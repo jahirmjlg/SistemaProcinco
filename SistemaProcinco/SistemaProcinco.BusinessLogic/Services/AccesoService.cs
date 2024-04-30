@@ -1,5 +1,6 @@
 ﻿using SistemaProcinco.BunisessLogic;
 using SistemaProcinco.DataAccess.Repository;
+using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,10 +73,112 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
+        public ServicesResult BuscarRoles(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarRoles(tbRoles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarRoles(tbRoles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServicesResult EliminarRoles(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
 
         #region Pantallas Por Roles
+        public ServicesResult ListaPantallasPorRoles()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.List();
 
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
         #endregion
     }
 }
