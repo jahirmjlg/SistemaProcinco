@@ -1,0 +1,25 @@
+
+<div class="card">
+  <h2>Listado Estados</h2>
+  <div class="card-body">
+    <table>
+      <thead>
+          <tr>
+            <th>ID</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+          </tr>
+      </thead>
+    <tbody>
+      <tr *ngFor="let cat of categoria">
+        <td>{{cat.id}}</td>
+        <td>{{cat.name}}</td>
+        <td>
+          <button class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
