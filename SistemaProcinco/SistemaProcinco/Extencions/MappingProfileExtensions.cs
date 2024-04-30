@@ -12,7 +12,22 @@ namespace SistemaProcinco.API.Extencions
     {
         public MappingProfileExtensions()
         {
-            CreateMap<BlanckViewModel, BlankEntitie>().ReverseMap();
+            CreateMap<CargosViewModel, tbCargos>().ReverseMap();
+            CreateMap<CiudadesViewModel, tbCiudades>().ReverseMap();
+            CreateMap<EmpleadosViewModel, tbEmpleados>().ReverseMap();
+            CreateMap<EstadosViewModel, tbEstados>().ReverseMap();
+            CreateMap<EstadosCivilesViewModel, tbEstadosCiviles>().ReverseMap();
+            CreateMap<PantallasViewModel, tbPantallas>().ReverseMap();
+            CreateMap<RolesViewModel, tbRoles>().ReverseMap();
+            CreateMap<PantallasPorRolesViewModel, tbPantallasPorRoles>().ReverseMap();
+            CreateMap<UsuariosViewModel, tbUsuarios>().ReverseMap();
+            CreateMap<AptitudesViewModel, tbAptitudes>().ReverseMap();
+            CreateMap<AptitudesPorEmpleadosViewModel, tbAptitudesPorEmpleado>().ReverseMap();
+            CreateMap<CategoriasViewModel, tbCategorias>().ReverseMap();
+            CreateMap<ContenidoViewModel, tbContenido>().ReverseMap();
+            CreateMap<ContenidoPorCursoViewModel, tbContenidoPorCurso>().ReverseMap();
+            CreateMap<CursosImpartidosViewModel, tbCursosImpartidos>().ReverseMap();
+            CreateMap<CursosViewModel, tbCursos>().ReverseMap();
 
         }
     }

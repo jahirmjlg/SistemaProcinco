@@ -15,8 +15,19 @@ namespace SistemaProcinco.BusinessLogic
     {
         public static void DataAccess(this IServiceCollection service, string conn)
         {
-            service.AddScoped<BlanckRepository>();
-
+            service.AddScoped<CargosRepository>();
+            service.AddScoped<CiudadesRepository>();
+            service.AddScoped<EmpleadosRepository>();
+            service.AddScoped<EstadosRepository>();
+            service.AddScoped<EstadosCivilesRepository>();
+            service.AddScoped<PantallasRepository>();
+            service.AddScoped<RolesRepository>();
+            service.AddScoped<UsuariosRepository>();
+            service.AddScoped<AptitudesRepository>();
+            service.AddScoped<AptitudesPorEmpleadoRepoditory>();
+            service.AddScoped<CategoriasRepository>();
+            service.AddScoped<ContenidoRepository>();
+            service.AddScoped<ContenidoPorCursoRepository>();
             SistemaProcincoContext.BuildConnectionString(conn);
 
         }
@@ -24,6 +35,8 @@ namespace SistemaProcinco.BusinessLogic
         public static void BusinessLogic(this IServiceCollection service)
         {
             service.AddScoped<AccesoService>();
+            service.AddScoped<GeneralService>();
+            service.AddScoped<ProcincoService>();
         }
     }
 }

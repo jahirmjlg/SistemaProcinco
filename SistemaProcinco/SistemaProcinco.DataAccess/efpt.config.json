@@ -1,0 +1,97 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "DBSistemaprocincoContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "SistemaProcinco.DataAccess",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[Acc].[tbPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acc].[tbPantallasPorRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acc].[tbRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acc].[tbUsuarios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Grl].[tbCiudades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Grl].[tbEmpleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Grl].[tbEstados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Grl].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbAptitudes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbAptitudesPorEmpleado]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCargos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCategorias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbContenido]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbContenidoPorCurso]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCursos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCursosImpartidos]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "vj7500.SistemaProcinco",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
