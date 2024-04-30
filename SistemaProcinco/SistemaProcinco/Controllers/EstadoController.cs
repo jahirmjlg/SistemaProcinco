@@ -47,11 +47,35 @@ namespace SistemaProcinco.API.Controllers
                 Esta_Id = item.Esta_Id,
                 Esta_Descripcion = item.Esta_Descripcion,
                 Esta_UsuarioCreacion = 1,
-                Esta_FechaCreacion = DateTime.Now,
+                Esta_FechaCreacion = DateTime.Now
 
 
             };
             var list = _generalService.InsertarEstados(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpPost("EstadoEditar")]
+        public IActionResult Edit(EstadosViewModel item)
+        {
+            var model = _mapper.Map<tbEstados>(item);
+            var modelo = new tbEstados()
+            {
+                Esta_Id = item.Esta_Id,
+                Esta_Descripcion = item.Esta_Descripcion,
+                Esta_UsuarioModificacion = 1,
+                Esta_FechaModificacion = DateTime.Now
+
+
+            };
+            var list = _generalService.EditarEstados(modelo);
             if (list.Success == true)
             {
                 return Ok(list);

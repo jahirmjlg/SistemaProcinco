@@ -108,6 +108,28 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult EditarEstados(tbEstados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
 
         #region Estados Civiles
@@ -170,6 +192,8 @@ namespace SistemaProcinco.BusinessLogic.Services
                 return Enumerable.Empty<tbEmpleados>();
             }
         }
+
+
         #endregion
     }
 }
