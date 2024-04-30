@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SistemaProcinco.BusinessLogic.Services;
+using SistemaProcinco.Common.Models;
+using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +35,100 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+        [HttpPost("EmpleadoCrear")]
+        public IActionResult Insert(EmpleadosViewModel item)
+        {
+            var model = _mapper.Map<tbEmpleados>(item);
+            var modelo = new tbEmpleados()
+            {
+                Empl_DNI = item.Empl_DNI,
+                Carg_Id = item.Carg_Id,
+                Empl_Nombre = item.Empl_Nombre,
+                Empl_Apellido = item.Empl_Apellido,
+                Empl_Correo = item.Empl_Correo,
+                Empl_FechaNacimiento = item.Empl_FechaNacimiento,
+                Empl_Sexo = item.Empl_Sexo,
+                Estc_Id = item.Estc_Id,
+                Empl_Direccion = item.Empl_Direccion,
+                Ciud_id = item.Ciud_id,
+                Empl_UsuarioCreacion = 1,
+                Empl_FechaCreacion = DateTime.Now
+
+
+            };
+            var list = _generalService.InsertarEmpleados(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpPut("EmpleadoEditar")]
+        public IActionResult Edit(EmpleadosViewModel item)
+        {
+            var model = _mapper.Map<tbEmpleados>(item);
+            var modelo = new tbEmpleados()
+            {
+                Empl_Id = item.Empl_Id,
+                Empl_DNI = item.Empl_DNI,
+                Carg_Id = item.Carg_Id,
+                Empl_Nombre = item.Empl_Nombre,
+                Empl_Apellido = item.Empl_Apellido,
+                Empl_Correo = item.Empl_Correo,
+                Empl_FechaNacimiento = item.Empl_FechaNacimiento,
+                Empl_Sexo = item.Empl_Sexo,
+                Estc_Id = item.Estc_Id,
+                Empl_Direccion = item.Empl_Direccion,
+                Ciud_id = item.Ciud_id,
+                Empl_UsuarioModificacion = 1,
+                Empl_FechaModificacion = DateTime.Now
+
+
+            };
+            var list = _generalService.EditarEmpleados(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpDelete("EmpleadoEliminar")]
+        public IActionResult Delete(int Empl_id)
+        {
+            var list = _generalService.EliminarEmpleados(Empl_id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+
+        }
+
+        [HttpGet("EmpleadoBuscar")]
+        public IActionResult Details(int Empl_Id)
+        {
+            var list = _generalService.BuscarEmpleados(Empl_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
     }
 }
