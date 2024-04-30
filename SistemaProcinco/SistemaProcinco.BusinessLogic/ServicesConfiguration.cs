@@ -23,10 +23,11 @@ namespace SistemaProcinco.BusinessLogic
             service.AddScoped<PantallasRepository>();
             service.AddScoped<RolesRepository>();
             service.AddScoped<UsuariosRepository>();
-            service.AddScoped<CargosRepository>();
-            service.AddScoped<CargosRepository>();
-            service.AddScoped<CargosRepository>();
-
+            service.AddScoped<AptitudesRepository>();
+            service.AddScoped<AptitudesPorEmpleadoRepoditory>();
+            service.AddScoped<CategoriasRepository>();
+            service.AddScoped<ContenidoRepository>();
+            service.AddScoped<ContenidoPorCursoRepository>();
             SistemaProcincoContext.BuildConnectionString(conn);
 
         }
@@ -35,6 +36,7 @@ namespace SistemaProcinco.BusinessLogic
         {
             service.AddScoped<AccesoService>();
             service.AddScoped<GeneralService>();
+            service.AddScoped<ProcincoService>();
         }
     }
 }

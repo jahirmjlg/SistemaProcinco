@@ -46,7 +46,35 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Pro].[tbAptitudes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbAptitudesPorEmpleado]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Pro].[tbCargos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCategorias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbContenido]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbContenidoPorCurso]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCursos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Pro].[tbCursosImpartidos]",
          "ObjectType": 0
       }
    ],

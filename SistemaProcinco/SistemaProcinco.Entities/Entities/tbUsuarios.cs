@@ -12,10 +12,24 @@ namespace SistemaProcinco.Entities.Entities
         {
             InverseUsua_UsuarioCreacionNavigation = new HashSet<tbUsuarios>();
             InverseUsua_UsuarioModificacionNavigation = new HashSet<tbUsuarios>();
+            tbAptitudesApti_UsuarioCreacionNavigation = new HashSet<tbAptitudes>();
+            tbAptitudesApti_UsuarioModificacionNavigation = new HashSet<tbAptitudes>();
+            tbAptitudesPorEmpleadoAptPe_UsuarioCreacionNavigation = new HashSet<tbAptitudesPorEmpleado>();
+            tbAptitudesPorEmpleadoAptPe_UsuarioModificacionNavigation = new HashSet<tbAptitudesPorEmpleado>();
             tbCargosCarg_UsuarioCreacionNavigation = new HashSet<tbCargos>();
             tbCargosCarg_UsuarioModificacionNavigation = new HashSet<tbCargos>();
+            tbCategoriasCate_UsuarioCreacionNavigation = new HashSet<tbCategorias>();
+            tbCategoriasCate_UsuarioModificacionNavigation = new HashSet<tbCategorias>();
             tbCiudadesCiud_UsuarioCreacionNavigation = new HashSet<tbCiudades>();
             tbCiudadesCiud_UsuarioModificacionNavigation = new HashSet<tbCiudades>();
+            tbContenidoCont_UsuarioCreacionNavigation = new HashSet<tbContenido>();
+            tbContenidoCont_UsuarioModificacionNavigation = new HashSet<tbContenido>();
+            tbContenidoPorCursoConPc_UsuarioCreacionNavigation = new HashSet<tbContenidoPorCurso>();
+            tbContenidoPorCursoConPc_UsuarioModificacionNavigation = new HashSet<tbContenidoPorCurso>();
+            tbCursosCurso_UsuarioCreacionNavigation = new HashSet<tbCursos>();
+            tbCursosCurso_UsuarioModificacionNavigation = new HashSet<tbCursos>();
+            tbCursosImpartidosCurIm_UsuarioCreacionNavigation = new HashSet<tbCursosImpartidos>();
+            tbCursosImpartidosCurIm_UsuarioModificacionNavigation = new HashSet<tbCursosImpartidos>();
             tbEmpleadosEmpl_UsuarioCreacionNavigation = new HashSet<tbEmpleados>();
             tbEmpleadosEmpl_UsuarioModificacionNavigation = new HashSet<tbEmpleados>();
             tbEstadosCivilesEstc_UsuarioCreacionNavigation = new HashSet<tbEstadosCiviles>();
@@ -49,10 +63,24 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Usua_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbUsuarios> InverseUsua_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbUsuarios> InverseUsua_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbAptitudes> tbAptitudesApti_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbAptitudes> tbAptitudesApti_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbAptitudesPorEmpleado> tbAptitudesPorEmpleadoAptPe_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbAptitudesPorEmpleado> tbAptitudesPorEmpleadoAptPe_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbCargos> tbCargosCarg_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbCargos> tbCargosCarg_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbCategorias> tbCategoriasCate_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbCategorias> tbCategoriasCate_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbCiudades> tbCiudadesCiud_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbCiudades> tbCiudadesCiud_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbContenido> tbContenidoCont_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbContenido> tbContenidoCont_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbContenidoPorCurso> tbContenidoPorCursoConPc_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbContenidoPorCurso> tbContenidoPorCursoConPc_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbCursos> tbCursosCurso_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbCursos> tbCursosCurso_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbCursosImpartidos> tbCursosImpartidosCurIm_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbCursosImpartidos> tbCursosImpartidosCurIm_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesEstc_UsuarioCreacionNavigation { get; set; }

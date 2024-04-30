@@ -67,7 +67,15 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public IEnumerable<tbUsuarios> List()
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.UsuariosListar;
+
+            List<tbUsuarios> result = new List<tbUsuarios>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbUsuarios>(sql, commandType: CommandType.Text).ToList();
+                return result;
+            }
         }
 
         public RequestStatus Update(tbUsuarios item)

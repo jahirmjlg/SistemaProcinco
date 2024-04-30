@@ -19,8 +19,15 @@ namespace SistemaProcinco.DataAccess.Context
         {
         }
 
+        public virtual DbSet<tbAptitudes> tbAptitudes { get; set; }
+        public virtual DbSet<tbAptitudesPorEmpleado> tbAptitudesPorEmpleado { get; set; }
         public virtual DbSet<tbCargos> tbCargos { get; set; }
+        public virtual DbSet<tbCategorias> tbCategorias { get; set; }
         public virtual DbSet<tbCiudades> tbCiudades { get; set; }
+        public virtual DbSet<tbContenido> tbContenido { get; set; }
+        public virtual DbSet<tbContenidoPorCurso> tbContenidoPorCurso { get; set; }
+        public virtual DbSet<tbCursos> tbCursos { get; set; }
+        public virtual DbSet<tbCursosImpartidos> tbCursosImpartidos { get; set; }
         public virtual DbSet<tbEmpleados> tbEmpleados { get; set; }
         public virtual DbSet<tbEstados> tbEstados { get; set; }
         public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
@@ -32,6 +39,67 @@ namespace SistemaProcinco.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<tbAptitudes>(entity =>
+            {
+                entity.HasKey(e => e.Apti_Id)
+                    .HasName("PK__tbAptitu__B57201C8281A4267");
+
+                entity.ToTable("tbAptitudes", "Pro");
+
+                entity.Property(e => e.Apti_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Apti_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Apti_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Apti_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Apti_ValorMonetario).HasColumnType("numeric(8, 2)");
+
+                entity.HasOne(d => d.Apti_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbAptitudesApti_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Apti_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Apti_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbAptitudesApti_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Apti_UsuarioModificacion);
+            });
+
+            modelBuilder.Entity<tbAptitudesPorEmpleado>(entity =>
+            {
+                entity.HasKey(e => e.AptPe_Id)
+                    .HasName("PK__tbAptitu__FC49FA8B5970B4EE");
+
+                entity.ToTable("tbAptitudesPorEmpleado", "Pro");
+
+                entity.Property(e => e.AptPe_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.AptPe_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.AptPe_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.AptPe_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbAptitudesPorEmpleadoAptPe_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.AptPe_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.AptPe_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbAptitudesPorEmpleadoAptPe_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.AptPe_UsuarioModificacion);
+
+                entity.HasOne(d => d.Apti)
+                    .WithMany(p => p.tbAptitudesPorEmpleado)
+                    .HasForeignKey(d => d.Apti_Id);
+
+                entity.HasOne(d => d.Empl)
+                    .WithMany(p => p.tbAptitudesPorEmpleado)
+                    .HasForeignKey(d => d.Empl_Id);
+            });
 
             modelBuilder.Entity<tbCargos>(entity =>
             {
@@ -59,6 +127,36 @@ namespace SistemaProcinco.DataAccess.Context
                 entity.HasOne(d => d.Carg_UsuarioModificacionNavigation)
                     .WithMany(p => p.tbCargosCarg_UsuarioModificacionNavigation)
                     .HasForeignKey(d => d.Carg_UsuarioModificacion);
+            });
+
+            modelBuilder.Entity<tbCategorias>(entity =>
+            {
+                entity.HasKey(e => e.Cate_Id)
+                    .HasName("PK__tbCatego__297787C69519634F");
+
+                entity.ToTable("tbCategorias", "Pro");
+
+                entity.Property(e => e.Cate_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cate_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Cate_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Cate_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Cate_Imagen).IsUnicode(false);
+
+                entity.HasOne(d => d.Cate_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbCategoriasCate_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Cate_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Cate_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbCategoriasCate_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Cate_UsuarioModificacion);
             });
 
             modelBuilder.Entity<tbCiudades>(entity =>
@@ -105,6 +203,133 @@ namespace SistemaProcinco.DataAccess.Context
                     .HasForeignKey(d => d.Esta_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbCiudades_tbEstartamentos_Esta_Id");
+            });
+
+            modelBuilder.Entity<tbContenido>(entity =>
+            {
+                entity.HasKey(e => e.Cont_Id)
+                    .HasName("PK__tbConten__F757F146460D9386");
+
+                entity.ToTable("tbContenido", "Pro");
+
+                entity.Property(e => e.Cont_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cont_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Cont_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Cont_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Cont_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbContenidoCont_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Cont_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Cont_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbContenidoCont_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Cont_UsuarioModificacion);
+            });
+
+            modelBuilder.Entity<tbContenidoPorCurso>(entity =>
+            {
+                entity.HasKey(e => e.ConPc_Id)
+                    .HasName("PK__tbConten__42031BCE0A8B29F8");
+
+                entity.ToTable("tbContenidoPorCurso", "Pro");
+
+                entity.Property(e => e.ConPc_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ConPc_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.ConPc_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ConPc_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbContenidoPorCursoConPc_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.ConPc_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.ConPc_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbContenidoPorCursoConPc_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.ConPc_UsuarioModificacion);
+
+                entity.HasOne(d => d.Cont)
+                    .WithMany(p => p.tbContenidoPorCurso)
+                    .HasForeignKey(d => d.Cont_Id);
+
+                entity.HasOne(d => d.Curso)
+                    .WithMany(p => p.tbContenidoPorCurso)
+                    .HasForeignKey(d => d.Curso_Id)
+                    .HasConstraintName("FK_tbContenidoPorCurso_tbCurso_Curso_Id");
+            });
+
+            modelBuilder.Entity<tbCursos>(entity =>
+            {
+                entity.HasKey(e => e.Curso_Id)
+                    .HasName("PK__tbCursos__98A16D2767D50B42");
+
+                entity.ToTable("tbCursos", "Pro");
+
+                entity.Property(e => e.Curso_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Curso_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Curso_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Curso_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Curso_Imagen).IsUnicode(false);
+
+                entity.HasOne(d => d.Cate)
+                    .WithMany(p => p.tbCursos)
+                    .HasForeignKey(d => d.Cate_Id);
+
+                entity.HasOne(d => d.Curso_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbCursosCurso_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Curso_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Curso_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbCursosCurso_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Curso_UsuarioModificacion);
+            });
+
+            modelBuilder.Entity<tbCursosImpartidos>(entity =>
+            {
+                entity.HasKey(e => e.CurIm_Id)
+                    .HasName("PK__tbCursos__72B63779DC52F335");
+
+                entity.ToTable("tbCursosImpartidos", "Pro");
+
+                entity.Property(e => e.CurIm_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CurIm_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.CurIm_FechaFin).HasColumnType("datetime");
+
+                entity.Property(e => e.CurIm_FechaInicio).HasColumnType("datetime");
+
+                entity.Property(e => e.CurIm_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.CurIm_Finalizar).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.CurIm_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbCursosImpartidosCurIm_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.CurIm_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.CurIm_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbCursosImpartidosCurIm_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.CurIm_UsuarioModificacion);
+
+                entity.HasOne(d => d.Curso)
+                    .WithMany(p => p.tbCursosImpartidos)
+                    .HasForeignKey(d => d.Curso_Id);
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>

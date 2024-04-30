@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace SistemaProcinco.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UsuarioController : Controller
     {
         private readonly AccesoService _accesoService;
@@ -22,9 +24,18 @@ namespace SistemaProcinco.API.Controllers
             _mailService = mailService;
         }
 
+        [HttpGet("Listado")]
         public IActionResult Index()
         {
-            return View();
+            var listado = _accesoService.ListaUsuarios();
+            if (listado.Success == true)
+            {
+                return Ok(listado);
+            }
+            else
+            {
+                return Problem();
+            }
         }
     }
 }
