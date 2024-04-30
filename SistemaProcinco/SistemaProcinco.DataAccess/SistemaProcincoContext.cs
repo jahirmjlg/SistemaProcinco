@@ -10,7 +10,7 @@ using SistemaProcinco.DataAccess.Context;
 
 namespace SistemaProcinco.DataAccess
 {
-    public partial class SistemaProcincoContext : DbContext //Cambiar por el contexto de la base
+    public partial class SistemaProcincoContext : DBSistemaprocincoContext
     {
         public static string ConnectionString { get; set; }
 
