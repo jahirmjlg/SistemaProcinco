@@ -22,7 +22,7 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("Listado")]
+        [HttpGet("PantallaPorRolListado")]
         public IActionResult Index()
         {
             var listado = _accesoService.ListaPantallas();
@@ -35,5 +35,7 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+
     }
 }

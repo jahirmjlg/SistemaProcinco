@@ -12,10 +12,12 @@ namespace SistemaProcinco.BusinessLogic.Services
     {
         private readonly UsuariosRepository _usuariosRepository;
         private readonly PantallasRepository _pantallasRepository;
-        public AccesoService(UsuariosRepository usuariosRepository, PantallasRepository pantallasRepository)
+        private readonly RolesRepository _rolesRepository;
+        public AccesoService(UsuariosRepository usuariosRepository, PantallasRepository pantallasRepository, RolesRepository rolesRepository)
         {
             _usuariosRepository = usuariosRepository;
             _pantallasRepository = pantallasRepository;
+            _rolesRepository = rolesRepository;
         }
 
         #region Usuarios
@@ -54,7 +56,22 @@ namespace SistemaProcinco.BusinessLogic.Services
         #endregion
 
         #region Roles
+        public ServicesResult ListaRoles()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.List();
 
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
         #endregion
 
         #region Pantallas Por Roles

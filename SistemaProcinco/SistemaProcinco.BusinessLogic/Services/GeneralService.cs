@@ -252,16 +252,89 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
-        public IEnumerable<tbEstadosCiviles> BuscarEstadosCiviles(int Id)
+        public ServicesResult BuscarEstadosCiviles(int Id)
         {
             var result = new ServicesResult();
             try
             {
-                return _estadosCivilesRepository.Find(Id);
+                var lost = _estadosCivilesRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                        return result.Error(lost);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return Enumerable.Empty<tbEstadosCiviles>();
+                    return result.Error(ex);
+            }
+        }
+        public ServicesResult InsertarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServicesResult EditarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarEstadosCiviles(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
             }
         }
         #endregion

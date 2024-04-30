@@ -1,7 +1,10 @@
-﻿using SistemaProcinco.DataAcces.Repository;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using SistemaProcinco.DataAcces.Repository;
 using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +15,77 @@ namespace SistemaProcinco.DataAccess.Repository
     {
         public RequestStatus Delete(int? id)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.RolesEliminar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Role_Id", id);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+
+            }
         }
 
         public IEnumerable<tbRoles> Find(int? id)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.RolesLlenarEditar;
+            List<tbRoles> result = new List<tbRoles>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Role_Id", id);
+                result = db.Query<tbRoles>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
         }
 
         public RequestStatus Insert(tbRoles item)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.RolesCrear;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Role_Descripcion", item.Role_Descripcion);
+                parametro.Add("@Role_UsuarioCreacion", item.Role_UsuarioCreacion);
+                parametro.Add("@Role_FechaCreacion", item.Role_FechaCreacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
         }
 
         public IEnumerable<tbRoles> List()
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.RolesListar;
+
+            List<tbRoles> result = new List<tbRoles>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbRoles>(sql, commandType: System.Data.CommandType.Text).ToList();
+
+                return result;
+            }
         }
 
         public RequestStatus Update(tbRoles item)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.RolesActualizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Role_Id", item.Role_Id);
+                parametro.Add("@Role_Descripcion", item.Role_Descripcion);
+                parametro.Add("@Role_UsuarioModificacion", item.Role_UsuarioModificacion);
+                parametro.Add("@Role_FechaModificacion", item.Role_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
         }
     }
 }
