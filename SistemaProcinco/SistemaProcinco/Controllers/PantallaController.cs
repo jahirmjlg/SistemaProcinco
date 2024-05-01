@@ -12,20 +12,20 @@ namespace SistemaProcinco.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RolController : Controller
+    public class PantallaController : Controller
     {
         private readonly IMapper _mapper;
         private readonly AccesoService _accesoService;
-        public RolController(IMapper mapper, AccesoService accesoService)
+        public PantallaController(IMapper mapper, AccesoService accesoService)
         {
             _mapper = mapper;
             _accesoService = accesoService;
         }
 
-        [HttpGet("Listado")]
-        public IActionResult Index()
+        [HttpGet("PantallasListado")]
+        public IActionResult Index(int Role_Id)
         {
-            var listado = _accesoService.ListaRoles();
+            var listado = _accesoService.ListaPantallas(Role_Id);
             if (listado.Success == true)
             {
                 return Ok(listado);
@@ -36,18 +36,19 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpPost("RolCrear")]
-        public IActionResult Insert(RolesViewModel item)
+        [HttpPost("PantallasCrear")]
+        public IActionResult Insert(PantallasViewModel item)
         {
-            var model = _mapper.Map<tbRoles>(item);
-            var modelo = new tbRoles()
+            var model = _mapper.Map<tbPantallas>(item);
+            var modelo = new tbPantallas()
             {
-                Role_Descripcion = item.Role_Descripcion,
-                Role_UsuarioCreacion = 1,
-                Role_FechaCreacion = DateTime.Now
+                Pant_Descripcion = item.Pant_Descripcion,
+                Pant_UsuarioCreacion = 1,
+                Pant_FechaCreacion = DateTime.Now
+
+
             };
-            (var list, int Role_Id ) = _accesoService.InsertarRoles(modelo);
-            list.Message = Role_Id.ToString();
+            var list = _accesoService.InsertarPantallas(modelo);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -58,20 +59,19 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpPut("RolEditar")]
-        public IActionResult Edit(RolesViewModel item)
+
+        [HttpPut("PantallaEditar")]
+        public IActionResult Edit(PantallasViewModel item)
         {
-            var model = _mapper.Map<tbRoles>(item);
-            var modelo = new tbRoles()
+            var model = _mapper.Map<tbPantallas>(item);
+            var modelo = new tbPantallas()
             {
-                Role_Id = item.Role_Id,
-                Role_Descripcion = item.Role_Descripcion,
-                Role_UsuarioModificacion = 1,
-                Role_FechaModificacion = DateTime.Now
-
-
+                Pant_Id = item.Pant_Id,
+                Pant_Descripcion = item.Pant_Descripcion,
+                Pant_UsuarioModificacion = 1,
+                Pant_FechaModificacion = DateTime.Now
             };
-            var list = _accesoService.EditarRoles(modelo);
+            var list = _accesoService.EditarPantallas(modelo);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -82,10 +82,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("RolEliminar")]
-        public IActionResult Delete(int Role_id)
+        [HttpDelete("PantallaEliminar")]
+        public IActionResult Delete(int Pant_Id)
         {
-            var list = _accesoService.EliminarRoles(Role_id);
+            var list = _accesoService.EliminarPantallas(Pant_Id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -94,7 +94,6 @@ namespace SistemaProcinco.API.Controllers
             {
                 return Problem();
             }
-
         }
     }
 }

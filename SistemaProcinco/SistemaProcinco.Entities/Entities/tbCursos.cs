@@ -12,6 +12,7 @@ namespace SistemaProcinco.Entities.Entities
         {
             tbContenidoPorCurso = new HashSet<tbContenidoPorCurso>();
             tbCursosImpartidos = new HashSet<tbCursosImpartidos>();
+            tbInformeEmpleados = new HashSet<tbInformeEmpleados>();
         }
 
         public int Curso_Id { get; set; }
@@ -30,5 +31,6 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Curso_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbContenidoPorCurso> tbContenidoPorCurso { get; set; }
         public virtual ICollection<tbCursosImpartidos> tbCursosImpartidos { get; set; }
+        public virtual ICollection<tbInformeEmpleados> tbInformeEmpleados { get; set; }
     }
 }

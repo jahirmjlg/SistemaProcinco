@@ -41,7 +41,7 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
-        public RequestStatus Insert(tbRoles item)
+        public (RequestStatus, int) Insert(tbRoles item)
         {
             string sql = ScriptsDatabase.RolesCrear;
 
@@ -51,9 +51,13 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Role_Descripcion", item.Role_Descripcion);
                 parametro.Add("@Role_UsuarioCreacion", item.Role_UsuarioCreacion);
                 parametro.Add("@Role_FechaCreacion", item.Role_FechaCreacion);
+                parametro.Add("@role_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+                int roleId = parametro.Get<int>("@role_id");
+
+                string mensaje = (result == 1) ? "exito" : "error";
+                return (new RequestStatus { CodeStatus = result, MessageStatus = "" }, roleId);
             }
         }
 
@@ -86,6 +90,11 @@ namespace SistemaProcinco.DataAccess.Repository
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
+        }
+
+        RequestStatus IRepository<tbRoles>.Insert(tbRoles item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

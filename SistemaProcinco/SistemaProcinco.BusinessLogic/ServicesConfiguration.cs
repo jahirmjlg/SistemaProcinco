@@ -21,10 +21,12 @@ namespace SistemaProcinco.BusinessLogic
             service.AddScoped<EstadosRepository>();
             service.AddScoped<EstadosCivilesRepository>();
             service.AddScoped<PantallasRepository>();
+            service.AddScoped<PantallasPorRolesRepostory>();
             service.AddScoped<RolesRepository>();
             service.AddScoped<UsuariosRepository>();
-            service.AddScoped<AptitudesRepository>();
-            service.AddScoped<AptitudesPorEmpleadoRepoditory>();
+            service.AddScoped<InformeEmpleadosRepository>();
+            service.AddScoped<TitulosRepository>();
+            service.AddScoped<TitulosPorEmpleadosRepository>();
             service.AddScoped<CategoriasRepository>();
             service.AddScoped<ContenidoRepository>();
             service.AddScoped<ContenidoPorCursoRepository>();

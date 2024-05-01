@@ -9,12 +9,15 @@ namespace SistemaProcinco.DataAccess.Repository
     class ScriptsDatabase
     {
         #region Pantallas 
-        public static string PantallasListar = "";
-        public static string PantallasBuscar = "[Acc].[SP_Pantallas_Seleccionar]";
+        public static string PantallasListar = "[Acc].[SP_Pantallas_Seleccionar]";
+        public static string PantallasCrear = "[Acc].[SP_Pantallas_Insertar]";
+        public static string PantallasEliminar = "[Acc].[SP_Pantallas_Eliminar]";
+        public static string PantallasActualizar = "[Acc].[SP_Pantallas_Actualizar]";
+        public static string PantallasBuscar = "[Acc].[SP_Pantallas_LlenarEditar]";
         #endregion
 
         #region PantallasPorRoles
-        public static string PantallasPorRolesListar = "";
+        public static string PantallasPorRolesListar = "[Acc].[SP_PantallasPorRoles_Mostrar]";
         public static string PantallasPorRolesCrear = "[Acc].[SP_PantallasPorRoles_Insertar]";
         public static string PantallasPorRolesActualizar = "[Acc].[SP_PantallasPorRoles_Actualizar]";
         public static string PantallasPorRolesEliminar = "[Acc].[SP_PantallasPorRoles_Eliminar]";
@@ -83,5 +86,76 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string EstadosCivilesBuscar = "[Grl].[SP_EstadosCiviles_LlenarEditar]";
         #endregion
 
+        #region Cargos
+        public static string CargosListar = "[Pro].[SP_Cargos_Seleccionar]";
+        public static string CargosCrear = "[Pro].[SP_Cargos_Insertar]";
+        public static string CargosActualizar = "[Pro].[SP_Cargos_Actualizar]";
+        public static string CargosEliminar = "[Pro].[SP_Cargos_Eliminar]";
+        public static string CargosBuscar = "[Pro].[SP_Cargos_LlenarEditar]";
+        #endregion
+
+        #region Categorias
+        public static string CategoriasListar = "[Pro].[SP_Categoria_Seleccionar]";
+        public static string CategoriasCrear = "[Pro].[SP_Categoria_Insertar]";
+        public static string CategoriasActualizar = "[Pro].[SP_Categoria_Actualizar]";
+        public static string CategoriasEliminar = "[Pro].[SP_Categoria_Eliminar]";
+        public static string CategoriasBuscar = "[Pro].[SP_Categoria_Buscar]";
+        #endregion
+
+        #region Contenido
+        public static string ContenidoListar = "[Pro].[SP_Contenido_Seleccionar]";
+        public static string ContenidoCrear = "[Pro].[SP_Contenido_Insertar]";
+        public static string ContenidoActualizar = "[Pro].[SP_Contenido_Actualizar]";
+        public static string ContenidoEliminar = "[Pro].[SP_Contenido_Eliminar]";
+        public static string ContenidoBuscar = "[Pro].[SP_Contenido_Buscar]";
+        #endregion
+
+        #region Contenido por curso
+        public static string ContenidoPorCursoListar = "[Pro].[SP_ContenidoPorCurso_Seleccionar]";
+        public static string ContenidoPorCursoCrear = "[Pro].[SP_ContenidoPorCurso_Insertar]";
+        public static string ContenidoPorCursoActualizar = "[Pro].[SP_ContenidoPorCurso_Actualizar]";
+        public static string ContenidoPorCursoEliminar = "[Pro].[SP_ContenidoPorCurso_Eliminar]";
+        public static string ContenidoPorCursoBuscar = "[Pro].[SP_ContenidoPorCurso_Buscar]";
+        #endregion
+
+        #region Cursos
+        public static string CursosListar = "[Pro].[SP_Curso_Seleccionar]";
+        public static string CursosCrear = "[Pro].[SP_Curso_Insertar]";
+        public static string CursosActualizar = "[Pro].[SP_Curso_Actualizar]";
+        public static string CursosEliminar = "[Pro].[SP_Curso_Eliminar]";
+        public static string CursosBuscar = "[Pro].[SP_Curso_Buscar]";
+        #endregion
+
+        #region CursosImpartidos
+        public static string CursosImpartidosListar = "[Pro].[SP_CursosImpartidos_Seleccionar]";
+        public static string CursosImpartidosCrear = "[Pro].[SP_CursoImpartido_Insertar]";
+        public static string CursosImpartidosActualizar = "[Pro].[SP_CursoImpartido_Actualizar]";
+        public static string CursosImpartidosEliminar = "[Pro].[SP_CursoImpartido_Eliminar]";
+        public static string CursosImpartidosBuscar = "[Pro].[SP_CursosImpartidos_Buscar]";
+        #endregion
+
+        #region Informe Empleados
+        public static string InformeEmpleadosListar = "[Pro].[SP_InformeEmpleados_Seleccionar]";
+        public static string InformeEmpleadosCrear = "[Pro].[SP_InformeEmpleado_Insertar]";
+        public static string InformeEmpleadosActualizar = "[Pro].[SP_InformeEmpleado_Actualizar]";
+        public static string InformeEmpleadosEliminar = "[Pro].[SP_InformeEmpleado_Eliminar]";
+        public static string InformeEmpleadosBuscar = "[Pro].[SP_InformeEmpleados_Buscar]";
+        #endregion
+
+        #region Titulos
+        public static string TitulosListar = "[Pro].[SP_Titulos_Seleccionar]";
+        public static string TitulosCrear = "[Pro].[SP_Titulo_Insertar]";
+        public static string TitulosActualizar = "[Pro].[SP_Titulo_Actualizar]";
+        public static string TitulosEliminar = "[Pro].[SP_Titulo_Eliminar]";
+        public static string TitulosBuscar = "[Pro].[SP_Titulos_Buscar]";
+        #endregion
+
+        #region Titulos Por Empleados
+        public static string TitulosPorEmpleadosListar = "[Pro].[SP_TitulosPorEmpleado_Seleccionar]";
+        public static string TitulosPorEmpleadosCrear = "[Pro].[SP_TituloPorEmpleado_Insertar]";
+        public static string TitulosPorEmpleadosActulizar = "[Pro].[SP_TituloPorEmpleado_Actualizar]";
+        public static string TitulosPorEmpleadosEliminar = "Pro.SP_TituloPorEmpleado_Eliminar";
+        public static string TitulosPorEmpleadosBuscar = "[Pro].[SP_TitulosPorEmpleado_Buscar]";
+        #endregion
     }
 }
