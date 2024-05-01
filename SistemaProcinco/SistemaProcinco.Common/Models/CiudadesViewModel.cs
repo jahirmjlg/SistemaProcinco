@@ -12,6 +12,8 @@ namespace SistemaProcinco.Common.Models
         public string Ciud_Id { get; set; }
         public string Ciud_Descripcion { get; set; }
         public string Esta_Id { get; set; }
+        [NotMapped]
+        public string Estado { get; set; }
         public int Ciud_UsuarioCreacion { get; set; }
         public DateTime Ciud_FechaCreacion { get; set; }
         public int? Ciud_UsuarioModificacion { get; set; }
