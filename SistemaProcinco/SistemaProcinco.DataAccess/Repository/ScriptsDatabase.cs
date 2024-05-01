@@ -43,12 +43,11 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string UsuariosDetalle = "[Acc].[SP_Usuarios_Detalles]";
         public static string UsuariosInicioSesion = "[Acc].[SP_UsuariosValidarInicioSesion]";
         public static string UsuariosLlenarEditar = "[Acc].[SP_Usuarios_LlenarEditar]";
-        public static string UsuariosRestablecerContra = "[Acc].[SP_Usuarios_ReestablecerContraseña]";
-        public static string UsuariosRestablecer = "[Acc].[SP_Usuarios_Reestablecer]";
+        public static string UsuariosRestablecerContra = "[Acc].[SP_Usuarios_Reestablecer]";
         public static string UsuariosValidarInsertar = "[Acc].[SP_Usuarios_InsertarValidar]";
-        public static string UsuariosObtenerCorreo= "[Acc].[SP_Usuarios_ObtenerCorreo]";
-        public static string UsuariosIngresarCodigo = "";
-        public static string UsuariosValidarCodigo = "";
+        public static string UsuariosEnviarCodigo = "[Acc].[SP_Usuarios_EnviarCorreo]";
+        public static string UsuariosIngresarCodigo = "[Acc].[sp_Usuarios_IngresarCodigo]";
+        public static string UsuariosValidarCodigo = "[Acc].[SP_Usuarios_ValidarCodigo]";
         #endregion
 
         #region Ciudades 
@@ -153,7 +152,7 @@ namespace SistemaProcinco.DataAccess.Repository
         #region Titulos Por Empleados
         public static string TitulosPorEmpleadosListar = "[Pro].[SP_TitulosPorEmpleado_Seleccionar]";
         public static string TitulosPorEmpleadosCrear = "[Pro].[SP_TituloPorEmpleado_Insertar]";
-        public static string TitulosPorEmpleadosActulizar = "[Pro].[SP_TituloPorEmpleado_Actualizar]";
+        public static string TitulosPorEmpleadosActualizar = "[Pro].[SP_TituloPorEmpleado_Actualizar]";
         public static string TitulosPorEmpleadosEliminar = "Pro.SP_TituloPorEmpleado_Eliminar";
         public static string TitulosPorEmpleadosBuscar = "[Pro].[SP_TitulosPorEmpleado_Buscar]";
         #endregion

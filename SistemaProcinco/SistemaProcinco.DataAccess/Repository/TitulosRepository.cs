@@ -42,7 +42,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Insert(tbTitulos item)
         {
-            string sql = ScriptsDatabase.CargosCrear;
+            string sql = ScriptsDatabase.TitulosCrear;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {

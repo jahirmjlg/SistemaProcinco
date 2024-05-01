@@ -127,6 +127,98 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult Login(string Usuario, string Contra)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.Login(Usuario, Contra);
+                if (lost != null)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EnviarCodigo(string corus)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.EnviarCodigo(corus);
+                return result.Ok(lost);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult Implementarcodigo(string codigo, int usuarioId)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _usuariosRepository.IngresarCodigo(codigo, usuarioId);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult ValidarCodigo(string codigo)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _usuariosRepository.ValidarCodigo(codigo);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error(list);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult RestablecerContrasenia(tbUsuarios item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.RestablecerContra(item);
+                if (lost.CodeStatus == 200)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
 
         #region Pantallas

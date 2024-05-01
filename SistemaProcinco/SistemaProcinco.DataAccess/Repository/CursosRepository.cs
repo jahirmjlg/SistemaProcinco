@@ -20,7 +20,7 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Carg_Id", id);
+                parametro.Add("Curso_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
@@ -73,7 +73,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Update(tbCursos item)
         {
-            string sql = ScriptsDatabase.CargosActualizar;
+            string sql = ScriptsDatabase.CursosActualizar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
