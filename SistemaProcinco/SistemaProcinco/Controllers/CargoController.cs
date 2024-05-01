@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SistemaProcinco.BusinessLogic.Services;
+using SistemaProcinco.Common.Models;
+using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +23,88 @@ namespace SistemaProcinco.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("Listado")]
+        [HttpGet("CargoListado")]
         public IActionResult Index()
         {
             var listado = _procincoService.ListaCargos();
             if (listado.Success == true)
             {
                 return Ok(listado);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpPost("CargoCrear")]
+        public IActionResult Insert(CargosViewModel item)
+        {
+            var model = _mapper.Map<tbCargos>(item);
+            var modelo = new tbCargos()
+            {
+                Carg_Descripcion = item.Carg_Descripcion,
+                Carg_UsuarioCreacion = 1,
+                Carg_FechaCreacion = DateTime.Now
+
+
+            };
+            var list = _procincoService.InsertarCargos(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpPut("CargoEditar")]
+        public IActionResult Edit(CargosViewModel item)
+        {
+            var model = _mapper.Map<tbCargos>(item);
+            var modelo = new tbCargos()
+            {
+                Carg_Id = item.Carg_Id,
+                Carg_Descripcion = item.Carg_Descripcion,
+                Carg_UsuarioModificacion = 1,
+                Carg_FechaModificacion = DateTime.Now
+            };
+            var list = _procincoService.EditarCargos(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpDelete("CargoEliminar")]
+        public IActionResult Delete(int Carg_Id)
+        {
+            var list = _procincoService.EliminarCargos(Carg_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+
+        }
+
+        [HttpGet("CargoBuscar")]
+        public IActionResult Details(int Carg_Id)
+        {
+            var list = _procincoService.BuscarCargos(Carg_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
             }
             else
             {

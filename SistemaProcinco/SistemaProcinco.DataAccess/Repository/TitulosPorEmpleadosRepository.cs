@@ -71,7 +71,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Update(tbTitulosPorEmpleado item)
         {
-            string sql = ScriptsDatabase.CargosActualizar;
+            string sql = ScriptsDatabase.TitulosPorEmpleadosActualizar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {

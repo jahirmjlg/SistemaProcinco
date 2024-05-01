@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SistemaProcinco.BusinessLogic.Services;
+using SistemaProcinco.Common.Models;
+using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +35,79 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+        [HttpPost("ContenidoCrear")]
+        public IActionResult Insert(ContenidoViewModel item)
+        {
+            var model = _mapper.Map<tbContenido>(item);
+            var modelo = new tbContenido()
+            {
+                Cont_Descripcion = item.Cont_Descripcion,
+                Cont_DuracionHoras = item.Cont_DuracionHoras,
+                Cont_UsuarioCreacion = 1,
+                Cont_FechaCreacion = DateTime.Now
+            };
+            var list = _procincoService.InsertarContenido(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpPut("ContenidoEditar")]
+        public IActionResult Edit(ContenidoViewModel item)
+        {
+            var model = _mapper.Map<tbContenido>(item);
+            var modelo = new tbContenido()
+            {
+                Cont_Id = item.Cont_Id,
+                Cont_Descripcion = item.Cont_Descripcion,
+                Cont_DuracionHoras = item.Cont_DuracionHoras,
+                Cont_UsuarioModificacion = 1,
+                Cont_FechaModificacion = DateTime.Now
+            };
+            var list = _procincoService.EditarContenido(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpDelete("ContenidoEliminar")]
+        public IActionResult Delete(int Cont_Id)
+        {
+            var list = _procincoService.EliminarContenido(Cont_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+
+        }
+
+        [HttpGet("ContenidoBuscar")]
+        public IActionResult Details(int Cont_Id)
+        {
+            var list = _procincoService.BuscarContenido(Cont_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
     }
 }

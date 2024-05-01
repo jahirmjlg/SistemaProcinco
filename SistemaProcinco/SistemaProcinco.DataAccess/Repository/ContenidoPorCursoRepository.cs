@@ -49,8 +49,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parametro = new DynamicParameters();
                 parametro.Add("@Cont_Id", item.Cont_Id);
                 parametro.Add("@Curso_Id", item.Curso_Id);
-                parametro.Add("@ConPc_UsuarioModificacion", item.ConPc_UsuarioModificacion);
-                parametro.Add("@ConPc_FechaModificacion", item.ConPc_FechaModificacion);
+                parametro.Add("@ConPc_UsuarioCreacion", item.ConPc_UsuarioCreacion);
+                parametro.Add("@ConPc_FechaCreacion", item.ConPc_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

@@ -89,5 +89,104 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+        [HttpDelete("UsuarioEliminar")]
+        public IActionResult Delete(int Usua_Id)
+        {
+            var list = _accesoService.EliminarUsuarios(Usua_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+
+        }
+
+
+        [HttpGet("UsuarioLogin")]
+        public IActionResult Login(string Usuario_Correo, string Contra)
+        {
+            var list = _accesoService.Login(Usuario_Correo, Contra);
+            if (!list.Success)
+            {
+                return Problem();
+            }
+            else
+            {
+                return Ok(list);
+
+            }
+        }
+
+
+        [HttpGet("EnviarCorreo")]
+        public IActionResult EnviarCorreo(string Correo_Usuario)
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(100000, 1000000);
+            var estado = _accesoService.EnviarCodigo(Correo_Usuario);
+            var lista = estado.Data;
+            if (lista.Count > 0)
+            {
+                var datos = estado.Data as List<tbUsuarios>;
+                var first = datos.FirstOrDefault();
+                _accesoService.Implementarcodigo(randomNumber.ToString(), first.Usua_Id);
+                MailData mailData = new MailData();
+                mailData.EmailToId = first.correo;
+                mailData.EmailToName = "Usuario";
+                mailData.EmailSubject = "Su codigo para restablecer contraseña es el siguiente";
+                mailData.EmailBody = "" + randomNumber.ToString();
+                _mailService.SendMail(mailData);
+                return Ok(estado);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("ValidarCodigo")]
+        public IActionResult restablecer(string Usua_VerificarCorreo)
+        {
+            
+            var lista = _accesoService.ValidarCodigo(Usua_VerificarCorreo);
+            
+            if (lista.Success == true)
+            {
+                return Ok(lista.Code);
+
+            }
+            else
+            {
+                return Problem();
+
+            }
+        }
+
+        [HttpPut("RestablacerContrasena")]
+        public IActionResult restablecer(UsuariosViewModel item)
+        {
+          
+            var modelo = new tbUsuarios()
+            {
+                Usua_Id = item.Usua_Id,
+                Usua_Contraseña = item.Usua_Contraseña,
+                Usua_UsuarioModificacion = 1,
+                Usua_FechaModificacion = DateTime.Now,
+            };
+            var list = _accesoService.RestablecerContrasenia(modelo);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            { 
+                return Problem();
+            }
+            
+        }
     }
 }

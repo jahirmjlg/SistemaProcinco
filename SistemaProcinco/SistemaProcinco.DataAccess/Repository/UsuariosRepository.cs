@@ -96,5 +96,84 @@ namespace SistemaProcinco.DataAccess.Repository
 
             }
         }
+
+        public tbUsuarios Login(string Usuario, string Contra)
+        {
+            string sql = ScriptsDatabase.UsuariosInicioSesion;
+
+            tbUsuarios result = new tbUsuarios();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Usuario", Usuario);
+                parameters.Add("@Contraseña", Contra);
+                result = db.QueryFirstOrDefault<tbUsuarios>(sql, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
+        public IEnumerable<tbUsuarios> EnviarCodigo(string Usuario)
+        {
+            string sql = ScriptsDatabase.UsuariosEnviarCodigo;
+
+            List<tbUsuarios> result = new List<tbUsuarios>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add( "@UsuarioCorreo", Usuario );
+                result = db.Query<tbUsuarios>(sql, parameters, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+        public IEnumerable<tbUsuarios> IngresarCodigo(string codigo, int usua_id)
+        {
+            string sql = ScriptsDatabase.UsuariosIngresarCodigo;
+
+            List<tbUsuarios> result = new List<tbUsuarios>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Usua_Id", usua_id);
+                parameters.Add("@Usua_VerificarCorreo", codigo);
+                result = db.Query<tbUsuarios>(sql, parameters, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+        public IEnumerable<tbUsuarios> ValidarCodigo(string codigo)
+        {
+            string sql = ScriptsDatabase.UsuariosValidarCodigo;
+
+            List<tbUsuarios> result = new List<tbUsuarios>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Usua_VerificarCorreo", codigo);
+                result = db.Query<tbUsuarios>(sql, parameters, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+        public RequestStatus RestablecerContra(tbUsuarios item)
+        {
+            string sql = ScriptsDatabase.UsuariosRestablecerContra;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Usua_Id", item.Usua_Id);
+                parametro.Add("@Usua_Contraseña", item.Usua_Contraseña);
+                parametro.Add("@Usua_UsuarioModificacion", item.Usua_UsuarioModificacion);
+                parametro.Add("@Usua_FechaModificacion", item.Usua_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
+        }
     }
 }
