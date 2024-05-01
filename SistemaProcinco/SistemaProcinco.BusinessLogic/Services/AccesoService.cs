@@ -1,5 +1,6 @@
 ﻿using SistemaProcinco.BunisessLogic;
 using SistemaProcinco.DataAccess.Repository;
+using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace SistemaProcinco.BusinessLogic.Services
     {
         private readonly UsuariosRepository _usuariosRepository;
         private readonly PantallasRepository _pantallasRepository;
-        public AccesoService(UsuariosRepository usuariosRepository, PantallasRepository pantallasRepository)
+        private readonly RolesRepository _rolesRepository;
+        private readonly PantallasPorRolesRepostory _pantallasPorRolesRepostory;
+        public AccesoService(UsuariosRepository usuariosRepository, PantallasRepository pantallasRepository, RolesRepository rolesRepository, PantallasPorRolesRepostory pantallasPorRolesRepostory)
         {
             _usuariosRepository = usuariosRepository;
             _pantallasRepository = pantallasRepository;
+            _rolesRepository = rolesRepository;
+            _pantallasPorRolesRepostory = pantallasPorRolesRepostory;
         }
 
         #region Usuarios
@@ -32,15 +37,217 @@ namespace SistemaProcinco.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
-        #endregion
 
-        #region Pantallas
-        public ServicesResult ListaPantallas()
+        public ServicesResult BuscarUsuarios(int Id)
         {
             var result = new ServicesResult();
             try
             {
-                var lost = _pantallasRepository.List();
+                var lost = _usuariosRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarUsuarios(tbUsuarios item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.Insert(item);
+
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarUsuarios(tbUsuarios item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarUsuarios(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _usuariosRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Pantallas
+        public ServicesResult ListaPantallas(int Role_Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.List1(Role_Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+        public ServicesResult BuscarPantallas(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _pantallasRepository.Find(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarPantallas(tbPantallas item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarPantallas(tbPantallas item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarPantallas(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Roles
+        public ServicesResult ListaRoles()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.List();
 
                 return result.Ok(lost);
 
@@ -51,14 +258,207 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
-        #endregion
+        public ServicesResult BuscarRoles(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
 
-        #region Roles
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public (ServicesResult, int) InsertarRoles(tbRoles item)
+        {
+            var result = new ServicesResult();
+            int rolid = 0;
+            try
+            {
+                var lost = _rolesRepository.Insert(item);
+                rolid = lost.Item2;
+
+                if (lost.Item1.CodeStatus > 0)
+                {
+                    return (result.Ok(lost), rolid);
+
+                }
+                else
+                {
+                    return (result.Error(lost), rolid);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (result.Error(ex.Message), rolid);
+            }
+        }
+
+        public ServicesResult EditarRoles(tbRoles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServicesResult EliminarRoles(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _rolesRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
 
         #endregion
 
         #region Pantallas Por Roles
+        public ServicesResult ListaPantallasPorRoles(int Role_Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasPorRolesRepostory.List1(Role_Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+        public ServicesResult BuscarPantallasPorRoles(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _pantallasPorRolesRepostory.Find(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarPantallasPorRoles(tbPantallasPorRoles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasPorRolesRepostory.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarPantallasPorRoles(tbPantallasPorRoles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasPorRolesRepostory.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarPantallasPorRoles(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasPorRolesRepostory.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

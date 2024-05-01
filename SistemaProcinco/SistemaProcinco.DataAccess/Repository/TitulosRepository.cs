@@ -11,77 +11,76 @@ using System.Threading.Tasks;
 
 namespace SistemaProcinco.DataAccess.Repository
 {
-    public class CategoriasRepository : IRepository<tbCategorias>
+    public class TitulosRepository : IRepository<tbTitulos>
     {
         public RequestStatus Delete(int? id)
         {
-            string sql = ScriptsDatabase.CategoriasEliminar;
+            string sql = ScriptsDatabase.TitulosEliminar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Cate_Id", id);
+                parametro.Add("Titl_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
 
-        public IEnumerable<tbCategorias> Find(int? id)
+        public IEnumerable<tbTitulos> Find(int? id)
         {
-            string sql = ScriptsDatabase.CategoriasBuscar;
-            List<tbCategorias> result = new List<tbCategorias>();
+            string sql = ScriptsDatabase.TitulosBuscar;
+            List<tbTitulos> result = new List<tbTitulos>();
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Cate_Id", id);
-                result = db.Query<tbCategorias>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                parametro.Add("Titl_Id", id);
+                result = db.Query<tbTitulos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
                 return result;
             }
         }
 
-        public RequestStatus Insert(tbCategorias item)
+        public RequestStatus Insert(tbTitulos item)
         {
-            string sql = ScriptsDatabase.CategoriasCrear;
+            string sql = ScriptsDatabase.CargosCrear;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Cate_Descripcion", item.Cate_Descripcion);
-                parametro.Add("@Cate_Imagen", item.Cate_Imagen);
-                parametro.Add("@Cate_UsuarioCreacion", item.Cate_UsuarioCreacion);
-                parametro.Add("@Cate_FechaCreacion", item.Cate_FechaCreacion);
+                parametro.Add("@Titl_Descripcion", item.Titl_Descripcion);
+                parametro.Add("@Titl_ValorMonetario", item.Titl_ValorMonetario);
+                parametro.Add("@Titl_UsuarioCreacion", item.Titl_UsuarioCreacion);
+                parametro.Add("@Titl_FechaCreacion", item.Titl_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
-
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
 
-        public IEnumerable<tbCategorias> List()
+        public IEnumerable<tbTitulos> List()
         {
-            string sql = ScriptsDatabase.CategoriasListar;
+            string sql = ScriptsDatabase.TitulosListar;
 
-            List<tbCategorias> result = new List<tbCategorias>();
+            List<tbTitulos> result = new List<tbTitulos>();
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
-                result = db.Query<tbCategorias>(sql, commandType: System.Data.CommandType.Text).ToList();
+                result = db.Query<tbTitulos>(sql, commandType: System.Data.CommandType.Text).ToList();
                 return result;
             }
         }
 
-        public RequestStatus Update(tbCategorias item)
+        public RequestStatus Update(tbTitulos item)
         {
-            string sql = ScriptsDatabase.CategoriasActualizar;
+            string sql = ScriptsDatabase.TitulosActualizar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Cate_Id", item.Cate_Id);
-                parametro.Add("@Cate_Descripcion", item.Cate_Descripcion);
-                parametro.Add("@Cate_Imagen", item.Cate_Imagen);
-                parametro.Add("@Cate_UsuarioModificacion", item.Cate_UsuarioModificacion);
-                parametro.Add("@Cate_FechaModificacion", item.Cate_FechaModificacion);
+                parametro.Add("@Titl_Id", item.Titl_Id);
+                parametro.Add("@Titl_Descripcion", item.Titl_Descripcion);
+                parametro.Add("@Titl_ValorMonetario", item.Titl_ValorMonetario);
+                parametro.Add("@Titl_UsuarioModificacion", item.Titl_UsuarioModificacion);
+                parametro.Add("@Titl_FechaModificacion", item.Titl_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

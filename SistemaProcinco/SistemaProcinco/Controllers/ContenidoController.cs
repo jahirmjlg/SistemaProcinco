@@ -10,21 +10,20 @@ namespace SistemaProcinco.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CargoController : Controller
+    public class ContenidoController : Controller
     {
         private readonly ProcincoService _procincoService;
         private readonly IMapper _mapper;
 
-        public CargoController(ProcincoService procincoService, IMapper mapper)
+        public ContenidoController(ProcincoService procincoService, IMapper mapper)
         {
             _procincoService = procincoService;
             _mapper = mapper;
         }
-
         [HttpGet("Listado")]
         public IActionResult Index()
         {
-            var listado = _procincoService.ListaCargos();
+            var listado = _procincoService.ListaContenido();
             if (listado.Success == true)
             {
                 return Ok(listado);

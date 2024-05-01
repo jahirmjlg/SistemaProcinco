@@ -11,74 +11,80 @@ using System.Threading.Tasks;
 
 namespace SistemaProcinco.DataAccess.Repository
 {
-    public class CargosRepository : IRepository<tbCargos>
+    public class InformeEmpleadosRepository : IRepository<tbInformeEmpleados>
     {
         public RequestStatus Delete(int? id)
         {
-            string sql = ScriptsDatabase.CargosEliminar;
+            string sql = ScriptsDatabase.InformeEmpleadosEliminar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Carg_Id", id);
+                parametro.Add("InfoE_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
 
-        public IEnumerable<tbCargos> Find(int? id)
+        public IEnumerable<tbInformeEmpleados> Find(int? id)
         {
-            string sql = ScriptsDatabase.CargosBuscar;
-            List<tbCargos> result = new List<tbCargos>();
+            string sql = ScriptsDatabase.InformeEmpleadosBuscar;
+            List<tbInformeEmpleados> result = new List<tbInformeEmpleados>();
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Carg_Id", id);
-                result = db.Query<tbCargos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                parametro.Add("InfoE_Id", id);
+                result = db.Query<tbInformeEmpleados>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
                 return result;
             }
         }
 
-        public RequestStatus Insert(tbCargos item)
+        public RequestStatus Insert(tbInformeEmpleados item)
         {
             string sql = ScriptsDatabase.CargosCrear;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Carg_Descripcion", item.Carg_Descripcion);
-                parametro.Add("@Carg_UsuarioCreacion", item.Carg_UsuarioCreacion);
-                parametro.Add("@Carg_FechaCreacion", item.Carg_FechaCreacion);
+                parametro.Add("@InfoE_Calificacion", item.InfoE_Calificacion);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@Curso_Id", item.Curso_Id);
+                parametro.Add("@InfoE_Observaciones", item.InfoE_Observaciones);
+                parametro.Add("@InfoE_UsuarioCreacion", item.InfoE_UsuarioCreacion);
+                parametro.Add("@InfoE_FechaCreacion", item.InfoE_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
 
-        public IEnumerable<tbCargos> List()
+        public IEnumerable<tbInformeEmpleados> List()
         {
-            string sql = ScriptsDatabase.CargosListar;
+            string sql = ScriptsDatabase.InformeEmpleadosListar;
 
-            List<tbCargos> result = new List<tbCargos>();
+            List<tbInformeEmpleados> result = new List<tbInformeEmpleados>();
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
-                result = db.Query<tbCargos>(sql, commandType: System.Data.CommandType.Text).ToList();
+                result = db.Query<tbInformeEmpleados>(sql, commandType: System.Data.CommandType.Text).ToList();
                 return result;
             }
         }
 
-        public RequestStatus Update(tbCargos item)
+        public RequestStatus Update(tbInformeEmpleados item)
         {
             string sql = ScriptsDatabase.CargosActualizar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Carg_Id", item.Carg_Id);
-                parametro.Add("@Carg_Descripcion", item.Carg_Descripcion);
-                parametro.Add("@Carg_UsuarioModificacion", item.Carg_UsuarioModificacion);
-                parametro.Add("@Carg_FechaModificacion", item.Carg_FechaModificacion);
+                parametro.Add("@InfoE_Id", item.InfoE_Id);
+                parametro.Add("@InfoE_Calificacion", item.InfoE_Calificacion);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@Curso_Id", item.Curso_Id);
+                parametro.Add("@InfoE_Observaciones", item.InfoE_Observaciones);
+                parametro.Add("@InfoE_UsuarioModificacion", item.InfoE_UsuarioModificacion);
+                parametro.Add("@InfoE_FechaModificacion", item.InfoE_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

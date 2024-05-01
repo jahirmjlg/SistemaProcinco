@@ -42,16 +42,89 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
-        public IEnumerable<tbCiudades> BuscarCiudades(string Id)
+        public ServicesResult BuscarCiudades(string Id)
         {
             var result = new ServicesResult();
             try
             {
-                return _ciudadesRepository.FindDetalle(Id);
+                var list = _ciudadesRepository.FindDetalle(Id);
+                if(list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return Enumerable.Empty<tbCiudades>();
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarCiudades(tbCiudades item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _ciudadesRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarCiudades(tbCiudades item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _ciudadesRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarCiudades(string id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _ciudadesRepository.Delete1(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
             }
         }
         #endregion
@@ -73,16 +146,24 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
-        public IEnumerable<tbEstados> BuscarEstados(string Id)
+        public ServicesResult BuscarEstados(string Id)
         {
             var result = new ServicesResult();
             try
             {
-                return _estadosRepository.Find1(Id);
+                var lost = _estadosRepository.Find1(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.NotFound();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return Enumerable.Empty<tbEstados>();
+                return result.Error(ex);
             }
         }
 
@@ -92,6 +173,50 @@ namespace SistemaProcinco.BusinessLogic.Services
             try
             {
                 var lost = _estadosRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarEstados(tbEstados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarEstados(string id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosRepository.Delete1(id);
                 if (lost.CodeStatus > 0)
                 {
                     return result.Ok(lost);
@@ -127,16 +252,89 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
-        public IEnumerable<tbEstadosCiviles> BuscarEstadosCiviles(int Id)
+        public ServicesResult BuscarEstadosCiviles(int Id)
         {
             var result = new ServicesResult();
             try
             {
-                return _estadosCivilesRepository.Find(Id);
+                var lost = _estadosCivilesRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                        return result.Error(lost);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return Enumerable.Empty<tbEstadosCiviles>();
+                    return result.Error(ex);
+            }
+        }
+        public ServicesResult InsertarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServicesResult EditarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarEstadosCiviles(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _estadosCivilesRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
             }
         }
         #endregion
@@ -158,18 +356,94 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
-        public IEnumerable<tbEmpleados> BuscarPersonas(int Id)
+        public ServicesResult BuscarEmpleados(int Id)
         {
             var result = new ServicesResult();
             try
             {
-                return _empleadosRepository.Find(Id);
+                var lost = _empleadosRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return Enumerable.Empty<tbEmpleados>();
+                    return result.Error(ex);
             }
         }
+
+        public ServicesResult InsertarEmpleados(tbEmpleados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarEmpleados(tbEmpleados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarEmpleados(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
     }
 }

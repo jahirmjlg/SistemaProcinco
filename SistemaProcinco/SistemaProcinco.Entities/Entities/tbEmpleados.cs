@@ -10,7 +10,8 @@ namespace SistemaProcinco.Entities.Entities
     {
         public tbEmpleados()
         {
-            tbAptitudesPorEmpleado = new HashSet<tbAptitudesPorEmpleado>();
+            tbInformeEmpleados = new HashSet<tbInformeEmpleados>();
+            tbTitulosPorEmpleado = new HashSet<tbTitulosPorEmpleado>();
             tbUsuarios = new HashSet<tbUsuarios>();
         }
 
@@ -37,7 +38,8 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Empl_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Empl_UsuarioModificacionNavigation { get; set; }
         public virtual tbEstadosCiviles Estc { get; set; }
-        public virtual ICollection<tbAptitudesPorEmpleado> tbAptitudesPorEmpleado { get; set; }
+        public virtual ICollection<tbInformeEmpleados> tbInformeEmpleados { get; set; }
+        public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }
 }

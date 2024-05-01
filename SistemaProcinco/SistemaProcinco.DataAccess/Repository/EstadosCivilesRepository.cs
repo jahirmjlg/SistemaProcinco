@@ -43,12 +43,11 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Insert(tbEstadosCiviles item)
         {
-            string sql = ScriptsDatabase.EstadosCrear;
+            string sql = ScriptsDatabase.EstadosCivilesCrear;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Estc_Id", item.Estc_Id);
                 parametro.Add("@Estc_Descripcion", item.Estc_Descripcion);
                 parametro.Add("@Estc_UsuarioCreacion", item.Estc_UsuarioCreacion);
                 parametro.Add("@Estc_FechaCreacion", item.Estc_FechaCreacion);

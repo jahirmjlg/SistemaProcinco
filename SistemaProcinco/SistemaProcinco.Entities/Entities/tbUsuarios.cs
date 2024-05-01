@@ -12,10 +12,6 @@ namespace SistemaProcinco.Entities.Entities
         {
             InverseUsua_UsuarioCreacionNavigation = new HashSet<tbUsuarios>();
             InverseUsua_UsuarioModificacionNavigation = new HashSet<tbUsuarios>();
-            tbAptitudesApti_UsuarioCreacionNavigation = new HashSet<tbAptitudes>();
-            tbAptitudesApti_UsuarioModificacionNavigation = new HashSet<tbAptitudes>();
-            tbAptitudesPorEmpleadoAptPe_UsuarioCreacionNavigation = new HashSet<tbAptitudesPorEmpleado>();
-            tbAptitudesPorEmpleadoAptPe_UsuarioModificacionNavigation = new HashSet<tbAptitudesPorEmpleado>();
             tbCargosCarg_UsuarioCreacionNavigation = new HashSet<tbCargos>();
             tbCargosCarg_UsuarioModificacionNavigation = new HashSet<tbCargos>();
             tbCategoriasCate_UsuarioCreacionNavigation = new HashSet<tbCategorias>();
@@ -42,6 +38,10 @@ namespace SistemaProcinco.Entities.Entities
             tbPantallasPorRolesPaPr_UsuarioModificacionNavigation = new HashSet<tbPantallasPorRoles>();
             tbRolesRole_UsuarioCreacionNavigation = new HashSet<tbRoles>();
             tbRolesRole_UsuarioModificacionNavigation = new HashSet<tbRoles>();
+            tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation = new HashSet<tbTitulosPorEmpleado>();
+            tbTitulosPorEmpleadoTitPe_UsuarioModificacionNavigation = new HashSet<tbTitulosPorEmpleado>();
+            tbTitulosTitl_UsuarioCreacionNavigation = new HashSet<tbTitulos>();
+            tbTitulosTitl_UsuarioModificacionNavigation = new HashSet<tbTitulos>();
         }
 
         public int Usua_Id { get; set; }
@@ -63,10 +63,6 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Usua_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbUsuarios> InverseUsua_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbUsuarios> InverseUsua_UsuarioModificacionNavigation { get; set; }
-        public virtual ICollection<tbAptitudes> tbAptitudesApti_UsuarioCreacionNavigation { get; set; }
-        public virtual ICollection<tbAptitudes> tbAptitudesApti_UsuarioModificacionNavigation { get; set; }
-        public virtual ICollection<tbAptitudesPorEmpleado> tbAptitudesPorEmpleadoAptPe_UsuarioCreacionNavigation { get; set; }
-        public virtual ICollection<tbAptitudesPorEmpleado> tbAptitudesPorEmpleadoAptPe_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbCargos> tbCargosCarg_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbCargos> tbCargosCarg_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbCategorias> tbCategoriasCate_UsuarioCreacionNavigation { get; set; }
@@ -93,5 +89,9 @@ namespace SistemaProcinco.Entities.Entities
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaPr_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleadoTitPe_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbTitulos> tbTitulosTitl_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbTitulos> tbTitulosTitl_UsuarioModificacionNavigation { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿using SistemaProcinco.DataAcces.Repository;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using SistemaProcinco.DataAcces.Repository;
 using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +15,93 @@ namespace SistemaProcinco.DataAccess.Repository
     {
         public RequestStatus Delete(int? id)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.PantallasEliminar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Pant_Id", id);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+
+            }
         }
 
         public IEnumerable<tbPantallas> Find(int? id)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.CiudadesLlenarEditar;
+            List<tbPantallas> result = new List<tbPantallas>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Ciud_Id", id);
+                result = db.Query<tbPantallas>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
         }
 
         public RequestStatus Insert(tbPantallas item)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.PantallasCrear;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Pant_Descripcion", item.Pant_Descripcion);
+                parametro.Add("@Pant_UsuarioCreacion", item.Pant_UsuarioCreacion);
+                parametro.Add("@Pant_FechaCreacion", item.Pant_FechaCreacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
         }
 
         public IEnumerable<tbPantallas> List()
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.PantallasListar;
+
+            List<tbPantallas> result = new List<tbPantallas>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbPantallas>(sql, commandType: System.Data.CommandType.Text).ToList();
+
+                return result;
+            }
+        }
+
+        public IEnumerable<tbPantallas> List1(int Role_Id)
+        {
+            string sql = ScriptsDatabase.PantallasListar;
+
+            List<tbPantallas> result = new List<tbPantallas>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@RoleId", Role_Id);
+                result = db.Query<tbPantallas>(sql, parametro, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
         }
 
         public RequestStatus Update(tbPantallas item)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.PantallasActualizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters(); 
+                parametro.Add("@Pant_Id", item.Pant_Id);
+                parametro.Add("@Pant_Descripcion", item.Pant_Descripcion);
+                parametro.Add("@Pant_UsuarioModificacion", item.Pant_UsuarioModificacion);
+                parametro.Add("@Pant_FechaModificacion", item.Pant_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
         }
     }
 }

@@ -17,22 +17,21 @@ namespace SistemaProcinco.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-
-        public RequestStatus Eliminar(string? id)
+        public RequestStatus Delete1(string? id)
         {
-
             string sql = ScriptsDatabase.CiudadesEliminar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Id", id);
+                parametro.Add("Ciud_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
 
             }
         }
+       
 
         public IEnumerable<tbCiudades> Find(int? id)
         {
@@ -94,8 +93,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Ciud_Id", item.Ciud_Id);
                 parametro.Add("@Ciud_Descripcion", item.Ciud_Descripcion);
                 parametro.Add("@Esta_Id", item.Esta_Id);
-                parametro.Add("@Ciud_UsuarioCreacion", item.Ciud_UsuarioCreacion);
-                parametro.Add("@Ciud_FechaCreacion", item.Ciud_FechaCreacion);
+                parametro.Add("@Ciud_UsuarioModificacion", item.Ciud_UsuarioModificacion);
+                parametro.Add("@Ciud_FechaModificacion", item.Ciud_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

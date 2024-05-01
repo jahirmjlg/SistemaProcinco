@@ -36,7 +36,7 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Usua_Id", id);
+                parametro.Add("Usua_Id", id);
                 result = db.Query<tbUsuarios>(sql, parametro, commandType: CommandType.StoredProcedure).ToList();
 
                 return result;
@@ -51,16 +51,15 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Usuario", item.Usua_Usuario);
-                parametro.Add("@UsuaClave", item.Usua_Contraseña);
-                parametro.Add("@UsuaIsAdmin", item.Usua_EsAdmin);
-                parametro.Add("@Rol_Id", item.Role_Id);
-                parametro.Add("@UsuaCreacion", item.Usua_UsuarioCreacion);
-                parametro.Add("@FechaCreacion", item.Usua_FechaCreacion);
-                parametro.Add("@Correo", item.Empl_Id);
+                parametro.Add("@Usua_Usuario", item.Usua_Usuario);
+                parametro.Add("@Usua_Contraseña", item.Usua_Contraseña);
+                parametro.Add("@Usua_EsAdmin", item.Usua_EsAdmin);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@Role_Id", item.Role_Id);
+                parametro.Add("@Usua_UsuarioCreacion", item.Usua_UsuarioCreacion);
+                parametro.Add("@Usua_FechaCreacion", item.Usua_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
-                string mensaje = (result == 1) ? "exito" : "error";
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result, MessageStatus = ""};
 
             }
         }
@@ -80,7 +79,22 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Update(tbUsuarios item)
         {
-            throw new NotImplementedException();
+            string sql = ScriptsDatabase.UsuariosActualizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Usua_Id", item.Usua_Id);
+                parametro.Add("@Usua_Usuario", item.Usua_Usuario);
+                parametro.Add("@Usua_EsAdmin", item.Usua_EsAdmin);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@Role_Id", item.Role_Id);
+                parametro.Add("@Usua_UsuarioModificacion", item.Usua_UsuarioModificacion);
+                parametro.Add("@Usua_FechaModificacion", item.Usua_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+
+            }
         }
     }
 }
