@@ -15,7 +15,9 @@ import { Login } from '../../../../Models/loginViewModel';
             margin-right: 1rem;
             color: var(--primary-color) !important;
         }
-    `]
+    `],
+    styleUrls: ['./login.scss']
+
 })
 export class LoginComponent {
 

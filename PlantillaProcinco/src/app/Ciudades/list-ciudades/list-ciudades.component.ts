@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceService} from '../../Services/service.service';
+import {CiudadService} from '../../Services/ciudad.service';
 //
 import { Ciudad } from 'src/app/Models/CiudadViewModel';
 import {Router} from '@angular/router';
@@ -49,13 +49,13 @@ export class ListCiudadesComponent implements OnInit {
 
 
     //ultimos dos
-    constructor(private productService: ProductService, private messageService: MessageService, private service: ServiceService, private router: Router) { }
+    constructor(private productService: ProductService, private messageService: MessageService, private ciudadservice: CiudadService, private router: Router) { }
 
     ngOnInit() {
 
 
         // Respuesta de la api
-        this.service.getCiudades().subscribe((Response: any)=> {
+        this.ciudadservice.getCiudades().subscribe((Response: any)=> {
             console.log(Response.data);
             this.ciudad = Response.data;
 

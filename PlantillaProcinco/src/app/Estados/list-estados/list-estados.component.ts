@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceService} from '../../Services/service.service';
+import {EstadoService} from '../../Services/estado.service';
 import { Estado } from 'src/app/Models/EstadoViewModel';
 import {Router} from '@angular/router';
 
@@ -47,13 +47,13 @@ export class ListEstadosComponent implements OnInit {
 
 
     //ultimos dos
-    constructor(private productService: ProductService, private messageService: MessageService, private service: ServiceService, private router: Router) { }
+    constructor(private productService: ProductService, private messageService: MessageService, private estadoservice: EstadoService, private router: Router) { }
 
     ngOnInit() {
 
 
         // Respuesta de la api
-        this.service.getEstados().subscribe((Response: any)=> {
+        this.estadoservice.getEstados().subscribe((Response: any)=> {
             console.log(Response.data);
             this.estado = Response.data;
 
