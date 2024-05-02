@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
+$theme-colors: (
+  "primary": #550e92,
+  "warning": #f7941d,
+  "danger": #ff0000,
+  "color": #fff
+);
+
+$btn-danger: (
+    "color": #fff
+  );
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
 $gutter: 1rem; //for primeflex grid system
 @import "assets/layout/styles/layout/layout.scss";
 
