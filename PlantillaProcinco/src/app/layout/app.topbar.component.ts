@@ -2,6 +2,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
 
+import { CookieService } from 'ngx-cookie-service';
+
+
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html'
@@ -16,5 +19,19 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService, private cookieService: CookieService) { }
+
+
+    ngOnInit() {
+        var empleado = document.getElementById('emp');
+
+
+        var nombre = this.cookieService.get('namee')
+
+
+        empleado.textContent = nombre;
+
+
+
+    }
 }

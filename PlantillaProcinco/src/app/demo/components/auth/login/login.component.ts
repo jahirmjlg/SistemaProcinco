@@ -8,6 +8,8 @@ import { emptyInputValidator } from './CustomValidatorss';
 
 import { Router } from '@angular/router';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -30,7 +32,7 @@ export class LoginComponent {
 
     loginForm: FormGroup;
 
-    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: ServiceService, private router:Router) {
+    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: ServiceService, private router:Router, private cookieService: CookieService) {
 
         this.loginForm = this.formBuilder.group({
             usuario: ['', [Validators.required, emptyInputValidator()]],
@@ -50,29 +52,34 @@ export class LoginComponent {
         var validarusu = document.getElementById('validarusu');
         var validarcontra = document.getElementById('validarcontra');
 
-        const usuario = document.getElementById('usuaa');
-        const contra = document.getElementById('contraa');
 
 
 
-        if(usuario == null && contra == null )
+        if(this.loginForm.get('usuario').value == '' )
             {
                 validarusu.classList.remove('collapse');
-                validarcontra.classList.remove('collapse');
 
             }
-            else if(usuario == null )
-                {
-                    validarusu.classList.remove('collapse');
+            else
+            {
+                validarusu.classList.add('collapse');
 
-                }
-            else if(contra == null )
+            }
+
+            if(this.loginForm.get('contra').value == '' )
                 {
                     validarcontra.classList.remove('collapse');
 
                 }
-        else
-        {
+                else
+                {
+                    validarcontra.classList.add('collapse');
+
+                }
+
+
+        if(this.loginForm.get('usuario').value != '' && this.loginForm.get('contra').value != '' )
+            {
 
             const errorSpan = document.getElementById('error-span');
         if (this.loginForm.valid) {
@@ -82,7 +89,10 @@ export class LoginComponent {
 
                 if (response.code == 200) {
 
-                    this.router.navigate(['/dash']);
+                    this.cookieService.set('namee', response.data.empl_Nombre);
+
+                    console.log(response)
+                    this.router.navigate(['/pages/empty']);
                 } else {
 
                     errorSpan.classList.remove('collapse');
@@ -97,7 +107,8 @@ export class LoginComponent {
         } else {
           console.log('Formulario inválido');
         }
-        }
+
+             }
 
       }
 }
