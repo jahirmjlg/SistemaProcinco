@@ -30,7 +30,6 @@ namespace SistemaProcinco.Common.Models
         public DateTime? Empl_FechaCreacion { get; set; }
         public int? Empl_UsuarioModificacion { get; set; }
         public DateTime? Empl_FechaModificacion { get; set; }
-        public bool? Empl_Estado { get; set; }
         public decimal? Empl_SalarioHora { get; set; }
 
         [NotMapped]

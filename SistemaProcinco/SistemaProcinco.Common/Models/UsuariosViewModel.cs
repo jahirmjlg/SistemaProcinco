@@ -20,7 +20,15 @@ namespace SistemaProcinco.Common.Models
         public DateTime? Usua_FechaModificacion { get; set; }
         public bool? Usua_Estado { get; set; }
         public int? Empl_Id { get; set; }
+        [NotMapped]
+        public string Usua_Admin1 { get; set; }
         public string Usua_VerificarCorreo { get; set; }
+        [NotMapped]
+        public string Role_Descripcion { get; set; }
+        [NotMapped]
+        public string correo { get; set; }
+        [NotMapped]
+        public string Empl_Nombre { get; set; }
         [NotMapped]
         public string UsuarioCreacion { get; set; }
 

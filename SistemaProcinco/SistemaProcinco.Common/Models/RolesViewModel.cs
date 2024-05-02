@@ -15,7 +15,6 @@ namespace SistemaProcinco.Common.Models
         public DateTime? Role_FechaCreacion { get; set; }
         public int? Role_UsuarioModificacion { get; set; }
         public DateTime? Role_FechaModificacion { get; set; }
-        public bool? Role_Estado { get; set; }
         [NotMapped]
         public string Creacion { get; set; }
 
