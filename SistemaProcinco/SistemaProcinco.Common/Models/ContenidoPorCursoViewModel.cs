@@ -20,6 +20,9 @@ namespace SistemaProcinco.Common.Models
         public DateTime ConPc_FechaCreacion { get; set; }
         public int? ConPc_UsuarioModificacion { get; set; }
         public DateTime? ConPc_FechaModificacion { get; set; }
-        public bool? ConPc_Estado { get; set; }
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
     }
 }

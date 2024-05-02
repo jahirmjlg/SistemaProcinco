@@ -25,7 +25,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? CurIm_UsuarioModificacion { get; set; }
         public DateTime? CurIm_FechaModificacion { get; set; }
         public bool? CurIm_Estado { get; set; }
-
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
         public virtual tbUsuarios CurIm_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios CurIm_UsuarioModificacionNavigation { get; set; }
         public virtual tbCursos Curso { get; set; }
