@@ -1,11 +1,11 @@
 export class Curso {
-    Curso_Id !: Number;
-    Curso_Descripcion  !: String;
-    Curso_DuracionHoras  !: Number;
-    Curso_Imagen  !: String;
-    Cate_Id  !: Number;
-    Categoria  !: String;
-    Curso_UsuarioCreacion !: Number;
+    curso_Id !: Number;
+    curso_Descripcion  !: String;
+    curso_DuracionHoras  !: Number;
+    curso_Imagen  !: String;
+    cate_Id  !: Number;
+    categoria  !: String;
+    curso_UsuarioCreacion !: Number;
     Curso_FechaCreacion !: String;
     Curso_UsuarioModificacion !: Number;
     Curso_FechaModificacion !: String;

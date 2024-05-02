@@ -1,8 +1,8 @@
-import { Component} from '@angular/core';
-import {CursoService} from '../../Services/curso.service';
-import {Curso} from 'src/app/Models/CursosViewModel';
+import { Component } from '@angular/core';
+import {CategoriaService} from '../../Services/categoria.service';
+import { Categoria } from 'src/app/Models/CategoriasViewModel';
 import {Router} from '@angular/router';
-
+//
 import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -10,12 +10,12 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-  selector: 'app-list-curso',
-  templateUrl: './list-curso.component.html',
+  selector: 'app-list-categoria',
+  templateUrl: './list-categoria.component.html',
   providers: [MessageService]
 
 })
-export class ListCursoComponent {
+export class ListCategoriaComponent {
 
 
   productDialog: boolean = false;
@@ -43,19 +43,19 @@ export class ListCursoComponent {
     ];
 
   //   variable para iterar
-  curso!:Curso[];
+  categ!:Categoria[];
 
 
   //ultimos dos
-  constructor(private productService: ProductService, private messageService: MessageService, private service: CursoService, private router: Router) { }
+  constructor(private productService: ProductService, private messageService: MessageService, private service: CategoriaService, private router: Router) { }
 
   ngOnInit() {
 
 
       // Respuesta de la api
-      this.service.getCurso().subscribe((Response: any)=> {
+      this.service.getCategoria().subscribe((Response: any)=> {
           console.log(Response.data);
-          this.curso = Response.data;
+          this.categ = Response.data;
 
         }, error=>{
           console.log(error);
@@ -170,3 +170,4 @@ export class ListCursoComponent {
       return id;
   }
 }
+
