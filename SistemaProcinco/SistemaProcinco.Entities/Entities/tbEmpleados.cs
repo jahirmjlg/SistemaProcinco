@@ -38,6 +38,10 @@ namespace SistemaProcinco.Entities.Entities
         public string Ciud_id { get; set; }
         [NotMapped]
         public string Ciudades { get; set;}
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
 
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }

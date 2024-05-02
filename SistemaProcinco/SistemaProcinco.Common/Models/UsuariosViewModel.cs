@@ -22,9 +22,9 @@ namespace SistemaProcinco.Common.Models
         public int? Empl_Id { get; set; }
         public string Usua_VerificarCorreo { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
 
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
     }
 }

@@ -23,7 +23,10 @@ namespace SistemaProcinco.Entities.Entities
         public DateTime Ciud_FechaCreacion { get; set; }
         public int? Ciud_UsuarioModificacion { get; set; }
         public DateTime? Ciud_FechaModificacion { get; set; }
-
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
         public virtual tbUsuarios Ciud_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Ciud_UsuarioModificacionNavigation { get; set; }
         public virtual tbEstados Esta { get; set; }

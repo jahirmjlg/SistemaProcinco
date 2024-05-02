@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace SistemaProcinco.Common.Models
         public DateTime Cate_FechaCreacion { get; set; }
         public int? Cate_UsuarioModificacion { get; set; }
         public DateTime? Cate_FechaModificacion { get; set; }
-        public bool? Cate_Estado { get; set; }
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
     }
 }

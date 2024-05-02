@@ -17,9 +17,15 @@ namespace SistemaProcinco.Common.Models
         public string Empl_Correo { get; set; }
         public DateTime? Empl_FechaNacimiento { get; set; }
         public string Empl_Sexo { get; set; }
+        [NotMapped]
+        public string Sexo { get; set; }
         public int? Estc_Id { get; set; }
+        [NotMapped]
+        public string EstadoCivil { get; set; }
         public string Empl_Direccion { get; set; }
         public string Ciud_id { get; set; }
+        [NotMapped]
+        public string Ciudades { get; set; }
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }
         public int? Empl_UsuarioModificacion { get; set; }

@@ -11,7 +11,11 @@ namespace SistemaProcinco.Common.Models
     {
         public int PaPr_Id { get; set; }
         public int Pant_Id { get; set; }
+        [NotMapped]
+        public string Pantalla { get; set; }
         public int Role_Id { get; set; }
+        [NotMapped]
+        public string Rol { get; set; }
         public int? PaPr_UsuarioCreacion { get; set; }
         public DateTime? PaPr_FechaCreacion { get; set; }
         public int? PaPr_UsuarioModificacion { get; set; }

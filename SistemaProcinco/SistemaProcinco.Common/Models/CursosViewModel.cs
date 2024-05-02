@@ -21,5 +21,9 @@ namespace SistemaProcinco.Common.Models
         public int? Curso_UsuarioModificacion { get; set; }
         public DateTime? Curso_FechaModificacion { get; set; }
         public bool? Curso_Estado { get; set; }
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
     }
 }

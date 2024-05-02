@@ -106,10 +106,10 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("UsuarioLogin")]
-        public IActionResult Login(string Usuario_Correo, string Contra)
+        [HttpGet("UsuarioLogin/{usuario},{contra}")]
+        public IActionResult Login(string usuario, string contra)
         {
-            var list = _accesoService.Login(Usuario_Correo, Contra);
+            var list = _accesoService.Login(usuario, contra);
             if (!list.Success)
             {
                 return Problem();
@@ -122,12 +122,12 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("EnviarCorreo")]
-        public IActionResult EnviarCorreo(string Correo_Usuario)
+        [HttpGet("EnviarCorreo/{correo_usuario}")]
+        public IActionResult EnviarCorreo(string correo_usuario)
         {
             Random random = new Random();
             int randomNumber = random.Next(100000, 1000000);
-            var estado = _accesoService.EnviarCodigo(Correo_Usuario);
+            var estado = _accesoService.EnviarCodigo(correo_usuario);
             var lista = estado.Data;
             if (lista.Count > 0)
             {
@@ -148,21 +148,34 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpGet("ValidarCodigo")]
-        public IActionResult restablecer(string Usua_VerificarCorreo)
-        {
-            
-            var lista = _accesoService.ValidarCodigo(Usua_VerificarCorreo);
-            
-            if (lista.Success == true)
-            {
-                return Ok(lista.Code);
+        [HttpGet("Buscar/{usua_Id}")]
 
+        public IActionResult Details(int usua_Id)
+        {
+            var list = _accesoService.BuscarUsuarios(usua_Id);
+            if (list.Success == true)
+            {
+                return Ok(list);
             }
             else
             {
                 return Problem();
+            }
+        }
 
+        [HttpGet("ValidarCodigo/{usua_verificarCorreo}")]
+        public IActionResult restablecer(string usua_verificarCorreo)
+        {
+            
+            var lista = _accesoService.ValidarCodigo(usua_verificarCorreo);
+            
+            if (lista.Success == true)
+            {
+                return Ok(lista.Code);
+            }
+            else
+            {
+                return Problem();
             }
         }
 

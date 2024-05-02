@@ -22,7 +22,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? TitPe_UsuarioModificacion { get; set; }
         public DateTime? TitPe_FechaModificacion { get; set; }
         public bool? TitPe_Estado { get; set; }
-
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
         public virtual tbEmpleados Empl { get; set; }
         public virtual tbUsuarios TitPe_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios TitPe_UsuarioModificacionNavigation { get; set; }

@@ -21,7 +21,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? PaPr_UsuarioModificacion { get; set; }
         public DateTime? PaPr_FechaModificacion { get; set; }
         public bool? PaPr_Estado { get; set; }
-
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
         public virtual tbUsuarios PaPr_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios PaPr_UsuarioModificacionNavigation { get; set; }
         public virtual tbPantallas Pant { get; set; }

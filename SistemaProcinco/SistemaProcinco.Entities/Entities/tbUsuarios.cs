@@ -63,7 +63,13 @@ namespace SistemaProcinco.Entities.Entities
         public string Usua_VerificarCorreo { get; set; }
         [NotMapped]
         public string correo { get; set; }
+        [NotMapped]
+        public string Empl_Nombre { get; set; }
+        [NotMapped]
+        public string UsuarioCreacion { get; set; }
 
+        [NotMapped]
+        public string UsuarioModificacion { get; set; }
         public virtual tbEmpleados Empl { get; set; }
         public virtual tbRoles Role { get; set; }
         public virtual tbUsuarios Usua_UsuarioCreacionNavigation { get; set; }
