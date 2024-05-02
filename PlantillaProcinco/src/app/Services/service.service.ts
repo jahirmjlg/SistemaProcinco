@@ -21,17 +21,6 @@ export class ServiceService {
 
         //#region General
 
-        UrlEstados = this.urlLocalhost + 'Estado/Listado';
-
-        getEstados() {
-        return this.http.get<Estado[]>(this.UrlEstados);
-        }
-
-        UrlCiudades = this.urlLocalhost + 'Ciudad/CiudadListado';
-
-        getCiudades() {
-        return this.http.get<Ciudad[]>(this.UrlCiudades);
-        }
         //#endregion
 
         //#region Acceso
