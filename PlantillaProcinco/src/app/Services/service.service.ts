@@ -37,9 +37,6 @@ export class ServiceService {
         //#region Acceso
         UrlLogin = this.urlLocalhost + 'Usuario/UsuarioLogin/';
 
-        setLogin() {
-        return this.http.get<Ciudad[]>(this.UrlLogin);
-        }
 
         login(loginData: Login): Observable<any> {
             return this.http.get<any>(`${this.UrlLogin}${loginData.usuario},${loginData.contra}`, {});
