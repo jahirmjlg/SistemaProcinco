@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Contenido} from '../Models/ContenidoViewModel';
+import {Usuario} from '../Models/UsuariosViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContenidoService {
+export class UsuariosService {
 
   constructor(private http:HttpClient, private service:ServiceService) { }
 
-  UrlContenido = this.service.urlLocalhost + 'Contenido/Listado';
+  UrlUsuario = this.service.urlLocalhost + 'Usuario/Listado';
 
-  getContenido() {
-  return this.http.get<Contenido[]>(this.UrlContenido);
+  getUsuario() {
+  return this.http.get<Usuario[]>(this.UrlUsuario);
   }
 }

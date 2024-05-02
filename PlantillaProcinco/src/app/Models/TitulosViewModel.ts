@@ -1,11 +1,11 @@
 export class Titulo {
-    Titl_Id !: Number;
-    Titl_Descripcion  !: String;
-    Titl_ValorMonetario !: Number;
-    Titl_UsuarioCreacion !: Number;
-    Titl_FechaCreacion !: String;
-    Titl_UsuarioModificacion !: Number;
-    Titl_FechaModificacion !: String;
+    titl_Id !: Number;
+    titl_Descripcion  !: String;
+    titl_ValorMonetario !: Number;
+    titl_UsuarioCreacion !: Number;
+    titl_FechaCreacion !: String;
+    titl_UsuarioModificacion !: Number;
+    titl_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
 }

@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Contenido} from '../Models/ContenidoViewModel';
+import {EstadoCivil} from '../Models/EstadosCivilesViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContenidoService {
+export class EstadoscivilesService {
 
   constructor(private http:HttpClient, private service:ServiceService) { }
 
-  UrlContenido = this.service.urlLocalhost + 'Contenido/Listado';
+  UrlEstadoCivil = this.service.urlLocalhost + 'Estadocivil/Listado';
 
-  getContenido() {
-  return this.http.get<Contenido[]>(this.UrlContenido);
+  getEstadoCivil() {
+  return this.http.get<EstadoCivil[]>(this.UrlEstadoCivil);
   }
 }

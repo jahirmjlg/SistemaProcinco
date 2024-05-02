@@ -1,0 +1,52 @@
+
+<div class="card-body">
+    <div class="card-header">
+        <header class="w-100 d-flex justify-content-between p-2">
+            <h2>Listado de Contenido</h2>
+
+        </header>
+    </div>
+</div>
+<div class="card m-2 mt-4 p-3">
+    <div class="card-header">
+        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
+            Nuevo
+        </a>
+    </div>
+
+    <div class="card px-6 py-6">
+
+        <p-table #dt [value]="estado" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <ng-template pTemplate="caption">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Contenido</th>
+                    <th>Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-est>
+                <tr>
+                    <td>{{est.estc_Id}}</td>
+                    <td>{{est.estc_Descripcion}}</td>
+                    <td>{{est.cont_DuracionHoras}}</td>
+
+                    <td>
+                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
+
+                    </td>
+                  </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>

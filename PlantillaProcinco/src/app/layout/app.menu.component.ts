@@ -25,12 +25,12 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Usuarios',
                                 icon: 'pi pi-fw pi-user',
-                                routerLink: ['/pages/crud']
+                                routerLink: ['/pages/usuarios']
                             },
                             {
                                 label: 'Roles',
                                 icon: 'pi pi-fw pi-user',
-                                routerLink: ['/pages/crud']
+                                routerLink: ['/pages/roles']
                             },
                             {
                                 label: 'Login',
@@ -51,7 +51,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Empleados',
                                 icon: 'pi pi-fw pi-cog',
-                                routerLink: ['/pages/crud']
+                                routerLink: ['/pages/empleados']
                             },
                             {
                                 label: 'Estados',
@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Estados Civiles',
                                 icon: 'pi pi-fw pi-cog',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/estadosciviles']
                             },
 
                         ]
@@ -88,7 +88,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Cursos',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/cursos']
                             },
                             {
                                 label: 'Contenido',
@@ -98,22 +98,22 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Categorias',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/categorias']
                             },
                             {
                                 label: 'Informes de Empleados',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/informesempleados']
                             },
                             {
                                 label: 'Titulos',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/titulos']
                             },
                             {
                                 label: 'Cargos',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/']
+                                routerLink: ['/pages/cargos']
                             },
 
                         ]

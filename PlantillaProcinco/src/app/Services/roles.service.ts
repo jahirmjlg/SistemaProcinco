@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Contenido} from '../Models/ContenidoViewModel';
+import {Role} from '../Models/RolesViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContenidoService {
+export class RolesService {
 
   constructor(private http:HttpClient, private service:ServiceService) { }
 
-  UrlContenido = this.service.urlLocalhost + 'Contenido/Listado';
+  UrlRol = this.service.urlLocalhost + 'Rol/Listado';
 
-  getContenido() {
-  return this.http.get<Contenido[]>(this.UrlContenido);
+  getRol() {
+  return this.http.get<Role[]>(this.UrlRol);
   }
 }

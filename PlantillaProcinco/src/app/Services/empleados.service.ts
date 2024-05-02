@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
-
-import {InformeEmpleado} from '../Models/InformesEmpleadosViewModel';
-
+import {Empleado} from '../Models/EmpleadosViewModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 import { ServiceService } from './service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class InformeEmpleadosService {
+export class EmpleadosService {
 
   constructor(private http:HttpClient, private service:ServiceService) { }
 
-  UrlInformeEmpleado = this.service.urlLocalhost + 'InformeEmpleado/Listado';
+  UrlEmpleado = this.service.urlLocalhost + 'Empleado/Listado';
 
-  getInformeEmpleado() {
-  return this.http.get<InformeEmpleado[]>(this.UrlInformeEmpleado);
+  getEmpleado() {
+  return this.http.get<Empleado[]>(this.UrlEmpleado);
   }
 }
