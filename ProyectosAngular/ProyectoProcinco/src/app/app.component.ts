@@ -14,4 +14,8 @@ export class AppComponent {
   Listar() {
     this.router.navigate(['index']);
   }
+
+  ListarEstados() {
+    this.router.navigate(['indexEstados']);
+  }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Categoria} from '../Models/CategoriaViewModel';
+import {Estado} from '../Models/EstadoViewModel';
+
 import {HttpClient} from '@angular/common/http';
 
 
@@ -15,6 +17,17 @@ export class ServiceService {
     getCategorias() {
       return this.http.get<Categoria[]>(this.Url);
     }
+
+
+    UrlEstados = 'https://localhost:44358/Estado/Listado';
+
+    getEstados() {
+      return this.http.get<Estado[]>(this.UrlEstados);
+    }
+
+    //#region
+    si = 1
+    //#endregion
 
 
 }

@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListComponent } from './Categorias/list/list.component';
 import {HttpClientModule} from '@angular/common/http';
+import { ListEstadosComponent } from './Estados/list-estados/list-estados.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent
+    ListComponent,
+    ListEstadosComponent
   ],
   imports: [
     BrowserModule,

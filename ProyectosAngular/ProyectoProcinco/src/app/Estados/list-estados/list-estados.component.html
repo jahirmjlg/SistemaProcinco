@@ -1,0 +1,27 @@
+
+
+<div class="card">
+  <h2>Listado Estados</h2>
+  <div class="card-body">
+    <table>
+      <thead>
+          <tr>
+            <th>ID</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+          </tr>
+      </thead>
+    <tbody>
+      <tr *ngFor="let esta of estado">
+        <td>{{esta.esta_Id}}</td>
+        <td>{{esta.esta_Descripcion}}</td>
+        <td>
+          <button class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
