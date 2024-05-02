@@ -9,6 +9,8 @@ import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
+import{CreateEstadosComponent} from '../create-estados/create-estados.component'
+
 @Component({
   selector: 'app-list-estados',
   templateUrl: './list-estados.component.html',
@@ -18,7 +20,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class ListEstadosComponent implements OnInit {
 
 
-    productDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
@@ -47,7 +48,7 @@ export class ListEstadosComponent implements OnInit {
 
 
     //ultimos dos
-    constructor(private productService: ProductService, private messageService: MessageService, private estadoservice: EstadoService, private router: Router) { }
+    constructor(private productService: ProductService, private messageService: MessageService, private estadoservice: EstadoService, private router: Router, private createestadoscomponent:CreateEstadosComponent) { }
 
     ngOnInit() {
 
@@ -86,19 +87,19 @@ export class ListEstadosComponent implements OnInit {
     }
 
     openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productDialog = true;
+        this.createestadoscomponent.product = {};
+        this.createestadoscomponent.submitted = false;
+        this.createestadoscomponent.productDialog = true;
     }
 
     deleteSelectedProducts() {
         this.deleteProductsDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
-    }
+    // editProduct(product: Product) {
+    //     this.product = { ...product };
+    //     this.productDialog = true;
+    // }
 
     deleteProduct(product: Product) {
         this.deleteProductDialog = true;
@@ -120,8 +121,8 @@ export class ListEstadosComponent implements OnInit {
     }
 
     hideDialog() {
-        this.productDialog = false;
-        this.submitted = false;
+        this.createestadoscomponent.submitted = false;
+        this.createestadoscomponent.productDialog = false;
     }
 
     saveProduct() {
@@ -144,7 +145,7 @@ export class ListEstadosComponent implements OnInit {
             }
 
             this.products = [...this.products];
-            this.productDialog = false;
+            this.createestadoscomponent.productDialog = false;
             this.product = {};
         }
     }
