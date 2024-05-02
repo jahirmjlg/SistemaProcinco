@@ -7,6 +7,7 @@ import { Product } from 'src/app/demo/api/product';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA}  from '@angular/core';
 
 @Component({
   selector: 'app-create-estados',

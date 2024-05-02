@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateEstadosComponent } from './create-estados.component';
@@ -20,6 +20,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA}  from '@angular/core';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -40,6 +42,15 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule
     ],
-    declarations: [CreateEstadosComponent]
+    declarations: [CreateEstadosComponent],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
 })
-export class ListEstadosModule { }
+export class ListEstadosModule {
+
+
+    productDialog: boolean = false;
+
+    display: boolean = false;
+
+
+}

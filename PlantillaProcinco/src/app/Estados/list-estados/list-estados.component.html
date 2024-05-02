@@ -8,9 +8,10 @@
 </div>
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
+        <!-- <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;" (click)="openNew()">
             Nuevo
-        </a>
+        </a> -->
+        <button (click)="display=true" class="btn btn-primary" style="max-height: 40px; max-width:150px;" pButton icon="pi pi-plus" label="Agregar"></button>
     </div>
 
     <div class="card px-6 py-6">
@@ -47,6 +48,21 @@
     </div>
 
 </div>
+
+
+
+
+<div class="card">
+    <div class="card-body">
+        <p-dialog header="Agregar Estado" [(visible)]="display" [modal]="true" showEffect="fade" [style]="{width: '30vw'}" [breakpoints]="{'960px': '75vw'}">
+
+        </p-dialog>
+
+    </div>
+</div>
+
+
+
 
 
 <!--
