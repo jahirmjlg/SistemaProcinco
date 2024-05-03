@@ -87,7 +87,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoEliminar")]
+        [HttpDelete("CiudadEliminar")]
         public IActionResult Delete(string Ciud_Id)
         {
             var list = _generalService.EliminarCiudades(Ciud_Id);

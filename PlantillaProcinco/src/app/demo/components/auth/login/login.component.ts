@@ -108,7 +108,7 @@ export class LoginComponent {
           console.log('Formulario inválido');
         }
 
-             }
+    }
 
       }
 }

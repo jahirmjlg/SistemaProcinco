@@ -1,4 +1,5 @@
 
+<div class="collapsar" [style.display]="(Collapse)?'none':null">
 
 <form [formGroup]="crearCiudadForm" (ngSubmit)="onSubmit()">
     <div class="card">
@@ -14,8 +15,8 @@
                     <!-- <input pInputText id="firstname2" formControlName="Muni_Codigo" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.controls['Muni_Codigo'].invalid}" />
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Codigo'].invalid" style="color: red !important;">Codigo Requerido</small> -->
 
-                    <input asp-for="Muni_Id" class="form-control numerosm" />
-                    <span asp-validation-for="Muni_Id" class="text-danger"></span>
+                    <input pInputText id="firstname2" formControlName="ciud_Id" type="text" required autofocus />
+                    <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Codigo Requerido</small>
                 </div>
                 <div class="col">
                      <label for="lastname2">Municipio</label>
@@ -24,8 +25,8 @@
                     <!-- <input pInputText id="lastname2" formControlName="Muni_Municipio" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.get('Muni_Municipio').value === ''}" />
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Municipio'].invalid" style="color: red !important;">Municipio Requerido</small> -->
 
-                    <input asp-for="Muni_Descripcion" class="form-control letras" />
-                    <span asp-validation-for="Muni_Descripcion" class="text-danger"></span>
+                    <input pInputText id="firstname2" formControlName="ciud_Descripcion" type="text" required autofocus />
+                    <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Descripcion Requerida</small>
                 </div>
             </div>
 
@@ -40,8 +41,13 @@
                   <small *ngIf="submitted && municipioForm.get('Depa_Codigo').value === '0'" style="color: red;">Departamento Requerido</small> -->
 
 
-                <select asp-for="Esta_Id" class="form-control" asp-items="ViewBag.Estadoss"></select>
-                <span asp-validation-for="Esta_Id" class="text-danger"></span>
+                    <select formControlName="esta_Id" pInputText id="" required autofocus>
+                    <option *ngFor="let esta of estados" [value]="esta.value">{{ esta.text }}</option>
+                  </select>
+                  <!-- <small style="color: red;">Estado Requerido</small> -->
+
+                  <!-- <input pInputText id="firstname2" formControlName="esta_Id" type="text" required autofocus />
+                  <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Estado Requerido</small> -->
             </div>
         </div>
 
@@ -49,7 +55,7 @@
             <div class="row mt-3">
                 <div class="col-md-offset-2 col-3">
                     <!-- <input type="submit" value="Guardar" class="btn btn-primary" /> -->
-                    <button pButton icon="pi pi-check" type="submit" label="Agregar" class="btn btn-primary"></button>
+                    <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                 </div>
                 <div class="col-md-offset-2 col-3" id="">
                     <!-- <input type="button" value="Cancelar" class="btn btn-default" /> -->
@@ -60,7 +66,7 @@
     </div>
 </form>
 
-
+</div>
 
 
 <!-- Table -->
@@ -74,7 +80,7 @@
 </div>
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <button (click)="display=true" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+        <button (click)="Collapse=true" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
     </div>
 

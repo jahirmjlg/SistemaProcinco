@@ -7,3 +7,7 @@ export class Estado {
   }
 
 
+  export class dropEstados {
+    value?:String;
+    text?:String;
+  }
