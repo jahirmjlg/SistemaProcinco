@@ -81,7 +81,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("TituloPorEmpleadoEliminar/{titPe_Id")]
+        [HttpDelete("TituloPorEmpleadoEliminar")]
         public IActionResult Delete(int titPe_Id)
         {
             var list = _procincoService.EliminarTitulosPorEmpleados(titPe_Id);
@@ -96,7 +96,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("TituloPorEmpleadoBuscar/{titPe_Id}")]
+        [HttpGet("TituloPorEmpleadoBuscar")]
         public IActionResult Details(int titPe_Id)
         {
             var list = _procincoService.BuscarTitulosEmpleados(titPe_Id);

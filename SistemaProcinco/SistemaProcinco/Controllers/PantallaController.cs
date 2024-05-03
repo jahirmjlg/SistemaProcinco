@@ -22,7 +22,7 @@ namespace SistemaProcinco.API.Controllers
             _accesoService = accesoService;
         }
 
-        [HttpGet("PantallasListado/{Role_Id")]
+        [HttpGet("PantallasListado")]
         public IActionResult Index(int Role_Id)
         {
             var listado = _accesoService.ListaPantallas(Role_Id);
@@ -82,7 +82,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("PantallaEliminar/{Pant_Id}")]
+        [HttpDelete("PantallaEliminar")]
         public IActionResult Delete(int Pant_Id)
         {
             var list = _accesoService.EliminarPantallas(Pant_Id);

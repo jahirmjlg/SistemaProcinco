@@ -81,7 +81,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoCivilEliminar/{Estc_id}")]
+        [HttpDelete("EstadoCivilEliminar")]
         public IActionResult Delete(int Estc_id)
         {
             var list = _generalService.EliminarEstadosCiviles(Estc_id);
@@ -96,7 +96,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("EstadosCivilesBuscar/{Estc_Id}")]
+        [HttpGet("EstadosCivilesBuscar")]
         public IActionResult Details(int Estc_Id)
         {
             var list = _generalService.BuscarEstadosCiviles(Estc_Id);
