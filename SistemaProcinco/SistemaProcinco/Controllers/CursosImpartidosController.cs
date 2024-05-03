@@ -89,7 +89,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("CursosImpartidosEliminar")]
+        [HttpDelete("CursosImpartidosEliminar/{CurIm_Id}")]
         public IActionResult Delete(int CurIm_Id)
         {
             var list = _procincoService.EliminarCursosImpartidos(CurIm_Id);
@@ -104,7 +104,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CursoImpartidoBuscar")]
+        [HttpGet("CursoImpartidoBuscar/{CurIm_Id}")]
         public IActionResult Details(int CurIm_Id)
         {
             var list = _procincoService.BuscarCursosImpartidos(CurIm_Id);

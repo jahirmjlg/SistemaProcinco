@@ -81,7 +81,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("CategoriaEliminar")]
+        [HttpDelete("CategoriaEliminar/{Cate_Id}")]
         public IActionResult Delete(int Cate_Id)
         {
             var list = _procincoService.EliminarCategorias(Cate_Id);
@@ -96,7 +96,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CategoriaBuscar")]
+        [HttpGet("CategoriaBuscar/{Cate_Id}")]
         public IActionResult Details(int Cate_Id)
         {
             var list = _procincoService.BuscarCatergorias(Cate_Id);

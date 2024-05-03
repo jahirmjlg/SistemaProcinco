@@ -82,7 +82,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("RolEliminar")]
+        [HttpDelete("RolEliminar/{Role_id}")]
         public IActionResult Delete(int Role_id)
         {
             var list = _accesoService.EliminarRoles(Role_id);

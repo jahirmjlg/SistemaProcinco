@@ -101,7 +101,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EmpleadoEliminar")]
+        [HttpDelete("EmpleadoEliminar/{Empl_id}")]
         public IActionResult Delete(int Empl_id)
         {
             var list = _generalService.EliminarEmpleados(Empl_id);
@@ -116,7 +116,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("EmpleadoBuscar")]
+        [HttpGet("EmpleadoBuscar/{Empl_Id}")]
         public IActionResult Details(int Empl_Id)
         {
             var list = _generalService.BuscarEmpleados(Empl_Id);
