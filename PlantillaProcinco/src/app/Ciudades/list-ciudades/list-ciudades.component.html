@@ -1,4 +1,69 @@
 
+
+<form [formGroup]="crearCiudadForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+        <div class="card-body">
+            <h4>Agregar Ciudad</h4>
+            <hr />
+
+            <div class="row">
+                <div class="col">
+
+                    <label for="firstname2">Codigo</label>
+
+                    <!-- <input pInputText id="firstname2" formControlName="Muni_Codigo" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.controls['Muni_Codigo'].invalid}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Codigo'].invalid" style="color: red !important;">Codigo Requerido</small> -->
+
+                    <input asp-for="Muni_Id" class="form-control numerosm" />
+                    <span asp-validation-for="Muni_Id" class="text-danger"></span>
+                </div>
+                <div class="col">
+                     <label for="lastname2">Municipio</label>
+
+
+                    <!-- <input pInputText id="lastname2" formControlName="Muni_Municipio" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.get('Muni_Municipio').value === ''}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Municipio'].invalid" style="color: red !important;">Municipio Requerido</small> -->
+
+                    <input asp-for="Muni_Descripcion" class="form-control letras" />
+                    <span asp-validation-for="Muni_Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+
+        <div class="col">
+            <div class="col">
+
+                <label for="state">Departamento</label>
+
+                <!-- <select formControlName="Depa_Codigo" pInputText id="municipio" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.get('Depa_Codigo').value === '0'}" >
+                    <option *ngFor="let departamento of departamentos" [value]="departamento.value">{{ departamento.text }}</option>
+                  </select>
+                  <small *ngIf="submitted && municipioForm.get('Depa_Codigo').value === '0'" style="color: red;">Departamento Requerido</small> -->
+
+
+                <select asp-for="Esta_Id" class="form-control" asp-items="ViewBag.Estadoss"></select>
+                <span asp-validation-for="Esta_Id" class="text-danger"></span>
+            </div>
+        </div>
+
+
+            <div class="row mt-3">
+                <div class="col-md-offset-2 col-3">
+                    <!-- <input type="submit" value="Guardar" class="btn btn-primary" /> -->
+                    <button pButton icon="pi pi-check" type="submit" label="Agregar" class="btn btn-primary"></button>
+                </div>
+                <div class="col-md-offset-2 col-3" id="">
+                    <!-- <input type="button" value="Cancelar" class="btn btn-default" /> -->
+                    <button pButton icon="pi pi-times" type="button" (click)="display=false" label="Cancelar" class="btn btn-danger"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+<!-- Table -->
 <div class="card-body">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
@@ -9,14 +74,13 @@
 </div>
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
-            Nuevo
-        </a>
+        <button (click)="display=true" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+
     </div>
 
     <div class="card px-6 py-6">
 
-        <p-table #dt [value]="ciudad" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <p-table #dt [value]="ciudad" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">
                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -29,15 +93,15 @@
                 <tr>
                     <th>ID</th>
                     <th>Ciudad</th>
-                    <!-- <th>Estado</th> -->
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-ciud>
                 <tr>
                     <td>{{ciud.ciud_Id}}</td>
-                    <!-- <td>{{ciud.esta_Descripcion}}</td> -->
                     <td>{{ciud.ciud_Descripcion}}</td>
+                    <td>{{ciud.estado}}</td>
 
                     <td>
                       <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
@@ -51,3 +115,6 @@
     </div>
 
 </div>
+
+
+
