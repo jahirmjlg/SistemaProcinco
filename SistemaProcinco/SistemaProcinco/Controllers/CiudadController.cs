@@ -87,7 +87,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoEliminar")]
+        [HttpDelete("EstadoEliminar/{Ciud_Id}")]
         public IActionResult Delete(string Ciud_Id)
         {
             var list = _generalService.EliminarCiudades(Ciud_Id);
@@ -102,7 +102,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CiudadBuscar")]
+        [HttpGet("CiudadBuscar/{Ciud_Id}")]
         public IActionResult Details(string Ciud_Id)
         {
             var list = _generalService.BuscarCiudades(Ciud_Id);

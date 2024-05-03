@@ -80,7 +80,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("ContenidoEliminar")]
+        [HttpDelete("ContenidoEliminar/{Cont_Id}")]
         public IActionResult Delete(int Cont_Id)
         {
             var list = _procincoService.EliminarContenido(Cont_Id);
@@ -95,7 +95,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("ContenidoBuscar")]
+        [HttpGet("ContenidoBuscar/{Cont_Id}")]
         public IActionResult Details(int Cont_Id)
         {
             var list = _procincoService.BuscarContenido(Cont_Id);

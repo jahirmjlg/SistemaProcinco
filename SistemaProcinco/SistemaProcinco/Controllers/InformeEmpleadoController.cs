@@ -85,7 +85,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("InfomeEmpleadoEliminar")]
+        [HttpDelete("InfomeEmpleadoEliminar/{InfoE_Id}")]
         public IActionResult Delete(int InfoE_Id)
         {
             var list = _procincoService.EliminarInformeEmpleados(InfoE_Id);
@@ -101,7 +101,7 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("InformeEmpleadoBuscar")]
+        [HttpGet("InformeEmpleadoBuscar/{InfoE_Id}")]
         public IActionResult Details(int InfoE_Id)
         {
             var list = _procincoService.BuscarInformeEmpleados(InfoE_Id);
