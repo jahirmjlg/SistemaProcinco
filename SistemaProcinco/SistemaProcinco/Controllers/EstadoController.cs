@@ -86,7 +86,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoEliminar/{Est_Id}")]
+        [HttpDelete("EstadoEliminar")]
         public IActionResult Delete(string Est_Id)
         {
             var list = _generalService.EliminarEstados(Est_Id);
@@ -101,7 +101,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("EstadoBuscar/{Est_Id}")]
+        [HttpGet("EstadoBuscar")]
         public IActionResult Details(string Esta_Id)
         {
             var list = _generalService.BuscarEstados(Esta_Id);
