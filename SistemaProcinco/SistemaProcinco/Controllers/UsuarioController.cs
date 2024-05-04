@@ -171,7 +171,7 @@ namespace SistemaProcinco.API.Controllers
             
             if (lista.Success == true)
             {
-                return Ok(lista.Code);
+                return Ok(lista);
             }
             else
             {

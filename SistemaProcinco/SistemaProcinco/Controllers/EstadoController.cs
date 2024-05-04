@@ -104,10 +104,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoEliminar")]
-        public IActionResult Delete(string Est_Id)
+        [HttpDelete("EstadoEliminar/{id}")]
+        public IActionResult Delete(string id)
         {
-            var list = _generalService.EliminarEstados(Est_Id);
+            var list = _generalService.EliminarEstados(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -119,13 +119,13 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("EstadoBuscar")]
-        public IActionResult Details(string Esta_Id)
+        [HttpGet("EstadoBuscar/{id}")]
+        public IActionResult Details(string id)
         {
-            var list = _generalService.BuscarEstados(Esta_Id);
+            var list = _generalService.BuscarEstados(id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
             }
             else
             {

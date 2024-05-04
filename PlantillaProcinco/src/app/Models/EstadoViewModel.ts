@@ -3,7 +3,10 @@ export class Estado {
     esta_Descripcion!:String;
     esta_UsuarioCreacion!:number;
     esta_UsuarioModificacion!:number;
-
+    esta_FechaCreacion!:String;
+    esta_FechaModificacion!:String;
+    usuarioCreacion!:String;
+    usuarioModificacion!:String;
   }
 
 
