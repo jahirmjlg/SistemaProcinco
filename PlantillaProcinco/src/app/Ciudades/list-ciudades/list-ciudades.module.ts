@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [

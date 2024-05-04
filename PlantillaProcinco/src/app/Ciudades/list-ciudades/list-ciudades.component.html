@@ -1,86 +1,146 @@
 
-<div class="collapsar" [style.display]="(Collapse)?'none':null">
 
-<form [formGroup]="crearCiudadForm" (ngSubmit)="onSubmit()">
-    <div class="card">
-        <div class="card-body">
-            <h4>Agregar Ciudad</h4>
-            <hr />
+    <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+<div class="" [ngClass]="{'collapse': Collapse === false}">
 
-            <div class="row">
-                <div class="col">
+    <form [formGroup]="crearCiudadForm" (ngSubmit)="onSubmitInsert()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Agregar Ciudad</h4>
+                <hr />
 
-                    <label for="firstname2">Codigo</label>
+                <div class="row">
+                    <div class="col-4">
 
-                    <!-- <input pInputText id="firstname2" formControlName="Muni_Codigo" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.controls['Muni_Codigo'].invalid}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Codigo'].invalid" style="color: red !important;">Codigo Requerido</small> -->
+                        <div class="col-sm-2">
+                        <label for="firstname2" class="form-label">Codigo</label>
+                        </div>
 
-                    <input pInputText id="firstname2" formControlName="ciud_Id" type="text" required autofocus />
-                    <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Codigo Requerido</small>
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4 mt-2">
+
+                        <div class="col-sm-2">
+                            <label for="firstname2">Municipio</label>
+                            </div>
+
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Descripcion" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.controls['ciud_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                    </div>
                 </div>
-                <div class="col">
-                     <label for="lastname2">Municipio</label>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-6">
 
+                        <div class="col-sm-2">
+                        <label for="firstname2">Estado</label>
+                        </div>
 
-                    <!-- <input pInputText id="lastname2" formControlName="Muni_Municipio" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.get('Muni_Municipio').value === ''}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && municipioForm.controls['Muni_Municipio'].invalid" style="color: red !important;">Municipio Requerido</small> -->
+                        <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus>
+                        <option *ngFor="let esta of estados" [value]="esta.value">{{ esta.text }}</option>
+                    </select>
+                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
 
-                    <input pInputText id="firstname2" formControlName="ciud_Descripcion" type="text" required autofocus />
-                    <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Descripcion Requerida</small>
-                </div>
             </div>
-
-        <div class="col">
-            <div class="col">
-
-                <label for="state">Departamento</label>
-
-                <!-- <select formControlName="Depa_Codigo" pInputText id="municipio" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && municipioForm.get('Depa_Codigo').value === '0'}" >
-                    <option *ngFor="let departamento of departamentos" [value]="departamento.value">{{ departamento.text }}</option>
-                  </select>
-                  <small *ngIf="submitted && municipioForm.get('Depa_Codigo').value === '0'" style="color: red;">Departamento Requerido</small> -->
-
-
-                    <select formControlName="esta_Id" pInputText id="" required autofocus>
-                    <option *ngFor="let esta of estados" [value]="esta.value">{{ esta.text }}</option>
-                  </select>
-                  <!-- <small style="color: red;">Estado Requerido</small> -->
-
-                  <!-- <input pInputText id="firstname2" formControlName="esta_Id" type="text" required autofocus />
-                  <small class="ng-dirty ng-invalid collapse" style="color: red !important;">Estado Requerido</small> -->
-            </div>
-        </div>
-
-
-            <div class="row mt-3">
-                <div class="col-md-offset-2 col-3">
-                    <!-- <input type="submit" value="Guardar" class="btn btn-primary" /> -->
-                    <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                 </div>
-                <div class="col-md-offset-2 col-3" id="">
-                    <!-- <input type="button" value="Cancelar" class="btn btn-default" /> -->
-                    <button pButton icon="pi pi-times" type="button" (click)="display=false" label="Cancelar" class="btn btn-danger"></button>
+
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
 </div>
 
 
-<!-- Table -->
-<div class="card-body">
+
+    <!-- DESPLEGAR FORMULARIO DE EDITAR -->
+<div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+    <form [formGroup]="editarCiudadForm" (ngSubmit)="onSubmitEdit()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar Ciudad</h4>
+                <hr />
+
+                <div class="row">
+                    <div class="col-4">
+
+                        <div class="col-sm-2">
+                        <label for="firstname2" class="form-label">Codigo</label>
+                        </div>
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4 mt-2">
+
+                        <div class="col-sm-2">
+                            <label for="firstname2">Municipio</label>
+                            </div>
+
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Descripcion" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCiudadForm.controls['ciud_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-6">
+
+                        <div class="col-sm-2">
+                        <label for="firstname2">Estado</label>
+                        </div>
+
+
+                        <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus>
+                        <option *ngFor="let esta of estados" [value]="esta.value">{{ esta.text }}</option>
+                    </select>
+                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCiudadForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
+
+            </div>
+                </div>
+
+
+
+
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+<!-- DESPLEGAR TABLA DE LISTADO -->
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Ciudades</h2>
 
         </header>
     </div>
-</div>
+
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <button (click)="Collapse=true" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
     </div>
 
@@ -110,10 +170,9 @@
                     <td>{{ciud.estado}}</td>
 
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
-
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(ciud.ciud_Id)">Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(ciud.ciud_Id)">Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCiudad(ciud.ciud_Id)">Eliminar</button>
                     </td>
                   </tr>
             </ng-template>
@@ -121,6 +180,94 @@
     </div>
 
 </div>
+</div>
 
 
+
+
+<!-- DESPLEGAR DETALLE -->
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles Ciudad</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>Municipio</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Codigo</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Estado</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ Ciudad }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ codigo }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ estado }}</label></div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ UsuarioCreacion }}</td>
+                                    <td>{{ FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ UsuarioModificacion }}</td>
+                                    <td>{{ FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DESPLEGAR MODAL DELETE -->
+<p-dialog [(visible)]="deleteCiudadBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar el registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteCiudadBool = false"></button>
+            </div>
+        </div>
+</p-dialog>
 

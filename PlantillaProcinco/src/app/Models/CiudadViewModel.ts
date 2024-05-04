@@ -6,6 +6,6 @@ export class Ciudad {
     esta_Id!:String;
     ciud_UsuarioCreacion!:number;
     ciud_FechaCreacion!:String;
-    ciud_UsuarioModificacion!:number;
-    ciud_FechaModificacion!:String;
+    usuarioCreacion!:number;
+    usuarioModificacion!:String;
   }

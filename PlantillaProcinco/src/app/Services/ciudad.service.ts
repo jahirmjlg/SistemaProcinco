@@ -24,16 +24,32 @@ export class CiudadService {
     return this.http.get<Ciudad[]>(`${this.UrlCiudades}CiudadListado`);
     }
 
-
-
     //INSERTAR
 
     insertCiudades(ciudadInsert: Ciudad): Observable<any> {
     return this.http.post<any>(`${this.UrlCiudades}CiudadCrear`,ciudadInsert);
     }
 
+    //EDITAR
+    editCiudades(ciudadEdit: Ciudad): Observable<any> {
+        return this.http.put<any>(`${this.UrlCiudades}CiudadEditar`,ciudadEdit);
+        }
+
+    //LLENAR && DETALLE
+    fillCiudad(id: String): Observable<any> {
+        return this.http.get<any>(`${this.UrlCiudades}CiudadBuscar/${id}`);
+        }
+
+    //ELIMINAR
+    deleteCiudad(ID): Observable<any>{
+        return this.http.delete<any>(`${this.UrlCiudades}CiudadEliminar/${ID}`)
+        }
+
+
+    //DDL
     getDdlEstados(): Observable<any> {
         return this.http.get<Estado[]>(this.UrlEstados);
     }
 
 }
+

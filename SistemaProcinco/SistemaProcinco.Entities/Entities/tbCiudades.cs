@@ -18,15 +18,15 @@ namespace SistemaProcinco.Entities.Entities
         public string Ciud_Descripcion { get; set; }
         public string Esta_Id { get; set; }
         [NotMapped]
-        public string Estado { get; set; }
+        public string Esta_Descripcion { get; set; }
         public int Ciud_UsuarioCreacion { get; set; }
         public DateTime Ciud_FechaCreacion { get; set; }
         public int? Ciud_UsuarioModificacion { get; set; }
         public DateTime? Ciud_FechaModificacion { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
         public virtual tbUsuarios Ciud_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Ciud_UsuarioModificacionNavigation { get; set; }
         public virtual tbEstados Esta { get; set; }
