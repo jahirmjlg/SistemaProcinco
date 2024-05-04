@@ -17,8 +17,8 @@ namespace SistemaProcinco.Common.Models
         public int? Carg_UsuarioModificacion { get; set; }
         public DateTime? Carg_FechaModificacion { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
     }
 }

@@ -23,9 +23,9 @@ namespace SistemaProcinco.Entities.Entities
         public DateTime? Titl_FechaModificacion { get; set; }
         public bool? Titl_Estado { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
         public virtual tbUsuarios Titl_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Titl_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }

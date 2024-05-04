@@ -22,9 +22,9 @@ namespace SistemaProcinco.Entities.Entities
         public DateTime? Carg_FechaModificacion { get; set; }
         public bool? Carg_Estado { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
         public virtual tbUsuarios Carg_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Carg_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
