@@ -18,6 +18,6 @@ export class Empleado {
     empl_UsuarioModificacion !: Number;
     empl_FechaModificacion !: String;
     empl_SalarioHora !: Number;
-    creacion !: String;
-    modificacion !: String;
+    usuarioCreacion!: String;
+    usuarioModificacion!: String;
 }
