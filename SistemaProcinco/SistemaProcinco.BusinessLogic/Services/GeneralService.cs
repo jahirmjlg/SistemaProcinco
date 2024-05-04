@@ -42,6 +42,28 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult GetCiudadesPorEstados(string Esta_Id)
+        {
+            var resul = new ServicesResult();
+            try
+            {
+                var list = _ciudadesRepository.GetMunicipiosPorEstado(Esta_Id);
+                if (list.Count() > 0)
+                {
+                    return resul.Ok(list);
+                }
+                else
+                {
+                    return resul.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return resul.Error(ex.Message);
+            }
+        }
+
         public ServicesResult BuscarCiudades(string Id)
         {
             var result = new ServicesResult();

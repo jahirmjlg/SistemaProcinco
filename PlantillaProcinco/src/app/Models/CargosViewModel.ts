@@ -8,3 +8,8 @@ export class Cargo {
     creacion !: String;
     modificacion !: String;
 }
+
+export class dropCargos {
+    value?:String;
+    text?:String;
+  }
