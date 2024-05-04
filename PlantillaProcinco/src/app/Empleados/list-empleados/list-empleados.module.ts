@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListEmpleadosComponent } from './list-empleados.component';
 import { ListEmpleadosRoutingModule } from './list-empleados-routing.module';
 
@@ -27,6 +27,7 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         FormsModule,
         ListEmpleadosRoutingModule,
         ButtonModule,
+        ReactiveFormsModule,
         RippleModule,
         ToastModule,
         ToolbarModule,

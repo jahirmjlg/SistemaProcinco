@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -34,6 +35,23 @@ namespace SistemaProcinco.API.Controllers
             {
                 return Problem();
             }
+        }
+
+        [HttpGet("ddl/{id}")]
+        public IActionResult Lista(string id)
+        {
+            var listado = _generalService.GetCiudadesPorEstados(id);
+            var drop = listado.Data as List<tbCiudades>;
+            var ciud = drop.Select(x => new SelectListItem
+            {
+                Text = x.Ciud_Descripcion,
+                Value = x.Ciud_Id
+
+            }).ToList();
+
+            ciud.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+
+            return Ok(ciud.ToList());
         }
 
 

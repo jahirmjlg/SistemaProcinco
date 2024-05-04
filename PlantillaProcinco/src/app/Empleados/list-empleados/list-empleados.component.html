@@ -1,22 +1,262 @@
 
-<div class="card-body">
+    <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
+
+        <form [formGroup]="crearEmpleadoForm" (ngSubmit)="onSubmitInsert()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Agregar Empleado</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Nombre</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Nombre'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Apellido</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Apellido" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Apellido'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Apellido'].invalid" style="color: red !important;">Apellido Requerido</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">DNI</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_DNI'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido</small>
+                        </div>
+                            <div class="col-6 mt-2">
+
+                                <div class="col-sm-2">
+                                <label for="firstname2">Cargo</label>
+                                </div>
+
+                                <select formControlName="carg_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['carg_Id'].invalid}">
+                                <option *ngFor="let carg of cargosddl" [value]="carg.value">{{ carg.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.get('carg_Id').value === '0'" style="color: red !important;">Cargo Requerido</small>
+                            </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Correo</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Correo'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Correo'].invalid" style="color: red !important;">Correo Requerido</small>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="">
+                            <label for="firstname2" class="form-label">Fecha de Nacimiento</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_FechaNacimiento" type="datetime-local" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_FechaNacimiento'].invalid" style="color: red !important;">Fecha de Nacimiento Requerida</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                            <label for="firstname2" class="form-label">Sexo</label>
+                            <div class="col-md-3">
+                                <label>
+                                    <input type="radio" class="form-check-input" name="sexo" value="M" checked formControlName="empl_Sexo"> Masculino
+                                  </label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" class="form-check-input" name="sexo" value="F" formControlName="empl_Sexo"> Femenino
+                                      </label>
+                                    </div>
+
+                                    <div class="col-6" style="margin-top: -30px;">
+
+
+                                        <label for="firstname2">Estado Civil</label>
+
+
+                                        <select formControlName="estc_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['estc_Id'].invalid}">
+                                        <option *ngFor="let estc of estadosCivilesddl" [value]="estc.value">{{ estc.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.get('estc_Id').value === '0'" style="color: red !important;">Estado Civil Requerido</small>
+                                    </div>
+
+                        </div>
+
+
+
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-6">
+
+
+                                <label for="firstname2">Estado</label>
+
+
+                                <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['esta_Id'].invalid}"
+                                (change)="onEstadoChange(crearEmpleadoForm.get('esta_Id').value)">
+                                <option *ngFor="let esta of estadosddl" [value]="esta.value">{{ esta.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
+                            </div>
+
+                                    <div class="col-6">
+
+
+                                        <label for="firstname2">Ciudad Requerida</label>
+
+
+                                        <select formControlName="ciud_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['ciud_Id'].invalid}">
+                                        <option *ngFor="let ciud of ciudadesddl" [value]="ciud.value">{{ ciud.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.get('ciud_Id').value === '0'" style="color: red !important;">Ciudad Requerida</small>
+                                    </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label">Dirección Exacta</label>
+
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid}" />
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+        <!-- DESPLEGAR FORMULARIO DE EDITAR -->
+    <!-- <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+        <form [formGroup]="editarEmpleadoForm" (ngSubmit)="onSubmitEdit()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Editar Ciudad</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Codigo</label>
+                            </div>
+                            <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-4 mt-2">
+
+                            <div class="col-sm-2">
+                                <label for="firstname2">Municipio</label>
+                                </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="ciud_Descripcion" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['ciud_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-6">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2">Estado</label>
+                            </div>
+
+
+                            <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus>
+                            <option *ngFor="let esta of estados" [value]="esta.value">{{ esta.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
+
+                </div>
+                    </div>
+
+
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div> -->
+
+
+
+
+
+<!-- DESPLEGAR TABLA DE LISTADO -->
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Empleados</h2>
 
         </header>
     </div>
-</div>
+
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
-            Nuevo
-        </a>
+        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+
     </div>
 
     <div class="card px-6 py-6">
 
-        <p-table #dt [value]="empleado" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <p-table #dt [value]="empleado" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">
                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -28,35 +268,23 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>ID</th>
-                    <th>DNI</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
                     <th>Sexo</th>
-                    <th>Estado Civil</th>
-                    <th>Direccion</th>
-                    <th>Ciudades</th>
-                    <th>Salario Por Hora</th>
+                    <th>Ciudad</th>
                     <th>Acciones</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-emp>
                 <tr>
                     <td>{{emp.empl_Id}}</td>
-                    <td>{{emp.empl_DNI}}</td>
-                    <td>{{emp.empl_Nombre}}</td>
-                    <td>{{emp.empl_Apellido}}</td>
-                    <td>{{emp.empl_Correo}}</td>
+                    <td>{{emp.empl_Nombre}} {{emp.empl_Apellido}}</td>
                     <td>{{emp.sexo}}</td>
-                    <td>{{emp.estadoCivil}}</td>
-                    <td>{{emp.empl_Direccion}}</td>
                     <td>{{emp.ciudades}}</td>
-                    <td>{{emp.empl_SalarioHora}}</td>
 
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(emp.empl_Id)">Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(emp.empl_Id)">Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCiudad(emp.empl_Id)">Eliminar</button>
 
                     </td>
                   </tr>
@@ -65,3 +293,92 @@
     </div>
 
 </div>
+</div>
+
+
+
+<!-- DESPLEGAR DETALLE -->
+<!-- <div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles Ciudad</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>Municipio</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Codigo</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Estado</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ Ciudad }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ codigo }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ estado }}</label></div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ UsuarioCreacion }}</td>
+                                    <td>{{ FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ UsuarioModificacion }}</td>
+                                    <td>{{ FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<!-- DESPLEGAR MODAL DELETE -->
+<!-- <p-dialog [(visible)]="deleteCiudadBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar el registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteCiudadBool = false"></button>
+            </div>
+        </div>
+</p-dialog> -->
