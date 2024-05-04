@@ -204,7 +204,7 @@ namespace SistemaProcinco.BusinessLogic.Services
             try
             {
                 var lost = _usuariosRepository.RestablecerContra(item);
-                if (lost.CodeStatus == 200)
+                if (lost.CodeStatus > 0)
                 {
                     return result.Ok(lost);
                 }

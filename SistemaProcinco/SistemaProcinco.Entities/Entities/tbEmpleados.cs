@@ -39,9 +39,9 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Ciudades { get; set;}
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
 
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }

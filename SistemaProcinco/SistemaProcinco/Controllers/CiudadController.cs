@@ -87,10 +87,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EstadoEliminar")]
-        public IActionResult Delete(string Ciud_Id)
+        [HttpDelete("CiudadEliminar/{id}")]
+        public IActionResult Delete(string id)
         {
-            var list = _generalService.EliminarCiudades(Ciud_Id);
+            var list = _generalService.EliminarCiudades(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -102,13 +102,15 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CiudadBuscar")]
-        public IActionResult Details(string Ciud_Id)
+     
+
+        [HttpGet("CiudadBuscar/{id}")]
+        public IActionResult Details(string id)
         {
-            var list = _generalService.BuscarCiudades(Ciud_Id);
+            var list = _generalService.BuscarCiudades(id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
             }
             else
             {

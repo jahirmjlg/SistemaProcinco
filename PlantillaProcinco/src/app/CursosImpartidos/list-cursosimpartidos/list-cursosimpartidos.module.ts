@@ -1,10 +1,8 @@
-
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CreateEstadosComponent } from './create-estados.component';
-
-//Cambiar routing
-import { CreateEstadosRoutingModule } from './create-estados-routing.module';
+import { ListCursosimpartidosComponent } from './list-cursosimpartidos.component';
+import { ListCursosImpartidosRoutingModule } from './list-cursosimpartidos-routing.module';
 
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -19,8 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA}  from '@angular/core';
+import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
 
 @NgModule({
     imports: [
@@ -28,8 +25,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA}  from '@angular/cor
         TableModule,
         FileUploadModule,
         FormsModule,
-        DialogModule,
-        CreateEstadosRoutingModule,
+        ListCursosImpartidosRoutingModule,
         ButtonModule,
         RippleModule,
         ToastModule,
@@ -42,15 +38,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA}  from '@angular/cor
         InputNumberModule,
         DialogModule
     ],
-    declarations: [CreateEstadosComponent],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
+    declarations: [ListCursosimpartidosComponent]
 })
-export class ListEstadosModule {
-
-
-    productDialog: boolean = false;
-
-    display: boolean = false;
-
-
-}
+export class ListCursosImpartidosModule { }

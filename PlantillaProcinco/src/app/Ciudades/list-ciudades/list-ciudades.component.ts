@@ -4,54 +4,109 @@ import {CiudadService} from '../../Services/ciudad.service';
 import { Ciudad } from 'src/app/Models/CiudadViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { dropEstados } from 'src/app/Models/EstadoViewModel';
+
 
 @Component({
   selector: 'app-list-estados',
   //
   templateUrl: './list-ciudades.component.html',
-  providers: [MessageService]
+  styleUrls: ['./list-ciudades.scss'],
+  providers: [ConfirmationService, MessageService]
 
 })
 export class ListCiudadesComponent implements OnInit {
 
 
-    productDialog: boolean = false;
 
-    deleteProductDialog: boolean = false;
+    Tabla: boolean = true;
 
-    deleteProductsDialog: boolean = false;
+    //BOOLEANS INSERTAR
+    Collapse: boolean = false;
+    isSubmit: boolean = false;
 
-    products: Product[] = [];
+        //BOOLEANS EDITAR
+        CollapseEdit: boolean = false;
+        isSubmitEdit: boolean = false;
 
-    product: Product = {};
+        //BOOLEAN DETALLE
+        CollapseDetalle: boolean = false;
 
-    selectedProducts: Product[] = [];
+                //BOOLEAN DELETE
+                deleteCiudadBool: boolean = false;
 
-    submitted: boolean = false;
 
+        //VARIABLE EN LA QUE ITERA EL DDL
+    estados: any[] = [];
+
+
+    // DETALLE
+    Ciudad: String = "";
+    codigo: String = "";
+    estado: String = "";
+    UsuarioCreacion: String = "";
+    UsuarioModificacion: String = "";
+    FechaCreacion: String = "";
+    FechaModificacion: String = "";
+    ID: String = "";
+
+
+
+    //IGNORAR (DESTACAR QUE ES LO UNICO NECESARIO(DEPURAR TODO LO DEMAS))
     cols: any[] = [];
-
     statuses: any[] = [];
-
     rowsPerPageOptions = [5, 10, 20];
-
     schemas = [
         CUSTOM_ELEMENTS_SCHEMA
       ];
 
+
     //   variable para iterar
     ciudad!:Ciudad[];
 
+    //CREAR EL FORMGROUP EN EL QUE SE CREAN LAS PROPIEDADES
+    crearCiudadForm: FormGroup
+    editarCiudadForm: FormGroup
 
-    //ultimos dos
-    constructor(private productService: ProductService, private messageService: MessageService, private ciudadservice: CiudadService, private router: Router) { }
+
+
+
+    constructor(private ciudadservice: CiudadService, private router: Router,
+                private formBuilder: FormBuilder, private cookieService: CookieService,
+                private messageService: MessageService) {
+
+
+     }
 
     ngOnInit() {
+
+        //INICIALIZAR EL FORMULARIO
+        this.crearCiudadForm = this.formBuilder.group({
+            ciud_Id: ['', [Validators.required]],
+            ciud_Descripcion: ['', [Validators.required]],
+            esta_Id: ['0', [Validators.required]],
+
+          });
+
+          this.editarCiudadForm = new FormGroup({
+            ciud_Id: new FormControl("",Validators.required),
+            ciud_Descripcion: new FormControl("",Validators.required),
+            esta_Id: new FormControl("0",Validators.required),
+        });
+
+
+        this.ciudadservice.getDdlEstados().subscribe((data: dropEstados[]) => {
+            this.estados = data;
+            console.log(data);
+        }, error => {
+            console.log(error);
+        });
 
 
         // Respuesta de la api
@@ -66,110 +121,182 @@ export class ListCiudadesComponent implements OnInit {
           //
 
 
-        this.productService.getProducts().then(data => this.products = data);
 
-        this.cols = [
-            { field: 'product', header: 'Product' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
-            { field: 'rating', header: 'Reviews' },
-            { field: 'inventoryStatus', header: 'Status' }
-        ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
-        ];
 
         this.schemas = [
             CUSTOM_ELEMENTS_SCHEMA
           ];
     }
 
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productDialog = true;
+
+
+
+    //INSERTAR
+    onSubmitInsert(): void {
+
+        this.isSubmit = true;
+
+            const errorSpan = document.getElementById('error-span');
+        if (this.crearCiudadForm.valid) {
+          const ciudadData: Ciudad = this.crearCiudadForm.value;
+          this.ciudadservice.insertCiudades(ciudadData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+
+                    // this.cookieService.set('namee', response.data.empl_Nombre);
+
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.ciudadservice.getCiudades().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.ciudad = Response.data;
+                    });
+
+                    this.Collapse = false;
+                    this.Tabla = true;
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                errorSpan.classList.remove('collapse');
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+
+
+    //EDITAR
+    onSubmitEdit(): void {
+
+        this.isSubmitEdit = true;
+
+        if (this.editarCiudadForm.valid) {
+          const ciudadData: Ciudad = this.editarCiudadForm.value;
+          this.ciudadservice.editCiudades(ciudadData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.ciudadservice.getCiudades().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.ciudad = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+
+
+    detalles(id){
+
+        this.ciudadservice.fillCiudad(id).subscribe({
+            next: (data: Ciudad) => {
+               this.Ciudad = data[0].ciud_Descripcion,
+               this.codigo = data[0].ciud_Id,
+               this.estado = data[0].esta_Descripcion,
+               this.UsuarioCreacion = data[0].usuarioCreacion,
+               this.UsuarioModificacion = data[0].usuarioModificacion,
+               this.FechaCreacion = data[0].ciud_FechaCreacion,
+               this.FechaModificacion = data[0].ciud_FechaModificacion
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
 
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
+
+
+    //DELETE
+    deleteCiudad(codigo) {
+        this.deleteCiudadBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
     }
 
     confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
-    }
+        this.ciudadservice.deleteCiudad(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.ciudadservice.getCiudades().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.ciudad = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
 
-    hideDialog() {
-        this.productDialog = false;
-        this.submitted = false;
-    }
+                    this.Tabla=true;
 
-    saveProduct() {
-        this.submitted = true;
+                    this.deleteCiudadBool = false;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+                   }
+                else{
+                    console.log(response)
+                this.deleteCiudadBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
             }
+        },
+    });
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
-        }
     }
 
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
+
+
+
+
+    //LLENAR EDITAR && DETALLE
+    Fill(id) {
+        this.ciudadservice.fillCiudad(id).subscribe({
+            next: (data: Ciudad) => {
+                this.editarCiudadForm = new FormGroup({
+                    ciud_Id: new FormControl(data[0].ciud_Id,Validators.required),
+                    ciud_Descripcion: new FormControl(data[0].ciud_Descripcion,Validators.required),
+                    esta_Id: new FormControl(data[0].esta_Id,Validators.required),
+                });
+
+                this.CollapseEdit = true;
+                this.Tabla=false;
+
+                console.log(data)
+
             }
-        }
+          });
 
-        return index;
     }
 
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
+
 
 }

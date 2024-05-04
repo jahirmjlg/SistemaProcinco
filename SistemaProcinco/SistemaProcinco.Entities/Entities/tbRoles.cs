@@ -23,9 +23,9 @@ namespace SistemaProcinco.Entities.Entities
         public DateTime? Role_FechaModificacion { get; set; }
         public bool? Role_Estado { get; set; }
         [NotMapped]
-        public string Creacion { get; set; }
+        public string UsuarioCreacion { get; set; }
         [NotMapped]
-        public string Modificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
         public virtual tbUsuarios Role_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Role_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }

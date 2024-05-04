@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListEstadosComponent } from './list-estados.component';
-
-//Cambiar routing
 import { ListEstadosRoutingModule } from './list-estados-routing.module';
 
 import { TableModule } from 'primeng/table';
@@ -20,14 +18,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 
+
+
 @NgModule({
     imports: [
         CommonModule,
         TableModule,
         FileUploadModule,
-        FormsModule,
-        //
+        FormsModule,        //
         ListEstadosRoutingModule,
+        ReactiveFormsModule,
         ButtonModule,
         RippleModule,
         ToastModule,
