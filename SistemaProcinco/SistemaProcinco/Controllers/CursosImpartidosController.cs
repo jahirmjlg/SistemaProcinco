@@ -78,7 +78,7 @@ namespace SistemaProcinco.API.Controllers
             </head>
             <body>
                 <div style='text-align: center;'>
-                    <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-WHITE-1.png' alt='Logo' style='width: 100px; height: auto;' />
+                    <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' style='width: 100px; height: auto;' />
                     <h1>Reporte de Cursos Impartidos</h1>
                 </div>
                 <table>
