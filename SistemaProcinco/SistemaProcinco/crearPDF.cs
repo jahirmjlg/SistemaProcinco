@@ -1,51 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PdfSharpCore.Pdf;
-using PdfSharpCore.Drawing;
-using SistemaProcinco.BusinessLogic.Services;
-using AutoMapper;
-using SistemaProcinco.Entities.Entities;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System.IO;
 
-namespace SistemaProcinco.API
+public class HeaderFooter : PdfPageEventHelper
 {
-    public class crearPDF
+    private Image _logo;
+
+    public HeaderFooter()
     {
+        string logoPath = "https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-WHITE-1.png"; // Asegúrate de proporcionar la ruta correcta
+        _logo = Image.GetInstance(logoPath);
+        _logo.ScalePercent(25); // Ajusta el tamaño del logo según sea necesario
+        _logo.SetAbsolutePosition(10, 760); // Posiciona el logo en el documento
+    }
 
-        public byte[] CursosImpartidosPdf(List<tbCursosImpartidos> cursosimpartidos)
-        {
-            var document = new PdfDocument();
-            var page = document.AddPage();
-            var gfx = XGraphics.FromPdfPage(page);
-            var font = new XFont("Verdana", 10);
-            var titleFont = new XFont("Verdana", 12, XFontStyle.Bold);
-            var yPos = 40;
+    // Método para agregar el encabezado
+    public override void OnStartPage(PdfWriter writer, Document document)
+    {
+        document.Add(_logo);
+    }
 
-            // Encabezado
-            gfx.DrawString("Listado de Cursos Impartidos", titleFont, XBrushes.Black, new XRect(0, yPos, page.Width, page.Height), XStringFormats.TopCenter);
+    // Método para agregar el pie de página
+    public override void OnEndPage(PdfWriter writer, Document document)
+    {
+        PdfPTable footerTbl = new PdfPTable(1);
+        footerTbl.TotalWidth = 300;
+        footerTbl.HorizontalAlignment = Element.ALIGN_CENTER;
 
-            // Dibujar tabla
-            yPos += 20;
-            gfx.DrawString("ID | Curso | Instructor | Fecha de Inicio | Fecha de Fin | Usuario Finalización | Finalizado", font, XBrushes.Black, new XRect(10, yPos, page.Width, page.Height), XStringFormats.TopLeft);
-            yPos += 20;
+        PdfPCell cell = new PdfPCell(new Phrase("Page " + document.PageNumber, FontFactory.GetFont("Arial", 12, Font.ITALIC)));
+        cell.Border = 0;
+        cell.PaddingLeft = 10;
 
-            foreach (var curso in cursosimpartidos)
-            {
-                var text = $"{curso.CurIm_Id} | {curso.Cursos} | {curso.Nombre} | {curso.CurIm_FechaInicio:dd/MM/yyyy} | {curso.CurIm_FechaFin:dd/MM/yyyy} | {curso.CurIm_UsuarioFinalizacion} | {(curso.CurIm_Finalizar.HasValue ? (curso.CurIm_Finalizar.Value ? "Sí" : "No") : "No especificado")}";
-                gfx.DrawString(text, font, XBrushes.Black, new XRect(10, yPos, page.Width, page.Height), XStringFormats.TopLeft);
-                yPos += 20;
-            }
-
-            using (var stream = new MemoryStream())
-            {
-                document.Save(stream);
-                return stream.ToArray();
-            }
-        }
-
-
-
+        footerTbl.AddCell(cell);
+        footerTbl.WriteSelectedRows(0, -1, 415, 30, writer.DirectContent);
     }
 }
