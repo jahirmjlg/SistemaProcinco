@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
+import { Router } from 'express';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -10,6 +12,15 @@ import { MessageService } from 'primeng/api';
 })
 export class ListadoCursosImpartidosPdfComponent {
 
+
+    constructor(
+        // private cursoservice: CursoService,
+        private router: Router,
+         private cookieService: CookieService,
+        private messageService: MessageService) {
+
+
+}
 
     showPdf: boolean = false;
 

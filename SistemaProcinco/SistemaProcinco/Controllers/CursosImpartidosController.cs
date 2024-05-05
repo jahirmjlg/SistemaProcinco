@@ -48,9 +48,9 @@ namespace SistemaProcinco.API.Controllers
         [Route("api/preview-pdf")]
         public IActionResult PreviewPDF()
         {
-            // Suponiendo que esta función genera un PDF y devuelve un stream
-            MemoryStream memoryStream = CreatePdfStream(); // Esta función es tu actual generador de PDF
-            memoryStream.Position = 0; // Restablece la posición del stream para asegurar que se lea desde el principio
+
+            MemoryStream memoryStream = CreatePdfStream();
+            memoryStream.Position = 0;
             return new FileStreamResult(memoryStream, "application/pdf");
         }
 
@@ -58,12 +58,12 @@ namespace SistemaProcinco.API.Controllers
 
         private MemoryStream CreatePdfStream()
         {
-            // Creamos el MemoryStream fuera de cualquier bloque using para que no se cierre automáticamente.
+
             MemoryStream memoryStream = new MemoryStream();
 
             Document document = new Document(PageSize.A4, 50, 50, 80, 60);
             PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
-            writer.CloseStream = false;  // Instruye a PdfWriter a no cerrar el MemoryStream cuando document se cierre.
+            writer.CloseStream = false; 
 
             document.Open();
 
@@ -93,28 +93,26 @@ namespace SistemaProcinco.API.Controllers
             }
 
             document.Add(table);
-            document.Close();  // Cierra el documento pero el MemoryStream sigue abierto.
+            document.Close(); 
 
-            memoryStream.Position = 0;  // Reinicia la posición del stream para lectura.
+            memoryStream.Position = 0; 
             return memoryStream;
         }
 
 
 
-
+        
 
         [HttpGet("Preview")]
         public ActionResult GenerateCoursesPdf()
         {
-            MemoryStream pdfStream = CreatePdfStream();
-            if (pdfStream == null || pdfStream.Length == 0)
-            {
-                return NotFound("El PDF no se generó correctamente.");
-            }
+            MemoryStream memoryStream = CreatePdfStream();
+            memoryStream.Position = 0;
 
-            // Asegurarse de que el Content-Disposition esté configurado para visualización inline
-            Response.Headers.Add("Content-Disposition", "inline; filename=ReporteCursos.pdf");
-            return new FileStreamResult(pdfStream, "application/pdf");
+            return new FileStreamResult(memoryStream, "application/pdf")
+            {
+                FileDownloadName = "ReporteCursos.pdf"
+            };
         }
 
 
