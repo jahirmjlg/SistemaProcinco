@@ -51,7 +51,7 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Sexo = item.Empl_Sexo,
                 Estc_Id = item.Estc_Id,
                 Empl_Direccion = item.Empl_Direccion,
-                Ciud_id = item.Ciud_id,
+                Ciud_Id = item.Ciud_Id,
                 Empl_UsuarioCreacion = 1,
                 Empl_FechaCreacion = DateTime.Now
 
@@ -84,7 +84,7 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Sexo = item.Empl_Sexo,
                 Estc_Id = item.Estc_Id,
                 Empl_Direccion = item.Empl_Direccion,
-                Ciud_id = item.Ciud_id,
+                Ciud_Id = item.Ciud_Id,
                 Empl_UsuarioModificacion = 1,
                 Empl_FechaModificacion = DateTime.Now
 
@@ -101,10 +101,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EmpleadoEliminar")]
-        public IActionResult Delete(int Empl_id)
+        [HttpDelete("EmpleadoEliminar/{id}")]
+        public IActionResult Delete(int id)
         {
-            var list = _generalService.EliminarEmpleados(Empl_id);
+            var list = _generalService.EliminarEmpleados(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -116,13 +116,14 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("EmpleadoBuscar")]
-        public IActionResult Details(int Empl_Id)
+        [HttpGet("EmpleadoBuscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _generalService.BuscarEmpleados(Empl_Id);
+            var list = _generalService.BuscarEmpleados(id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
+
             }
             else
             {

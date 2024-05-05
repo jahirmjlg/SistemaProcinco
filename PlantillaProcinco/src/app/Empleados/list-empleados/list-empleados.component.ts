@@ -46,6 +46,8 @@ export class ListEmpleadosComponent {
     estadosCivilesddl: any[] = [];
     ciudadesddl: any[] = [];
 
+    ciudadID: String = "";
+
 
     // DETALLE
     empID: number = 0;
@@ -59,7 +61,7 @@ export class ListEmpleadosComponent {
     estadoCivil: String = "";
     empDireccion: String = "";
     empSalarioHora: number = 0;
-    ciudades: String = "";
+    ciudad: String = "";
     UsuarioCreacion: String = "";
     UsuarioModificacion: String = "";
     FechaCreacion: String = "";
@@ -122,15 +124,14 @@ export class ListEmpleadosComponent {
             estc_Id: new FormControl("0",Validators.required),
             empl_Direccion: new FormControl("",Validators.required),
             ciud_Id: new FormControl("0",Validators.required),
+            esta_Id: new FormControl(this.ciudadID,Validators.required),
         });
 
-
-        var ddlestado = document.getElementById('esta_Id');
 
         this.empleadoservice.getDdlEstados().subscribe((data: dropEstados[]) => {
             this.estadosddl = data;
             console.log(data);
-            ddlestado.nodeValue = "0";
+
 
         }, error => {
             console.log(error);
@@ -301,7 +302,7 @@ export class ListEmpleadosComponent {
                this.estadoCivil = data[0].estadoCivil;
                this.empDireccion = data[0].empl_Direccion;
                this.empSalarioHora = data[0].empl_SalarioHora;
-               this.ciudades = data[0].ciudades;
+               this.ciudad = data[0].ciud_Descripcion;
                this.UsuarioCreacion = data[0].usuarioCreacion;
                this.UsuarioModificacion = data[0].usuarioModificacion;
                this.FechaCreacion = data[0].empl_FechaCreacion;
@@ -316,7 +317,7 @@ export class ListEmpleadosComponent {
 
 
     //DELETE
-    deleteCiudad(id) {
+    deleteEmpleado(id) {
         this.deleteEmpleadoBool = true;
         this.empID = id;
         console.log("ID" + id);
@@ -356,7 +357,7 @@ export class ListEmpleadosComponent {
         this.empleadoservice.fillEmpleado(id).subscribe({
             next: (data: Empleado) => {
                 this.editarEmpleadoForm = new FormGroup({
-                    empl_Id: new FormControl(data[0].empl_Id,Validators.required),
+                    empl_Id: new FormControl(id,Validators.required),
                     empl_DNI: new FormControl(data[0].empl_DNI,Validators.required),
                     carg_Id: new FormControl(data[0].carg_Id,Validators.required),
                     empl_Nombre: new FormControl(data[0].empl_Nombre,Validators.required),
@@ -366,8 +367,18 @@ export class ListEmpleadosComponent {
                     empl_Sexo: new FormControl(data[0].empl_Sexo,Validators.required),
                     estc_Id: new FormControl(data[0].estc_Id,Validators.required),
                     empl_Direccion: new FormControl(data[0].empl_Direccion,Validators.required),
+                    esta_Id: new FormControl(data[0].esta_Id,Validators.required),
                     ciud_Id: new FormControl(data[0].ciud_Id,Validators.required),
                 });
+                this.ciudadID = data[0].ciud_Id;
+                console.log("LA DATA: " + data[0] + " ID CIUDAD: " + this.ciudadID)
+                this.empleadoservice.getDdlCiudades(data[0].esta_Id).subscribe(
+                    (data: any) => {
+                      this.ciudadesddl = data;
+                      this.editarEmpleadoForm.get('ciud_Id').setValue(this.ciudadID);
+                    }
+                  );
+
 
                 this.CollapseEdit = true;
                 this.Tabla=false;

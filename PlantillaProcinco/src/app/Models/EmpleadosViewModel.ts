@@ -12,13 +12,14 @@ export class Empleado {
     estc_Id !: Number;
     estadoCivil !: String;
     empl_Direccion !: String;
-    ciud_id !: String;
+    ciud_Id !: String;
     empl_SalarioHora !: Number;
-    ciudades !: String;
+    ciud_Descripcion !: String;
     empl_UsuarioCreacion !: Number;
     empl_FechaCreacion !: String;
     empl_UsuarioModificacion !: Number;
     empl_FechaModificacion !: String;
     usuarioCreacion!: String;
     usuarioModificacion!: String;
+    esta_Id!: String;
 }
