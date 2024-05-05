@@ -1,0 +1,95 @@
+
+/* styles.css */
+
+.surface-ground {
+    background-image: url('https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/Banner-PROCINCO-2.jpg');
+    background-size: cover;
+    background-position: center;
+    padding-top: 25px;
+  }
+
+  .surface-cardd {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .btn {
+    margin-left: 100px;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    max-height: 55px;
+    max-width: 200px;
+    background-color: #633394;
+  }
+
+  .has-error {
+    border-color: red;
+}
+
+  .btn:hover {
+    background-color: #4c2078;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-900 {
+    font-weight: 900;
+  }
+
+  .text-700 {
+    font-weight: 700;
+    color: #000;
+  }
+
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+
+  .font-medium {
+    font-weight: 500;
+
+  }
+
+  .mb-5 {
+    margin-bottom: 1.25rem;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .error {
+    color:rgba(207, 11, 11, 0.961);
+     padding-left: 110px;
+     font-weight: 780;
+  }
+
+  .align-items-center {
+    align-items: center;
+  }
+
+  .justify-content-between {
+    justify-content: space-between;
+  }
+
+  .gap-5 {
+    gap: 0.3125rem;
+  }
+
+  .no-underline {
+    text-decoration: none;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }

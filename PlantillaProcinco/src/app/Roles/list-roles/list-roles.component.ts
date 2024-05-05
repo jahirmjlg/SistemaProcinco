@@ -3,40 +3,35 @@ import {RolesService} from '../../Services/roles.service';
 import {Role} from 'src/app/Models/RolesViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class ListRolesComponent {
 
+    Tabla: boolean = true;
 
-  productDialog: boolean = false;
+    Collapse: boolean = false;
+    isSubmit: boolean = false;
 
-  deleteProductDialog: boolean = false;
+    CollapseEdit: boolean = false;
+    isSubmitEdit: boolean = false;
 
-  deleteProductsDialog: boolean = false;
+    CollapseDetalle: boolean = false;
 
-  products: Product[] = [];
+    deleteRolBool: boolean = false;
 
-  product: Product = {};
-
-  selectedProducts: Product[] = [];
-
-  submitted: boolean = false;
+    ID: String = "";
 
   cols: any[] = [];
-
   statuses: any[] = [];
-
   rowsPerPageOptions = [5, 10, 20];
-
   schemas = [
       CUSTOM_ELEMENTS_SCHEMA
     ];
@@ -44,12 +39,23 @@ export class ListRolesComponent {
   //   variable para iterar
   role!:Role[];
 
+  crearRolForm: FormGroup
+  editarRolForm: FormGroup
 
   //ultimos dos
-  constructor(private productService: ProductService, private messageService: MessageService, private service: RolesService, private router: Router) { }
+  constructor(private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService ) { }
 
   ngOnInit() {
 
+
+    this.crearRolForm = this.formBuilder.group({
+        role_Descripcion: ['', [Validators.required]],
+    });
+
+    this.editarRolForm = new FormGroup({
+        role_Id: new FormControl("",Validators.required),
+        role_Descripcion: new FormControl("", Validators.required),
+     })
 
       // Respuesta de la api
       this.service.getRol().subscribe((Response: any)=> {
@@ -62,111 +68,133 @@ export class ListRolesComponent {
 
         //
 
-
-      this.productService.getProducts().then(data => this.products = data);
-
-      this.cols = [
-          { field: 'product', header: 'Product' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' },
-          { field: 'rating', header: 'Reviews' },
-          { field: 'inventoryStatus', header: 'Status' }
-      ];
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
-
       this.schemas = [
           CUSTOM_ELEMENTS_SCHEMA
         ];
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
 
-  deleteSelectedProducts() {
-      this.deleteProductsDialog = true;
-  }
+  onSubmitInsert(): void {
 
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
+    this.isSubmit = true;
 
-  deleteProduct(product: Product) {
-      this.deleteProductDialog = true;
-      this.product = { ...product };
-  }
+    const errorSpan = document.getElementById('error-span');
+    if (this.crearRolForm.valid) {
+      const contenidoData: Role = this.crearRolForm.value;
+      this.service.CrearRol(contenidoData).subscribe(
+       response => {
 
-  confirmDeleteSelected() {
-      this.deleteProductsDialog = false;
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-      this.selectedProducts = [];
-  }
+        if (response.code == 200) 
+        {
+            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
-  confirmDelete() {
-      this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      this.product = {};
-  }
+            console.log(response)
+            this.service.getRol().subscribe((Response: any)=> {
+                console.log(Response.data);
+                this.role = Response.data;
+            });
 
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
+                this.Collapse = false;
+                this.Tabla = true;
+        } else {
 
-  saveProduct() {
-      this.submitted = true;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+            }
 
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
+        },
+        error => {
+            errorSpan.classList.remove('collapse');
+        }
+        );
+        } else {
+        console.log('Formulario inválido');
+        }
+    }
 
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
-  }
 
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
+    onSubmitEdit(): void {
 
-      return index;
-  }
+        this.isSubmitEdit = true;
 
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
+        if (this.editarRolForm.valid) {
+          const contenidoData: Role = this.editarRolForm.value;
+          this.service.editRol(contenidoData).subscribe(
+            response => {
 
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.service.getRol().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.role = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+                }
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+    }
+
+ 
+    deleteRol(codigo) {
+        this.deleteRolBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
+    }
+    
+
+    confirmDelete() {
+        this.service.deleteRol(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.service.getRol().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.role = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+                    this.Tabla=true;
+                    this.deleteRolBool = false;
+
+                }
+                else{
+                    console.log(response)
+                this.deleteRolBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
+    }
+
+    // Fill(id) {
+    //     this.service.fillEstadoCivil(id).subscribe({
+    //         next: (data: Role) => {
+    //             this.ID = data[0].estc_Id,
+    //             this.editarRolForm = new FormGroup({
+    //                 role_Id: new FormControl(data[0].role_Id),
+    //                 role_Descripcion: new FormControl(data[0].role_Descripcion,Validators.required),
+    //             });
+    //             console.log(this.ID);
+
+    //             this.CollapseEdit = true;
+    //             this.Tabla=false;
+
+    //             console.log(data)
+
+    //         }
+    //     });
+    // }
 }
