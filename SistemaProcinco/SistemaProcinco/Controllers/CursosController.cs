@@ -100,10 +100,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpGet("CursosBuscar")]
-        public IActionResult Details(int Curso_Id)
+        [HttpGet("CursosBuscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _procincoService.BuscarCursos(Curso_Id);
+            var list = _procincoService.BuscarCursos(id);
             if (list.Success == true)
             {
                 return Json(list.Data);

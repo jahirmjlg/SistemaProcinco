@@ -9,3 +9,8 @@ export class Categoria {
     creacion !: String;
     modificacion !: String;
 }
+
+export class dropCategorias {
+    value?:String;
+    text?:String;
+  }
