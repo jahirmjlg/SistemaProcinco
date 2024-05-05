@@ -3,57 +3,76 @@ import {CargosService} from '../../Services/cargos.service';
 import {Cargo} from 'src/app/Models/CargosViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-list-cargos',
+  styleUrls: ['./list-cargos.scss'],
   templateUrl: './list-cargos.component.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 
 })
 export class ListCargosComponent {
+    
+  Tabla: boolean = true;
+
+  Collapse: boolean = false;
+  isSubmit: boolean = false;
 
 
-  productDialog: boolean = false;
+  CollapseEdit: boolean = false;
+  isSubmitEdit: boolean = false;
+    
+  CollapseDetalle: boolean = false;
 
-  deleteProductDialog: boolean = false;
-
-  deleteProductsDialog: boolean = false;
-
-  products: Product[] = [];
-
-  product: Product = {};
-
-  selectedProducts: Product[] = [];
-
-  submitted: boolean = false;
+    //BOOLEAN DELETE
+  deleteCargoBool: boolean = false;
 
   cols: any[] = [];
-
   statuses: any[] = [];
-
   rowsPerPageOptions = [5, 10, 20];
-
   schemas = [
       CUSTOM_ELEMENTS_SCHEMA
     ];
+
+
+    // DETALLE
+    carg_Id: String = "";
+    Cargo: String = "";
+    UsuarioCreacion: String = "";
+    UsuarioModificacion: String = "";
+    FechaCreacion: String = "";
+    FechaModificacion: String = "";
+    ID: String = "";
 
   //   variable para iterar
   cargo!:Cargo[];
 
 
+  crearCargoForm: FormGroup
+  editarCargoForm: FormGroup
   //ultimos dos
-  constructor(private productService: ProductService, private messageService: MessageService, private service: CargosService, private router: Router) { }
+  constructor(private messageService: MessageService, private cargoservice: CargosService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
 
 
+    this.crearCargoForm = this.formBuilder.group({
+      carg_Descripcion: ['', [Validators.required]],
+
+      });
+
+      this.editarCargoForm = new FormGroup({
+        carg_Id: new FormControl("",Validators.required),
+        carg_Descripcion: new FormControl("",Validators.required),
+    });
+
       // Respuesta de la api
-      this.service.getCargo().subscribe((Response: any)=> {
+      this.cargoservice.getCargo().subscribe((Response: any)=> {
           console.log(Response.data);
           this.cargo = Response.data;
 
@@ -62,111 +81,155 @@ export class ListCargosComponent {
         });
 
         //
-
-
-      this.productService.getProducts().then(data => this.products = data);
-
-      this.cols = [
-          { field: 'product', header: 'Product' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' },
-          { field: 'rating', header: 'Reviews' },
-          { field: 'inventoryStatus', header: 'Status' }
-      ];
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
-
       this.schemas = [
           CUSTOM_ELEMENTS_SCHEMA
         ];
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
+    onSubmitInsert(): void {
+        this.isSubmit = true;
 
-  deleteSelectedProducts() {
-      this.deleteProductsDialog = true;
-  }
+            const errorSpan = document.getElementById('error-span');
+        if (this.crearCargoForm.valid) {
+        const cargoData: Cargo = this.crearCargoForm.value;
+        this.cargoservice.insertCargos(cargoData).subscribe(
+            response => {
 
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
+                if (response.code == 200) {
 
-  deleteProduct(product: Product) {
-      this.deleteProductDialog = true;
-      this.product = { ...product };
-  }
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
-  confirmDeleteSelected() {
-      this.deleteProductsDialog = false;
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-      this.selectedProducts = [];
-  }
+                    // this.cookieService.set('namee', response.data.empl_Nombre);
 
-  confirmDelete() {
-      this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      this.product = {};
-  }
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.cargoservice.getCargo().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cargo = Response.data;
+                    });
 
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
+                    this.Collapse = false;
+                    this.Tabla = true;
+                } else {
 
-  saveProduct() {
-      this.submitted = true;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
 
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+
+                }
+
+            },
+            error => {
+                errorSpan.classList.remove('collapse');
+            }
+        );
+        } else {
+        console.log('Formulario inválido');
+        }
+    }
+
+    onSubmitEdit(): void {
+
+        this.isSubmitEdit = true;
+
+        if (this.editarCargoForm.valid) {
+          const contenidoData: Cargo = this.editarCargoForm.value;
+          this.cargoservice.editCargos(contenidoData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.cargoservice.getCargo().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cargo = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
+    }
+
+    detalles(id){
+
+        this.cargoservice.fillCargos(id).subscribe({
+            next: (data: Cargo) => {
+               this.carg_Id = data[0].carg_Id,
+               this.Cargo = data[0].carg_Descripcion,
+               this.UsuarioCreacion = data[0].usuarioCreacion,
+               this.UsuarioModificacion = data[0].usuarioModificacion,
+               this.FechaCreacion = data[0].carg_FechaCreacion,
+               this.FechaModificacion = data[0].carg_FechaModificacion
+                console.log(data);            
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
+    }
+
+    deleteContenido(codigo) {
+        this.deleteCargoBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
+    }
+
+    confirmDelete() {
+        this.cargoservice.deleteCargo(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.cargoservice.getCargo().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cargo = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+                    this.Tabla=true;
+                    this.deleteCargoBool = false;
+
+                }
+                else{
+                    console.log(response)
+                this.deleteCargoBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
+    }
+
+    Fill(id) {
+      this.cargoservice.fillCargos(id).subscribe({
+          next: (data: Cargo) => {
+              this.ID = data[0].cont_Id,
+              this.editarCargoForm = new FormGroup({
+                  carg_Id: new FormControl(data[0].carg_Id),
+                  carg_Descripcion: new FormControl(data[0].carg_Descripcion,Validators.required),
+              });
+              console.log(this.ID);
+
+              this.CollapseEdit = true;
+              this.Tabla=false;
+
+              console.log(data)
+
           }
-
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
+      });
   }
 
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
-
-      return index;
-  }
-
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
 }

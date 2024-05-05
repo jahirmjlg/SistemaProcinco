@@ -1,171 +1,235 @@
 import { Component } from '@angular/core';
 import {EstadoscivilesService} from '../../Services/estadosciviles.service';
-import {Estado} from 'src/app/Models/EstadoViewModel';
+import { EstadoCivil } from 'src/app/Models/EstadosCivilesViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-list-estadosciviles',
   templateUrl: './list-estadosciviles.component.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class ListEstadoscivilesComponent {
 
-  productDialog: boolean = false;
+    Tabla: boolean = true;
 
-  deleteProductDialog: boolean = false;
+    Collapse: boolean = false;
+    isSubmit: boolean = false;
 
-  deleteProductsDialog: boolean = false;
+    CollapseEdit: boolean = false;
+    isSubmitEdit: boolean = false;
 
-  products: Product[] = [];
+    CollapseDetalle: boolean = false;
 
-  product: Product = {};
+    deleteContenidoBool: boolean = false;
 
-  selectedProducts: Product[] = [];
-
-  submitted: boolean = false;
+ 
+  estc_Id: String = "";
+  estc_Descripcion: String = "";
+  UsuarioCreacion: String = "";
+  UsuarioModificacion: String = "";
+  FechaCreacion: String = "";
+  FechaModificacion: String = "";
+  ID: String = "";
 
   cols: any[] = [];
-
   statuses: any[] = [];
-
   rowsPerPageOptions = [5, 10, 20];
-
   schemas = [
       CUSTOM_ELEMENTS_SCHEMA
     ];
 
   //   variable para iterar
-  estado!:Estado[];
+  estadocivil!:EstadoCivil[];
 
+  crearEstaciCivilForm: FormGroup
+  editarEstadoCivilForm: FormGroup
 
   //ultimos dos
-  constructor(private productService: ProductService, private messageService: MessageService, private service: EstadoscivilesService, private router: Router) { }
+  constructor( private messageService: MessageService, private estadoscivilesservice: EstadoscivilesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService ) { }
 
   ngOnInit() {
 
+    this.crearEstaciCivilForm = this.formBuilder.group({
+        estc_Descripcion: ['', [Validators.required]],
+    });
+
+    this.editarEstadoCivilForm = new FormGroup({
+        estc_Id: new FormControl("",Validators.required),
+        estc_Descripcion: new FormControl("", Validators.required),
+     })
 
       // Respuesta de la api
-      this.service.getEstadoCivil().subscribe((Response: any)=> {
+      this.estadoscivilesservice.getEstadoCivil().subscribe((Response: any)=> {
           console.log(Response.data);
-          this.estado = Response.data;
+          this.estadocivil = Response.data;
 
         }, error=>{
           console.log(error);
         });
 
         //
-
-
-      this.productService.getProducts().then(data => this.products = data);
-
-      this.cols = [
-          { field: 'product', header: 'Product' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' },
-          { field: 'rating', header: 'Reviews' },
-          { field: 'inventoryStatus', header: 'Status' }
-      ];
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
-
       this.schemas = [
           CUSTOM_ELEMENTS_SCHEMA
         ];
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
+  onSubmitInsert(): void {
 
-  deleteSelectedProducts() {
-      this.deleteProductsDialog = true;
-  }
+    this.isSubmit = true;
 
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
+    const errorSpan = document.getElementById('error-span');
+    if (this.crearEstaciCivilForm.valid) {
+      const contenidoData: EstadoCivil = this.crearEstaciCivilForm.value;
+      this.estadoscivilesservice.insertEstadoCivil(contenidoData).subscribe(
+       response => {
 
-  deleteProduct(product: Product) {
-      this.deleteProductDialog = true;
-      this.product = { ...product };
-  }
+        if (response.code == 200) 
+        {
+            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
-  confirmDeleteSelected() {
-      this.deleteProductsDialog = false;
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-      this.selectedProducts = [];
-  }
+                // this.cookieService.set('namee', response.data.empl_Nombre);
 
-  confirmDelete() {
-      this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      this.product = {};
-  }
+            console.log(response)
+                // this.router.navigate(['/pages/estados']);
+            this.estadoscivilesservice.getEstadoCivil().subscribe((Response: any)=> {
+                console.log(Response.data);
+                this.estadocivil = Response.data;
+            });
 
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
+                this.Collapse = false;
+                this.Tabla = true;
+        } else {
 
-  saveProduct() {
-      this.submitted = true;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
 
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
 
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
-  }
+            }
 
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
+        },
+        error => {
+            errorSpan.classList.remove('collapse');
+        }
+        );
+        } else {
+        console.log('Formulario inválido');
+        }
 
-      return index;
-  }
+    }
 
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
+
+    onSubmitEdit(): void {
+
+        this.isSubmitEdit = true;
+
+        if (this.editarEstadoCivilForm.valid) {
+          const contenidoData: EstadoCivil = this.editarEstadoCivilForm.value;
+          this.estadoscivilesservice.editEstadoCivil(contenidoData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.estadoscivilesservice.getEstadoCivil().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.estadocivil = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
+    }
+
+
+    detalles(id){
+
+        this.estadoscivilesservice.fillEstadoCivil(id).subscribe({
+            next: (data: EstadoCivil) => {
+               this.estc_Id = data[0].estc_Id,
+               this.estc_Descripcion = data[0].estc_Descripcion,
+               this.UsuarioCreacion = data[0].usuarioCreacion,
+               this.UsuarioModificacion = data[0].usuarioModificacion,
+               this.FechaCreacion = data[0].estc_FechaCreacion,
+               this.FechaModificacion = data[0].estc_FechaModificacion
+                console.log(data);            
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
+    }
+
+    
+    deleteContenido(codigo) {
+        this.deleteContenidoBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
+    }
+    
+
+    confirmDelete() {
+        this.estadoscivilesservice.deleteEstadoCivil(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.estadoscivilesservice.getEstadoCivil().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.estadocivil = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+                    this.Tabla=true;
+                    this.deleteContenidoBool = false;
+
+                }
+                else{
+                    console.log(response)
+                this.deleteContenidoBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
+    }
+
+
+    
+    Fill(id) {
+        this.estadoscivilesservice.fillEstadoCivil(id).subscribe({
+            next: (data: EstadoCivil) => {
+                this.ID = data[0].estc_Id,
+                this.editarEstadoCivilForm = new FormGroup({
+                    estc_Id: new FormControl(data[0].estc_Id),
+                    estc_Descripcion: new FormControl(data[0].estc_Descripcion,Validators.required),
+                });
+                console.log(this.ID);
+
+                this.CollapseEdit = true;
+                this.Tabla=false;
+
+                console.log(data)
+
+            }
+        });
+    }
 
 }

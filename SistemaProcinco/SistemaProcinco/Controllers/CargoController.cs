@@ -83,7 +83,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("CargoEliminar")]
+        [HttpDelete("CargoEliminar/{Carg_Id}")]
         public IActionResult Delete(int Carg_Id)
         {
             var list = _procincoService.EliminarCargos(Carg_Id);
@@ -98,13 +98,13 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CargoBuscar")]
+        [HttpGet("CargoBuscar/{Carg_Id}")]
         public IActionResult Details(int Carg_Id)
         {
             var list = _procincoService.BuscarCargos(Carg_Id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
             }
             else
             {

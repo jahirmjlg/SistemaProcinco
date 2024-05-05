@@ -3,40 +3,52 @@ import {UsuariosService} from '../../Services/usuarios.service';
 import {Usuario} from 'src/app/Models/UsuariosViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { dropRoles } from 'src/app/Models/RolesViewModel';
+import { dropEmpleados } from 'src/app/Models/EmpleadosViewModel';
 
 @Component({
   selector: 'app-list-usuarios',
+  styleUrls: ['./list-usuarios.scss'],
   templateUrl: './list-usuarios.component.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class ListUsuariosComponent {
 
+    Tabla: boolean = true;
 
-  productDialog: boolean = false;
+    Collapse: boolean = false;
+    isSubmit: boolean = false;
 
-  deleteProductDialog: boolean = false;
+    CollapseEdit: boolean = false;
+    isSubmitEdit: boolean = false;
 
-  deleteProductsDialog: boolean = false;
+    CollapseDetalle: boolean = false;
 
-  products: Product[] = [];
+    deleteUsaurioBool: boolean = false;
 
-  product: Product = {};
+    roles: any[] = [];
+    empleados: any[] = [];
 
-  selectedProducts: Product[] = [];
-
-  submitted: boolean = false;
+    
+    usua_Id: String = "";
+    usua_Usuario: String = "";
+    usua_Contraseña : String = "";
+    usua_EsAdmin  : String = "";
+    role_Id  : String = "";
+    empl_Id : String = ""; 
+    UsuarioCreacion: String = "";
+    UsuarioModificacion: String = "";
+    FechaCreacion: String = "";
+    FechaModificacion: String = "";
+    ID: String = "";
 
   cols: any[] = [];
-
   statuses: any[] = [];
-
   rowsPerPageOptions = [5, 10, 20];
-
   schemas = [
       CUSTOM_ELEMENTS_SCHEMA
     ];
@@ -44,130 +56,219 @@ export class ListUsuariosComponent {
   //   variable para iterar
   usuario!:Usuario[];
 
-
+    crearUsuarioForm: FormGroup
+    editarUsuarioForm: FormGroup
   //ultimos dos
-  constructor(private productService: ProductService, private messageService: MessageService, private service: UsuariosService, private router: Router) { }
+  constructor( private messageService: MessageService, private service: UsuariosService, private router: Router,  private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
 
+    this.crearUsuarioForm = this.formBuilder.group({
+        usua_Usuario: ['', [Validators.required]],
+        usua_Contraseña: ['', [Validators.required]],
+        usua_EsAdmin: ['', [Validators.required]],
+        role_Id: ['0', [Validators.required]],
+        empl_Id: ['0', [Validators.required]],
+
+      });
+
+      this.editarUsuarioForm = new FormGroup({
+        usua_Id: new FormControl("",Validators.required),
+        usua_Usuario: new FormControl("",Validators.required),
+        usua_EsAdmin: new FormControl("",Validators.required),
+        role_Id: new FormControl("0", Validators.required),
+        empl_Id: new FormControl("0", Validators.required),
+    });
+
+
+
+    this.service.getDdlRoles().subscribe((data: dropRoles[]) => {
+        this.roles = data;
+        console.log(data);
+    }, error => {
+        console.log(error);
+    });
+
+    this.service.getDdlEmpleado().subscribe((data: dropEmpleados[]) => {
+        this.empleados = data;
+        console.log(data);
+    }, error => {
+        console.log(error);
+    });
 
       // Respuesta de la api
-      this.service.getUsuario().subscribe((Response: any)=> {
-          console.log(Response.data);
-          this.usuario = Response.data;
+    this.service.getUsuario().subscribe((Response: any)=> {
+        console.log(Response.data);
+        this.usuario = Response.data;
 
-        }, error=>{
-          console.log(error);
-        });
-
-        //
-
-
-      this.productService.getProducts().then(data => this.products = data);
-
-      this.cols = [
-          { field: 'product', header: 'Product' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' },
-          { field: 'rating', header: 'Reviews' },
-          { field: 'inventoryStatus', header: 'Status' }
-      ];
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
+    }, error=>{
+        console.log(error);
+    });
 
       this.schemas = [
           CUSTOM_ELEMENTS_SCHEMA
         ];
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
 
-  deleteSelectedProducts() {
-      this.deleteProductsDialog = true;
-  }
+    //INSERTAR
+    onSubmitInsert(): void {
 
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
+        this.isSubmit = true;
 
-  deleteProduct(product: Product) {
-      this.deleteProductDialog = true;
-      this.product = { ...product };
-  }
+            const errorSpan = document.getElementById('error-span');
+        if (this.crearUsuarioForm.valid) {
+          const ciudadData: Usuario = this.crearUsuarioForm.value;
+          this.service.insertUsuario(ciudadData).subscribe(
+            response => {
 
-  confirmDeleteSelected() {
-      this.deleteProductsDialog = false;
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-      this.selectedProducts = [];
-  }
+                if (response.code == 200) {
 
-  confirmDelete() {
-      this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      this.product = {};
-  }
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
+                    // this.cookieService.set('namee', response.data.empl_Nombre);
 
-  saveProduct() {
-      this.submitted = true;
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.service.getUsuario().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.usuario = Response.data;
+                    });
 
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
+                    this.Collapse = false;
+                    this.Tabla = true;
+                } else {
 
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
-  }
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+                }
+            },
+            error => {
+                errorSpan.classList.remove('collapse');
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+    }
 
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
 
-      return index;
-  }
+    
+    //EDITAR
+    onSubmitEdit(): void {
 
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
+        this.isSubmitEdit = true;
+
+        if (this.editarUsuarioForm.valid) {
+          const ciudadData: Usuario = this.editarUsuarioForm.value;
+          this.service.editUsuario(ciudadData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.service.getUsuario().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.usuario = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
+    }
+
+    detalles(id){
+
+        this.service.fillUsuario(id).subscribe({
+            next: (data: Usuario) => {
+               this.usua_Id = data[0].usua_Id,
+               this.usua_Usuario = data[0].usua_Usuario,
+               this.usua_EsAdmin = data[0].usua_EsAdmin,
+               this.role_Id = data[0].role_Descripcion,
+               this.empl_Id = data[0].empl_Nombre,
+               this.UsuarioCreacion = data[0].usuarioCreacion,
+               this.UsuarioModificacion = data[0].usuarioModificacion,
+               this.FechaCreacion = data[0].usua_FechaCreacion,
+               this.FechaModificacion = data[0].usua_FechaModificacion
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
+    }
+
+    
+    //DELETE
+    deleteUsuario(codigo) {
+        this.deleteUsaurioBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
+    }
+
+
+    confirmDelete() {
+        this.service.deleteUsuario(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.service.getUsuario().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.usuario = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+
+                    this.Tabla=true;
+
+                    this.deleteUsaurioBool = false;
+
+                   }
+                else{
+                    console.log(response)
+                this.deleteUsaurioBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
+    }
+
+  //LLENAR EDITAR && DETALLE
+    Fill(id) {
+    this.service.fillUsuario(id).subscribe({
+        next: (data: Usuario) => {
+            this.editarUsuarioForm = new FormGroup({
+                usua_Id: new FormControl(data[0].usua_Id,Validators.required),
+                usua_Usuario: new FormControl(data[0].usua_Usuario,Validators.required),
+                usua_EsAdmin: new FormControl(data[0].usua_EsAdmin,Validators.required),
+                empl_Id: new FormControl(data[0].empl_Id,Validators.required),
+                role_Id: new FormControl(data[0].role_Id,Validators.required),
+            });
+
+            this.CollapseEdit = true;
+            this.Tabla=false;
+
+            console.log(data)
+
+        }
+      });
+
+    }
+
 
 }
 

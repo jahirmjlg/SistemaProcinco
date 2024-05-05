@@ -8,3 +8,8 @@ export class Role {
     creacion !: String;
     modificacion !: String;
 }
+
+export class dropRoles {
+    value?:String;
+    text?:String;
+  }

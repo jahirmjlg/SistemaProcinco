@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -82,7 +83,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("RolEliminar")]
+        [HttpDelete("RolEliminar/{Role_id}")]
         public IActionResult Delete(int Role_id)
         {
             var list = _accesoService.EliminarRoles(Role_id);
@@ -95,6 +96,23 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
 
+        }
+
+        [HttpGet("ddl")]
+        public IActionResult Lista()
+        {
+            var listado = _accesoService.ListaRoles();
+            var drop = listado.Data as List<tbRoles>;
+            var esta = drop.Select(x => new SelectListItem
+            {
+                Text = x.Role_Descripcion,
+                Value = x.Role_Id.ToString()
+
+            }).ToList();
+
+            esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+
+            return Ok(esta.ToList());
         }
     }
 }

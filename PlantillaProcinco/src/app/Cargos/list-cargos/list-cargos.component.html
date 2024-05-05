@@ -1,22 +1,95 @@
 
-<div class="card-body">
+<div class="" [ngClass]="{'collapse': Collapse === false}">
+
+    <form [formGroup]="crearCargoForm" (ngSubmit)="onSubmitInsert()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Agregar Contenido</h4>
+                <hr />
+
+                <div class="row">
+                    <div class="col-4">
+
+                        <div class="col-sm-2">
+                        <label for="firstname2" class="form-label">Cargo</label>
+                        </div>
+
+                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCargoForm.controls['carg_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
+                    </div>
+                  
+                </div>
+                
+
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+<div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+    <form [formGroup]="editarCargoForm" (ngSubmit)="onSubmitEdit()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar Estado</h4>
+                <hr />
+
+                <div class="row">
+                    
+                    <div class="col-4 mt-2">
+
+                        <div class="col-sm-2">
+                            <label for="firstname2">Cargo</label>
+                            </div>
+
+                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCargoForm.controls['carg_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                    </div>
+
+                   
+                </div>
+                   
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Cargos</h2>
 
         </header>
     </div>
-</div>
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
-            Nuevo
-        </a>
+        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
     </div>
 
     <div class="card px-6 py-6">
 
-        <p-table #dt [value]="cargo" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <p-table #dt [value]="cargo" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"  selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">
                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -38,14 +111,87 @@
                     <td>{{carg.carg_Descripcion}}</td>
 
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
-
+                        <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(carg.carg_Id)">Editar</button> |
+                        <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(carg.carg_Id)">Detalle</button> |
+                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(carg.carg_Id)">Eliminar</button>
                     </td>
                   </tr>
             </ng-template>
         </p-table>
     </div>
+</div>
 
 </div>
+
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles Contenido</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+               
+                <div class="col" style="font-weight:700">
+                    <div>Cargo</div>
+                </div>
+                
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Cargo">{{ Cargo }}</label></div>
+                </div>
+               
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ UsuarioCreacion }}</td>
+                                    <td>{{ FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ UsuarioModificacion }}</td>
+                                    <td>{{ FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="deleteCargoBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar el registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteCargoBool = false"></button>
+            </div>
+        </div>
+</p-dialog>

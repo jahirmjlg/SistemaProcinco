@@ -6,6 +6,6 @@ export class Contenido {
     cont_FechaCreacion !: String;
     cont_UsuarioModificacion !: String;
     cont_FechaModificacion !: String;
-    creacion !: String;
-    modificacion !: String;
+    usuarioCreacion !: String;
+    usuarioModificacion !: String;
 }

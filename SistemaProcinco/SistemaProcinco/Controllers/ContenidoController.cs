@@ -80,10 +80,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("ContenidoEliminar")]
-        public IActionResult Delete(int Cont_Id)
+        [HttpDelete("ContenidoEliminar/{id}")]
+        public IActionResult Delete(int id)
         {
-            var list = _procincoService.EliminarContenido(Cont_Id);
+            var list = _procincoService.EliminarContenido(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -95,13 +95,14 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("ContenidoBuscar")]
-        public IActionResult Details(int Cont_Id)
+        [HttpGet("ContenidoBuscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _procincoService.BuscarContenido(Cont_Id);
+            var list = _procincoService.BuscarContenido(id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
+
             }
             else
             {

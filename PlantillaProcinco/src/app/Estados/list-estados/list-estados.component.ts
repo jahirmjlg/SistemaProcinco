@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {EstadoService} from '../../Services/estado.service';
-
 import { Estado } from 'src/app/Models/EstadoViewModel';
 import {Router} from '@angular/router';
 
 import { Product } from 'src/app/demo/api/product';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -112,7 +110,7 @@ export class ListEstadosComponent implements OnInit {
                     // this.router.navigate(['/pages/estados']);
                     this.estadoservice.getEstados().subscribe((Response: any)=> {
                         console.log(Response.data);
-                        this.estadoo = Response.data;
+                        this.estado = Response.data;
                     });
 
                     this.Collapse = false;
@@ -225,21 +223,20 @@ export class ListEstadosComponent implements OnInit {
     }
 
     Fill(id) {
-        this.estadoservice.fillEstado(id).subscribe({
-            next: (data: Estado) => {
-                this.editarEstadoForm = new FormGroup({
-                    esta_Id: new FormControl(data[0].esta_Id,Validators.required),
-                    esta_Descripcion: new FormControl(data[0].esta_Descripcion,Validators.required),
-                });
-
-                this.CollapseEdit = true;
-                this.Tabla=false;
-
-                console.log(data)
-
-            }
+      this.estadoservice.fillEstado(id).subscribe({
+        next: (data: Estado) => {
+          this.editarEstadoForm = new FormGroup({
+            esta_Id: new FormControl(data[0].esta_Id,Validators.required),
+            esta_Descripcion: new FormControl(data[0].esta_Descripcion,Validators.required),
           });
 
+        this.CollapseEdit = true;
+        this.Tabla=false;
+
+        console.log(data)
+
+        }
+      });
     }
 
 }

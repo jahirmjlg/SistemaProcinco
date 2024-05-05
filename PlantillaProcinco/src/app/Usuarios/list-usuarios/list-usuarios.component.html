@@ -1,61 +1,134 @@
 
-<div class="card-body">
+    <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
+
+        <form [formGroup]="crearUsuarioForm" (ngSubmit)="onSubmitInsert()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Agregar Usuario</h4>
+                    <hr />
+    
+                    <div class="row">
+                        <div class="col-4">
+    
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Usuario</label>
+                            </div>
+    
+                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Usuario'].invalid" style="color: red !important;">Codigo Requerido</small>
+                        </div>
+                        <div class="col-4 mt-2">
+                            <div class="col-sm-2">
+                                <label for="firstname2">Contraseña</label>
+                            </div>
+    
+                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Contraseña" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Contraseña'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 mt-2">
+    
+                            <div class="col-sm-4">
+                                <label for="firstname2">Es admin</label>
+                                </div>
+    
+                            <input pInputText id="firstname2" class="form-control" formControlName="usua_EsAdmin" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                        </div>
+
+                        <div class="col-6">    
+                            <div class="col-sm-2">
+                            <label for="firstname2">Rol</label>
+                            </div>    
+                            <select formControlName="role_Id" class="form-control" pInputText id="" required autofocus>
+                            <option *ngFor="let rol of roles" [value]="rol.value">{{ rol.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.get('role_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">    
+                            <div class="col-sm-2">
+                            <label for="firstname2">Empleado</label>
+                            </div>
+                            <select formControlName="empl_Id" class="form-control" pInputText id="" required autofocus>
+                            <option *ngFor="let empl of empleados" [value]="empl.value">{{ empl.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.get('empl_Id').value === '0'" style="color: red !important;">El Empleado es Requerido</small>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    
+    </div>
+
+    
+
+<div class="card">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Usuarios</h2>
 
         </header>
     </div>
-</div>
-<div class="card m-2 mt-4 p-3">
-    <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
-            Nuevo
-        </a>
+    <div class="card m-2 mt-4 p-3">
+        <div class="card-header">
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+    
+        </div>
+
+        <div class="card px-6 py-6">
+
+            <p-table #dt [value]="usuario" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Usuario</th>
+                        <th>Admin</th>
+                        <th>Rol</th>
+                        <th>Contenido</th>
+                        <th>Correo</th>
+                        <th>Empleado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-usua>
+                    <tr>
+                        <td>{{usua.usua_Id}}</td>
+                        <td>{{usua.usua_Usuario}}</td>
+                        <td>{{usua.usua_Admin1}}</td>
+                        <td>{{usua.role_Descripcion}}</td>
+                        <td>{{usua.cont_Descripcion}}</td>
+                        <td>{{usua.correo}}</td>
+                        <td>{{usua.empl_Nombre}}</td>
+
+                        <td>
+                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(usua.usua_Id)">Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(usua.usua_Id)">Detalle</button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(usua.usua_Id)">Eliminar</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
-
-    <div class="card px-6 py-6">
-
-        <p-table #dt [value]="usuario" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
-            <ng-template pTemplate="caption">
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre Usuario</th>
-                    <th>Admin</th>
-                    <th>Rol</th>
-                    <th>Contenido</th>
-                    <th>Correo</th>
-                    <th>Empleado</th>
-                    <th>Acciones</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-usua>
-                <tr>
-                    <td>{{usua.usua_Id}}</td>
-                    <td>{{usua.usua_Usuario}}</td>
-                    <td>{{usua.usua_Admin1}}</td>
-                    <td>{{usua.role_Descripcion}}</td>
-                    <td>{{usua.cont_Descripcion}}</td>
-                    <td>{{usua.correo}}</td>
-                    <td>{{usua.empl_Nombre}}</td>
-
-                    <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
-
-                    </td>
-                  </tr>
-            </ng-template>
-        </p-table>
-    </div>
-
 </div>

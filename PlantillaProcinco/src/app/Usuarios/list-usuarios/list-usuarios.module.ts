@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ListUsuariosComponent } from './list-usuarios.component';
 import { ListUsuariosRoutingModule } from './list-usuarios-routing.module';
 
@@ -17,7 +17,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
 
 @NgModule({
     imports: [
@@ -26,6 +25,7 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         FileUploadModule,
         FormsModule,
         ListUsuariosRoutingModule,
+        ReactiveFormsModule,
         ButtonModule,
         RippleModule,
         ToastModule,

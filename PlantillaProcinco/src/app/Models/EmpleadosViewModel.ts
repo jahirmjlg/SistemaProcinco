@@ -21,3 +21,8 @@ export class Empleado {
     usuarioCreacion!: String;
     usuarioModificacion!: String;
 }
+
+export class dropEmpleados{
+    value?:String;
+    text?:String;
+}

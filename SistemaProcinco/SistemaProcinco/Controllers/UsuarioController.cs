@@ -73,7 +73,7 @@ namespace SistemaProcinco.API.Controllers
             {
                 Usua_Id = item.Usua_Id,
                 Usua_Usuario = item.Usua_Usuario,
-                Usua_EsAdmin = item.Usua_EsAdmin,
+                Usua_EsAdmin = false,
                 Empl_Id = item.Empl_Id,
                 Role_Id = item.Role_Id,
                 Usua_UsuarioModificacion = 1,
@@ -90,7 +90,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("UsuarioEliminar")]
+        [HttpDelete("UsuarioEliminar/{usua_Id}")]
         public IActionResult Delete(int Usua_Id)
         {
             var list = _accesoService.EliminarUsuarios(Usua_Id);
@@ -155,7 +155,7 @@ namespace SistemaProcinco.API.Controllers
             var list = _accesoService.BuscarUsuarios(usua_Id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
             }
             else
             {
