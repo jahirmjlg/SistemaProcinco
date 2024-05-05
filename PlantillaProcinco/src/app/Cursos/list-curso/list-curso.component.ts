@@ -248,7 +248,7 @@ export class ListCursoComponent {
 
 
     //DELETE
-    deleteCiudad(codigo) {
+    deleteCurso(codigo) {
         this.deleteCursoBool = true;
         this.cursoID = codigo;
         console.log("ID" + codigo);

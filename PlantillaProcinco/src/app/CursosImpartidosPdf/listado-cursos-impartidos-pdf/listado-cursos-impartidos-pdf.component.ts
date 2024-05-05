@@ -22,6 +22,5 @@ export class ListadoCursosImpartidosPdfComponent {
 
 }
 
-    showPdf: boolean = false;
 
 }

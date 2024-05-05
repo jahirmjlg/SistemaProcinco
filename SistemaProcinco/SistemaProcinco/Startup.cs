@@ -71,7 +71,7 @@ namespace SistemaProcinco
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SistemaProcinco v1"));
             }
-            app.UseCors("AllowAll");
+            app.UseCors("AllowSpecificOrigin");
 
 
             app.UseHttpsRedirection();

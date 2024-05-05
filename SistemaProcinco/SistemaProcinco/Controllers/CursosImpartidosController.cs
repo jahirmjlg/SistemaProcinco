@@ -13,6 +13,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Data;
+using iTextSharp.tool.xml;
 
 namespace SistemaProcinco.API.Controllers
 {
@@ -44,15 +45,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/preview-pdf")]
-        public IActionResult PreviewPDF()
-        {
 
-            MemoryStream memoryStream = CreatePdfStream();
-            memoryStream.Position = 0;
-            return new FileStreamResult(memoryStream, "application/pdf");
-        }
 
 
 
@@ -61,61 +54,126 @@ namespace SistemaProcinco.API.Controllers
 
             MemoryStream memoryStream = new MemoryStream();
 
-            Document document = new Document(PageSize.A4, 50, 50, 80, 60);
-            PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
-            writer.CloseStream = false; 
 
-            document.Open();
-
-            Font font = FontFactory.GetFont("Arial", 10, Font.NORMAL);
-            PdfPTable table = new PdfPTable(7);
-            var headers = new string[] { "ID", "Curso", "Nombre", "Fecha Inicio", "Fecha Fin", "Usuario Finalización", "Finalizado" };
-            foreach (var header in headers)
+            using (Document document = new Document())
             {
-                PdfPCell cell = new PdfPCell(new Phrase(header, font));
-                cell.BackgroundColor = new BaseColor(153, 102, 204);
-                table.AddCell(cell);
-            }
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                writer.CloseStream = false; 
 
-            var listado = _procincoService.ListaCursosImpartidos();
-            if (listado.Data != null)
-            {
+                document.Open();
+
+                // Estilos CSS
+                string css = @"
+            <style> 
+                body { font-family: 'Arial'; font-size: 10pt; }
+                table { width: 100%; border-collapse: collapse; }
+                th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+            </style>";
+
+                // Contenido HTML del PDF
+                string htmlContent = @"
+            <html>
+            <head>
+            </head>
+            <body>
+                <div style='text-align: center;'>
+                    <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-WHITE-1.png' alt='Logo' style='width: 100px; height: auto;' />
+                    <h1>Reporte de Cursos Impartidos</h1>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Curso</th>
+                            <th>Nombre</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Usuario Finalización</th>
+                            <th>Finalizado</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+                var listado = _procincoService.ListaCursosImpartidos();
                 foreach (var curso in listado.Data)
                 {
-                    table.AddCell(new Phrase(curso.CurIm_Id.ToString(), font));
-                    table.AddCell(new Phrase(curso.Cursos, font));
-                    table.AddCell(new Phrase(curso.Nombre, font));
-                    table.AddCell(new Phrase(curso.CurIm_FechaInicio.ToString("dd/MM/yyyy"), font));
-                    table.AddCell(new Phrase(curso.CurIm_FechaFin.ToString("dd/MM/yyyy"), font));
-                    table.AddCell(new Phrase(curso.CurIm_UsuarioFinalizacion.ToString(), font));
-                    table.AddCell(new Phrase(curso.CurIm_Finalizar ? "Sí" : "No", font));
+                    htmlContent += $@"
+                <tr>
+                    <td>{curso.CurIm_Id}</td>
+                    <td>{curso.Cursos}</td>
+                    <td>{curso.Nombre}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                    <td>{curso.CurIm_UsuarioFinalizacion}</td>
+                    <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                </tr>";
                 }
+
+                htmlContent += @"
+                    </tbody>
+                </table>
+            </body>
+            </html>";
+
+                using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
+                using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
+                {
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, msHtml, msCss);
+                }
+
+                document.Close();
             }
 
-            document.Add(table);
-            document.Close(); 
-
-            memoryStream.Position = 0; 
+            memoryStream.Position = 0;
             return memoryStream;
         }
 
 
 
-        
+        private static readonly Dictionary<string, byte[]> _pdfCache = new Dictionary<string, byte[]>();
 
         [HttpGet("Preview")]
-        public ActionResult GenerateCoursesPdf()
+        public ActionResult GeneratePreviewPdf()
         {
-            MemoryStream memoryStream = CreatePdfStream();
-            memoryStream.Position = 0;
+            MemoryStream pdfStream = CreatePdfStream();
+            pdfStream.Position = 0;
+            var pdfBytes = pdfStream.ToArray();
 
-            return new FileStreamResult(memoryStream, "application/pdf")
+            var fileId = Guid.NewGuid().ToString();
+            _pdfCache[fileId] = pdfBytes;
+
+
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            var url = Url.Action("GetPdfFile", new { fileId = fileId });
+            var fullUrl = baseUrl + url;
+
+            return Ok(fullUrl);
+        }
+
+        [HttpGet("GetPdfFile/{fileId}")]
+        public ActionResult GetPdfFile(string fileId)
+        {
+            if (_pdfCache.TryGetValue(fileId, out var pdfBytes))
             {
-                FileDownloadName = "ReporteCursos.pdf"
-            };
+                Response.Headers.Add("Content-Disposition", "inline");
+                return File(pdfBytes, "application/pdf");
+            }
+
+            return NotFound();
         }
 
 
+        [HttpGet("DownloadPdf/{fileId}")]
+        public ActionResult DownloadPdf(string fileId)
+        {
+            if (_pdfCache.TryGetValue(fileId, out var pdfBytes))
+            {
+                return File(pdfBytes, "application/pdf", "Download_ReporteCursos.pdf");
+            }
+
+            return NotFound();
+        }
 
 
 
