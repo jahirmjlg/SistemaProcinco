@@ -57,7 +57,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
                 parametro.Add("@Empl_Direccion", item.Empl_Direccion);
-                parametro.Add("@Ciud_Id", item.Ciud_id);
+                parametro.Add("@Ciud_Id", item.Ciud_Id);
                 parametro.Add("@Empl_UsuarioCreacion", item.Empl_UsuarioCreacion);
                 parametro.Add("@Empl_FechaCreacion", item.Empl_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
@@ -96,7 +96,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
                 parametro.Add("@Empl_Direccion", item.Empl_Direccion);
-                parametro.Add("@Ciud_Id", item.Ciud_id);
+                parametro.Add("@Ciud_Id", item.Ciud_Id);
                 parametro.Add("@Empl_UsuarioModificacion", item.Empl_UsuarioModificacion);
                 parametro.Add("@Empl_FechaModificacion", item.Empl_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
