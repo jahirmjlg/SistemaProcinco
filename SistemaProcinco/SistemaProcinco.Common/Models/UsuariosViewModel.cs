@@ -28,6 +28,8 @@ namespace SistemaProcinco.Common.Models
         [NotMapped]
         public string correo { get; set; }
         [NotMapped]
+        public string adminfalso { get; set; }
+        [NotMapped]
         public string Empl_Nombre { get; set; }
         [NotMapped]
         public string UsuarioCreacion { get; set; }

@@ -37,7 +37,7 @@ export class ListUsuariosComponent {
     usua_Id: String = "";
     usua_Usuario: String = "";
     usua_Contraseña : String = "";
-    usua_EsAdmin  : String = "";
+    usua_EsAdmin  : Boolean;
     role_Id  : String = "";
     empl_Id : String = ""; 
     UsuarioCreacion: String = "";
@@ -66,7 +66,7 @@ export class ListUsuariosComponent {
     this.crearUsuarioForm = this.formBuilder.group({
         usua_Usuario: ['', [Validators.required]],
         usua_Contraseña: ['', [Validators.required]],
-        usua_EsAdmin: ['', [Validators.required]],
+        usua_EsAdmin: [false, [Validators.required]],
         role_Id: ['0', [Validators.required]],
         empl_Id: ['0', [Validators.required]],
 
@@ -119,6 +119,7 @@ export class ListUsuariosComponent {
             const errorSpan = document.getElementById('error-span');
         if (this.crearUsuarioForm.valid) {
           const ciudadData: Usuario = this.crearUsuarioForm.value;
+          console.log(ciudadData);
           this.service.insertUsuario(ciudadData).subscribe(
             response => {
 

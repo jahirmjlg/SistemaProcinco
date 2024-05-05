@@ -73,7 +73,7 @@ namespace SistemaProcinco.API.Controllers
             {
                 Usua_Id = item.Usua_Id,
                 Usua_Usuario = item.Usua_Usuario,
-                Usua_EsAdmin = false,
+                Usua_EsAdmin = item.Usua_EsAdmin,
                 Empl_Id = item.Empl_Id,
                 Role_Id = item.Role_Id,
                 Usua_UsuarioModificacion = 1,

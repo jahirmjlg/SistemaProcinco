@@ -24,18 +24,24 @@
                             </div>
     
                             <input pInputText id="firstname2" class="form-control" formControlName="usua_Contraseña" type="text" required autofocus />
+                            
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Contraseña'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 mt-2">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="admin" value="true" formControlName="usua_EsAdmin"> Si
+                            </label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="admin" value="false" formControlName="usua_EsAdmin"> No
+                            </label>
+                        </div>
     
-                            <div class="col-sm-4">
-                                <label for="firstname2">Es admin</label>
-                                </div>
-    
-                            <input pInputText id="firstname2" class="form-control" formControlName="usua_EsAdmin" type="text" required autofocus />
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
 
                         <div class="col-6">    
@@ -67,7 +73,6 @@
                             <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
-                </div>
             </div>
         </form>
     

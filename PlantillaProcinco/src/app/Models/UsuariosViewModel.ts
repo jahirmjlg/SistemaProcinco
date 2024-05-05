@@ -1,7 +1,7 @@
 export class Usuario {
     usua_Id !: Number;
     usua_Usuario  !: String;
-    usua_Contrasena  !: String;
+    usua_Contraseña  !: String;
     usua_EsAdmin  !: Boolean;
     role_Id  !: String;
     usua_UsuarioCreacion  !: String;
