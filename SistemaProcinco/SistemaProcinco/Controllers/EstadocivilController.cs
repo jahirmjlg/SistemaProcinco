@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -35,6 +36,25 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+        [HttpGet("ddl")]
+        public IActionResult Lista()
+        {
+            var listado = _generalService.ListaEstadosCiviles();
+            var drop = listado.Data as List<tbEstadosCiviles>;
+            var esta = drop.Select(x => new SelectListItem
+            {
+                Text = x.Estc_Descripcion,
+                Value = x.Estc_Id.ToString()
+
+            }).ToList();
+
+            esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+
+            return Ok(esta.ToList());
+        }
+
+
 
         [HttpPost("EstadoCivilCrear")]
         public IActionResult Insert(EstadosCivilesViewModel item)

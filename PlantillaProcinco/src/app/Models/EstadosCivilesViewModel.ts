@@ -8,3 +8,8 @@ export class EstadoCivil {
     creacion !: String;
     modificacion !: String;
 }
+
+export class dropEstadosCiviles {
+    value?:String;
+    text?:String;
+  }

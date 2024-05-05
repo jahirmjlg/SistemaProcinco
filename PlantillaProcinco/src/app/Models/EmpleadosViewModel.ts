@@ -2,6 +2,7 @@ export class Empleado {
     empl_Id !: Number;
     empl_DNI  !: String;
     carg_Id !: Number;
+    cargo !: String;
     empl_Nombre !: String;
     empl_Apellido !: String;
     empl_Correo !: String;
@@ -11,15 +12,16 @@ export class Empleado {
     estc_Id !: Number;
     estadoCivil !: String;
     empl_Direccion !: String;
-    ciud_id !: String;
-    ciudades !: String;
+    ciud_Id !: String;
+    empl_SalarioHora !: Number;
+    ciud_Descripcion !: String;
     empl_UsuarioCreacion !: Number;
     empl_FechaCreacion !: String;
     empl_UsuarioModificacion !: Number;
     empl_FechaModificacion !: String;
-    empl_SalarioHora !: Number;
     usuarioCreacion!: String;
     usuarioModificacion!: String;
+    esta_Id!: String;
 }
 
 export class dropEmpleados{

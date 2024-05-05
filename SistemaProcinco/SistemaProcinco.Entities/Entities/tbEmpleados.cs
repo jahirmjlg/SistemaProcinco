@@ -35,13 +35,19 @@ namespace SistemaProcinco.Entities.Entities
         public string EstadoCivil { get; set;}
 
         public string Empl_Direccion { get; set; }
-        public string Ciud_id { get; set; }
+        public string Ciud_Id { get; set; }
         [NotMapped]
-        public string Ciudades { get; set;}
+        public string Ciud_Descripcion { get; set;}
         [NotMapped]
         public string UsuarioCreacion { get; set; }
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+
+        [NotMapped]
+        public string Esta_Id { get; set; }
+
+        
+
 
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }

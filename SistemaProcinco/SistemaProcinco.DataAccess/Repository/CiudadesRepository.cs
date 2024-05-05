@@ -100,5 +100,21 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
+
+        public IEnumerable<tbCiudades> GetMunicipiosPorEstado(string Esta_Id)
+        {
+            string sql = ScriptsDatabase.CiudadesPorEstadosSeleccionar;
+
+            List<tbCiudades> result = new List<tbCiudades>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameters = new { Esta_Id = Esta_Id };
+                result = db.Query<tbCiudades>(sql, parameters, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
+        }
+
     }
 }

@@ -9,3 +9,9 @@ export class Ciudad {
     usuarioCreacion!:number;
     usuarioModificacion!:String;
   }
+
+
+  export class dropCiudades {
+    value?:String;
+    text?:String;
+  }
