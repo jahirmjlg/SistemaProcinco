@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PdfSharpCore.Pdf;
+using PdfSharpCore.Drawing;
+
 
 namespace SistemaProcinco.API.Controllers
 {
@@ -15,12 +18,15 @@ namespace SistemaProcinco.API.Controllers
     public class CursosImpartidosController : Controller
     {
         private readonly ProcincoService _procincoService;
+
+        private readonly crearPDF _crearpdf;
         private readonly IMapper _mapper;
 
-        public CursosImpartidosController(ProcincoService procincoService, IMapper mapper)
+        public CursosImpartidosController(ProcincoService procincoService, IMapper mapper, crearPDF crearpdf)
         {
             _procincoService = procincoService;
             _mapper = mapper;
+            _crearpdf = crearpdf;
         }
         [HttpGet("Listado")]
         public IActionResult Index()
@@ -35,6 +41,24 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+
+        [HttpGet("ListadoPDF")]
+        public IActionResult GetCoursesAsPdf()
+        {
+            var listado = _procincoService.ListaCursosImpartidos();
+            if (listado.Success)
+            {
+                var pdfBytes = _crearpdf.CursosImpartidosPdf(listado.Data);
+                return File(pdfBytes, "application/pdf", "ListadoCursos.pdf");
+            }
+            else
+            {
+                return Problem("Error al obtener los cursos.");
+            }
+        }
+
+
 
         [HttpPost("CursoImpartidoCrear")]
         public IActionResult Insert(CursosImpartidosViewModel item)

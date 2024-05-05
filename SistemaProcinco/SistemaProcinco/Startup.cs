@@ -39,7 +39,12 @@ namespace SistemaProcinco
             services.AddAutoMapper(x => x.AddProfile<MappingProfileExtensions>(), AppDomain.CurrentDomain.GetAssemblies());
             services.AddHttpContextAccessor();
 
+
+
             services.AddControllers();
+            //
+            services.AddScoped<crearPDF>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SistemaProcinco", Version = "v1" });
