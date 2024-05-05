@@ -2,7 +2,7 @@ export class Usuario {
     usua_Id !: Number;
     usua_Usuario  !: String;
     usua_Contraseña  !: String;
-    usua_EsAdmin  !: Boolean;
+    usua_EsAdmin  !: String;
     role_Id  !: String;
     usua_UsuarioCreacion  !: String;
     usua_FechaCreacion  !: String;
