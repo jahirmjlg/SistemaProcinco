@@ -106,7 +106,7 @@ namespace SistemaProcinco.API.Controllers
             var list = _procincoService.BuscarCursos(Curso_Id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
             }
             else
             {
