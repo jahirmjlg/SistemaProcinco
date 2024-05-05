@@ -30,11 +30,11 @@ export class UsuariosService {
   }
     
   fillUsuario(id: Number): Observable<any>{
-    return this.http.get<any>(`${this.UrlUsuario}UsuarioBuscar/${id}`);
+    return this.http.get<any>(`${this.UrlUsuario}Buscar/${id}`);
   }
 
   deleteUsuario(ID): Observable<any>{
-    return this.http.delete<any>(`${this.UrlUsuario}UsaurioEliminar/${ID}`)
+    return this.http.delete<any>(`${this.UrlUsuario}UsuarioEliminar/${ID}`)
   }
 
    //DDL

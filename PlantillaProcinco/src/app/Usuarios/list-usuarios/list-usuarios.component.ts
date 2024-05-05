@@ -66,7 +66,7 @@ export class ListUsuariosComponent {
     this.crearUsuarioForm = this.formBuilder.group({
         usua_Usuario: ['', [Validators.required]],
         usua_Contraseña: ['', [Validators.required]],
-        usua_EsAdmin: [false, [Validators.required]],
+        usua_EsAdmin: [true, [Validators.required]],
         role_Id: ['0', [Validators.required]],
         empl_Id: ['0', [Validators.required]],
 
@@ -75,7 +75,7 @@ export class ListUsuariosComponent {
       this.editarUsuarioForm = new FormGroup({
         usua_Id: new FormControl("",Validators.required),
         usua_Usuario: new FormControl("",Validators.required),
-        usua_EsAdmin: new FormControl("",Validators.required),
+        usua_EsAdmin: new FormControl(true,Validators.required),
         role_Id: new FormControl("0", Validators.required),
         empl_Id: new FormControl("0", Validators.required),
     });
