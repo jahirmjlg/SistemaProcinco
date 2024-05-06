@@ -28,5 +28,13 @@ namespace SistemaProcinco.Common.Models
         public string Creacion { get; set; }
         [NotMapped]
         public string Modificacion { get; set; }
+
+        [NotMapped]
+        public int Year { get; set; }
+        [NotMapped]
+        public int Month { get; set; }
+        [NotMapped]
+        public int TotalCursos { get; set; }
+
     }
 }

@@ -73,6 +73,24 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+
+        public IEnumerable<tbCursosImpartidos> CursosMes()
+        {
+            string sql = ScriptsDatabase.CursosImpartidosMES;
+
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbCursosImpartidos>(sql, commandType: System.Data.CommandType.Text).ToList();
+                return result;
+            }
+        }
+
+
+
+
         public RequestStatus Update(tbCursosImpartidos item)
         {
             string sql = ScriptsDatabase.CursosImpartidosActualizar;
