@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -112,6 +113,23 @@ namespace SistemaProcinco.API.Controllers
             {
                 return Problem();
             }
+        }
+
+        [HttpGet("ddl")]
+        public IActionResult Lista()
+        {
+            var listado = _procincoService.ListaCursos();
+            var drop = listado.Data as List<tbCursos>;
+            var esta = drop.Select(x => new SelectListItem
+            {
+                Text = x.Curso_Descripcion,
+                Value = x.Curso_Id.ToString()
+
+            }).ToList();
+
+            esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+
+            return Ok(esta.ToList());
         }
 
     }

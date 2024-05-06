@@ -12,3 +12,8 @@ export class Curso {
     creacion !: String;
     modificacion !: String;
 }
+
+export class dropCursos{
+    curso_Id !: Number;
+    curso_Descripcion  !: String;
+}

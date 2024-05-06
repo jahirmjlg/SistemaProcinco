@@ -7,9 +7,9 @@ export class InformeEmpleado {
     cursos  !: String;
     infoE_Observaciones  !: String;
     infoE_Usuariocreacion !: Number;
-    infoE_Fechacreacion !: String;
+    infoE_FechaCreacion !: String;
     infoE_UsuarioModificacion !: Number;
-    estc_FechaModificacion !: String;
+    infoE_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
 }
