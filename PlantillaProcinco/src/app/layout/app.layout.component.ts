@@ -22,6 +22,11 @@ export class AppLayoutComponent implements OnDestroy {
 
     showPdf: boolean = false;
 
+    showPDF()
+    {
+        this.showPdf = false;
+    }
+
     public safeUrl: SafeResourceUrl;
 
 

@@ -62,6 +62,7 @@ namespace SistemaProcinco.API.Controllers
             var model = _mapper.Map<tbCategorias>(item);
             var modelo = new tbCategorias()
             {
+                Cate_Imagen = item.Cate_Imagen,
                 Cate_Descripcion = item.Cate_Descripcion,
                 Cate_UsuarioCreacion = 1,
                 Cate_FechaCreacion = DateTime.Now
@@ -99,10 +100,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("CategoriaEliminar")]
-        public IActionResult Delete(int Cate_Id)
+        [HttpDelete("CategoriaEliminar/{id}")]
+        public IActionResult Delete(int id)
         {
-            var list = _procincoService.EliminarCategorias(Cate_Id);
+            var list = _procincoService.EliminarCategorias(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -114,13 +115,13 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CategoriaBuscar")]
-        public IActionResult Details(int Cate_Id)
+        [HttpGet("CategoriaBuscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _procincoService.BuscarCatergorias(Cate_Id);
+            var list = _procincoService.BuscarCatergorias(id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Ok(list.Data);
             }
             else
             {

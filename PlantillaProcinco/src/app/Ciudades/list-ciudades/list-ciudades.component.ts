@@ -141,6 +141,7 @@ export class ListCiudadesComponent implements OnInit {
           const ciudadData: Ciudad = this.crearCiudadForm.value;
           this.ciudadservice.insertCiudades(ciudadData).subscribe(
             response => {
+                console.log(response.code)
 
                 if (response.code == 200) {
 
@@ -166,7 +167,9 @@ export class ListCiudadesComponent implements OnInit {
 
             },
             error => {
-                errorSpan.classList.remove('collapse');
+                console.log(error)
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Registro ya existe', life: 3000 });
+
             }
           );
         } else {
