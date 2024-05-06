@@ -1,11 +1,15 @@
-﻿using AutoMapper;
+﻿using Amazon.S3;
+using Amazon.S3.Transfer;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,11 +22,27 @@ namespace SistemaProcinco.API.Controllers
         private readonly ProcincoService _procincoService;
         private readonly IMapper _mapper;
 
-        public CursosController(ProcincoService procincoService, IMapper mapper)
+
+        private readonly IAmazonS3 _s3Client;
+
+        private readonly string _bucketName;
+
+        public CursosController(IConfiguration configuration, ProcincoService procincoService, IMapper mapper, IAmazonS3 s3Client)
         {
             _procincoService = procincoService;
             _mapper = mapper;
+            _s3Client = s3Client;
+            _bucketName = configuration.GetValue<string>("AWS:BucketName");
+
+            var awsOptions = configuration.GetSection("AWS");
+            _s3Client = new AmazonS3Client(
+                awsOptions["AccessKey"],
+                awsOptions["SecretKey"],
+               Amazon.RegionEndpoint.USEast2
+            );
+
         }
+
         [HttpGet("Listado")]
         public IActionResult Index()
         {
@@ -40,6 +60,9 @@ namespace SistemaProcinco.API.Controllers
         [HttpPost("CursosCrear")]
         public IActionResult Insert(CursosViewModel item)
         {
+
+
+
             var model = _mapper.Map<tbCursos>(item);
             var modelo = new tbCursos()
             {
@@ -101,10 +124,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpGet("CursosBuscar")]
-        public IActionResult Details(int Curso_Id)
+        [HttpGet("CursosBuscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _procincoService.BuscarCursos(Curso_Id);
+            var list = _procincoService.BuscarCursos(id);
             if (list.Success == true)
             {
                 return Json(list.Data);
@@ -115,21 +138,38 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpGet("ddl")]
-        public IActionResult Lista()
+
+        [HttpPost("cargarImagen")]
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
-            var listado = _procincoService.ListaCursos();
-            var drop = listado.Data as List<tbCursos>;
-            var esta = drop.Select(x => new SelectListItem
+            var allowedExtensions = new HashSet<string> { ".png", ".jpeg", ".svg", ".jpg", ".gif" };
+            var fileExtension = Path.GetExtension(file.FileName).ToLower();
+            if (!allowedExtensions.Contains(fileExtension))
             {
-                Text = x.Curso_Descripcion,
-                Value = x.Curso_Id.ToString()
+                return Ok(new { message = "Error" });
+            }
 
-            }).ToList();
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
 
-            esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+            var fileName = Path.GetFileName(file.FileName);
+            using var fileStream = file.OpenReadStream();
 
-            return Ok(esta.ToList());
+            try
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var transferUtility = new TransferUtility(_s3Client);
+                    await transferUtility.UploadAsync(fileStream, _bucketName, fileName);
+
+                    return Ok(new { message = $"Success" });
+                }
+            }
+            catch (AmazonS3Exception e)
+            {
+                return StatusCode(500, $"AWS error: {e.ToString()}");
+            }
+
         }
 
     }

@@ -32,5 +32,13 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios CurIm_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios CurIm_UsuarioModificacionNavigation { get; set; }
         public virtual tbCursos Curso { get; set; }
+
+
+        [NotMapped]
+        public int Year { get; set; }
+        [NotMapped]
+        public int Month { get; set; }
+        [NotMapped]
+        public int TotalCursos { get; set; }
     }
 }

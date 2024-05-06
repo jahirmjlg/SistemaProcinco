@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListCategoriaComponent } from './list-categoria.component';
 import { ListCategoriaRoutingModule } from './list-categoria-routing.module';
 
@@ -25,6 +25,7 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         TableModule,
         FileUploadModule,
         FormsModule,
+        ReactiveFormsModule,
         ListCategoriaRoutingModule,
         ButtonModule,
         RippleModule,

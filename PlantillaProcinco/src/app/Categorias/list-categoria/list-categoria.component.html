@@ -1,22 +1,134 @@
+<p-toast></p-toast>
+   <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
 
-<div class="card-body">
+        <form [formGroup]="crearCategoriaForm" (ngSubmit)="onSubmitInsert()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Agregar Categoria</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Categoria</label>
+                            </div>
+                            <input pInputText id="firstname2" class="form-control" formControlName="cate_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && crearCategoriaForm.controls['cate_Descripcion'].invalid}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCategoriaForm.controls['cate_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+                        </div>
+                        <div class="col-2"></div>
+
+                        <div class="col-4 mt-2">
+                            <label for="firstname2">Imagen</label>
+
+                            <div class="field col-12">
+                                <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" (onSelect)="onUpload($event)" class="mr-2"></p-fileUpload>
+                                <small *ngIf="isSubmit && crearCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-7">
+
+                        </div>
+
+                        <div class="col-4 mt-2" [ngClass]="{'collapse': subidaIf === false}">
+                            <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{subida}}" style="height: 100px; width: 120px;" alt="Imagen">
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+    <!-- DESPLEGAR FORMULARIO DE EDITAR -->
+<div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+    <form [formGroup]="editarCategoriaForm" (ngSubmit)="onSubmitEdit()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar Categoria</h4>
+                <hr />
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="col-sm-2">
+                        <label for="firstname2" class="form-label">Categoria</label>
+                        </div>
+                        <input pInputText id="firstname2" class="form-control" formControlName="cate_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCategoriaForm.controls['cate_Descripcion'].invalid}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCategoriaForm.controls['cate_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+                    </div>
+                    <div class="col-2"></div>
+
+                    <div class="col-4 mt-2">
+                        <label for="firstname2">Imagen</label>
+
+                        <div class="field col-12">
+                            <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
+                            <small *ngIf="isSubmitEdit && editarCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerido</small>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+<!-- DESPLEGAR TABLA DE LISTADO -->
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Categorias</h2>
 
         </header>
     </div>
-</div>
+
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-        <a class="btn btn-primary" id="AbrirModal" style="max-height: 40px; max-width:150px;">
-            Nuevo
-        </a>
+        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+
     </div>
 
     <div class="card px-6 py-6">
 
-        <p-table #dt [value]="categ" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <p-table #dt [value]="categoria" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">
                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -37,13 +149,11 @@
                 <tr>
                     <td>{{cate.cate_Id}}</td>
                     <td>{{cate.cate_Descripcion}}</td>
-                    <td>{{cate.cate_Imagen}}</td>
-
+                    <td> <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{cate.cate_Imagen}}" style="height: 40px; width: 45px;" alt=""></td>
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm">Eliminar</button>
-
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(cate.cate_Id)">Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(cate.cate_Id)">Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCategoria(cate.cate_Id)">Eliminar</button>
                     </td>
                   </tr>
             </ng-template>
@@ -51,3 +161,94 @@
     </div>
 
 </div>
+</div>
+
+
+
+
+<!-- DESPLEGAR DETALLE -->
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles Categoria</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>ID</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Categoria</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Imagen</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ cateID }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ cateDescripcion }}</label></div>
+                </div>
+                <div class="col">
+                    <div><img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{cateImagen}}" style="height: 70px; width: 75px;" alt=""></div>
+                </div>
+            </div>
+
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ UsuarioCreacion }}</td>
+                                    <td>{{ FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ UsuarioModificacion }}</td>
+                                    <td>{{ FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DESPLEGAR MODAL DELETE -->
+<p-dialog [(visible)]="deleteBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar el registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteBool = false"></button>
+            </div>
+        </div>
+</p-dialog>

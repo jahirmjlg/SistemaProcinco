@@ -1,6 +1,7 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
+import {AppLayoutComponent} from '../layout/app.layout.component';
 
 @Component({
     selector: 'app-menu',
@@ -10,7 +11,14 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService, private layoutcomponent: AppLayoutComponent) { }
+
+
+    showPDF()
+    {
+        this.layoutcomponent.showPdf = true;
+    }
+
 
     ngOnInit() {
         this.model = [
@@ -134,7 +142,10 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/pages/empty'] }
+                    { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/pages/empty'] },
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-database', routerLink: ['/uikit/charts'] },
+                    { label: 'Drag', icon: 'pi pi-fw pi-table', routerLink: ['/pages/drag'] },
+
                 ]
             },
             {

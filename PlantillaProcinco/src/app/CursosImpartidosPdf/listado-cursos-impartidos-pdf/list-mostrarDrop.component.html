@@ -1,0 +1,42 @@
+<!--
+
+<h1>Multi-drag-Drop</h1>
+<li>CTRL-A within a list to select all</li>
+<li>CTRL-click to select multiple</li>
+<li>dragging gives the item count while dragging</li>
+<li>drag between lists or order within a single list</li>
+<li>click outside to clear selection</li>
+<li>ESC to cancel drag</li>
+<li>Styling of list is outside the component</li>
+<br/>
+
+<div cdkDropListGroup>
+  <multi-drag-drop
+    [items]="[0,1,2,3,4,5]"
+    (itemsRemoved)="itemsRemoved($event, 1)"
+    (itemsAdded)="itemsAdded($event, 1)"
+    (itemsUpdated)="itemsUpdated($event, 1)"
+    (selectionChanged)="selectionChanged($event, 1)"
+  >
+    <ng-template let-item>
+      --{{ item }}--
+    </ng-template>
+  </multi-drag-drop>
+  <br/>
+  <multi-drag-drop
+    [items]="['b', 'a', 'r']"
+    (itemsRemoved)="itemsRemoved($event, 2)"
+    (itemsAdded)="itemsAdded($event, 2)"
+    (itemsUpdated)="itemsUpdated($event, 2)"
+    (selectionChanged)="selectionChanged($event, 1)"
+  >
+    <ng-template let-item>
+      --{{ item }}--
+    </ng-template>
+  </multi-drag-drop>
+</div>
+<br/>
+<button (click)="clearEvents()">Clear Events:</button>
+<div *ngFor="let ev of events">
+  {{ev.text}}: {{ev.ev}}
+</div> -->

@@ -23,6 +23,8 @@ export class ServiceService {
 
         //#endregion
 
+        urlPreview = this.urlLocalhost + 'CursosImpartidos/Preview';
+
         //#region Acceso
         UrlLogin = this.urlLocalhost + 'Usuario/UsuarioLogin/';
 
@@ -32,6 +34,10 @@ export class ServiceService {
           }
 
         //#endregion
+
+        getPreviewPdfUrl(): Observable<string> {
+            return this.http.get<string>(this.urlPreview, { responseType: 'text' as 'json' });
+          }
 
 
 

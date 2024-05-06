@@ -6,14 +6,9 @@ export class Curso {
     cate_Id  !: Number;
     categoria  !: String;
     curso_UsuarioCreacion !: Number;
-    Curso_FechaCreacion !: String;
-    Curso_UsuarioModificacion !: Number;
-    Curso_FechaModificacion !: String;
+    curso_FechaCreacion !: String;
+    curso_UsuarioModificacion !: Number;
+    curso_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
-}
-
-export class dropCursos{
-    curso_Id !: Number;
-    curso_Descripcion  !: String;
 }

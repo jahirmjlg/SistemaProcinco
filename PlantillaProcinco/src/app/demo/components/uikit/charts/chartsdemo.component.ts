@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import {CursosImpartidosService} from '../../../../Services/cursosimpartidos.service'
 
 @Component({
     templateUrl: './chartsdemo.component.html'
@@ -10,6 +11,11 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     lineData: any;
 
     barData: any;
+
+
+    //DATOS DASH #1
+    cursosMesData: any;
+
 
     pieData: any;
 
@@ -28,7 +34,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     radarOptions: any;
 
     subscription: Subscription;
-    constructor(private layoutService: LayoutService) {
+    constructor(private layoutService: LayoutService, private cursosimpservice: CursosImpartidosService) {
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
             .subscribe((config) => {
@@ -38,31 +44,62 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.initCharts();
+
+            // this.cursosimpservice.getCursoPorMesData().subscribe((Response: any)=> {
+            //     console.log(Response.data);
+            //     this.cursosMesData = Response.data;
+
+            //   }, error=>{
+            //     console.log(error);
+            //   });
+
     }
+
+
+
 
     initCharts() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-        
-        this.barData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'My First dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                    borderColor: documentStyle.getPropertyValue('--primary-500'),
-                    data: [65, 59, 80, 81, 56, 55, 40]
+
+        this.cursosimpservice.getCursoPorMesData().subscribe(data => {
+            const months = data.map(item => new Date(item.year, item.month - 1).toLocaleString('default', { month: 'long' }));
+            const courseCounts = data.map(item => item.totalCursos);
+
+            this.barData = {
+                labels: months,
+                datasets: [
+                    {
+                        label: 'Cursos Totales',
+                        backgroundColor: '#633394',
+                        borderColor: '#1E88E5',
+                        data: courseCounts
+                    }
+                ]
+            };
+
+            this.lineOptions = {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0  // Omitir decimales
+                        }
+                    },
+                    x: {
+
+                    }
                 },
-                {
-                    label: 'My Second dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                    borderColor: documentStyle.getPropertyValue('--primary-200'),
-                    data: [28, 48, 40, 19, 86, 27, 90]
+                plugins: {
+                    legend: {
+                        display: true
+                    }
                 }
-            ]
-        };
+            };
+        });
 
         this.barOptions = {
             plugins: {
@@ -126,8 +163,10 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             }
         };
 
+
+        //Dashboard #1
         this.lineData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
             datasets: [
                 {
                     label: 'First Dataset',
@@ -147,6 +186,14 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
                 }
             ]
         };
+
+
+
+
+
+
+
+
 
         this.lineOptions = {
             plugins: {
@@ -266,5 +313,5 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
         }
     }
-    
+
 }

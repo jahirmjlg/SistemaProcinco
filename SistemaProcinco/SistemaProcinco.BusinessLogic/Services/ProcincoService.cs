@@ -575,6 +575,26 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        //DASH
+        public ServicesResult CursosImpartidosMes()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.CursosMes();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
         public ServicesResult BuscarCursosImpartidos(int Id)
         {
             var result = new ServicesResult();

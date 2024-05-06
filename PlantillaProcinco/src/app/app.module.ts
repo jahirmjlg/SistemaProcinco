@@ -11,6 +11,7 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -19,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule, BrowserModule, HttpClientModule, ReactiveFormsModule],
+    imports: [AppRoutingModule, AppLayoutModule, BrowserModule, HttpClientModule, ReactiveFormsModule, DragDropModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
