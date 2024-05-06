@@ -66,70 +66,87 @@ namespace SistemaProcinco.API.Controllers
 
         private MemoryStream CreatePdfStream()
         {
-
             MemoryStream memoryStream = new MemoryStream();
-
 
             using (Document document = new Document())
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
-                writer.CloseStream = false; 
+                writer.CloseStream = false;
 
                 document.Open();
 
-                // Estilos CSS
                 string css = @"
-            <style> 
-                body { font-family: 'Arial'; font-size: 10pt; }
-                table { width: 100%; border-collapse: collapse; }
-                th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-                th { background-color: #f2f2f2; }
-            </style>";
+        <style> 
+            body { font-family: 'Arial'; font-size: 10pt; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+            th { background-color: #633394; color: #ffffff; } // Color de encabezado personalizado
+            td { background-color: #f9f9f9; color: #333; }  // Mejora en el color de fondo de la celda
+            .header, .footer { width: 100%; background-color: #633394; color: white; text-align: center; padding: 10px 0; }
+            .footer { position: fixed; bottom: 0; }
+        </style>";
 
-                // Contenido HTML del PDF
                 string htmlContent = @"
-            <html>
-            <head>
-            </head>
-            <body>
-                <div style='text-align: center;'>
-                    <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' style='width: 100px; height: auto;' />
-                    <h1>Reporte de Cursos Impartidos</h1>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Curso</th>
-                            <th>Nombre</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Usuario Finalización</th>
-                            <th>Finalizado</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+        <html>
+        <head>
+        </head>
+        <body>
+            <div class='header'>
+                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' style='width: 100px; height: auto;' />
+                <h1>Reporte de Cursos Impartidos</h1>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Curso</th>
+                        <th>Nombre</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Finalizado</th>
+                    </tr>
+                </thead>
+                <tbody>";
 
                 var listado = _procincoService.ListaCursosImpartidos();
                 foreach (var curso in listado.Data)
                 {
-                    htmlContent += $@"
-                <tr>
-                    <td>{curso.CurIm_Id}</td>
-                    <td>{curso.Cursos}</td>
-                    <td>{curso.Nombre}</td>
-                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                    <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
-                    <td>{curso.CurIm_UsuarioFinalizacion}</td>
-                    <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
-                </tr>";
+                    
+                    if(curso.CurIm_FechaFin != null)
+                    {
+                        htmlContent += $@"
+                        <tr>
+                            <td>{curso.CurIm_Id}</td>
+                            <td>{curso.Cursos}</td>
+                            <td>{curso.Nombre}</td>
+                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                            <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                        </tr>";
+                    }
+                    else
+                    {
+                        htmlContent += $@"
+                        <tr>
+                            <td>{curso.CurIm_Id}</td>
+                            <td>{curso.Cursos}</td>
+                            <td>{curso.Nombre}</td>
+                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                            <td style='color: #14b81b'>Sin Finalizar</td>
+                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                        </tr>";
+                    }
+
                 }
 
                 htmlContent += @"
-                    </tbody>
-                </table>
-            </body>
-            </html>";
+                </tbody>
+            </table>
+            <div class='footer'>
+                <p>© 2024 Procinco. Todos los derechos reservados.</p>
+            </div>
+        </body>
+        </html>";
 
                 using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
                 using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
@@ -143,6 +160,7 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
 
 
 
