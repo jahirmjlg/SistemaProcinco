@@ -1,3 +1,5 @@
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.S3;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using SistemaProcinco.API;
 using SistemaProcinco.API.Extencions;
@@ -42,6 +45,20 @@ namespace SistemaProcinco
 
 
             services.AddControllers();
+
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonS3>();
+
+            services.AddSingleton<IAmazonS3>(sp =>
+            {
+                var awsOptions = sp.GetRequiredService<IOptions<AWSOptions>>().Value;
+                return new AmazonS3Client(awsOptions.Credentials, new AmazonS3Config
+                {
+                    RegionEndpoint = Amazon.RegionEndpoint.USEast2
+                });
+            });
+
+            services.AddScoped<CargarImagenService>();
 
 
             services.AddSwaggerGen(c =>

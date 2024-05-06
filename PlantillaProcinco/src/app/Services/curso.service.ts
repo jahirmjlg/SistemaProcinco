@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Curso } from '../Models/CursosViewModel';
 import {ServiceService} from './service.service'
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Categoria } from '../Models/CategoriasViewModel';
 
 @Injectable({
@@ -48,6 +48,16 @@ export class CursoService {
         getDdlCategorias(): Observable<any> {
             return this.http.get<Categoria[]>(this.UrlCategorias);
         }
+
+
+        //CARGA DE IMAGENES
+        upload(file: any): Observable<any>{
+            return this.http.post<Curso[]>(this.UrlCurso + 'cargarImagen', file).pipe(
+                map(response => {
+                    return response;
+                  }),
+            );
+          }
 
 
 }

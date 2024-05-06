@@ -16,7 +16,11 @@ import { FileUpload } from 'primeng/fileupload';
 @Component({
   selector: 'app-list-curso',
   templateUrl: './list-curso.component.html',
-  providers: [MessageService]
+  providers: [MessageService],
+  template: `
+  <input type="file" (change)="onFileSelected($event)">
+  <button (click)="onUpload()">Upload</button>
+`
 
 })
 export class ListCursoComponent {
@@ -42,6 +46,9 @@ export class ListCursoComponent {
 
         //VARIABLE EN LA QUE ITERA EL DDL
     dropCategorias: any[] = [];
+
+    //File
+    selectedFile: File;
 
 
     // DETALLE
@@ -83,6 +90,43 @@ export class ListCursoComponent {
 
 
      }
+
+
+     Cancel()
+     {
+        this.Collapse=false;
+        this.Tabla=true;
+        this.isSubmitEdit=false;
+        this.fileupload.clear();
+
+     }
+
+
+      onUpload(event) {
+        const file: File = event.files[0];
+        if (file) {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            const uniqueFileName = uniqueSuffix + '-' + file.name;
+
+            this.crearCursoForm.get('curso_Imagen').setValue(uniqueFileName);
+            const formData: FormData = new FormData();
+
+            formData.append('file', file, uniqueFileName);
+            this.cursoservice.upload(formData).subscribe(
+              response => {
+                console.log('Carga exitosa', response);
+                if (response.code == 200) {
+                  this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Imagen Subida', life: 3000 });
+                } else {
+                  this.messageService.add({ severity: 'success', summary: 'Error', detail: 'Suba una imagen', life: 3000 });
+                }
+              },
+              error => {
+                console.error('Error al cargar imagen', error);
+              }
+            );
+          }
+      }
 
     ngOnInit() {
 

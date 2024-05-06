@@ -48,7 +48,7 @@
 
 
                                 <div class="field md:col-6">
-                                    <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
+                                    <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" (onSelect)="onUpload($event)" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
                                     <small *ngIf="isSubmit && crearCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                 <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                             </div>
                             <div class="col-md-offset-2 col-3" id="">
-                                <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                                <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                         <td>{{curs.curso_Id}}</td>
                         <td>{{curs.curso_Descripcion}}</td>
                         <td>{{curs.curso_DuracionHoras}}</td>
-                        <td>{{curs.curso_Imagen}}</td>
+                        <td> <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{curs.curso_Imagen}}" style="height: 40px; width: 45px;" alt=""></td>
                         <td>{{curs.categoria}}</td>
 
                         <td>
