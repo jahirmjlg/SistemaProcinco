@@ -45,7 +45,11 @@ export class AppMenuComponent implements OnInit {
                                 icon: 'pi pi-fw pi-user',
                                 routerLink: ['/auth/login']
                             },
-
+                            {
+                                label: 'enviar codigo',
+                                icon: 'pi pi-fw pi-user',
+                                routerLink: ['/pages/enviarcodigo']
+                            },
                         ]
                     },
                 ]

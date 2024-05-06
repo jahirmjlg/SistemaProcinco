@@ -222,12 +222,12 @@ namespace SistemaProcinco.BusinessLogic.Services
         #endregion
 
         #region Pantallas
-        public ServicesResult ListaPantallas(int Role_Id)
+        public ServicesResult ListaPantallas()
         {
             var result = new ServicesResult();
             try
             {
-                var lost = _pantallasRepository.List1(Role_Id);
+                var lost = _pantallasRepository.List();
                 if (lost.Count() > 0)
                 {
                     return result.Ok(lost);

@@ -1,0 +1,26 @@
+
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <div class="w-full surface-cardd py-8 px-5 sm:px-8" style="border-radius: 53px;">
+            <div class="text-center mb-5">
+                <img src="assets/layout/images/ProcincoPNG.png" alt="Image" height="50" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3"></div>
+                <span class="text-700 font-medium">Ingrese su usuario:</span>
+            </div>
+
+            <form  [formGroup]="compararForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Codigo</label>
+                    <input id="codigo" type="text" placeholder="Codigo" formControlName="codigo" class="w-full md:w-30rem form-control" >
+                    <span id="validarcodi" class="text-danger mb-5 collapse">El campo codigo es obligatorio.</span>
+
+                    <span class="error collapse" id="error-span">Codigo Inválido</span>
+
+                   
+                    <button type="submit" pButton pRipple label="Enviar Codigo" class="w-full p-1 text-xl btn btn-primary" style="max-width: 150px;"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
