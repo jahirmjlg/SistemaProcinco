@@ -77,7 +77,6 @@ export class AppLayoutComponent implements OnDestroy {
         this.service.getPreviewPdfUrl().subscribe(
           (url) => {
             this.safeUrl = this.getSafeUrl(url);
-            console.log('la urlpapi: ' + this.safeUrl)
           },
           (error) => {
             console.error('Error al obtener la URL del PDF:', error);

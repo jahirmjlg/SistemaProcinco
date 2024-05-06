@@ -45,6 +45,21 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+        // DASH
+        [HttpGet("CursosMes")]
+        public IActionResult CursosMes()
+        {
+            var listado = _procincoService.CursosImpartidosMes();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
 
 
 
