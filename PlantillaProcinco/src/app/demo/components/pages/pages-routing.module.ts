@@ -40,6 +40,9 @@ import { RouterModule } from '@angular/router';
 
         { path: 'categorias', data: { breadcrumb: 'Categorias' }, loadChildren: () => import('../../../Categorias/list-categoria/list-categoria.module').then(m => m.ListCategoriaModule) },
 
+        { path: 'drag', data: { breadcrumb: 'DragDrop' }, loadChildren: () => import('../../../CursosImpartidosPdf/listado-cursos-impartidos-pdf/list-mostrarDrop-routing.module').then(m => m.ListMostrarDropRoutingModule) },
+
+
         { path: '**', redirectTo: '/notfound' }
     ])],
     exports: [RouterModule]

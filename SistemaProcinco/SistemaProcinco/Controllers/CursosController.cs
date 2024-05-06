@@ -162,7 +162,7 @@ namespace SistemaProcinco.API.Controllers
                     var transferUtility = new TransferUtility(_s3Client);
                     await transferUtility.UploadAsync(fileStream, _bucketName, fileName);
 
-                    return Ok();
+                    return Ok(new { message = $"Success" });
                 }
             }
             catch (AmazonS3Exception e)

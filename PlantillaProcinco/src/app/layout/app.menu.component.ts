@@ -144,6 +144,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/pages/empty'] },
                     { label: 'Dashboard', icon: 'pi pi-fw pi-database', routerLink: ['/uikit/charts'] },
+                    { label: 'Drag', icon: 'pi pi-fw pi-table', routerLink: ['/pages/drag'] },
 
                 ]
             },
