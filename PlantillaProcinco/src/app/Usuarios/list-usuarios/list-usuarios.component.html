@@ -7,55 +7,54 @@
                 <div class="card-body">
                     <h4>Agregar Usuario</h4>
                     <hr />
-    
+
                     <div class="row">
-                        <div class="col-4">
-    
+                        <div class="col-6">
+
                             <div class="col-sm-2">
                             <label for="firstname2" class="form-label">Usuario</label>
                             </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Usuario'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
-                        <div class="col-4 mt-2">
+                        <div class="col-6 mt-2">
                             <div class="col-sm-2">
                                 <label for="firstname2">Contraseña</label>
                             </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="usua_Contraseña" type="text" required autofocus />
-                            
+
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Contraseña'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="admin" [value]="true" formControlName="usua_EsAdmin"> Si
-                            </label>
-                        </div>
-                        
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="admin" [value]="false" formControlName="usua_EsAdmin"> No
-                            </label>
-                        </div>
-    
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Descripcion Requerida</small>
-                        </div>
+                            <label for="firstname2" class="form-label">Validacion Admin</label>
 
-                        <div class="col-6">    
-                            <div class="col-sm-2">
-                            <label for="firstname2">Rol</label>
-                            </div>    
+                            <div class="col-md-3">
+                                <label>
+                                    <input type="radio" class="form-check-input" name="admin" [value]="true" formControlName="usua_EsAdmin"> Si
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    <input type="radio" class="form-check-input" name="admin" [value]="false" formControlName="usua_EsAdmin"> No
+                                </label>
+                            </div>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Validacion Requerida</small>
+                            </div>
+                        <div class="col-6">
+                            <div >
+                                <label for="firstname2">Rol</label>
+                            </div>
                             <select formControlName="role_Id" class="form-control" pInputText id="" required autofocus>
-                            <option *ngFor="let rol of roles" [value]="rol.value">{{ rol.text }}</option>
-                        </select>
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.get('role_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
+                                <option *ngFor="let rol of roles" [value]="rol.value">{{ rol.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.get('role_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">    
+                        <div class="col-6">
                             <div class="col-sm-2">
                             <label for="firstname2">Empleado</label>
                             </div>
@@ -75,10 +74,10 @@
                     </div>
             </div>
         </form>
-    
+
     </div>
 
-    
+
     <!-- DESPLEGAR FORMULARIO DE EDITAR -->
 <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
 
@@ -88,7 +87,7 @@
                 <h4>Editar Usuario</h4>
                 <hr />
 
-               
+
                 <div class="row">
                     <div class="col-4">
 
@@ -99,7 +98,7 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarUsuarioForm.controls['usua_Usuario'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
-                    
+
                 </div>
                 <div class="row">
                     <div class="form-check">
@@ -107,7 +106,7 @@
                             <input type="radio" class="form-check-input" name="admin" [value]="true" formControlName="usua_EsAdmin"> Si
                         </label>
                     </div>
-                    
+
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="admin" [value]="false" formControlName="usua_EsAdmin"> No
@@ -117,10 +116,10 @@
                     <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Descripcion Requerida</small>
                     </div>
 
-                    <div class="col-6">    
+                    <div class="col-6">
                         <div class="col-sm-2">
                         <label for="firstname2">Rol</label>
-                        </div>    
+                        </div>
                         <select formControlName="role_Id" class="form-control" pInputText id="" required autofocus>
                         <option *ngFor="let rol of roles" [value]="rol.value">{{ rol.text }}</option>
                     </select>
@@ -128,7 +127,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">    
+                    <div class="col-6">
                         <div class="col-sm-2">
                         <label for="firstname2">Empleado</label>
                         </div>
@@ -138,7 +137,7 @@
                     <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarUsuarioForm.get('empl_Id').value === '0'" style="color: red !important;">El Empleado es Requerido</small>
                     </div>
                 </div>
-                
+
                 </div>
 
 
@@ -168,7 +167,7 @@
     <div class="card m-2 mt-4 p-3">
         <div class="card-header">
             <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
-    
+
         </div>
 
         <div class="card px-6 py-6">

@@ -6,30 +6,29 @@
                 <div class="card-body">
                     <h4>Agregar Estado</h4>
                     <hr />
-    
+
                     <div class="row">
-                        <div class="col-4">
-    
+                        <div class="col-6">
+
                             <div class="col-sm-2">
                             <label for="firstname2" class="form-label">Codigo</label>
                             </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstadoForm.controls['esta_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
-                        <div class="col-2"></div>
-                        <div class="col-4 mt-2">
-    
+                        <div class="col-6 mt-2">
+
                             <div class="col-sm-2">
                                 <label for="firstname2">Estado</label>
                                 </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstadoForm.controls['esta_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
-                    
-    
+
+
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -41,7 +40,7 @@
                 </div>
             </div>
         </form>
-    
+
     </div>
 
     <!-- DESPLEGAR FORMULARIO DE EDITAR -->
@@ -52,28 +51,27 @@
                 <div class="card-body">
                     <h4>Editar Estado</h4>
                     <hr />
-    
+
                     <div class="row">
-                        <div class="col-4">
-    
+                        <div class="col-6">
+
                             <div class="col-sm-2">
                             <label for="firstname2" class="form-label">Codigo</label>
                             </div>
                             <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEstadoForm.controls['esta_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
-                        <div class="col-2"></div>
-                        <div class="col-4 mt-2">
-    
+                        <div class="col-6 mt-2">
+
                             <div class="col-sm-2">
                                 <label for="firstname2">Estado</label>
                                 </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEstadoForm.controls['esta_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
-                       
+
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -85,9 +83,9 @@
                 </div>
             </div>
         </form>
-    
+
     </div>
-    
+
 
 <div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
@@ -151,7 +149,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-               
+
                 <div class="col" style="font-weight:700">
                     <div>Codigo</div>
                 </div>

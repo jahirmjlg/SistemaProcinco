@@ -9,19 +9,17 @@
                     <hr />
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="col-sm-2">
-                            <label for="firstname2" class="form-label">Categoria</label>
+                                <label for="firstname2" class="form-label">Categoria</label>
                             </div>
                             <input pInputText id="firstname2" class="form-control" formControlName="cate_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && crearCategoriaForm.controls['cate_Descripcion'].invalid}"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCategoriaForm.controls['cate_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
                         </div>
-                        <div class="col-2"></div>
-
-                        <div class="col-4 mt-2">
+                        <div class="col-6 ">
                             <label for="firstname2">Imagen</label>
 
-                            <div class="field col-12">
+                            <div class="">
                                 <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" (onSelect)="onUpload($event)" class="mr-2"></p-fileUpload>
                                 <small *ngIf="isSubmit && crearCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
                             </div>
@@ -30,18 +28,11 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-7">
-
-                        </div>
-
                         <div class="col-4 mt-2" [ngClass]="{'collapse': subidaIf === false}">
                             <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{subida}}" style="height: 100px; width: 120px;" alt="Imagen">
 
                         </div>
                     </div>
-
-
-
 
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
@@ -70,19 +61,18 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Categoria</label>
                         </div>
                         <input pInputText id="firstname2" class="form-control" formControlName="cate_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCategoriaForm.controls['cate_Descripcion'].invalid}"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCategoriaForm.controls['cate_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
                     </div>
-                    <div class="col-2"></div>
 
-                    <div class="col-4 mt-2">
+                    <div class="col-6">
                         <label for="firstname2">Imagen</label>
 
-                        <div class="field col-12">
+                        <div class="">
                             <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
                             <small *ngIf="isSubmitEdit && editarCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerido</small>
                         </div>
