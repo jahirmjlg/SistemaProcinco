@@ -29,4 +29,8 @@ export class RolesService {
     return this.http.delete<any>(`${this.UrlRol}RolEliminar/${ID}`);
   }
 
+  follRol(id: String): Observable<any>{
+    return this.http.get<any>(`${this.UrlRol}Buscar/${id}`);
+  }
+
 }

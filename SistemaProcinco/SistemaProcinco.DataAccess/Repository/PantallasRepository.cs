@@ -65,7 +65,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
-                result = db.Query<tbPantallas>(sql, commandType: System.Data.CommandType.Text).ToList();
+                result = db.Query<tbPantallas>(sql,  commandType: CommandType.StoredProcedure).ToList();
 
                 return result;
             }

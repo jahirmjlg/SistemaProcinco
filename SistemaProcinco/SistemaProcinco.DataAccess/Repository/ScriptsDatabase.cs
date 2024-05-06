@@ -22,7 +22,7 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string PantallasPorRolesActualizar = "[Acc].[SP_PantallasPorRoles_Actualizar]";
         public static string PantallasPorRolesEliminar = "[Acc].[SP_PantallasPorRoles_Eliminar]";
         public static string PantallasPorRolesLlenarEditar = "[Acc].[SP_PantallasPorRoles_LlenarEditar]";
-        public static string PantallasPorRolesBuscar = "[Acc].[SP_PantallasPorRoles_Seleccionar]";
+        public static string PantallasPorRolesBuscar = "[Acc].[SP_PantallasPorRoles_LlenarEditar]";
         #endregion
 
         #region Roles

@@ -85,7 +85,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("PantallaPorRolEliminar")]
+        [HttpDelete("PantallaPorRolEliminar/{PaPr_id}")]
         public IActionResult Delete(int PaPr_id)
         {
             var list = _accesoService.EliminarPantallasPorRoles(PaPr_id);
@@ -100,7 +100,7 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("PantallaPorRolBuscar")]
+        [HttpGet("PantallaPorRolBuscar/{PaPr_Id}")]
         public IActionResult Details(int PaPr_Id)
         {
             var list = _accesoService.BuscarPantallasPorRoles(PaPr_Id);

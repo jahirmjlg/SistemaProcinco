@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import {RolesService} from '../../Services/roles.service';
 import {Role} from 'src/app/Models/RolesViewModel';
 import {Router} from '@angular/router';
-
+import { PantallasService } from 'src/app/Services/pantallas.service';
+import { Pantalla } from 'src/app/Models/PantallasViewModel';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.service';
+import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
 
 @Component({
   selector: 'app-list-roles',
@@ -29,6 +32,9 @@ export class ListRolesComponent {
 
     ID: String = "";
 
+  pantd: any[] = [];
+
+
   cols: any[] = [];
   statuses: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
@@ -38,16 +44,16 @@ export class ListRolesComponent {
 
   //   variable para iterar
   role!:Role[];
+  pantalla!:Pantalla[];
 
   crearRolForm: FormGroup
   editarRolForm: FormGroup
+  crearParoForm: FormGroup
 
   //ultimos dos
-  constructor(private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService ) { }
+  constructor(private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
 
   ngOnInit() {
-
-
     this.crearRolForm = this.formBuilder.group({
         role_Descripcion: ['', [Validators.required]],
     });
@@ -55,17 +61,25 @@ export class ListRolesComponent {
     this.editarRolForm = new FormGroup({
         role_Id: new FormControl("",Validators.required),
         role_Descripcion: new FormControl("", Validators.required),
-     })
+    })
 
-      // Respuesta de la api
-      this.service.getRol().subscribe((Response: any)=> {
-          console.log(Response.data);
-          this.role = Response.data;
+    this.crearParoForm = this.formBuilder.group({
+        role_Id: [0, [Validators.required]],
+        checkboxes: this.formBuilder.group({})
+    })
 
-        }, error=>{
-          console.log(error);
-        });
+    // Respuesta de la api
+    this.service.getRol().subscribe((Response: any)=> {
+        console.log(Response.data);
+        this.role = Response.data;
+    }, error=>{
+        console.log(error);
+    });
 
+    this.pantallaservice.getPantalla().subscribe((Response: any)=>{
+        console.log(Response.data);
+        this.pantalla = Response.data;
+    });
         //
 
       this.schemas = [
@@ -73,6 +87,53 @@ export class ListRolesComponent {
         ];
   }
 
+   onCheckboxChange(checked: boolean, id: number) {
+    const checkboxGroup = this.crearParoForm.get('checkboxes') as FormGroup;
+
+    if (checked) {
+      checkboxGroup.addControl(id.toString(), this.formBuilder.control(true));
+      console.log(checkboxGroup);
+    } else {
+      checkboxGroup.removeControl(id.toString());
+    }
+  }
+
+  submitForm(): void {
+    if (this.crearParoForm.valid) {
+      const pantallasSeleccionadas = Object.keys(this.crearParoForm.get('checkboxes').value);
+
+      // Crear un objeto PantallaPorRol para cada checkbox seleccionado y enviarlo
+      pantallasSeleccionadas.forEach(id => {
+        const paroInsertar: PantallaPorRol = {
+          paPr_Id: null,
+          pant_Id: id,
+          pantalla: '', // Debes llenar este campo con el valor correspondiente
+          role_Id: 7,
+          rol: '', // Debes llenar este campo con el valor correspondiente
+          paPr_UsuarioCreacion: 1, // Debes llenar este campo con el valor correspondiente
+          paPr_FechaCreacion: '', // Debes llenar este campo con el valor correspondiente
+          paPr_UsuarioModificacion: null,
+          paPr_FechaModificacion: '', // Debes llenar este campo con el valor correspondiente
+          paPr_Estado: null,
+          creacion: '', // Debes llenar este campo con el valor correspondiente
+          modificacion: '' // Debes llenar este campo con el valor correspondiente
+        };
+
+        // Llamar al servicio para insertar el registro de PantallaPorRol
+        this.paroservice.insertPantallaPorRol(paroInsertar).subscribe(
+          response => { 
+      console.log("NO ENTRA ESTA MIERDA");
+      // Manejar la respuesta del servicio
+          },
+          error => {
+            console.error('Error al insertar el registro de PantallaPorRol:', error);
+          }
+        );
+      });
+    } else {
+      console.log('Formulario inválido');
+    }
+  }
 
   onSubmitInsert(): void {
 
@@ -83,11 +144,10 @@ export class ListRolesComponent {
       const contenidoData: Role = this.crearRolForm.value;
       this.service.CrearRol(contenidoData).subscribe(
        response => {
-
-        if (response.code == 200) 
+        if (response.code == 200)
         {
             this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
-
+            
             console.log(response)
             this.service.getRol().subscribe((Response: any)=> {
                 console.log(Response.data);
@@ -122,8 +182,6 @@ export class ListRolesComponent {
             response => {
 
                 if (response.code == 200) {
-
-
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
                     console.log(response)
                     // this.router.navigate(['/pages/estados']);
@@ -179,22 +237,4 @@ export class ListRolesComponent {
         });
     }
 
-    // Fill(id) {
-    //     this.service.fillEstadoCivil(id).subscribe({
-    //         next: (data: Role) => {
-    //             this.ID = data[0].estc_Id,
-    //             this.editarRolForm = new FormGroup({
-    //                 role_Id: new FormControl(data[0].role_Id),
-    //                 role_Descripcion: new FormControl(data[0].role_Descripcion,Validators.required),
-    //             });
-    //             console.log(this.ID);
-
-    //             this.CollapseEdit = true;
-    //             this.Tabla=false;
-
-    //             console.log(data)
-
-    //         }
-    //     });
-    // }
 }
