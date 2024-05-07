@@ -53,7 +53,7 @@
                             <label for="firstname2">Estado Civil</label>
                             </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="estc_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="estc_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)" />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEstadoCivilForm.controls['estc_Descripcion'].invalid" style="color: red !important;">Estado Civil Requerida</small>
                     </div>
                

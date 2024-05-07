@@ -188,6 +188,14 @@ export class ListEstadoscivilesComponent {
         console.log("ID" + codigo);
     }
     
+    validarTexto(event: KeyboardEvent) {
+
+        if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+            event.preventDefault();
+        }
+    }
+
+    
 
     confirmDelete() {
         this.estadoscivilesservice.deleteEstadoCivil(this.ID).subscribe({
