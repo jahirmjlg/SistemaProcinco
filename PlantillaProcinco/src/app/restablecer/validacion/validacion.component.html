@@ -1,0 +1,26 @@
+
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <div class="w-full surface-cardd py-8 px-5 sm:px-8" style="border-radius: 53px;">
+            <div class="text-center mb-5">
+                <img src="assets/layout/images/ProcincoPNG.png" alt="Image" height="50" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3"></div>
+                <span class="text-700 font-medium">Ingrese su usuario:</span>
+            </div>
+
+            <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Usuario</label>
+                    <input id="usuaa" type="text" placeholder="usuario" formControlName="usuario" class="w-full md:w-30rem form-control" >
+                    <span id="validarusu" class="text-danger mb-5 collapse">El campo Usuario es obligatorio.</span>
+
+                    <span class="error collapse" id="error-span">Usuario Inválido</span>
+
+                   
+                    <button type="submit" pButton pRipple label="Enviar Verificacion" class="w-full p-3 text-xl btn btn-primary" style="max-width: 200px;"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

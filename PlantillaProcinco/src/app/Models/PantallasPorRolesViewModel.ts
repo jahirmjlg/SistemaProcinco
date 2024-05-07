@@ -20,6 +20,4 @@ export class PantallasPorRolesView {
     paPr_UsuarioModificacion !: Number;
     paPr_FechaModificacion !: String;
     paPr_Estado !: boolean;
-    creacion !: String;
-    modificacion !: String;
 }

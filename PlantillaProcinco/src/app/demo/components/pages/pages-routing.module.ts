@@ -31,7 +31,12 @@ import { RouterModule } from '@angular/router';
         { path: 'cursos', data: { breadcrumb: 'Cursos' }, loadChildren: () => import('../../../Cursos/list-curso/list-curso.module').then(m => m.ListCursoModule) },
 
         { path: 'cursosimp', data: { breadcrumb: 'CursosImpartidos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule) },
+       
+        { path: 'enviarcodigo', data: { breadcrumb: 'EnviarCodigo' }, loadChildren: () => import('../../../restablecer/validacion/validacion.module').then(m => m.ValidacionModule) },
 
+        { path: 'compararcodigo', data: { breadcrumb: 'CompararCodigo' }, loadChildren: () => import('../../../restablecer/comparar/comparar.module').then(m => m.CompararModule) },
+
+        { path: 'restablecer', data: { breadcrumb: 'Restablecer' }, loadChildren: () => import('../../../restablecer/restablecer/restablecer.module').then(m => m.restablecerModule) },
 
         { path: 'categorias', data: { breadcrumb: 'Categorias' }, loadChildren: () => import('../../../Categorias/list-categoria/list-categoria.module').then(m => m.ListCategoriaModule) },
 

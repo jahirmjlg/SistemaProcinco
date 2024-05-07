@@ -1,0 +1,30 @@
+
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <div class="w-full surface-cardd py-8 px-5 sm:px-8" style="border-radius: 53px;">
+            <div class="text-center mb-5">
+                <img src="assets/layout/images/ProcincoPNG.png" alt="Image" height="50" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3"></div>
+                <span class="text-700 font-medium">Ingrese su usuario:</span>
+            </div>
+
+            <form  [formGroup]="restaForm" (ngSubmit)="onSubmitEdit()">
+                <div>
+                    <input id="ide"  type="text"  formControlName="usua_Id"   >
+
+                    <label class="block text-900 text-xl font-medium mb-2">Contraseña</label>
+                    
+                    <input id="contra" type="text" placeholder="Nueva Contraseña" formControlName="usua_Contraseña" class="w-full md:w-30rem form-control" >
+                    
+                    <span id="validarcontra" class="text-danger mb-5 collapse">El campo contraseña es obligatorio.</span>
+
+                    <span class="error collapse" id="error-span">Contraseña Inválida</span>
+
+                   
+                    <button type="submit" pButton label="Enviar Codigo" class="w-full p-1 text-xl btn btn-primary" style="max-width: 150px;"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Role} from '../Models/RolesViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
+
 import { PantallasPorRolesView } from '../Models/PantallasPorRolesViewModel';
 import { Observable } from 'rxjs';
 
@@ -13,7 +14,7 @@ export class RolesService {
 
   constructor(private http:HttpClient, private service:ServiceService) { }
 
-  UrlRol = this.service.urlLocalhost + 'Rol/Listado';
+  UrlRol = this.service.urlLocalhost + 'Rol/';
 
   UrlPantallasRoles = this.service.urlLocalhost + 'PantallaPorRol/'
 
@@ -43,6 +44,7 @@ export class RolesService {
         deleteRol(ID): Observable<any>{
             return this.http.delete<any>(`${this.UrlRol}RolEliminar/${ID}`)
             }
+
 
 
 

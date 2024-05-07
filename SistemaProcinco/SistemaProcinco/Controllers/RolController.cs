@@ -130,5 +130,19 @@ namespace SistemaProcinco.API.Controllers
 
             return Ok(esta.ToList());
         }
+
+        [HttpGet("Buscar/{id}")]
+        public IActionResult Details(int id)
+        {
+            var list = _accesoService.BuscarRoles(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
     }
 }
