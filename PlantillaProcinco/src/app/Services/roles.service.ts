@@ -3,7 +3,7 @@ import {Role} from '../Models/RolesViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
 
-import { PantallasPorRolesView } from '../Models/PantallasPorRolesViewModel';
+import { PantallaPorRol } from '../Models/PantallasPorRolesViewModel';
 import { Observable } from 'rxjs';
 
 
@@ -18,9 +18,12 @@ export class RolesService {
 
   UrlPantallasRoles = this.service.urlLocalhost + 'PantallaPorRol/'
 
+  UrlPantalla = this.service.urlLocalhost + 'Pantalla/';
+
+
 
         getRol() {
-        return this.http.get<Role[]>(this.UrlRol);
+        return this.http.get<Role[]>(`${this.UrlRol}Listado`);
         }
 
 
@@ -47,5 +50,12 @@ export class RolesService {
 
 
 
+
+            //PANTALLAS
+
+
+        getPantallas(idRol: number) {
+            return this.http.get<Role[]>(`${this.UrlRol}Listado/${idRol}`);
+            }
 
 }

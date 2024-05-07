@@ -9,6 +9,8 @@ namespace SistemaProcinco.DataAccess.Repository
     class ScriptsDatabase
     {
         #region Pantallas 
+        public static string PantallasFiltrar = "[Acc].[SP_Pantallas_Listado]";
+
         public static string PantallasListar = "[Acc].[SP_Pantallas_Seleccionar]";
         public static string PantallasCrear = "[Acc].[SP_Pantallas_Insertar]";
         public static string PantallasEliminar = "[Acc].[SP_Pantallas_Eliminar]";

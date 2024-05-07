@@ -12,12 +12,17 @@ export class PantallasView {
 }
 
 
-export class PantallasPorRolesView {
+export class PantallaPorRol {
     paPr_Id !: Number;
-    pant_Id !: Number;
-    paPr_UsuarioCreacion !: Number;
-    paPr_FechaCreacion !: String;
+    pant_Id  !: String;
+    pantalla  !: String;
+    role_Id  !: Number;
+    rol  !: String;
+    paPr_UsuarioCreacion  !: Number;
+    paPr_FechaCreacion  !: String;
     paPr_UsuarioModificacion !: Number;
     paPr_FechaModificacion !: String;
-    paPr_Estado !: boolean;
+    paPr_Estado !: Number;
+    creacion !: String;
+    modificacion !: String;
 }
