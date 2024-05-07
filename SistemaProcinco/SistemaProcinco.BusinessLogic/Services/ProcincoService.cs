@@ -681,6 +681,52 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+
+
+        public ServicesResult BuscarEmpleado(string Empl_DNI)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.BuscarEmpleado(Empl_DNI);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+        public ServicesResult BuscarCurso(string Curso_Descripcion)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.BuscarCurso(Curso_Descripcion);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
         #endregion
 
         #region Informes Empleados

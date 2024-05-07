@@ -29,21 +29,30 @@ export class CursosImpartidosService {
   }
 
   insertCursosIm(cursosImpatidoscrear: CursosImpartidos): Observable<any>{
-    return this.http.post<any>(`${this.UrlCursoImp}CursoImpartidoCrear`,cursosImpatidoscrear);
+    return this.http.post<any>(`${this.UrlCursoImp}Crear`,cursosImpatidoscrear);
   }
 
   editCursosIm(cursosImpartidoseditar: CursosImpartidos): Observable<any>{
-    return this.http.put<any>(`${this.UrlCursoImp}CursoImpartidoEditar`,cursosImpartidoseditar)
+    return this.http.put<any>(`${this.UrlCursoImp}Editar`,cursosImpartidoseditar)
   }
 
   fillCursosIm(id: Number): Observable<any>{
-    return this.http.get<any>(`${this.UrlCursoImp}CursoImpartidoBuscar/${id}`);
+    return this.http.get<any>(`${this.UrlCursoImp}Buscar/${id}`);
   }
 
   deleteCursosIm(ID): Observable<any>{
-    return this.http.delete<any>(`${this.UrlCursoImp}CursosImpartidosEliminar/${ID}`);
+    return this.http.delete<any>(`${this.UrlCursoImp}Eliminar/${ID}`);
   }
 
-  
+
+  BuscarEmpleado(DNI: String): Observable<any>{
+    return this.http.get<any>(`${this.UrlCursoImp}BuscarEmpleado/${DNI}`);
+  }
+
+  BuscarCurso(Curso: String): Observable<any>{
+    return this.http.get<any>(`${this.UrlCursoImp}BuscarCurso/${Curso}`);
+  }
+
+
 
 }

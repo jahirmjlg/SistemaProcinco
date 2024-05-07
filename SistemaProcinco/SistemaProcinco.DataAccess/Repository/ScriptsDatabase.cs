@@ -134,6 +134,11 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string CursosImpartidosEliminar = "[Pro].[SP_CursoImpartido_Eliminar]";
         public static string CursosImpartidosBuscar = "[Pro].[SP_CursosImpartidos_Buscar]";
 
+
+        public static string CursosImpartidosBuscarEmpleado = "[Pro].[SP_CursosImpartidos_BuscarEmpleado]";
+        public static string CursosImpartidosBuscarCurso = "[Pro].[SP_CursosImpartidos_BuscarCurso]";
+
+
         public static string CursosImpartidosMES = "[Pro].[ObtenerCursosPorMes]";
 
 

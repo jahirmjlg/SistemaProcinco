@@ -112,5 +112,39 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
+
+
+
+        public IEnumerable<tbCursosImpartidos> BuscarEmpleado(string Empl_DNI)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosBuscarEmpleado;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Empl_DNI", Empl_DNI);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+        public IEnumerable<tbCursosImpartidos> BuscarCurso(string Curso_Descripcion)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosBuscarCurso;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Curso_Descripcion", Curso_Descripcion);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+
+
+
     }
 }

@@ -24,11 +24,15 @@ export class ListCursosimpartidosComponent {
 
     CollapseEdit: boolean = false;
     isSubmitEdit: boolean = false;
-    
+
     CollapseDetalle: boolean = false;
 
     //BOOLEAN DELETE
     deleteCursoImpartidoBool: boolean = false;
+
+
+    ImagenEncontrada: boolean = false;
+
 
 
     curIm_Id: String = "";
@@ -61,6 +65,38 @@ export class ListCursosimpartidosComponent {
     ngOnInit() {
 
 
+
+        this.crearCursosImpartidosForm = this.formBuilder.group({
+            curso_Id: ['', [Validators.required]],
+            empl_Id: ['', [Validators.required]],
+            curIm_FechaInicio: ['', [Validators.required]],
+            curIm_FechaFin: ['', [Validators.required]],
+            empl_DNI: ['', [Validators.required]],
+            empl_Nombre: ['', [Validators.required]],
+            curso_DuracionHoras: ['', [Validators.required]],
+            cate_Descripcion: ['', [Validators.required]],
+            curso_Descripcion: ['', [Validators.required]],
+            curso_Imagen: ['', [Validators.required]],
+
+
+          });
+
+          this.editarCursosImpartidosForm = new FormGroup({
+            curIm_Id: new FormControl("",Validators.required),
+            curso_Id: new FormControl("",Validators.required),
+            empl_Id: new FormControl("",Validators.required),
+            curIm_FechaInicio: new FormControl("",Validators.required),
+            curIm_FechaFin: new FormControl("",Validators.required),
+            empl_DNI: new FormControl("",Validators.required),
+            empl_Nombre: new FormControl("",Validators.required),
+            curso_DuracionHoras: new FormControl("",Validators.required),
+            cate_Descripcion: new FormControl("",Validators.required),
+            curso_Descripcion: new FormControl("",Validators.required),
+            curso_Imagen: new FormControl("",Validators.required),
+
+        });
+
+
         // Respuesta de la api
         this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
             console.log(Response.data);
@@ -77,6 +113,122 @@ export class ListCursosimpartidosComponent {
           ];
     }
 
+
+
+
+    onSubmitInsert(): void {
+
+        this.isSubmit = true;
+        const errorSpan = document.getElementById('error-span');
+
+        if (this.crearCursosImpartidosForm.valid) {
+          const cursoimpData: CursosImpartidos = this.crearCursosImpartidosForm.value;
+          this.cursosimpartidosservice.insertCursosIm(cursoimpData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+
+                    // this.cookieService.set('namee', response.data.empl_Nombre);
+
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cursosimpartidos = Response.data;
+
+                      });
+
+                    this.Collapse = false;
+                    this.Tabla = true;
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                errorSpan.classList.remove('collapse');
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
+    }
+
+
+
+
+    onSubmitEdit(): void {
+
+        this.isSubmitEdit = true;
+            const errorSpan = document.getElementById('error-span');
+
+        if (this.editarCursosImpartidosForm.valid) {
+          const cursoimpData: CursosImpartidos = this.editarCursosImpartidosForm.value;
+          this.cursosimpartidosservice.editCursosIm(cursoimpData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cursosimpartidos = Response.data;
+
+                      }, error=>{
+                        console.log(error);
+                      });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
+    }
+
+
+
+    validarNumeros(event: KeyboardEvent) {
+        const errorSpan = document.getElementById('error-span');
+        if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+          event.preventDefault();
+
+        }
+        else{
+        }
+      }
+
+      validarTexto(event: KeyboardEvent) {
+        if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+            event.preventDefault();
+        }
+      }
+
+
+
+
     detalles(id){
 
         this.cursosimpartidosservice.fillCursosIm(id).subscribe({
@@ -91,7 +243,7 @@ export class ListCursosimpartidosComponent {
                this.curIm_FechaCreacion = data[0].curIm_FechaCreacion,
                this.modificacion = data[0].modificacion,
                this.curIm_FechaModificacion = data[0].curIm_FechaModificacion,
-                console.log(data);            
+                console.log(data);
             }
           });
           this.CollapseDetalle = true;
@@ -99,17 +251,64 @@ export class ListCursosimpartidosComponent {
     }
 
 
+    buscarEmpleado(DNI){
+
+        this.cursosimpartidosservice.BuscarEmpleado(DNI).subscribe({
+            next: (data: CursosImpartidos) => {
+               this.curIm_Id = data[0].curIm_Id,
+               this.curso_Id = data[0].cursos,
+               this.curIm_FechaInicio = data[0].curIm_FechaInicio,
+               this.curIm_FechaFin = data[0].curIm_FechaFin,
+               this.creacion = data[0].creacion,
+               this.empl_Id = data[0].nombre,
+               this.curIm_Finalizar = data[0].curIm_Finalizar,
+               this.curIm_FechaCreacion = data[0].curIm_FechaCreacion,
+               this.modificacion = data[0].modificacion,
+               this.curIm_FechaModificacion = data[0].curIm_FechaModificacion,
+                console.log(data);
+            }
+          });
+        //   this.ImagenEncontrada = true;
+    }
+
+
+    onCursoChange(curso){
+
+        this.cursosimpartidosservice.BuscarCurso(curso).subscribe({
+            next: (data: CursosImpartidos) => {
+                this.crearCursosImpartidosForm = new FormGroup({
+                    curso_Id: new FormControl(data[0].curso_Id,Validators.required),
+                    curso_DuracionHoras: new FormControl(data[0].curso_DuracionHoras,Validators.required),
+                    cate_Descripcion: new FormControl(data[0].cate_Descripcion,Validators.required),
+                    curso_Descripcion: new FormControl(data[0].curso_Descripcion,Validators.required),
+                    curso_Imagen: new FormControl(data[0].curso_Imagen,Validators.required),
+                });
+                       this.ImagenEncontrada = true;
+                    }
+                });
+                }
+
+
+
+
+
+
+
     Fill(id) {
         this.cursosimpartidosservice.fillCursosIm(id).subscribe({
             next: (data: CursosImpartidos) => {
-                this.ID = data[0].titl_Id,
                 this.editarCursosImpartidosForm = new FormGroup({
                     curIm_Id: new FormControl(data[0].curIm_Id),
                     curso_Id: new FormControl(data[0].curso_Id,Validators.required),
                     curIm_FechaInicio: new FormControl(data[0].curIm_FechaInicio,Validators.required),
                     curIm_FechaFin: new FormControl(data[0].curIm_FechaFin,Validators.required),
                     empl_Id: new FormControl(data[0].empl_Id,Validators.required),
-                    curIm_Finalizar: new FormControl(data[0].curIm_Finalizar,Validators.required),
+
+                    empl_DNI: new FormControl("",Validators.required),
+                    empl_Nombre: new FormControl("",Validators.required),
+                    curso_DuracionHoras: new FormControl("",Validators.required),
+                    cate_Descripcion: new FormControl("",Validators.required),
+                    curso_Descripcion: new FormControl("",Validators.required),
                 });
                 console.log(this.ID);
 
