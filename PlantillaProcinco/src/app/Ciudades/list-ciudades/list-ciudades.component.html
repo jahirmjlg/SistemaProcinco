@@ -17,8 +17,10 @@
                         <label for="firstname2" class="form-label">Codigo</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="number" required autofocus (keydown)="validarNumeros($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
+                        
+
                     </div>
                     <div class="col-6 mt-2">
 
@@ -164,9 +166,9 @@
                     <td>{{ciud.estado}}</td>
 
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(ciud.ciud_Id)">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(ciud.ciud_Id)">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCiudad(ciud.ciud_Id)">Eliminar</button>
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(ciud.ciud_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(ciud.ciud_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCiudad(ciud.ciud_Id)"><i class="pi pi-trash"></i>Eliminar</button>
                     </td>
                   </tr>
             </ng-template>

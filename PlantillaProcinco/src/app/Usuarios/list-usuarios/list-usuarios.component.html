@@ -15,7 +15,7 @@
                             <label for="firstname2" class="form-label">Usuario</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus (keydown)="validarTextoAlfa($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Usuario'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
                         <div class="col-6 mt-2">
@@ -23,26 +23,27 @@
                                 <label for="firstname2">Contraseña</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Contraseña" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="usua_Contraseña" type="text" required autofocus (keydown)="validarTextoAlfa($event)" />
 
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_Contraseña'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
                     <div class="row">
-                            <label for="firstname2" class="form-label">Validacion Admin</label>
-
-                            <div class="col-md-3">
+                        <div class="col-sm-6">
+                        <label for="firstname2" class="" >Validacion Admin</label>
+                        </div>  
+                            <div class="col-2">
                                 <label>
                                     <input type="radio" class="form-check-input" name="admin" [value]="true" formControlName="usua_EsAdmin"> Si
                                 </label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-2">
                                 <label>
                                     <input type="radio" class="form-check-input" name="admin" [value]="false" formControlName="usua_EsAdmin"> No
                                 </label>
                             </div>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.controls['usua_EsAdmin'].invalid" style="color: red !important;">Validacion Requerida</small>
-                            </div>
+                        
                         <div class="col-6">
                             <div >
                                 <label for="firstname2">Rol</label>
@@ -52,6 +53,7 @@
                             </select>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearUsuarioForm.get('role_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
                         </div>
+                    </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -95,19 +97,19 @@
                         <label for="firstname2" class="form-label">Usuario</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="usua_Usuario" type="text" required autofocus (keydown)="validarTextoAlfa($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarUsuarioForm.controls['usua_Usuario'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="form-check">
+                    <div class="col-md-3">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="admin" [value]="true" formControlName="usua_EsAdmin"> Si
                         </label>
                     </div>
 
-                    <div class="form-check">
+                    <div class="col-md-3">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="admin" [value]="false" formControlName="usua_EsAdmin"> No
                         </label>
@@ -139,10 +141,6 @@
                 </div>
 
                 </div>
-
-
-
-
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
                         <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -187,7 +185,7 @@
                         <th>Nombre Usuario</th>
                         <th>Admin</th>
                         <th>Rol</th>
-                        <th>Correo</th>
+                        <!-- <th>Correo</th> -->
                         <th>Empleado</th>
                         <th>Acciones</th>
                     </tr>
@@ -198,7 +196,7 @@
                         <td>{{usua.usua_Usuario}}</td>
                         <td>{{usua.usua_Admin1}}</td>
                         <td>{{usua.role_Descripcion}}</td>
-                        <td>{{usua.correo}}</td>
+                        <!-- <td>{{usua.correo}}</td> -->
                         <td>{{usua.empl_Nombre}}</td>
 
                         <td>

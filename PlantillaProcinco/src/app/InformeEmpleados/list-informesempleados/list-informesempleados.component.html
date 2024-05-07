@@ -38,7 +38,7 @@
                                 <label for="firstname2" class="form-label">Calificacion</label>
                             </div>
     
-                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus (keydown)="validarNumeros($event)"/>
 
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.controls['infoE_Calificacion'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
@@ -47,7 +47,7 @@
                                 <label for="firstname2">Observaciones</label>
                             </div>
     
-                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus (keydown)="validarTexto($event)"/>
                             
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.controls['infoE_Observaciones'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
@@ -107,7 +107,7 @@
                             <label for="firstname2" class="form-label">Calificacion</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus (keydown)="validarNumeros($event)" />
 
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.controls['infoE_Calificacion'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
@@ -116,7 +116,7 @@
                             <label for="firstname2">Observaciones</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus (keydown)="validarTexto($event)" />
                         
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.controls['infoE_Observaciones'].invalid" style="color: red !important;">Descripcion Requerida</small>
                     </div>
@@ -178,9 +178,9 @@
                         <td>{{infe.cursos}}</td>
                         <td>{{infe.infoE_Observaciones}}</td>
                         <td>
-                            <button class="btn btn-primary  btn-sm" (click)="Fill(infe.infoE_Id)"> <i class="pi pi-file-edit ">Editar  </i></button> |
-                            <button class="btn btn-warning fa fa-address-card btn-sm " (click)="detalles(infe.infoE_Id)"><i class="pi pi-file">Detalle  </i></button> |
-                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteUsuario(infe.infoE_Id)"> <i class="pi pi-trash">Eliminar</i></button>
+                            <button class="btn btn-primary  btn-sm" (click)="Fill(infe.infoE_Id)"> <i class="pi pi-file-edit "></i>  Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm " (click)="detalles(infe.infoE_Id)"><i class="pi pi-file">Detalle .</i></button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteUsuario(infe.infoE_Id)"> <i class="pi pi-trash">Eliminar.</i></button>
                         </td>
                     </tr>
                 </ng-template>

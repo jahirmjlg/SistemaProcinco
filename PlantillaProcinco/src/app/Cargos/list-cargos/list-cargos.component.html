@@ -14,7 +14,7 @@
                         <label for="firstname2" class="form-label">Cargo</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCargoForm.controls['carg_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
                     </div>
 
@@ -53,7 +53,7 @@
                             <label for="firstname2">Cargo</label>
                             </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="carg_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCargoForm.controls['carg_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                     </div>
 
@@ -107,9 +107,9 @@
                     <td>{{carg.carg_Descripcion}}</td>
 
                     <td>
-                        <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(carg.carg_Id)">Editar</button> |
-                        <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(carg.carg_Id)">Detalle</button> |
-                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(carg.carg_Id)">Eliminar</button>
+                        <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(carg.carg_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                        <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(carg.carg_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(carg.carg_Id)"> <i class="pi pi-trash"></i>Eliminar</button>
                     </td>
                   </tr>
             </ng-template>

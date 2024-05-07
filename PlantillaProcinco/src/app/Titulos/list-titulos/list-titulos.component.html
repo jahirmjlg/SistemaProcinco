@@ -14,7 +14,7 @@
                         <label for="firstname2" class="form-label">Titulo</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearTituloForm.controls['titl_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
                     </div>
                     <div class="col-6 mt-2">
@@ -23,7 +23,7 @@
                             <label for="firstname2">Horas de duracion</label>
                             </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="number" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="number" required autofocus (keydown)="validarNumeros($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Valor Requerido</small>
                     </div>
                 </div>
@@ -59,17 +59,17 @@
                             <label for="firstname2">Titulo</label>
                             </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_Descripcion'].invalid" style="color: red !important;">Titulo Requerido</small>
                     </div>
 
                     <div class="col-6">
 
                         <div class="col-sm-2">
-                        <label for="firstname2" class="form-label">Codigo</label>
+                        <label for="firstname2" class="form-label">Horas de duracion</label>
                         </div>
-                        <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="text" required autofocus />
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Codigo Requerido</small>
+                        <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Horas de duracion Requeridas</small>
                     </div>
                 </div>
 
@@ -123,9 +123,9 @@
                         <td>{{titl.titl_Descripcion}}</td>
                         <td>{{titl.titl_ValorMonetario}}</td>
                         <td>
-                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(titl.titl_Id)">Editar</button> |
-                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(titl.titl_Id)">Detalle</button> |
-                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteTitulo(titl.titl_Id)">Eliminar</button>
+                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(titl.titl_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(titl.titl_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteTitulo(titl.titl_Id)"><i class="pi pi-trash"></i>Eliminar</button>
                         </td>
                     </tr>
                 </ng-template>

@@ -244,8 +244,20 @@ export class ListInformesempleadosComponent implements OnInit {
             },
         });
     }
+    validarNumeros(event: KeyboardEvent) {
 
+        if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+          event.preventDefault();
+        }
+        else{
+        }
+      }
     
+      validarTexto(event: KeyboardEvent) {
+        if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+            event.preventDefault();
+        }
+      }
   //LLENAR EDITAR && DETALLE
   Fill(id) {
     this.informesempleadosservice.fillInformeEmpleado(id).subscribe({

@@ -14,8 +14,11 @@
                             <label for="firstname2" class="form-label">Codigo</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstadoForm.controls['esta_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
+                            
+                            <small class="ng-dirty ng-invalid" *ngIf="errortipo" style="color: red !important;">Codigo Invalido</small>
                         </div>
                         <div class="col-6 mt-2">
 
@@ -23,7 +26,7 @@
                                 <label for="firstname2">Estado</label>
                                 </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)" />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstadoForm.controls['esta_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
@@ -58,7 +61,7 @@
                             <div class="col-sm-2">
                             <label for="firstname2" class="form-label">Codigo</label>
                             </div>
-                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus (keydown)="validarNumeros($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEstadoForm.controls['esta_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                         </div>
                         <div class="col-6 mt-2">
@@ -67,7 +70,7 @@
                                 <label for="firstname2">Estado</label>
                                 </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="esta_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEstadoForm.controls['esta_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
                     </div>
@@ -121,9 +124,9 @@
                         <td>{{esta.esta_Id}}</td>
                         <td>{{esta.esta_Descripcion}}</td>
                         <td>
-                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(esta.esta_Id)">Editar</button> |
-                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(esta.esta_Id)">Detalle</button> |
-                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteEstado(esta.esta_Id)">Eliminar</button>
+                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(esta.esta_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(esta.esta_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteEstado(esta.esta_Id)"><i class="pi pi-trash"></i>Eliminar</button>
                           </td>
                     </tr>
                 </ng-template>

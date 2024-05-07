@@ -15,7 +15,7 @@
                             <label for="firstname2" class="form-label">Nombre</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Nombre'].invalid}" />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Nombre'].invalid}" (keydown)="validarTexto($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
                         </div>
                         <div class="col">
@@ -24,7 +24,7 @@
                             <label for="firstname2" class="form-label">Apellido</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Apellido" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Apellido'].invalid}" />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Apellido" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Apellido'].invalid}" (keydown)="validarTexto($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Apellido'].invalid" style="color: red !important;">Apellido Requerido</small>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             <label for="firstname2" class="form-label">DNI</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_DNI'].invalid}" />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_DNI'].invalid}" (keydown)="validarNumeros($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido</small>
                         </div>
                             <div class="col-6 mt-2">
@@ -61,7 +61,7 @@
                             <label for="firstname2" class="form-label">Correo</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Correo'].invalid}" />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Correo'].invalid}" (keydown)="validarTextoAlfa($event)" />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Correo'].invalid" style="color: red !important;">Correo Requerido</small>
                         </div>
                         <div class="col-6">
@@ -70,7 +70,7 @@
                             <label for="firstname2" class="form-label">Fecha de Nacimiento</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_FechaNacimiento" type="datetime-local" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_FechaNacimiento" type="datetime-local" required autofocus  (keydown)="validarTextoAlfa($event)" />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_FechaNacimiento'].invalid" style="color: red !important;">Fecha de Nacimiento Requerida</small>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                 <label for="firstname2" class="form-label">Dirección Exacta</label>
 
 
-                                <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid}" />
+                                <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid}"  (keydown)="validarTextoAlfa($event)" />
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
                             </div>
 
@@ -227,7 +227,7 @@
                             <label for="firstname2" class="form-label">Correo</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_Correo'].invalid}" />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_Correo'].invalid}"  (keydown)="validarTextoAlfa($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['empl_Correo'].invalid" style="color: red !important;">Correo Requerido</small>
                         </div>
                         <div class="col-6">
@@ -236,7 +236,7 @@
                             <label for="firstname2" class="form-label">Fecha de Nacimiento</label>
                             </div>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_FechaNacimiento" type="datetime-local" required autofocus />
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_FechaNacimiento" type="datetime-local" required autofocus  (keydown)="validarTextoAlfa($event)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['empl_FechaNacimiento'].invalid" style="color: red !important;">Fecha de Nacimiento Requerida</small>
                         </div>
                     </div>
@@ -302,7 +302,7 @@
                                 <label for="firstname2" class="form-label">Dirección Exacta</label>
 
 
-                                <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_Direccion'].invalid}" />
+                                <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_Direccion'].invalid}" (keydown)="validarTextoAlfa($event)" />
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['empl_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
                             </div>
 
@@ -341,8 +341,6 @@
     </div>
 
 <div class="card-body m-2 mt-4 p-3">
-
-
     <div class="card px-6 py-6">
 
         <p-table #dt [value]="empleado" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
@@ -371,9 +369,9 @@
                     <td>{{emp.ciudades}}</td>
 
                     <td>
-                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(emp.empl_Id)">Editar</button> |
-                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(emp.empl_Id)">Detalle</button> |
-                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteEmpleado(emp.empl_Id)">Eliminar</button>
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(emp.empl_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(emp.empl_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteEmpleado(emp.empl_Id)"><i class="pi pi-trash"></i>Eliminar</button>
 
                     </td>
                   </tr>

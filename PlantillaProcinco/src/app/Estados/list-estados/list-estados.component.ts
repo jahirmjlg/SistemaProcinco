@@ -23,6 +23,7 @@ export class ListEstadosComponent implements OnInit {
 
     Collapse: boolean = false;
     isSubmit: boolean = false;
+    errortipo: boolean = false;
 
 
     CollapseEdit: boolean = false;
@@ -132,6 +133,24 @@ export class ListEstadosComponent implements OnInit {
         }
 
     }
+
+
+  validarNumeros(event: KeyboardEvent) {
+    const errorSpan = document.getElementById('error-span');
+    if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+      event.preventDefault();
+
+    }
+    else{
+    }
+  }
+
+  validarTexto(event: KeyboardEvent) {
+    if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        event.preventDefault();
+    }
+  }
+
 
     onSubmitEdit(): void {
 

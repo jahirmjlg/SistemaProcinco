@@ -15,7 +15,7 @@
                         <label for="firstname2" class="form-label">Estado Civil</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="estc_Descripcion" type="text" required autofocus />
+                        <input pInputText id="firstname2" class="form-control" formControlName="estc_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstaciCivilForm.controls['estc_Descripcion'].invalid" style="color: red !important;">Estado Civil Requerido</small>
                     </div>
                 </div>
@@ -108,9 +108,9 @@
                     <td>{{est.estc_Descripcion}}</td>
 
                     <td>
-                        <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(est.estc_Id)">Editar</button> |
-                        <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(est.estc_Id)">Detalle</button> |
-                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(est.estc_Id)">Eliminar</button>
+                        <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(est.estc_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                        <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(est.estc_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(est.estc_Id)"><i class="pi pi-trash"></i>Eliminar</button>
                     </td>
                   </tr>
             </ng-template>
