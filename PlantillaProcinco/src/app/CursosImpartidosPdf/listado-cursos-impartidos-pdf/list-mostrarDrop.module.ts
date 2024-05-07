@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -9,6 +9,7 @@ import { MultiDragDropComponent } from './multi-drag-drop.component';
 @NgModule({
   imports:      [ BrowserModule, FormsModule, DragDropModule ],
   declarations: [ ListMostrarDropComponent, MultiDragDropComponent ],
-  bootstrap:    [ ListMostrarDropComponent ]
+  bootstrap:    [ ListMostrarDropComponent ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ListCursoModule { }
+export class ListMostrarDropModule { }

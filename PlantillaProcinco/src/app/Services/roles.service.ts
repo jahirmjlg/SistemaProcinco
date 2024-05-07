@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import {Role} from '../Models/RolesViewModel';
 import {HttpClient} from '@angular/common/http';
 import { ServiceService } from './service.service';
+
+import { PantallaPorRol } from '../Models/PantallasPorRolesViewModel';
 import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,24 +16,46 @@ export class RolesService {
 
   UrlRol = this.service.urlLocalhost + 'Rol/';
 
-  getRol() {
-  return this.http.get<Role[]>(`${this.UrlRol}Listado`);
-  }
+  UrlPantallasRoles = this.service.urlLocalhost + 'PantallaPorRol/'
 
-  CrearRol(RolesInsert: Role): Observable<any>{
-    return this.http.post<any>(`${this.UrlRol}RolCrear`,RolesInsert);
-  }
+  UrlPantalla = this.service.urlLocalhost + 'Pantalla/';
 
-  editRol(RolesEdit : Role): Observable<any>{
-    return this.http.put<any>(`${this.UrlRol}RolEditar`,RolesEdit);
-  }
 
-  deleteRol(ID): Observable<any>{
-    return this.http.delete<any>(`${this.UrlRol}RolEliminar/${ID}`);
-  }
 
-  follRol(id: String): Observable<any>{
-    return this.http.get<any>(`${this.UrlRol}Buscar/${id}`);
-  }
+        getRol() {
+        return this.http.get<Role[]>(`${this.UrlRol}Listado`);
+        }
+
+
+       //INSERTAR
+
+       insertRol(rolInsert: Role): Observable<any> {
+        return this.http.post<any>(`${this.UrlRol}CursosCrear`,rolInsert);
+        }
+
+        //EDITAR
+        editRol(rolEdit: Role): Observable<any> {
+            return this.http.put<any>(`${this.UrlRol}RolEditar`,rolEdit);
+            }
+
+        //LLENAR && DETALLE
+        fillRol(id: number): Observable<any> {
+            return this.http.get<any>(`${this.UrlRol}RolBuscar/${id}`);
+            }
+
+        //ELIMINAR
+        deleteRol(ID): Observable<any>{
+            return this.http.delete<any>(`${this.UrlRol}RolEliminar/${ID}`)
+            }
+
+
+
+
+            //PANTALLAS
+
+
+        getPantallas(idRol: number) {
+            return this.http.get<Role[]>(`${this.UrlRol}Listado/${idRol}`);
+            }
 
 }

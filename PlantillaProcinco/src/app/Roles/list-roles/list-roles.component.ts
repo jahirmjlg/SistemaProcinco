@@ -14,6 +14,7 @@ import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
 @Component({
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',
+  styleUrls: ['./list-roles.component.scss'],
   providers: [ConfirmationService, MessageService]
 })
 export class ListRolesComponent {
@@ -121,7 +122,7 @@ export class ListRolesComponent {
 
         // Llamar al servicio para insertar el registro de PantallaPorRol
         this.paroservice.insertPantallaPorRol(paroInsertar).subscribe(
-          response => { 
+          response => {
       console.log("NO ENTRA ESTA MIERDA");
       // Manejar la respuesta del servicio
           },
@@ -142,12 +143,12 @@ export class ListRolesComponent {
     const errorSpan = document.getElementById('error-span');
     if (this.crearRolForm.valid) {
       const contenidoData: Role = this.crearRolForm.value;
-      this.service.CrearRol(contenidoData).subscribe(
+      this.service.insertRol(contenidoData).subscribe(
        response => {
         if (response.code == 200)
         {
             this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
-            
+
             console.log(response)
             this.service.getRol().subscribe((Response: any)=> {
                 console.log(Response.data);
@@ -207,13 +208,13 @@ export class ListRolesComponent {
         }
     }
 
- 
+
     deleteRol(codigo) {
         this.deleteRolBool = true;
         this.ID = codigo;
         console.log("ID" + codigo);
     }
-    
+
 
     confirmDelete() {
         this.service.deleteRol(this.ID).subscribe({
@@ -236,5 +237,30 @@ export class ListRolesComponent {
             },
         });
     }
+
+
+    //EVENTOS DRAG
+
+    events = [];
+
+  clearEvents(): void {
+    this.events = [];
+  }
+
+  itemsRemoved(ev, list) {
+    this.events.push({text: `itemsRemoved from ${list}`, ev: JSON.stringify(ev)});
+  }
+
+  itemsAdded(ev, list) {
+    this.events.push({text: `itemsAdded to ${list}`, ev: JSON.stringify(ev)});
+  }
+
+  itemsUpdated(ev, list) {
+    this.events.push({text: `itemsUpdated in ${list}`, ev: JSON.stringify(ev)});
+  }
+
+  selectionChanged(ev, list) {
+    this.events.push({text: `selectionChanged in ${list}`, ev: JSON.stringify(ev)});
+  }
 
 }

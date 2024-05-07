@@ -15,7 +15,7 @@ namespace SistemaProcinco.DataAccess.Repository
     {
         public RequestStatus Delete(int? id)
         {
-            string sql = ScriptsDatabase.PantallasPorRolesListar;
+            string sql = ScriptsDatabase.PantallasPorRolesEliminar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
@@ -74,7 +74,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public IEnumerable<tbPantallasPorRoles> List1(int Role_Id)
         {
-            string sql = ScriptsDatabase.PantallasPorRolesListar;
+            string sql = ScriptsDatabase.PantallasPorRolesLlenarEditar;
 
             List<tbPantallasPorRoles> result = new List<tbPantallasPorRoles>();
 
