@@ -231,7 +231,7 @@ namespace SistemaProcinco.API.Controllers
 
 
 
-        [HttpPost("CursoImpartidoCrear")]
+        [HttpPost("Crear")]
         public IActionResult Insert(CursosImpartidosViewModel item)
         {
             var model = _mapper.Map<tbCursosImpartidos>(item);
@@ -241,8 +241,6 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Id = item.Empl_Id,
                 CurIm_FechaInicio = item.CurIm_FechaInicio,
                 CurIm_FechaFin = item.CurIm_FechaFin,
-                CurIm_UsuarioFinalizacion = item.CurIm_UsuarioFinalizacion,
-                CurIm_Finalizar = item.CurIm_Finalizar,
                 CurIm_UsuarioCreacion = 1,
                 CurIm_FechaCreacion = DateTime.Now
             };
@@ -257,7 +255,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpPut("CursoImpartidoEditar")]
+        [HttpPut("Editar")]
         public IActionResult Edit(CursosImpartidosViewModel item)
         {
             var model = _mapper.Map<tbCursosImpartidos>(item);
@@ -284,10 +282,10 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("CursosImpartidosEliminar/{CurIm_Id}")]
-        public IActionResult Delete(int CurIm_Id)
+        [HttpDelete("Eliminar/{id}")]
+        public IActionResult Delete(int id)
         {
-            var list = _procincoService.EliminarCursosImpartidos(CurIm_Id);
+            var list = _procincoService.EliminarCursosImpartidos(id);
             if (list.Success == true)
             {
                 return Ok(list);
@@ -299,10 +297,39 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("CursoImpartidoBuscar/{CurIm_Id}")]
-        public IActionResult Details(int CurIm_Id)
+        [HttpGet("Buscar/{id}")]
+        public IActionResult Details(int id)
         {
-            var list = _procincoService.BuscarCursosImpartidos(CurIm_Id);
+            var list = _procincoService.BuscarCursosImpartidos(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("BuscarEmpleado/{DNI}")]
+        public IActionResult BuscarEmpleado(string DNI)
+        {
+            var list = _procincoService.BuscarEmpleado(DNI);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("BuscarCurso/{curso}")]
+        public IActionResult BuscarCurso(string curso)
+        {
+            var list = _procincoService.BuscarCurso(curso);
             if (list.Success == true)
             {
                 return Json(list.Data);

@@ -1,10 +1,189 @@
 
+    <!-- DESPLEGAR FORMULARIO DE CREAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
+
+        <form [formGroup]="crearCursosImpartidosForm" (ngSubmit)="onSubmitInsert()">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Nuevo Curso Impartido</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)" (change)="onDNIChange(crearCursosImpartidosForm.get('empl_DNI').value)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
+                        </div>
+
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus (keydown)="validarNumeros($event)" readonly/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                    </div>
+
+                        <div class="card">
+                            <div class="row">
+
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (keydown)="validarNumeros($event)" (change)="onCursoChange(crearCursosImpartidosForm.get('curso_Descripcion').value)"/>
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+
+
+                                <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
+
+                                <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaInicio" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                                <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmit && crearCursosImpartidosForm.controls['curIm_FechaInicio'].invalid" style="color: red !important;">Fecha de Inicio  Requerida</small>
+
+
+                                    <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-label mt-5">Ingrese la Fecha de Finalización del Curso</label>
+
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaFin" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                                    <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmit && crearCursosImpartidosForm.controls['curIm_FechaFin'].invalid" style="color: red !important;">Fecha de Inicio Requerida</small>
+                            </div>
+
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearCursosImpartidosForm.get('curso_Imagen').value}}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Duración</h5>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
+                                        <label for="">horas</label>
+
+                                    <h5 class="card-title">Categoria</h5>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none;" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
+
+                            </div>
+                              </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+    <!-- DESPLEGAR FORMULARIO DE EDITAR -->
+    <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+        <form [formGroup]="editarCursosImpartidosForm" (ngSubmit)="onSubmitEdit()">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Editar Curso Impartido</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
+                        </div>
+
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['empl_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                    </div>
+
+                        <div class="card">
+                            <div class="row">
+
+
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+
+
+                                <label for="firstname2" class="form-label mt-5" [ngClass]="{'collapse': ImagenEncontrada === false}" >Ingrese la Fecha de Inicio del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" [ngClass]="{'collapse': ImagenEncontrada === false}"  formControlName="curIm_FechaInicio" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                                <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curIm_FechaInicio'].invalid" style="color: red !important;">Fecha de Inicio  Requerida</small>
+
+
+                                    <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-label mt-5">Ingrese la Fecha de Finalización del Curso</label>
+
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaFin" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                                    <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curIm_FechaFin'].invalid" style="color: red !important;">Fecha de Inicio Requerida</small>
+                            </div>
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://getbootstrap.com/docs/5.3/assets/img/webpack.svg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Duración</h5>
+                                    <label id="cursoduracion" class="form-label" formControlName="curso_DuracionHoras" required autofocus>11:00</label>
+                                        <label for=""> horas</label>
+
+                                    <h5 class="card-title">Categoria</h5>
+                                <label id="cursoduracion" class="form-label" formControlName="cate_Descripcion" required autofocus>Front</label>
+                            </div>
+                              </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Editar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
 
 <div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Cursos Impartidos</h2>
-
             <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
         </header>
@@ -28,7 +207,6 @@
                         <th>ID</th>
                         <th>Empleado</th>
                         <th>Curso</th>
-                        <th>Fecha de Inicio</th>
                         <th>Finalizado</th>
                         <th>Acciones</th>
                     </tr>
@@ -38,19 +216,21 @@
                         <td>{{cursosimp.curIm_Id}}</td>
                         <td>{{cursosimp.nombre}}</td>
                         <td>{{cursosimp.cursos}}</td>
-                        <td>{{cursosimp.curIm_FechaInicio}}</td>
                         <td>{{cursosimp.curIm_Finalizar}}</td>
 
                         <td>
                             <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(cursosimp.curIm_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
                             <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(cursosimp.curIm_Id)"><i class="pi pi-file"></i>Detalle</button> |
-                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-trash"></i>Eliminar</button>
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-trash"></i>Eliminar</button> |
+                            <button class="btn btn-warning fa fa-window-close btn-sm" (click)="finalizarCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-check"></i>Finalizar</button>
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
+
     </div>
+
 </div>
 
 
@@ -58,13 +238,13 @@
     <div class="card mt-4">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Detalles Contenido</h4>
+                <h4 class="card-title">Detalles De Curso Impartido</h4>
                 <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
-               
+
                 <div class="col" style="font-weight:700">
                     <div>Curso</div>
                 </div>
@@ -140,3 +320,11 @@
             </div>
         </div>
 </p-dialog>
+
+
+
+
+
+
+
+

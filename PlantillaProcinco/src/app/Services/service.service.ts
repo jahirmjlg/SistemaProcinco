@@ -17,7 +17,7 @@ export class ServiceService {
 
     constructor(private http:HttpClient) {}
 
-        urlLocalhost = 'http://sistemaProcinco.somee.com/'
+        urlLocalhost = 'https://localhost:44358/'
 
         //#region General
 

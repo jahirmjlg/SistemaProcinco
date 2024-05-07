@@ -14,4 +14,13 @@ export class CursosImpartidos
     curIm_UsuarioModificacion !: Number;
     curIm_FechaModificacion!: String;
     // curIm_Estado!:boolean;
+
+
+    Empl_DNI!: String;
+    Empl_Nombre!: String;
+    Curso_DuracionHoras!: Number;
+    Cate_Descripcion!: String;
+    Curso_Descripcion!: String;
+    PagoEmpleado!: Number;
+    Curso_Imagen!: String;
 }
