@@ -15,7 +15,7 @@
 
                             <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)" (change)="onDNIChange(crearCursosImpartidosForm.get('empl_DNI').value)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
                         </div>
 
@@ -23,7 +23,7 @@
 
                             <label for="firstname2" class="form-label">Empleado</label>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_Nombre" type="text" required autofocus (keydown)="validarNumeros($event)" readonly/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearCursosImpartidosForm.get('curso_Imagen').value}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">Duración</h5>
-                                    <input  id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px;" formControlName="curso_DuracionHoras" type="number" readonly/>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
                                         <label for="">horas</label>
 
                                     <h5 class="card-title">Categoria</h5>

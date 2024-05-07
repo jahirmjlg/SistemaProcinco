@@ -119,7 +119,6 @@ export class ListCursosimpartidosComponent {
     onSubmitInsert(): void {
 
         this.isSubmit = true;
-        const errorSpan = document.getElementById('error-span');
 
         if (this.crearCursosImpartidosForm.valid) {
           const cursoimpData: CursosImpartidos = this.crearCursosImpartidosForm.value;
@@ -151,7 +150,7 @@ export class ListCursosimpartidosComponent {
 
             },
             error => {
-                errorSpan.classList.remove('collapse');
+                console.log('El error: ' + error.data)
             }
           );
         } else {
@@ -251,38 +250,26 @@ export class ListCursosimpartidosComponent {
     }
 
 
-    buscarEmpleado(DNI){
+    onDNIChange(dni){
 
-        this.cursosimpartidosservice.BuscarEmpleado(DNI).subscribe({
+        this.cursosimpartidosservice.BuscarEmpleado(dni).subscribe({
             next: (data: CursosImpartidos) => {
-               this.curIm_Id = data[0].curIm_Id,
-               this.curso_Id = data[0].cursos,
-               this.curIm_FechaInicio = data[0].curIm_FechaInicio,
-               this.curIm_FechaFin = data[0].curIm_FechaFin,
-               this.creacion = data[0].creacion,
-               this.empl_Id = data[0].nombre,
-               this.curIm_Finalizar = data[0].curIm_Finalizar,
-               this.curIm_FechaCreacion = data[0].curIm_FechaCreacion,
-               this.modificacion = data[0].modificacion,
-               this.curIm_FechaModificacion = data[0].curIm_FechaModificacion,
-                console.log(data);
-            }
-          });
-        //   this.ImagenEncontrada = true;
-    }
+                this.crearCursosImpartidosForm.get('empl_Id').setValue(data[0].empl_Id);
+                this.crearCursosImpartidosForm.get('empl_Nombre').setValue(data[0].empl_Nombre);
+                    }
+                });
+                }
 
 
     onCursoChange(curso){
 
         this.cursosimpartidosservice.BuscarCurso(curso).subscribe({
             next: (data: CursosImpartidos) => {
-                this.crearCursosImpartidosForm = new FormGroup({
-                    curso_Id: new FormControl(data[0].curso_Id,Validators.required),
-                    curso_DuracionHoras: new FormControl(data[0].curso_DuracionHoras,Validators.required),
-                    cate_Descripcion: new FormControl(data[0].cate_Descripcion,Validators.required),
-                    curso_Descripcion: new FormControl(data[0].curso_Descripcion,Validators.required),
-                    curso_Imagen: new FormControl(data[0].curso_Imagen,Validators.required),
-                });
+                this.crearCursosImpartidosForm.get('curso_Id').setValue(data[0].curso_Id);
+                this.crearCursosImpartidosForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
+                this.crearCursosImpartidosForm.get('cate_Descripcion').setValue(data[0].cate_Descripcion);
+                this.crearCursosImpartidosForm.get('curso_Imagen').setValue(data[0].curso_Imagen);
+
                        this.ImagenEncontrada = true;
                     }
                 });

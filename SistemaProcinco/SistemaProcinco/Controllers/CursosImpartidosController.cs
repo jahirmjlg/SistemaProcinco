@@ -241,8 +241,6 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Id = item.Empl_Id,
                 CurIm_FechaInicio = item.CurIm_FechaInicio,
                 CurIm_FechaFin = item.CurIm_FechaFin,
-                CurIm_UsuarioFinalizacion = item.CurIm_UsuarioFinalizacion,
-                CurIm_Finalizar = item.CurIm_Finalizar,
                 CurIm_UsuarioCreacion = 1,
                 CurIm_FechaCreacion = DateTime.Now
             };

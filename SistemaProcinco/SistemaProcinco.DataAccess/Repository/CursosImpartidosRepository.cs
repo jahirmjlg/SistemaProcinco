@@ -51,10 +51,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Id", item.Empl_Id);
                 parametro.Add("@CurIm_FechaInicio", item.CurIm_FechaInicio);
                 parametro.Add("@CurIm_FechaFin", item.CurIm_FechaFin);
-                parametro.Add("@CurIm_UsuarioFinalizacion", item.CurIm_UsuarioFinalizacion);
-                parametro.Add("@CurIm_Finalizar", item.CurIm_Finalizar);
                 parametro.Add("@CurIm_UsuarioCreacion", item.CurIm_UsuarioCreacion);
-                parametro.Add("@CurIm_FechaCreacion", item.CurIm_FechaCreacion);
+                parametro.Add("@CurIm_FechaCreacion", DateTime.Now);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
