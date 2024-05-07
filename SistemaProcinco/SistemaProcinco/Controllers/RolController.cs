@@ -83,6 +83,22 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+        [HttpGet("RolBuscar/{id}")]
+        public IActionResult Details(int id)
+        {
+            var list = _accesoService.BuscarRoles(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+
         [HttpDelete("RolEliminar/{Role_id}")]
         public IActionResult Delete(int Role_id)
         {

@@ -22,7 +22,7 @@ import * as _ from 'lodash';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiDragDropComponent {
-  @Input() items: any[];
+    @Input() items: { id: number, description: string }[];
   @Output() itemsRemoved = new EventEmitter<any[]>();
   @Output() itemsAdded = new EventEmitter<any[]>();
   @Output() itemsUpdated = new EventEmitter<any[]>();

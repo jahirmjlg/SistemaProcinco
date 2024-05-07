@@ -23,9 +23,9 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpGet("PantallasListado")]
-        public IActionResult Index(int Role_Id)
+        public IActionResult Index()
         {
-            var listado = _accesoService.ListaPantallas(Role_Id);
+            var listado = _accesoService.ListaPantallas();
             if (listado.Success == true)
             {
                 return Ok(listado);
