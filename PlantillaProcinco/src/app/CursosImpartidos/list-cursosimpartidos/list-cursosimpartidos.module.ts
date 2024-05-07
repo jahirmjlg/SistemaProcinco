@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListCursosimpartidosComponent } from './list-cursosimpartidos.component';
 import { ListCursosImpartidosRoutingModule } from './list-cursosimpartidos-routing.module';
 
@@ -26,6 +26,7 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         FileUploadModule,
         FormsModule,
         ListCursosImpartidosRoutingModule,
+        ReactiveFormsModule,
         ButtonModule,
         RippleModule,
         ToastModule,

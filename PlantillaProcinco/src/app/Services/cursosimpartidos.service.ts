@@ -37,11 +37,11 @@ export class CursosImpartidosService {
   }
 
   fillCursosIm(id: Number): Observable<any>{
-    return this.http.get<any>(`${this.UrlCursoImp}/${id}`);
+    return this.http.get<any>(`${this.UrlCursoImp}CursoImpartidoBuscar/${id}`);
   }
 
   deleteCursosIm(ID): Observable<any>{
-    return this.http.delete<any>(`${this.UrlCursoImp}/${ID}`);
+    return this.http.delete<any>(`${this.UrlCursoImp}CursosImpartidosEliminar/${ID}`);
   }
 
   
