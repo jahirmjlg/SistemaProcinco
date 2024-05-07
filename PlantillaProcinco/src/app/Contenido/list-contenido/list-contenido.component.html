@@ -8,7 +8,7 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
 
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Contenido</label>
@@ -17,10 +17,9 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="cont_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoForm.controls['cont_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
                     </div>
-                    <div class="col-2"></div>
-                    <div class="col-4 mt-2">
+                    <div class="col-6 mt-2">
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-6">
                             <label for="firstname2">Horas de duracion</label>
                             </div>
 
@@ -28,7 +27,7 @@
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoForm.controls['cont_DuracionHoras'].invalid" style="color: red !important;">Descripcion Requerida</small>
                     </div>
                 </div>
-                
+
 
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
@@ -54,8 +53,8 @@
                 <hr />
 
                 <div class="row">
-                    
-                    <div class="col-4 mt-2">
+
+                    <div class="col-6 mt-2">
 
                         <div class="col-sm-2">
                             <label for="firstname2">Contenido</label>
@@ -64,18 +63,17 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="cont_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarContenidoForm.controls['cont_Descripcion'].invalid" style="color: red !important;">Descripcion Requerida</small>
                     </div>
-                    <div class="col-2"></div>
 
-                    <div class="col-4">
+                    <div class="col-6 mt-2">
 
-                        <div class="col-sm-2">
-                        <label for="firstname2" class="form-label">Codigo</label>
+                        <div class="col-sm-6">
+                            <label for="firstname2">Horas de duracion</label>
                         </div>
                         <input pInputText id="firstname2" class="form-control" formControlName="cont_DuracionHoras" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarContenidoForm.controls['cont_DuracionHoras'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
                 </div>
-                   
+
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
                         <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -95,15 +93,12 @@
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Contenido</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
         </header>
     </div>
 
-<div class="card m-2 mt-4 p-3">
-    <div class="card-header">
-        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
-
-    </div>
+<div class="card-body m-2 mt-4 p-3">
 
     <div class="card px-6 py-6">
         <p-table #dt [value]="contenido" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
@@ -150,7 +145,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-               
+
                 <div class="col" style="font-weight:700">
                     <div>Contenido</div>
                 </div>

@@ -8,15 +8,14 @@
                         <hr />
 
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="col-sm-2">
                                 <label for="firstname2" class="form-label">Curso</label>
                                 </div>
                                 <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid}"/>
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
                             </div>
-                            <div class="col-2"></div>
-                            <div class="col-4 mt-2">
+                            <div class="col-6 mt-2">
 
                                     <label for="firstname2">Duracion Horas</label>
 
@@ -47,21 +46,21 @@
                                 </div>
 
 
-                                <div class="field md:col-6">
+                                <div class="field md:col-sm-6">
                                     <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" (onSelect)="onUpload($event)" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
                                     <small *ngIf="isSubmit && crearCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
-                                </div>
+                                </div>
                             </div>
                         </div>
 
 
 
 
-                        <div class="row mt-3">
-                            <div class="col-md-offset-2 col-3">
+                        <div class="row mt-6">
+                            <div class="col-md-offset-2 col-6">
                                 <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                             </div>
-                            <div class="col-md-offset-2 col-3" id="">
+                            <div class="col-md-offset-2 col-6" id="">
                                 <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
                             </div>
                         </div>
@@ -83,20 +82,15 @@
                     <hr />
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="col-sm-2">
                             <label for="firstname2" class="form-label">Curso</label>
                             </div>
                             <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid}"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
                         </div>
-                        <div class="col-2"></div>
-                        <div class="col-4 mt-2">
-
-
+                        <div class="col-6 mt-2">
                                 <label for="firstname2">Duracion Horas</label>
-
-
                             <input pInputText id="firstname2" class="form-control" formControlName="curso_DuracionHoras" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid}" />
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid" style="color: red !important;">Cantidad de Horas Requerida</small>
                         </div>
@@ -119,18 +113,12 @@
                         <div class="col-6">
 
                             <label for="firstname2">Imagen</label>
-
-
-
-                            <div class="field col-12">
+                            <div class="">
                                 <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
                                 <small *ngIf="isSubmitEdit && editarCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerido</small>
-                            </div>
+                            </div>
                         </div>
                     </div>
-
-
-
 
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
@@ -155,15 +143,13 @@
         <div class="card-header">
             <header class="w-100 d-flex justify-content-between p-2">
                 <h2>Listado de Cursos</h2>
+                <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
             </header>
         </div>
 
-    <div class="card m-2 mt-4 p-3">
-        <div class="card-header">
-            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+    <div class="card-body m-2 mt-4 p-3">
 
-        </div>
 
         <div class="card px-6 py-6">
 

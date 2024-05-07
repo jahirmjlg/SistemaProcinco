@@ -8,7 +8,7 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
 
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Titulo</label>
@@ -17,10 +17,9 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearTituloForm.controls['titl_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
                     </div>
-                    <div class="col-2"></div>
-                    <div class="col-4 mt-2">
+                    <div class="col-6 mt-2">
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-6">
                             <label for="firstname2">Horas de duracion</label>
                             </div>
 
@@ -28,7 +27,7 @@
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Valor Requerido</small>
                     </div>
                 </div>
-                
+
 
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
@@ -53,8 +52,8 @@
                 <hr />
 
                 <div class="row">
-                    
-                    <div class="col-4 mt-2">
+
+                    <div class="col-6 mt-2">
 
                         <div class="col-sm-2">
                             <label for="firstname2">Titulo</label>
@@ -63,9 +62,8 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="titl_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_Descripcion'].invalid" style="color: red !important;">Titulo Requerido</small>
                     </div>
-                    <div class="col-2"></div>
 
-                    <div class="col-4">
+                    <div class="col-6">
 
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Codigo</label>
@@ -74,7 +72,7 @@
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
                 </div>
-                   
+
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
                         <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -93,13 +91,12 @@
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Titulos</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
         </header>
     </div>
-    <div class="card m-2 mt-4 p-3">
-        <div class="card-header">
-            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
-        </div>
+    <div class="card-body m-2 mt-4 p-3">
+
 
         <div class="card px-6 py-6">
 
@@ -148,7 +145,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-               
+
                 <div class="col" style="font-weight:700">
                     <div>Titulo</div>
                 </div>

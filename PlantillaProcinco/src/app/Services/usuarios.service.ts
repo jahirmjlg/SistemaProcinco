@@ -43,7 +43,7 @@ export class UsuariosService {
   }
 
   getDdlEmpleado(): Observable<any> {
-    return this.http.get<Empleado[]>(this.UrlEmpleado);
+    return this.http.get<dropEmpleados[]>(this.UrlEmpleado);
   }
 
 }

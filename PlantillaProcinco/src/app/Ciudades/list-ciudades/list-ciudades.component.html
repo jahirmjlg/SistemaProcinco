@@ -11,7 +11,7 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
 
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Codigo</label>
@@ -20,8 +20,7 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
-                    <div class="col-2"></div>
-                    <div class="col-4 mt-2">
+                    <div class="col-6 mt-2">
 
                         <div class="col-sm-2">
                             <label for="firstname2">Municipio</label>
@@ -32,10 +31,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2"></div>
                     <div class="col-6">
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                         <label for="firstname2">Estado</label>
                         </div>
 
@@ -73,7 +71,7 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
 
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Codigo</label>
@@ -81,8 +79,7 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
-                    <div class="col-2"></div>
-                    <div class="col-4 mt-2">
+                    <div class="col-6 mt-2">
 
                         <div class="col-sm-2">
                             <label for="firstname2">Municipio</label>
@@ -93,7 +90,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2"></div>
                     <div class="col-6">
 
                         <div class="col-sm-2">
@@ -135,15 +131,12 @@
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Ciudades</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
         </header>
     </div>
 
-<div class="card m-2 mt-4 p-3">
-    <div class="card-header">
-        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
-
-    </div>
+<div class="card-body m-2 mt-4 p-3">
 
     <div class="card px-6 py-6">
 

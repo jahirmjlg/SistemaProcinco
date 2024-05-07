@@ -3,53 +3,91 @@ import { InformeEmpleadosService } from '../../Services/informe-emplados.service
 import { InformeEmpleado } from 'src/app/Models/InformesEmpleadosViewModel';
 import {Router} from '@angular/router';
 
-import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { dropEmpleados } from 'src/app/Models/EmpleadosViewModel';
+import { dropCursos } from 'src/app/Models/CursosViewModel';
 
 @Component({
   selector: 'app-list-informeempleados',
+  styleUrls: ['./list-informesempleados.scss'],
   templateUrl: './list-informesempleados.component.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 
 })
 export class ListInformesempleadosComponent implements OnInit {
 
 
-    productDialog: boolean = false;
+    Tabla: boolean = true;
+    Collapse: boolean = false;
+    isSubmit: boolean = false;
+    CollapseEdit: boolean = false;
+    isSubmitEdit: boolean = false;
+    CollapseDetalle: boolean = false;
+    deleteUsaurioBool: boolean = false;
 
-    deleteProductDialog: boolean = false;
-
-    deleteProductsDialog: boolean = false;
-
-    products: Product[] = [];
-
-    product: Product = {};
-
-    selectedProducts: Product[] = [];
-
-    submitted: boolean = false;
+    empleados: any[] = [];
+    cursos: any[] = [];
 
     cols: any[] = [];
-
     statuses: any[] = [];
-
     rowsPerPageOptions = [5, 10, 20];
-
     schemas = [
         CUSTOM_ELEMENTS_SCHEMA
       ];
 
+    infoE_Id: String = "";
+    infoE_Calificacion: String = "";
+    empl_Id  : String = "";
+    curso_Id : String = ""; 
+    infoE_Observaciones: String = "";
+    infoE_Usuariocreacion: String = "";
+    infoE_FechaCreacion: String = "";
+    infoE_UsuarioModificacion: String = "";
+    infoE_FechaModificacion: String = "";
+    ID: String = "";
+
     //   variable para iterar
     informeempleado!:InformeEmpleado[];
-
+    crearInformeEmpleadoForm: FormGroup
+    editarInformeEmpleadoForm: FormGroup
 
     //ultimos dos
-    constructor(private productService: ProductService, private messageService: MessageService, private informesempleadosservice: InformeEmpleadosService, private router: Router) { }
+    constructor( private messageService: MessageService, private informesempleadosservice: InformeEmpleadosService, private router: Router,  private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
     ngOnInit() {
+
+        this.crearInformeEmpleadoForm = this.formBuilder.group({
+            infoE_Calificacion: ['', [Validators.required]],
+            curso_Id: ['0', [Validators.required]],
+            empl_Id: ['0', [Validators.required]],
+            infoE_Observaciones: ['', [Validators.required]],
+    
+        });
+
+        this.editarInformeEmpleadoForm = new FormGroup({
+            infoE_Id: new FormControl("",Validators.required),
+            infoE_Calificacion: new FormControl("",Validators.required),
+            empl_Id: new FormControl("0", Validators.required),
+            curso_Id: new FormControl("0", Validators.required),
+            infoE_Observaciones: new FormControl(true,Validators.required),
+        });
+
+        this.informesempleadosservice.getDdlEmpleado().subscribe((data: dropEmpleados[]) => {
+            this.empleados = data;
+            console.log(data);
+        }, error => {
+            console.log(error);
+        });
+
+        this.informesempleadosservice.getDdlCurso().subscribe((data: dropCursos[]) => {
+            this.cursos = data;
+            console.log(data);
+        }, error => {
+            console.log(error);
+        });
 
 
         // Respuesta de la api
@@ -59,116 +97,171 @@ export class ListInformesempleadosComponent implements OnInit {
 
           }, error=>{
             console.log(error);
-          });
-
+        });
           //
 
 
-        this.productService.getProducts().then(data => this.products = data);
-
-        this.cols = [
-            { field: 'product', header: 'Product' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
-            { field: 'rating', header: 'Reviews' },
-            { field: 'inventoryStatus', header: 'Status' }
-        ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
-        ];
 
         this.schemas = [
             CUSTOM_ELEMENTS_SCHEMA
           ];
     }
 
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productDialog = true;
+
+    //INSERTAR
+    onSubmitInsert(): void {
+
+        this.isSubmit = true;
+
+            const errorSpan = document.getElementById('error-span');
+        if (this.crearInformeEmpleadoForm.valid) {
+          const ciudadData: InformeEmpleado = this.crearInformeEmpleadoForm.value;
+          console.log(ciudadData);
+          this.informesempleadosservice.insertInformeEmpleado(ciudadData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+
+                    // this.cookieService.set('namee', response.data.empl_Nombre);
+
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.informesempleadosservice.getInformeEmpleado().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.informeempleado = Response.data;
+                    });
+
+                    this.Collapse = false;
+                    this.Tabla = true;
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+                }
+            },
+            error => {
+                errorSpan.classList.remove('collapse');
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+ 
+    //EDITAR
+    onSubmitEdit(): void {
+
+        this.isSubmitEdit = true;
+
+        if (this.editarInformeEmpleadoForm.valid) {
+          const ciudadData: InformeEmpleado = this.editarInformeEmpleadoForm.value;
+          this.informesempleadosservice.editInformeEmpleado(ciudadData).subscribe(
+            response => {
+
+                if (response.code == 200) {
+
+
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                    console.log(response)
+                    // this.router.navigate(['/pages/estados']);
+                    this.informesempleadosservice.getInformeEmpleado().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.informeempleado = Response.data;
+                    });
+
+                    this.CollapseEdit = false;
+                    this.Tabla = true;
+
+                } else {
+
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+
+
+                }
+
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        } else {
+          console.log('Formulario inválido');
+        }
+
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+
+    detalles(id){
+
+        this.informesempleadosservice.fillInformeEmpleado(id).subscribe({
+            next: (data: InformeEmpleado) => {
+               this.infoE_Id = data[0].infoE_Id,
+               this.infoE_Calificacion = data[0].infoE_Calificacion,
+               this.curso_Id = data[0].cursos,
+               this.empl_Id = data[0].nombre,
+               this.infoE_Observaciones = data[0].infoE_Observaciones,
+               this.infoE_Usuariocreacion = data[0].creacion,
+               this.infoE_FechaCreacion = data[0].infoE_FechaCreacion,
+               this.infoE_UsuarioModificacion = data[0].modificacion,
+               this.infoE_FechaModificacion = data[0].infoE_FechaModificacion
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
+ 
+    //DELETE
+    deleteUsuario(codigo) {
+        this.deleteUsaurioBool = true;
+        this.ID = codigo;
+        console.log("ID" + codigo);
     }
 
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
-    }
-
+    
     confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+        this.informesempleadosservice.deleteInformeEmpleado(this.ID).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.informesempleadosservice.getInformeEmpleado().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.informeempleado = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+
+                    this.Tabla=true;
+
+                    this.deleteUsaurioBool = false;
+
+                   }
+                else{
+                    console.log(response)
+                this.deleteUsaurioBool = false;
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
     }
 
-    hideDialog() {
-        this.productDialog = false;
-        this.submitted = false;
-    }
-
-    saveProduct() {
-        this.submitted = true;
-
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+    
+  //LLENAR EDITAR && DETALLE
+  Fill(id) {
+    this.informesempleadosservice.fillInformeEmpleado(id).subscribe({
+        next: (data: InformeEmpleado) => {
+            this.editarInformeEmpleadoForm = new FormGroup({
+                infoE_Id: new FormControl(data[0].infoE_Id,Validators.required),
+                infoE_Calificacion: new FormControl(data[0].infoE_Calificacion,Validators.required),
+                empl_Id: new FormControl(data[0].empl_Id,Validators.required),
+                curso_Id: new FormControl(data[0].curso_Id,Validators.required),
+                infoE_Observaciones: new FormControl(data[0].infoE_Observaciones,Validators.required),
+            });
+            this.CollapseEdit = true;
+            this.Tabla=false;
+            console.log(data)
         }
+      });
     }
-
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
-
 }
 

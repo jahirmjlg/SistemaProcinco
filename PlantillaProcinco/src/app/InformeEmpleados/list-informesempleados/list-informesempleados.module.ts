@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListInformesempleadosComponent } from './list-informesempleados.component';
 
 //Cambiar routing
@@ -26,8 +26,8 @@ import { DialogModule } from 'primeng/dialog';
         TableModule,
         FileUploadModule,
         FormsModule,
-        //
         ListInformesEmpleadosRoutingModule,
+        ReactiveFormsModule,
         ButtonModule,
         RippleModule,
         ToastModule,

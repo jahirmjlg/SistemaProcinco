@@ -20,7 +20,7 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("InforE_Id", id);
+                parametro.Add("InfoE_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

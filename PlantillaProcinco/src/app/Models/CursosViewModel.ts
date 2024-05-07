@@ -1,4 +1,4 @@
-export class Curso {
+    export class Curso {
     curso_Id !: Number;
     curso_Descripcion  !: String;
     curso_DuracionHoras  !: Number;
@@ -11,4 +11,9 @@ export class Curso {
     curso_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
+}
+
+export class dropCursos{
+    curso_Id !: Number;
+    curso_Descripcion  !: String;
 }
