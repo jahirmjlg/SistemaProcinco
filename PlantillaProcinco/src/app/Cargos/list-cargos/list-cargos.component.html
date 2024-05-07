@@ -83,7 +83,7 @@
     </header>
     </div>
 <div class="card-body m-2 mt-4 p-3">
-
+    <div class="card px-6 py-6">
 
         <p-table #dt [value]="cargo" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"  selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">
@@ -114,6 +114,7 @@
                   </tr>
             </ng-template>
         </p-table>
+    </div>
 </div>
 
 </div>
