@@ -68,7 +68,7 @@ namespace SistemaProcinco.API.Controllers
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            using (Document document = new Document())
+            using (Document document = new Document(PageSize.A4, 30, 30, 30, 30))
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 writer.CloseStream = false;
@@ -76,43 +76,44 @@ namespace SistemaProcinco.API.Controllers
                 document.Open();
 
                 string css = @"
-        <style> 
-            body { font-family: 'Arial'; font-size: 10pt; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-            th { background-color: #633394; color: #ffffff; } // Color de encabezado personalizado
-            td { background-color: #f9f9f9; color: #333; }  // Mejora en el color de fondo de la celda
-            .header, .footer { width: 100%; background-color: #633394; color: white; text-align: center; padding: 10px 0; }
-            .footer { position: fixed; bottom: 0; }
-        </style>";
+                <style> 
+                    body { font-family: 'Arial'; font-size: 10pt; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+                    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
+                    th { background-color: #633394; color: #ffffff; }
+                    .header { position: fixed; top: 0; left: 0; right: 0; height: 120px; }
+                    .header img { position: absolute; left: 30px; top: 20px; width: 150px; height: auto; }
+                    .title { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 20pt; font-weight: bold; color: #633394; text-align: center; }
+                    .footer { position: fixed; bottom: 0; left: 0; right: 0; background-color: #633394; color: white; text-align: center; padding: 10px 0; height: 40px; }
+                </style>";
 
                 string htmlContent = @"
-        <html>
-        <head>
-        </head>
-        <body>
-            <div class='header'>
-                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' style='width: 100px; height: auto;' />
-                <h1>Reporte de Cursos Impartidos</h1>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Curso</th>
-                        <th>Nombre</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Finalizado</th>
-                    </tr>
-                </thead>
-                <tbody>";
+                <html>
+                <head>
+                </head>
+                    <body>
+                        <div class='header'>
+                            <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
+                            <div class='title'>Reporte de Cursos Impartidos</div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Curso</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Finalizado</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
 
                 var listado = _procincoService.ListaCursosImpartidos();
                 foreach (var curso in listado.Data)
                 {
-                    
-                    if(curso.CurIm_FechaFin != null)
+
+                    if (curso.CurIm_FechaFin != null)
                     {
                         htmlContent += $@"
                         <tr>
@@ -136,17 +137,16 @@ namespace SistemaProcinco.API.Controllers
                             <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
                         </tr>";
                     }
-
                 }
 
-                htmlContent += @"
-                </tbody>
-            </table>
-            <div class='footer'>
-                <p>© 2024 Procinco. Todos los derechos reservados.</p>
-            </div>
-        </body>
-        </html>";
+                    htmlContent += @"
+                        </tbody>
+                    </table>
+                    <div class='footer'>
+                        <p>© 2024 Procinco. Todos los derechos reservados.</p>
+                    </div>
+                </body>
+                </html>";
 
                 using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
                 using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
@@ -160,6 +160,11 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
+
+
+
+
 
 
 

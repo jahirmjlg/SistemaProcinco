@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-body">
     <form [formGroup]="crearRolForm" (ngSubmit)="onSubmitInsert()">
-        
+
                 <h4>Agregar Nuevo Rol</h4>
                 <hr />
 
@@ -17,9 +17,9 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="role_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearRolForm.controls['role_Descripcion'].invalid" style="color: red !important;">El Rol es Requerido</small>
                     </div>
-                    
+
                 </div>
-                
+
 
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
@@ -29,34 +29,53 @@
                         <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
                     </div>
                 </div>
-           
-    </form>
-    </div>
 
-    <form [formGroup]="crearParoForm" (ngSubmit)="submitForm()">
-        <div *ngFor="let pantalla of pantalla">
-            <input type="checkbox" [value]="pantalla.pant_Id" (change)="onCheckboxChange($event.target.checked, pantalla.pant_Id)">
-            {{ pantalla.pant_Descripcion }}
-          </div>
+                </form>
+                </div>
 
-        <!-- <p-table  [value]="pantalla">
-            <ng-template pTemplate="body" let-pant>
-                <tr>
-                    <td>{{pant.pant_Descripcion}}</td>
-                    <input type="checkbox" [value]="pant.pant_Id" (change)="onCheckboxChange($event.target.checked, pant.pant_Id)">
-    
-                  </tr>
-            </ng-template>
-        </p-table> -->
-        <div class="col-md-offset-2 col-3">
-            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+
+
+
+
+                    <h3>Pantallas Por Roles</h3>
+
+                    <div cdkDropListGroup>
+                        <div class="lists-container">
+                    <multi-drag-drop
+                        [items]="['Usuarios','Aun no es dinamico','Roles','Estados','Ciudades','Categorias']"
+                        (itemsRemoved)="itemsRemoved($event, 1)"
+                        (itemsAdded)="itemsAdded($event, 1)"
+                        (itemsUpdated)="itemsUpdated($event, 1)"
+                        (selectionChanged)="selectionChanged($event, 1)"
+                    >
+                        <ng-template let-item>
+                        {{ item }}
+                        </ng-template>
+                    </multi-drag-drop>
+                    <br/>
+                    <multi-drag-drop
+                        [items]="['Empleados', 'No es dinamico', 'Cargos']"
+                        (itemsRemoved)="itemsRemoved($event, 2)"
+                        (itemsAdded)="itemsAdded($event, 2)"
+                        (itemsUpdated)="itemsUpdated($event, 2)"
+                        (selectionChanged)="selectionChanged($event, 1)"
+                    >
+                        <ng-template let-item>
+                        {{ item }}
+                        </ng-template>
+                    </multi-drag-drop>
+                    </div>
+                    <br/>
+                    <!-- <button (click)="clearEvents()">Clear Events:</button>
+                    <div *ngFor="let ev of events">
+                    {{ev.text}}: {{ev.ev}}
+                    </div> -->
+
+                </div>
+            </div>
+
+
         </div>
-    </form>
-    
-</div>
-
-
-</div>
 
 
 <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
@@ -68,7 +87,7 @@
                 <hr />
 
                 <div class="row">
-                    
+
                     <div class="col-4 mt-2">
 
                         <div class="col-sm-2">
@@ -78,10 +97,10 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="role_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarRolForm.controls['role_Descripcion'].invalid" style="color: red !important;">El Rol Requerida</small>
                     </div>
-               
-                   
+
+
                 </div>
-                   
+
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
                         <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
@@ -101,13 +120,13 @@
 <div class="card" [ngClass]="{'collapse': Tabla === false}">
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
-            <h2>Listado de Contenido</h2>
+            <h2>Listado de Roles</h2>
 
         </header>
     </div>
 <div class="card m-2 mt-4 p-3">
     <div class="card-header">
-       
+
         <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
     </div>

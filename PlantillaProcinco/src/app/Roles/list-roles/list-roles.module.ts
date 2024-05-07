@@ -18,6 +18,15 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+import { MultiDragDropComponent } from '../MultiDrag/multi-drag-drop.component';
+
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -26,6 +35,9 @@ import { DialogModule } from 'primeng/dialog';
         FormsModule,
         ListRolesRoutingModule,
         ReactiveFormsModule,
+
+        DragDropModule,
+
         ButtonModule,
         RippleModule,
         ToastModule,
@@ -38,6 +50,8 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule
     ],
-    declarations: [ListRolesComponent]
+    declarations: [ListRolesComponent, MultiDragDropComponent],
+    bootstrap:    [ ListRolesComponent ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ListRolesModule { }
