@@ -24,7 +24,7 @@ export class MessagesDemoComponent {
     }
 
     showSuccessViaToast() {
-        this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
+        this.service.add({ key: 'tst', severity: 'success', summary: 'Correcto ', detail: 'Se agrego con exito' });
     }
 
     showInfoViaMessages() {

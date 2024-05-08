@@ -4,7 +4,7 @@ import {CiudadService} from '../../Services/ciudad.service';
 import { Ciudad } from 'src/app/Models/CiudadViewModel';
 import {Router} from '@angular/router';
 
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Message, ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -26,6 +26,8 @@ export class ListCiudadesComponent implements OnInit {
 
 
     Tabla: boolean = true;
+
+    msgs: Message[] = [];
 
     //BOOLEANS INSERTAR
     Collapse: boolean = false;
@@ -103,6 +105,8 @@ export class ListCiudadesComponent implements OnInit {
 
         this.ciudadservice.getDdlEstados().subscribe((data: dropEstados[]) => {
             this.estados = data;
+        this.messageService.add({ key: 'tst', severity: 'info', summary: 'Info Message', detail: 'PrimeNG rocks' });
+
             console.log(data);
         }, error => {
             console.log(error);
@@ -155,12 +159,12 @@ export class ListCiudadesComponent implements OnInit {
                         console.log(Response.data);
                         this.ciudad = Response.data;
                     });
+                    this.messageService.add({ key: 'tst', severity: 'success', summary: 'Correcto ', detail: 'Se agrego con exito' });
 
                     this.Collapse = false;
                     this.Tabla = true;
                 } else {
 
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
 
 
                 }

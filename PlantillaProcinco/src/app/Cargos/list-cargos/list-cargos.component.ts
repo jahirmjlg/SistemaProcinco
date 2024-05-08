@@ -3,7 +3,7 @@ import {CargosService} from '../../Services/cargos.service';
 import {Cargo} from 'src/app/Models/CargosViewModel';
 import {Router} from '@angular/router';
 
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Message, ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -22,6 +22,7 @@ export class ListCargosComponent {
 
   Collapse: boolean = false;
   isSubmit: boolean = false;
+  msgs: Message[] = [];
 
 
   CollapseEdit: boolean = false;
