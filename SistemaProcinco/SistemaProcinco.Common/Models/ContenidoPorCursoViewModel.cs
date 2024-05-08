@@ -12,10 +12,18 @@ namespace SistemaProcinco.Common.Models
         public int ConPc_Id { get; set; }
         public int? Cont_Id { get; set; }
         [NotMapped]
-        public string Contenido { get; set; }
+        public string Cont_Descripcion { get; set; }
+        [NotMapped]
+        public string Cont_DuracionHoras { get; set; }
         public int? Curso_Id { get; set; }
         [NotMapped]
-        public string Cursos { get; set; }
+        public string Curso_Descripcion { get; set; }
+        [NotMapped]
+        public string Curso_DuracionHoras { get; set; }
+        [NotMapped]
+        public string Curso_Imagen { get; set; }
+        [NotMapped]
+        public string Cate_Descripcion { get; set; }
         public int ConPc_UsuarioCreacion { get; set; }
         public DateTime ConPc_FechaCreacion { get; set; }
         public int? ConPc_UsuarioModificacion { get; set; }

@@ -42,6 +42,8 @@ import { RouterModule } from '@angular/router';
 
         { path: 'drag', data: { breadcrumb: 'DragDrop' }, loadChildren: () => import('../../../CursosImpartidosPdf/listado-cursos-impartidos-pdf/list-mostrarDrop-routing.module').then(m => m.ListMostrarDropRoutingModule) },
 
+        { path: 'contenidoporcurso', data: { breadcrumb: 'ContenidoPorCurso' }, loadChildren: () => import('../../../ContenidoPorCurso/list-contenidoporcurso/list-contenidoporcursos.module').then(m => m.ListContenidoPorCursosModule) },
+
 
         { path: '**', redirectTo: '/notfound' }
     ])],

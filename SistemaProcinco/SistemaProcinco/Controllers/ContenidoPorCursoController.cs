@@ -58,7 +58,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpPut("CntenidoPorCursoEditar")]
+        [HttpPut("ContenidoPorCursoEditar")]
         public IActionResult Edit(ContenidoPorCursoViewModel item)
         {
             var model = _mapper.Map<tbContenidoPorCurso>(item);
@@ -81,7 +81,7 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("ContenidoPorCursoEliminar")]
+        [HttpDelete("ContenidoPorCursoEliminar/{ConPc_Id}")]
         public IActionResult Delete(int ConPc_Id)
         {
             var list = _procincoService.EliminarContenidosPorCursos(ConPc_Id);
@@ -96,13 +96,41 @@ namespace SistemaProcinco.API.Controllers
 
         }
 
-        [HttpGet("ContenidoPorCursoBuscar")]
-        public IActionResult Details(int ConPc_Id)
+        [HttpGet("ContenidoPorCursoBuscar/{ConPc_Id}")]
+        public IActionResult BuscarCurso(int ConPc_Id)
         {
             var list = _procincoService.BuscarContenidoPorCursos(ConPc_Id);
             if (list.Success == true)
             {
-                return Ok(list);
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("CPCCursoBuscar/{curso}")]
+        public IActionResult BuscarContenido(string curso)
+        {
+            var list = _procincoService.CPCBuscarCurso(curso);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("CPCContenidoBuscar/{contenido}")]
+        public IActionResult Details(string contenido)
+        {
+            var list = _procincoService.CPCBuscarContenido(contenido);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
             }
             else
             {

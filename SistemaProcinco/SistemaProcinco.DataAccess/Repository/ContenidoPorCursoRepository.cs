@@ -88,5 +88,36 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
+
+        public IEnumerable<tbContenidoPorCurso> BuscarCursos(string curso)
+        {
+            string sql = ScriptsDatabase.CPCCursoBuscar;
+            List<tbContenidoPorCurso> result = new List<tbContenidoPorCurso>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Curso_Descripcion", curso);
+                result = db.Query<tbContenidoPorCurso>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+
+        }
+
+        public IEnumerable<tbContenidoPorCurso> BuscarContenido(string cont_Descripcion)
+        {
+            string sql = ScriptsDatabase.CPCContenidosBuscar;
+            List<tbContenidoPorCurso> result = new List<tbContenidoPorCurso>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Cont_Descripcion", cont_Descripcion);
+                result = db.Query<tbContenidoPorCurso>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+
     }
 }

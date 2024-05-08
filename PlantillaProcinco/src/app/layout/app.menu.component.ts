@@ -103,6 +103,11 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/pages/cursos']
                             },
                             {
+                                label: 'Contenido por Cursos',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/contenidoporcurso']
+                            },
+                            {
                                 label: 'Contenido',
                                 icon: 'pi pi-fw pi-globe',
                                 routerLink: ['/pages/contenido']

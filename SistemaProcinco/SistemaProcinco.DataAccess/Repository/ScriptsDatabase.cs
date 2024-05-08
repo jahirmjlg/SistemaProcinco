@@ -117,6 +117,9 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string ContenidoPorCursoActualizar = "[Pro].[SP_ContenidoPorCurso_Actualizar]";
         public static string ContenidoPorCursoEliminar = "[Pro].[SP_ContenidoPorCurso_Eliminar]";
         public static string ContenidoPorCursoBuscar = "[Pro].[SP_ContenidoPorCurso_Buscar]";
+        public static string CPCCursoBuscar = "[Pro].[SP_ContenidoPorCurso_BuscarCurso]";
+        public static string CPCContenidosBuscar = "[Pro].[SP_ContenidoPorCurso_BuscarContenido]";
+
         #endregion
 
         #region Cursos

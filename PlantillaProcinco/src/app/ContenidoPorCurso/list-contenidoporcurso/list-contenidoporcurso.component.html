@@ -1,0 +1,312 @@
+<p-toast></p-toast>
+
+    <!-- DESPLEGAR FORMULARIO DE CREAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
+
+        <form [formGroup]="crearContenidoPorCursoForm" (ngSubmit)="onSubmitInsert()">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Nuevo Contenido Por Curso </h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Ingrese el nombre del Contenido</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="cont_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)" (change)="onContenidoChange(crearContenidoPorCursoForm.get('cont_Descripcion').value)"/>
+                            
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoPorCursoForm.controls['cont_Descripcion'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
+                        </div>
+
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Duracion de el contenido</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="cont_DuracionHoras" type="text" required autofocus  readonly/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoPorCursoForm.controls['cont_DuracionHoras'].invalid" style="color: red !important;">Duracion Requerido</small>
+                        </div>
+                    </div>
+
+                        <div class="card">
+                            <div class="row">
+
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus  (change)="onCursocrearChange(crearContenidoPorCursoForm.get('curso_Descripcion').value)" (keydown)="validarTexto($event)"/>
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoPorCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+
+
+                                <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
+
+                               
+
+
+                                    
+                            </div>
+
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
+                            <div class="card" style="width: 18rem;">
+                                <!-- <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearContenidoPorCursoForm.get('curso_Imagen').value}}" class="card-img-top" alt="..."> -->
+                                <div class="card-body">
+                                    <h5 class="card-title">Duración</h5>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
+                                        <label for="">horas</label>
+
+                                    <h5 class="card-title">Categoria</h5>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none;" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
+
+                            </div>
+                              </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div> 
+
+
+
+
+    <!-- DESPLEGAR FORMULARIO DE EDITAR -->
+<!-- 
+        <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+        <form [formGroup]="editarContenidoPorCursoForm" (ngSubmit)="onSubmitEdit()">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Editar Curso Impartido</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus  (change)="onCursoeditarChange(crearContenidoPorCursoForm.get('curso_Descripcion').value)" (keydown)="validarTexto($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarContenidoPorCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">La descripcion es Requerida</small>
+                        </div>
+
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label">Empleado</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="cont_DuracionHoras" type="text" required autofocus />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarContenidoPorCursoForm.controls['cont_DuracionHoras'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                    </div>
+
+                        <div class="card">
+                            <div class="row">
+
+
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (keydown)="validarTexto($event)"/>
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarContenidoPorCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+
+
+                                <label for="firstname2" class="form-label mt-5" [ngClass]="{'collapse': ImagenEncontrada === false}" >Ingrese la Fecha de Inicio del Curso</label>
+
+                                <input pInputText id="firstname2" class="form-control" [ngClass]="{'collapse': ImagenEncontrada === false}"  formControlName="curIm_FechaInicio" type="datetime-local" required autofocus/>
+                                <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarContenidoPorCursoForm.controls['curIm_FechaInicio'].invalid" style="color: red !important;">Fecha de Inicio  Requerida</small>
+
+
+                                    <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-label mt-5">Ingrese la Fecha de Finalización del Curso</label>
+
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaFin" type="datetime-local" required autofocus />
+                                    <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarContenidoPorCursoForm.controls['curIm_FechaFin'].invalid" style="color: red !important;">Fecha de Inicio Requerida</small>
+                            </div>
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://getbootstrap.com/docs/5.3/assets/img/webpack.svg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Duración</h5>
+                                    <label id="cursoduracion" class="form-label" formControlName="curso_DuracionHoras" required autofocus>11:00</label>
+                                        <label for=""> horas</label>
+
+                                    <h5 class="card-title">Categoria</h5>
+                                <label id="cursoduracion" class="form-label" formControlName="cate_Descripcion" required autofocus>Front</label>
+                            </div>
+                              </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Editar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+ -->
+
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
+    <div class="card-header">
+        <header class="w-100 d-flex justify-content-between p-2">
+            <h2>Listado de Contenido por Curso</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+
+        </header>
+    </div>
+    <div class="card-body m-2 mt-4 p-3">
+
+
+        <div class="card px-6 py-6">
+
+            <p-table #dt [value]="contenidoPcurso" [columns]="cols" responsiveLayout="scroll" [rows]="10"  [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Curso</th>
+                        <th>Contenido</th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-contcurso>
+                    <tr>
+                        <td>{{contcurso.conPc_Id}}</td>
+                        <td>{{contcurso.cont_Descripcion}}</td>
+                        <td>{{contcurso.curso_Descripcion}}</td>
+
+                        <td>
+                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(contcurso.conPc_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(contcurso.conPc_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenidoporCurso(contcurso.conPc_Id)"><i class="pi pi-trash"></i>Eliminar</button> 
+                     
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles De Curso Impartido</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col" style="font-weight:700">
+                    <div>Curso</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Contenido</div>
+                </div>
+
+            </div>
+            <div class="row">
+                
+                <div class="col">
+                    <div><label for="Curso">{{ curso_Descripcion }}</label></div>
+                </div>
+                
+                <div class="col">
+                    <div><label for="Contenido">{{ cont_Descripcion }}</label></div>
+                </div>
+                
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ creacion }}</td>
+                                    <td>{{ conPc_FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ modificacon }}</td>
+                                    <td>{{ conPc_FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="deleteContenidoPorCursoBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar este registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteContenidoPorCursoBool = false"></button>
+            </div>
+        </div>
+</p-dialog>

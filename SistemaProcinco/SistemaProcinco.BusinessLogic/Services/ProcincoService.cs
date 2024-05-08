@@ -449,6 +449,48 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult CPCBuscarCurso(string Curso_Descripcion)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.BuscarCursos(Curso_Descripcion);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult CPCBuscarContenido(string Contenido_Descripcion)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.BuscarContenido(Contenido_Descripcion);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
         #endregion
 
         #region Cursos
