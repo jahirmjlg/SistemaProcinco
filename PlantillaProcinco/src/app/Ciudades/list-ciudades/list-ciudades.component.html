@@ -17,7 +17,7 @@
                         <label for="firstname2" class="form-label">Codigo</label>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="number" required autofocus (keydown)="validarNumeros($event)"/>
+                        <input pInputText id="firstname2" class="form-control" formControlName="ciud_Id" type="text" required autofocus (keydown)="validarNumeros($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCiudadForm.controls['ciud_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
                         
 

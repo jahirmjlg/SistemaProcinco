@@ -1,13 +1,13 @@
 <div class="layout-topbar" >
-    <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'dark' ? 'ProcincoPNG' : 'PROCINCO_White'}}.png" alt="logo">
-
-    </a>
+    
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
-
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'dark' ? 'ProcincoPNG' : 'PROCINCO_White'}}.png" alt="logo">
+    </a>
+    
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
         <i class="pi pi-ellipsis-v"></i>
     </button>
@@ -16,13 +16,12 @@
 
         <button class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
-            <span>Profile</span>
+        <label style="color: #ff771c; margin-top: 12px;" id="emp"></label>
         </button>
-        <label style="color: #fff; margin-top: 12px;" id="emp">Hola Mundo</label>
-
+            
         <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
             <i class="pi pi-cog"></i>
-            <span>Settings</span>
+            <span>Ajustes</span>
         </button>
     </div>
 </div>
