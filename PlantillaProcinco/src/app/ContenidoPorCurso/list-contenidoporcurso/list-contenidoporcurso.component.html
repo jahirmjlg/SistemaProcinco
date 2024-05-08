@@ -39,13 +39,6 @@
 
                                 <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus  (change)="onCursocrearChange(crearContenidoPorCursoForm.get('curso_Descripcion').value)" (keydown)="validarTexto($event)"/>
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoPorCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
-
-
-                                <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
-
-                               
-
-
                                     
                             </div>
 
@@ -53,7 +46,7 @@
                             <div class="col-sm-1"></div>
                             <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
                             <div class="card" style="width: 18rem;">
-                                <!-- <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearContenidoPorCursoForm.get('curso_Imagen').value}}" class="card-img-top" alt="..."> -->
+                                <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearContenidoPorCursoForm.get('curso_Imagen').value}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">Duración</h5>
                                     <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
