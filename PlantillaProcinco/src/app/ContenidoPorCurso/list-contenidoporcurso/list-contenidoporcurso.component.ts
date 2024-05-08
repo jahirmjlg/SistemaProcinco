@@ -54,17 +54,23 @@ export class ListContenidoporcursoComponent {
     CUSTOM_ELEMENTS_SCHEMA
   ];
 
-    contenidoPcurso !: ContenidoPorCursos[];
+  contenidoPcurso !: ContenidoPorCursos[];
 
-    crearContenidoPorCursoForm: FormGroup;
-    editarContenidoPorCursoForm : FormGroup;
+  crearContenidoPorCursoForm: FormGroup;
+  editarContenidoPorCursoForm : FormGroup;
 
-    constructor(private messageService: MessageService, private contenidoPorCursosService : ContenidoporcursoService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) { }
+  constructor(private messageService: MessageService, private contenidoPorCursosService : ContenidoporcursoService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.crearContenidoPorCursoForm = this.formBuilder.group({
       cont_Id: ['',[Validators.required]],
       curso_Id: ['',[Validators.required]],
+      cont_Descripcion: ['',[Validators.required]],
+      cont_DuracionHoras: ['',[Validators.required]],
+      cate_Descripcion: ['',[Validators.required]],
+      curso_DuracionHoras: ['',[Validators.required]],
+      curso_Descripcion: ['',[Validators.required]],
+      curso_Imagen: ['',[Validators.required]],
     })
 
     this.editarContenidoPorCursoForm = this.formBuilder.group({
@@ -196,10 +202,6 @@ export class ListContenidoporcursoComponent {
         next: (data: ContenidoPorCursos) => {
             this.crearContenidoPorCursoForm.get('curso_Id').setValue(data[0].curso_Id);
             this.crearContenidoPorCursoForm.get('curso_Descripcion').setValue(data[0].curso_Descripcion);
-            this.crearContenidoPorCursoForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
-            this.crearContenidoPorCursoForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
-            this.crearContenidoPorCursoForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
-            this.crearContenidoPorCursoForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
             this.crearContenidoPorCursoForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
             this.crearContenidoPorCursoForm.get('cate_Descripcion').setValue(data[0].cate_Descripcion);
             this.crearContenidoPorCursoForm.get('curso_Imagen').setValue(data[0].curso_Imagen);
