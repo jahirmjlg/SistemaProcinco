@@ -3,7 +3,8 @@ h1, h2, h3, h4, h5, h6 {
     font-family: inherit;
     font-weight: 500;
     line-height: 1.2;
-    color: var(--surface-900);
+    color: #bdbdbd;
+    font-weight: bold;
 
     &:first-child {
         margin-top: 0;
