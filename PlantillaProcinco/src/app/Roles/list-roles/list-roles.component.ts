@@ -129,16 +129,6 @@ export class ListRolesComponent {
           modificacion: ''
         };
 
-        // Llamar al servicio para insertar el registro de PantallaPorRol
-        this.paroservice.insertPantallaPorRol(paroInsertar).subscribe(
-          response => {
-      console.log("NO ENTRA ESTA MIERDA");
-      // Manejar la respuesta del servicio
-          },
-          error => {
-            console.error('Error al insertar el registro de PantallaPorRol:', error);
-          }
-        );
       });
     } else {
       console.log('Formulario inválidoo');
