@@ -41,6 +41,37 @@
 
                     <div cdkDropListGroup>
                         <div class="lists-container">
+                          <multi-drag-drop
+                            [items]="itemsGroup1"
+                            (itemsRemoved)="itemsRemoved($event, 1)"
+                            (itemsAdded)="itemsAdded($event, 1)"
+                            (itemsUpdated)="itemsUpdated($event, 1)"
+                            (selectionChanged)="selectionChanged($event, 1)"
+                          >
+                            <ng-template let-item>
+                              {{ item.pant_Descripcion }}
+                            </ng-template>
+                          </multi-drag-drop>
+
+                          <br/>
+
+                          <multi-drag-drop
+                            [items]="itemsGroup2"
+                            (itemsRemoved)="itemsRemoved($event, 2)"
+                            (itemsAdded)="itemsAdded($event, 2)"
+                            (itemsUpdated)="itemsUpdated($event, 2)"
+                            (selectionChanged)="selectionChanged($event, 2)"
+                          >
+                            <ng-template let-item>
+                              {{ item.pant_Descripcion }}
+                            </ng-template>
+                          </multi-drag-drop>
+                        </div>
+                      </div>
+
+<!--
+                    <div cdkDropListGroup>
+                        <div class="lists-container">
                     <multi-drag-drop
                         [items]="['Usuarios','Aun no es dinamico','Roles','Estados','Ciudades','Categorias']"
                         (itemsRemoved)="itemsRemoved($event, 1)"
@@ -66,12 +97,12 @@
                     </multi-drag-drop>
                     </div>
                     <br/>
-                    <!-- <button (click)="clearEvents()">Clear Events:</button>
+                     <button (click)="clearEvents()">Clear Events:</button>
                     <div *ngFor="let ev of events">
                     {{ev.text}}: {{ev.ev}}
-                    </div> -->
+                    </div>
 
-                </div>
+                </div> -->
             </div>
 
 
@@ -121,17 +152,14 @@
     <div class="card-header">
         <header class="w-100 d-flex justify-content-between p-2">
             <h2>Listado de Roles</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
         </header>
     </div>
-<div class="card m-2 mt-4 p-3">
-    <div class="card-header">
+    <div class="card-body m-2 mt-4 p-3">
 
-        <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
 
-    </div>
-
-    <div class="card px-6 py-6">
+        <div class="card px-6 py-6">
 
         <p-table #dt [value]="role" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
             <ng-template pTemplate="caption">

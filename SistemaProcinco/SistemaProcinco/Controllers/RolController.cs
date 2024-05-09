@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SistemaProcinco.BunisessLogic;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -38,18 +39,37 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpPost("RolCrear")]
-        public IActionResult Insert(RolesViewModel item)
+        public IActionResult Insert([FromBody] RoleWithScreens data)
         {
-            var model = _mapper.Map<tbRoles>(item);
+            var result = new ServicesResult();
+            var rol = data.role_Descripcion;
+            var pantallas = data.Screens;
+
             var modelo = new tbRoles()
             {
-                Role_Descripcion = item.Role_Descripcion,
+                Role_Descripcion = rol,
                 Role_UsuarioCreacion = 1,
                 Role_FechaCreacion = DateTime.Now
             };
-            (var list, int Role_Id ) = _accesoService.InsertarRoles(modelo);
-            list.Message = Role_Id.ToString();
-            if (list.Success == true)
+            (var list, int Role_IdScope ) = _accesoService.InsertarRoles(modelo);
+
+
+            foreach (var pantalla in pantallas)
+            {
+                var modelo2 = new tbPantallasPorRoles()
+                {
+                    Pant_Id = pantalla.pant_Id,
+                    Role_Id = Role_IdScope,
+                    PaPr_UsuarioCreacion = 1
+                };
+
+             result = _accesoService.InsertarPantallasPorRoles(modelo2);
+
+
+            }
+
+
+            if (result.Success == true)
             {
                 return Ok(list);
             }

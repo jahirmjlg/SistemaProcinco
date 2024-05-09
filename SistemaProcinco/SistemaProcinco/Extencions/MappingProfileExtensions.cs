@@ -30,6 +30,9 @@ namespace SistemaProcinco.API.Extencions
             CreateMap<CursosImpartidosViewModel, tbCursosImpartidos>().ReverseMap();
             CreateMap<CursosViewModel, tbCursos>().ReverseMap();
 
+            CreateMap<PantallasAndRolesViewModel, tbPantallas>().ReverseMap();
+
+
         }
     }
 }

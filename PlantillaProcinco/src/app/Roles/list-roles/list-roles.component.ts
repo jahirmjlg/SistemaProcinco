@@ -6,7 +6,7 @@ import { PantallasService } from 'src/app/Services/pantallas.service';
 import { Pantalla } from 'src/app/Models/PantallasViewModel';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.service';
 import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
@@ -33,7 +33,8 @@ export class ListRolesComponent {
 
     ID: String = "";
 
-  pantd: any[] = [];
+    itemsGroup1: { pant_Id: number, pant_Descripcion: string }[] = [];
+    itemsGroup2: { pant_Id: number, pant_Descripcion: string }[] = [];
 
 
   cols: any[] = [];
@@ -57,6 +58,7 @@ export class ListRolesComponent {
   ngOnInit() {
     this.crearRolForm = this.formBuilder.group({
         role_Descripcion: ['', [Validators.required]],
+        screens: this.formBuilder.array([])
     });
 
     this.editarRolForm = new FormGroup({
@@ -82,6 +84,14 @@ export class ListRolesComponent {
         this.pantalla = Response.data;
     });
         //
+
+
+        this.service.getPantallas().subscribe(data => {
+            this.itemsGroup1 = data;
+            console.log(data);
+          });
+
+
 
       this.schemas = [
           CUSTOM_ELEMENTS_SCHEMA
@@ -132,9 +142,24 @@ export class ListRolesComponent {
         );
       });
     } else {
-      console.log('Formulario inválido');
+      console.log('Formulario inválidoo');
+
     }
   }
+
+
+  getScreensArray(): FormArray {
+    return this.crearRolForm.get('screens') as FormArray;
+}
+
+  addScreen(screen): void {
+    this.getScreensArray().push(
+        this.formBuilder.group({
+            pant_Id: [screen.pant_Id, Validators.required],
+            pant_Description: [screen.pant_Description, Validators.required]
+        })
+    );
+}
 
   onSubmitInsert(): void {
 
@@ -143,7 +168,11 @@ export class ListRolesComponent {
     const errorSpan = document.getElementById('error-span');
     if (this.crearRolForm.valid) {
       const contenidoData: Role = this.crearRolForm.value;
-      this.service.insertRol(contenidoData).subscribe(
+      this.itemsGroup2.forEach(screen => this.addScreen(screen));
+
+
+      console.log(contenidoData);
+      this.service.insertRol(this.crearRolForm.value).subscribe(
        response => {
         if (response.code == 200)
         {
@@ -164,11 +193,12 @@ export class ListRolesComponent {
 
         },
         error => {
-            errorSpan.classList.remove('collapse');
+            console.log(error)
         }
         );
         } else {
         console.log('Formulario inválido');
+
         }
     }
 
@@ -241,26 +271,75 @@ export class ListRolesComponent {
 
     //EVENTOS DRAG
 
-    events = [];
+    itemsRemoved(ev, list) {
+        if (list === 1) {
+          // Mover de la primera tabla a la segunda.
+          this.itemsGroup2.push(...ev.filter(item => !this.itemsGroup2.some(existing => existing.pant_Id === item.pant_Id)));
+          this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(removedItem => removedItem.pant_Id === item.pant_Id));
+        } else {
+          // Mover de la segunda tabla a la primera.
+          this.itemsGroup1.push(...ev.filter(item => !this.itemsGroup1.some(existing => existing.pant_Id === item.pant_Id)));
+          this.itemsGroup2 = this.itemsGroup2.filter(item => !ev.some(removedItem => removedItem.pant_Id === item.pant_Id));
+        }
+      }
 
-  clearEvents(): void {
-    this.events = [];
-  }
+      itemsAdded(ev: any[], list: number) {
 
-  itemsRemoved(ev, list) {
-    this.events.push({text: `itemsRemoved from ${list}`, ev: JSON.stringify(ev)});
-  }
+        if (list === 1) {
+            ev.forEach(item => {
+                if (!this.itemsGroup1.some(existing => existing.pant_Id === item.pant_Id)) {
+                    this.itemsGroup1.push(item);
+                }
+            });
+        } else {
+            ev.forEach(item => {
+                if (!this.itemsGroup2.some(existing => existing.pant_Id === item.pant_Id)) {
+                    this.itemsGroup2.push(item);
+                }
+            });
+        }
 
-  itemsAdded(ev, list) {
-    this.events.push({text: `itemsAdded to ${list}`, ev: JSON.stringify(ev)});
-  }
+        if (list === 1) {
+            this.itemsGroup2 = this.itemsGroup2.filter(item => !ev.some(addedItem => addedItem.pant_Id === item.pant_Id));
+        } else {
+            this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(addedItem => addedItem.pant_Id === item.pant_Id));
+        }
+    }
 
-  itemsUpdated(ev, list) {
-    this.events.push({text: `itemsUpdated in ${list}`, ev: JSON.stringify(ev)});
-  }
 
-  selectionChanged(ev, list) {
-    this.events.push({text: `selectionChanged in ${list}`, ev: JSON.stringify(ev)});
-  }
+      itemsUpdated(ev, list) {
+        // Aquí puedes manejar si necesitas una lógica adicional para los datos actualizados.
+      }
+
+      selectionChanged(ev, list) {
+        // Opcional: manejar cambios en la selección.
+      }
+
+
+
+
+
+
+//     events = [];
+
+//   clearEvents(): void {
+//     this.events = [];
+//   }
+
+//   itemsRemoved(ev, list) {
+//     this.events.push({text: `itemsRemoved from ${list}`, ev: JSON.stringify(ev)});
+//   }
+
+//   itemsAdded(ev, list) {
+//     this.events.push({text: `itemsAdded to ${list}`, ev: JSON.stringify(ev)});
+//   }
+
+//   itemsUpdated(ev, list) {
+//     this.events.push({text: `itemsUpdated in ${list}`, ev: JSON.stringify(ev)});
+//   }
+
+//   selectionChanged(ev, list) {
+//     this.events.push({text: `selectionChanged in ${list}`, ev: JSON.stringify(ev)});
+//   }
 
 }

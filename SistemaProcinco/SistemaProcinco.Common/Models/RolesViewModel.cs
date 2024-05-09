@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace SistemaProcinco.Common.Models
 {
+
+    public class ScreenDTO
+    {
+        public int pant_Id { get; set; }
+        public string pant_Descripcion { get; set; }
+    }
+
+    public class RoleWithScreens
+    {
+        public string role_Descripcion { get; set; }
+        public List<ScreenDTO> Screens { get; set; }
+    }
     public class RolesViewModel
     {
         public int Role_Id { get; set; }
@@ -19,5 +31,10 @@ namespace SistemaProcinco.Common.Models
         public string UsuarioCreacion { get; set; }
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+
+        [NotMapped]
+        public int? Pant_Id { get; set; }
+        [NotMapped]
+        public string Pant_Descripcion { get; set; }
     }
 }

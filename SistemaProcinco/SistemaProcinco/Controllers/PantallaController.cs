@@ -22,13 +22,13 @@ namespace SistemaProcinco.API.Controllers
             _accesoService = accesoService;
         }
 
-        [HttpGet("PantallasListado/{id}")]
-        public IActionResult Index(int id)
+        [HttpGet("PantallasListado")]
+        public IActionResult Index()
         {
-            var listado = _accesoService.ListaPantallas(id);
+            var listado = _accesoService.ListaPantallas();
             if (listado.Success == true)
             {
-                return Ok(listado);
+                return Ok(listado.Data);
             }
             else
             {

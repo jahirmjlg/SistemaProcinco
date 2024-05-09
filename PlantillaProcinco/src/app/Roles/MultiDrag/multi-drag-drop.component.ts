@@ -22,7 +22,7 @@ import * as _ from 'lodash';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiDragDropComponent {
-    @Input() items: { id: number, description: string }[];
+    @Input() items: { pant_Id: number, pant_Description: string }[];
   @Output() itemsRemoved = new EventEmitter<any[]>();
   @Output() itemsAdded = new EventEmitter<any[]>();
   @Output() itemsUpdated = new EventEmitter<any[]>();
@@ -77,25 +77,34 @@ export class MultiDragDropComponent {
     setTimeout(() => this.clearSelection());
   }
 
+  ////////
+
   droppedIntoList(ev: CdkDragDrop<any>): void {
     if (!ev.isPointerOverContainer || !_.get(ev, 'item.data.source')) {
       return;
     }
     const data = ev.item.data;
     let spliceIntoIndex = ev.currentIndex;
+
     if (ev.previousContainer === ev.container && this.selections.length > 1) {
       this.selections.splice(-1, 1);
       const sum = _.sumBy(this.selections, selectedIndex => selectedIndex <= spliceIntoIndex ? 1 : 0);
       spliceIntoIndex -= sum;
     }
-    this.items.splice(spliceIntoIndex, 0, ...data.values);
 
-    if (ev.previousContainer !== ev.container) {
-      this.itemsAdded.emit(data.values);
+    const uniqueValues = data.values.filter(item => !this.items.some(existing => existing.pant_Id === item.pant_Id));
+    this.items.splice(spliceIntoIndex, 0, ...uniqueValues);
+
+    if (ev.previousContainer !== ev.container && uniqueValues.length > 0) {
+      this.itemsAdded.emit(uniqueValues);
     }
+
     this.itemsUpdated.emit(this.items);
     setTimeout(() => this.cdRef.detectChanges());
-  }
+}
+
+
+
 
   isSelected(i: number): boolean {
     return this.selections.indexOf(i) >= 0;

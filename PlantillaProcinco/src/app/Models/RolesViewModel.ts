@@ -7,9 +7,19 @@ export class Role {
     role_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
+
+    pant_Descripcion  !: String;
+    pant_Id  !: Number;
+
 }
 
 export class dropRoles {
     value?:String;
     text?:String;
   }
+
+ export interface RoleWithScreens {
+    screens: [{ pant_Id: number, pant_Descripcion: string }];
+
+    role_Descripcion: Role;
+}
