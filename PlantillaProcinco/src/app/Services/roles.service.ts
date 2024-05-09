@@ -38,16 +38,14 @@ export class RolesService {
             return this.http.post<any>(`${this.UrlRol}RolCrear`, rolInsert);
         }
 
+        editRol(rolEdit: FormGroup): Observable<any> {
 
-
-        //EDITAR
-        editRol(rolEdit: Role): Observable<any> {
-            return this.http.put<any>(`${this.UrlRol}RolEditar`,rolEdit);
-            }
+            return this.http.put<any>(`${this.UrlRol}RolEditar`, rolEdit);
+        }
 
         //LLENAR && DETALLE
         fillRol(id: number): Observable<any> {
-            return this.http.get<any>(`${this.UrlRol}RolBuscar/${id}`);
+            return this.http.get<any>(`${this.UrlRol}Buscar/${id}`);
             }
 
         //ELIMINAR
@@ -62,6 +60,15 @@ export class RolesService {
 
             getPantallas(): Observable<{ pant_Id: number, pant_Descripcion: string }[]> {
                 return this.http.get<{ pant_Id: number, pant_Descripcion: string }[]>(`${this.UrlPantalla}PantallasListado`);
+              }
+
+              getPantallasFiltro(idRoll: Number): Observable<{ pant_Id: number, pant_Descripcion: string }[]> {
+                return this.http.get<{ pant_Id: number, pant_Descripcion: string }[]>(`${this.UrlPantalla}PantallasFiltro/${idRoll}`);
+              }
+
+
+              getPantallasPorRol(idRoll: Number): Observable<{ pant_Id: number, pant_Descripcion: string }[]> {
+                return this.http.get<{ pant_Id: number, pant_Descripcion: string }[]>(`${this.UrlRol}PantallasRoles/${idRoll}`);
               }
 
 }

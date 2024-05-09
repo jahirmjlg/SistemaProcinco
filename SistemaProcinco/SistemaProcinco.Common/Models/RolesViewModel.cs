@@ -16,6 +16,7 @@ namespace SistemaProcinco.Common.Models
 
     public class RoleWithScreens
     {
+        public int role_Id { get; set; }
         public string role_Descripcion { get; set; }
         public List<ScreenDTO> Screens { get; set; }
     }

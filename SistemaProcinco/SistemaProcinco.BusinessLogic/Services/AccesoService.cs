@@ -245,6 +245,54 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+
+        public ServicesResult ListaPantallasFiltro(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.List1(id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+        public ServicesResult ListaPantallasRol(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _pantallasRepository.ListPantallasRol(id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
         public ServicesResult ListaPantallas1(int id)
         {
             var result = new ServicesResult();

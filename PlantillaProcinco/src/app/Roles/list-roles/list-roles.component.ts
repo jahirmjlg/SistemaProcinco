@@ -36,6 +36,9 @@ export class ListRolesComponent {
     itemsGroup1: { pant_Id: number, pant_Descripcion: string }[] = [];
     itemsGroup2: { pant_Id: number, pant_Descripcion: string }[] = [];
 
+    itemsGroup1Edit: { pant_Id: number, pant_Descripcion: string }[] = [];
+    itemsGroup2Edit: { pant_Id: number, pant_Descripcion: string }[] = [];
+
 
   cols: any[] = [];
   statuses: any[] = [];
@@ -52,6 +55,17 @@ export class ListRolesComponent {
   editarRolForm: FormGroup
   crearParoForm: FormGroup
 
+
+  //Detalle
+  roleId : Number = 0;
+  roleDescripcion : String = "";
+  roleFechaCreacion: String = "";
+  roleFechaModificacion: String = "";
+  usuariocreacion: String = "";
+  usuariomodificacion: String = "";
+
+
+
   //ultimos dos
   constructor(private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
 
@@ -64,11 +78,7 @@ export class ListRolesComponent {
     this.editarRolForm = new FormGroup({
         role_Id: new FormControl("",Validators.required),
         role_Descripcion: new FormControl("", Validators.required),
-    })
-
-    this.crearParoForm = this.formBuilder.group({
-        role_Id: [0, [Validators.required]],
-        checkboxes: this.formBuilder.group({})
+        screens: this.formBuilder.array([])
     })
 
     // Respuesta de la api
@@ -98,36 +108,25 @@ export class ListRolesComponent {
         ];
   }
 
-   onCheckboxChange(checked: boolean, id: number) {
-    const checkboxGroup = this.crearParoForm.get('checkboxes') as FormGroup;
-
-    if (checked) {
-      checkboxGroup.addControl(id.toString(), this.formBuilder.control(true));
-      console.log(checkboxGroup);
-    } else {
-      checkboxGroup.removeControl(id.toString());
-    }
-  }
-
   submitForm(): void {
     if (this.crearParoForm.valid) {
       const pantallasSeleccionadas = Object.keys(this.crearParoForm.get('checkboxes').value);
 
-      // Crear un objeto PantallaPorRol para cada checkbox seleccionado y enviarlo
+
       pantallasSeleccionadas.forEach(id => {
         const paroInsertar: PantallaPorRol = {
           paPr_Id: null,
           pant_Id: id,
-          pantalla: '', // Debes llenar este campo con el valor correspondiente
+          pantalla: '',
           role_Id: 7,
-          rol: '', // Debes llenar este campo con el valor correspondiente
-          paPr_UsuarioCreacion: 1, // Debes llenar este campo con el valor correspondiente
-          paPr_FechaCreacion: '', // Debes llenar este campo con el valor correspondiente
+          rol: '',
+          paPr_UsuarioCreacion: 1,
+          paPr_FechaCreacion: '',
           paPr_UsuarioModificacion: null,
-          paPr_FechaModificacion: '', // Debes llenar este campo con el valor correspondiente
+          paPr_FechaModificacion: '',
           paPr_Estado: null,
-          creacion: '', // Debes llenar este campo con el valor correspondiente
-          modificacion: '' // Debes llenar este campo con el valor correspondiente
+          creacion: '',
+          modificacion: ''
         };
 
         // Llamar al servicio para insertar el registro de PantallaPorRol
@@ -161,6 +160,21 @@ export class ListRolesComponent {
     );
 }
 
+
+getScreensArrayEdit(): FormArray {
+    return this.editarRolForm.get('screens') as FormArray;
+}
+
+  addScreenEdit(screen): void {
+    this.getScreensArrayEdit().push(
+        this.formBuilder.group({
+            pant_Id: [screen.pant_Id, Validators.required],
+            pant_Description: [screen.pant_Description, Validators.required]
+        })
+    );
+}
+
+
   onSubmitInsert(): void {
 
     this.isSubmit = true;
@@ -176,7 +190,7 @@ export class ListRolesComponent {
        response => {
         if (response.code == 200)
         {
-            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Rol Insertado Exitosamente', life: 3000 });
 
             console.log(response)
             this.service.getRol().subscribe((Response: any)=> {
@@ -188,7 +202,7 @@ export class ListRolesComponent {
                 this.Tabla = true;
         } else {
 
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Rol', life: 3000 });
             }
 
         },
@@ -209,34 +223,39 @@ export class ListRolesComponent {
 
         if (this.editarRolForm.valid) {
           const contenidoData: Role = this.editarRolForm.value;
-          this.service.editRol(contenidoData).subscribe(
-            response => {
+          this.itemsGroup2Edit.forEach(screen => this.addScreenEdit(screen));
 
-                if (response.code == 200) {
-                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
-                    console.log(response)
-                    // this.router.navigate(['/pages/estados']);
-                    this.service.getRol().subscribe((Response: any)=> {
-                        console.log(Response.data);
-                        this.role = Response.data;
-                    });
+
+          console.log(contenidoData);
+          this.service.editRol(this.editarRolForm.value).subscribe(
+           response => {
+            if (response.code == 200)
+            {
+                this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Rol Editado Exitosamente', life: 3000 });
+
+                console.log(response)
+                this.service.getRol().subscribe((Response: any)=> {
+                    console.log(Response.data);
+                    this.role = Response.data;
+                });
 
                     this.CollapseEdit = false;
                     this.Tabla = true;
+            } else {
 
-                } else {
-
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Rol', life: 3000 });
                 }
+
             },
             error => {
-                console.log(error);
+                console.log(error)
             }
-          );
-        } else {
-          console.log('Formulario inválido');
+            );
+            } else {
+            console.log('Formulario inválido');
+
+            }
         }
-    }
 
 
     deleteRol(codigo) {
@@ -305,14 +324,10 @@ export class ListRolesComponent {
             this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(addedItem => addedItem.pant_Id === item.pant_Id));
         }
     }
-
-
       itemsUpdated(ev, list) {
-        // Aquí puedes manejar si necesitas una lógica adicional para los datos actualizados.
       }
 
       selectionChanged(ev, list) {
-        // Opcional: manejar cambios en la selección.
       }
 
 
@@ -320,26 +335,111 @@ export class ListRolesComponent {
 
 
 
-//     events = [];
 
-//   clearEvents(): void {
-//     this.events = [];
-//   }
+      ///EDITAR
 
-//   itemsRemoved(ev, list) {
-//     this.events.push({text: `itemsRemoved from ${list}`, ev: JSON.stringify(ev)});
-//   }
+      itemsRemovedEdit(ev, list) {
+        if (list === 1) {
+          // Mover de la primera tabla a la segunda.
+          this.itemsGroup2Edit.push(...ev.filter(item => !this.itemsGroup2Edit.some(existing => existing.pant_Id === item.pant_Id)));
+          this.itemsGroup1Edit = this.itemsGroup1Edit.filter(item => !ev.some(removedItem => removedItem.pant_Id === item.pant_Id));
+        } else {
+          // Mover de la segunda tabla a la primera.
+          this.itemsGroup1Edit.push(...ev.filter(item => !this.itemsGroup1Edit.some(existing => existing.pant_Id === item.pant_Id)));
+          this.itemsGroup2Edit = this.itemsGroup2Edit.filter(item => !ev.some(removedItem => removedItem.pant_Id === item.pant_Id));
+        }
+        }
 
-//   itemsAdded(ev, list) {
-//     this.events.push({text: `itemsAdded to ${list}`, ev: JSON.stringify(ev)});
-//   }
+      itemsAddedEdit(ev: any[], list: number) {
 
-//   itemsUpdated(ev, list) {
-//     this.events.push({text: `itemsUpdated in ${list}`, ev: JSON.stringify(ev)});
-//   }
+        if (list === 1) {
+            ev.forEach(item => {
+                if (!this.itemsGroup1Edit.some(existing => existing.pant_Id === item.pant_Id)) {
+                    this.itemsGroup1Edit.push(item);
+                }
+            });
+        } else {
+            ev.forEach(item => {
+                if (!this.itemsGroup2Edit.some(existing => existing.pant_Id === item.pant_Id)) {
+                    this.itemsGroup2Edit.push(item);
+                }
+            });
+        }
 
-//   selectionChanged(ev, list) {
-//     this.events.push({text: `selectionChanged in ${list}`, ev: JSON.stringify(ev)});
-//   }
+        if (list === 1) {
+            this.itemsGroup2Edit = this.itemsGroup2Edit.filter(item => !ev.some(addedItem => addedItem.pant_Id === item.pant_Id));
+        } else {
+            this.itemsGroup1Edit = this.itemsGroup1Edit.filter(item => !ev.some(addedItem => addedItem.pant_Id === item.pant_Id));
+        }
+        }
+
+
+      Fill(id) {
+        this.service.fillRol(id).subscribe({
+            next: (data: Role) => {
+                this.editarRolForm.get('role_Id').setValue(data[0].role_Id);
+                this.editarRolForm.get('role_Descripcion').setValue(data[0].role_Descripcion);
+
+                this.service.getPantallasFiltro(id).subscribe((Response: any)=>{
+
+                    Response.forEach(item => {
+                        this.itemsGroup1Edit.push({
+                            pant_Id: item.pant_Id,
+                            pant_Descripcion: item.pant_Descripcion
+                        })
+
+                    });
+                });
+
+
+                this.service.getPantallasPorRol(id).subscribe((Response: any)=>{
+
+                    Response.forEach(item => {
+                        this.itemsGroup2Edit.push({
+                            pant_Id: item.pant_Id,
+                            pant_Descripcion: item.pant_Descripcion
+                        })
+
+                    });
+                });
+
+                this.CollapseEdit = true;
+                this.Tabla=false;
+
+                console.log(data)
+
+            }
+          });
+
+    }
+
+
+    cancelar()
+    {
+        this.CollapseEdit=false;
+        this.Tabla=true;
+        this.isSubmitEdit=false
+        this.itemsGroup1Edit = []
+        this.itemsGroup2Edit = []
+
+    }
+
+
+    detalles(id){
+
+        this.service.fillRol(id).subscribe({
+            next: (data: Role) => {
+               this.roleId = data[0].role_Id,
+               this.roleDescripcion = data[0].role_Descripcion,
+               this.usuariocreacion = data[0].usuarioCreacion,
+               this.usuariomodificacion = data[0].usuarioModificacion,
+               this.roleFechaCreacion = data[0].role_FechaCreacion,
+               this.roleFechaModificacion = data[0].role_FechaModificacion
+            }
+          });
+          this.CollapseDetalle = true;
+          this.Tabla=false;
+    }
+
 
 }

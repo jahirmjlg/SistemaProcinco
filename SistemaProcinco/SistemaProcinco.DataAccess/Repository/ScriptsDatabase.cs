@@ -16,6 +16,9 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string PantallasEliminar = "[Acc].[SP_Pantallas_Eliminar]";
         public static string PantallasActualizar = "[Acc].[SP_Pantallas_Actualizar]";
         public static string PantallasBuscar = "[Acc].[SP_Pantallas_LlenarEditar]";
+
+        public static string PantallasRolFiltro = "[Acc].[SP_Pantallas_Filtrado]";
+
         #endregion
 
         #region PantallasPorRoles

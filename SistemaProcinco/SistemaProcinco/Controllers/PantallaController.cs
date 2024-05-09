@@ -36,6 +36,21 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+
+        [HttpGet("PantallasFiltro/{id}")]
+        public IActionResult ListadoFiltro(int id)
+        {
+            var listado = _accesoService.ListaPantallasFiltro(id);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
         [HttpPost("PantallasCrear")]
         public IActionResult Insert(PantallasViewModel item)
         {

@@ -80,20 +80,38 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpPut("RolEditar")]
-        public IActionResult Edit(RolesViewModel item)
+        public IActionResult Edit([FromBody] RoleWithScreens data)
         {
-            var model = _mapper.Map<tbRoles>(item);
+            var result = new ServicesResult();
+            var rol = data.role_Descripcion;
+            var pantallas = data.Screens;
+
             var modelo = new tbRoles()
             {
-                Role_Id = item.Role_Id,
-                Role_Descripcion = item.Role_Descripcion,
-                Role_UsuarioModificacion = 1,
-                Role_FechaModificacion = DateTime.Now
-
-
+                Role_Id = data.role_Id,
+                Role_Descripcion = rol,
+                Role_UsuarioCreacion = 1,
+                Role_FechaCreacion = DateTime.Now
             };
             var list = _accesoService.EditarRoles(modelo);
-            if (list.Success == true)
+
+            var limpiar = _accesoService.EliminarPantallasPorRoles(data.role_Id);
+
+
+            foreach (var pantalla in pantallas)
+            {
+                var modelo2 = new tbPantallasPorRoles()
+                {
+                    Pant_Id = pantalla.pant_Id,
+                    Role_Id = data.role_Id,
+                    PaPr_UsuarioModificacion = 1
+                };
+
+                result = _accesoService.InsertarPantallasPorRoles(modelo2);
+
+            }
+
+            if (result.Success == true)
             {
                 return Ok(list);
             }
@@ -143,6 +161,21 @@ namespace SistemaProcinco.API.Controllers
             if (list.Success == true)
             {
                 return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("PantallasRoles/{id}")]
+        public IActionResult ListadoFiltro(int id)
+        {
+            var listado = _accesoService.ListaPantallasRol(id);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
             }
             else
             {

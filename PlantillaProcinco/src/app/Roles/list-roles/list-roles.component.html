@@ -1,4 +1,6 @@
+<p-toast></p-toast>
 
+<!-- DESPLEGAR FORMULARIO CREAR -->
 <div class="" [ngClass]="{'collapse': Collapse === false}">
     <div class="card">
         <div class="card-body">
@@ -20,6 +22,38 @@
 
                 </div>
 
+                <h3>Pantallas Por Roles</h3>
+
+                <div cdkDropListGroup>
+                    <div class="lists-container">
+                      <multi-drag-drop
+                        [items]="itemsGroup1"
+                        (itemsRemoved)="itemsRemoved($event, 1)"
+                        (itemsAdded)="itemsAdded($event, 1)"
+                        (itemsUpdated)="itemsUpdated($event, 1)"
+                        (selectionChanged)="selectionChanged($event, 1)"
+                      >
+                        <ng-template let-item>
+                          {{ item.pant_Descripcion }}
+                        </ng-template>
+                      </multi-drag-drop>
+
+                      <br/>
+
+                      <multi-drag-drop
+                        [items]="itemsGroup2"
+                        (itemsRemoved)="itemsRemoved($event, 2)"
+                        (itemsAdded)="itemsAdded($event, 2)"
+                        (itemsUpdated)="itemsUpdated($event, 2)"
+                        (selectionChanged)="selectionChanged($event, 2)"
+                      >
+                        <ng-template let-item>
+                          {{ item.pant_Descripcion }}
+                        </ng-template>
+                      </multi-drag-drop>
+                    </div>
+                  </div>
+
 
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
@@ -32,77 +66,6 @@
 
                 </form>
                 </div>
-
-
-
-
-
-                    <h3>Pantallas Por Roles</h3>
-
-                    <div cdkDropListGroup>
-                        <div class="lists-container">
-                          <multi-drag-drop
-                            [items]="itemsGroup1"
-                            (itemsRemoved)="itemsRemoved($event, 1)"
-                            (itemsAdded)="itemsAdded($event, 1)"
-                            (itemsUpdated)="itemsUpdated($event, 1)"
-                            (selectionChanged)="selectionChanged($event, 1)"
-                          >
-                            <ng-template let-item>
-                              {{ item.pant_Descripcion }}
-                            </ng-template>
-                          </multi-drag-drop>
-
-                          <br/>
-
-                          <multi-drag-drop
-                            [items]="itemsGroup2"
-                            (itemsRemoved)="itemsRemoved($event, 2)"
-                            (itemsAdded)="itemsAdded($event, 2)"
-                            (itemsUpdated)="itemsUpdated($event, 2)"
-                            (selectionChanged)="selectionChanged($event, 2)"
-                          >
-                            <ng-template let-item>
-                              {{ item.pant_Descripcion }}
-                            </ng-template>
-                          </multi-drag-drop>
-                        </div>
-                      </div>
-
-<!--
-                    <div cdkDropListGroup>
-                        <div class="lists-container">
-                    <multi-drag-drop
-                        [items]="['Usuarios','Aun no es dinamico','Roles','Estados','Ciudades','Categorias']"
-                        (itemsRemoved)="itemsRemoved($event, 1)"
-                        (itemsAdded)="itemsAdded($event, 1)"
-                        (itemsUpdated)="itemsUpdated($event, 1)"
-                        (selectionChanged)="selectionChanged($event, 1)"
-                    >
-                        <ng-template let-item>
-                        {{ item }}
-                        </ng-template>
-                    </multi-drag-drop>
-                    <br/>
-                    <multi-drag-drop
-                        [items]="['Empleados', 'No es dinamico', 'Cargos']"
-                        (itemsRemoved)="itemsRemoved($event, 2)"
-                        (itemsAdded)="itemsAdded($event, 2)"
-                        (itemsUpdated)="itemsUpdated($event, 2)"
-                        (selectionChanged)="selectionChanged($event, 1)"
-                    >
-                        <ng-template let-item>
-                        {{ item }}
-                        </ng-template>
-                    </multi-drag-drop>
-                    </div>
-                    <br/>
-                     <button (click)="clearEvents()">Clear Events:</button>
-                    <div *ngFor="let ev of events">
-                    {{ev.text}}: {{ev.ev}}
-                    </div>
-
-                </div> -->
             </div>
 
 
@@ -131,13 +94,44 @@
 
 
                 </div>
+                <h3>Pantallas Por Roles</h3>
+
+                <div cdkDropListGroup>
+                    <div class="lists-container">
+                      <multi-drag-drop
+                        [items]="itemsGroup1Edit"
+                        (itemsRemoved)="itemsRemovedEdit($event, 1)"
+                        (itemsAdded)="itemsAddedEdit($event, 1)"
+                        (itemsUpdated)="itemsUpdated($event, 1)"
+                        (selectionChanged)="selectionChanged($event, 1)"
+                      >
+                        <ng-template let-item>
+                          {{ item.pant_Descripcion }}
+                        </ng-template>
+                      </multi-drag-drop>
+
+                      <br/>
+
+                      <multi-drag-drop
+                        [items]="itemsGroup2Edit"
+                        (itemsRemoved)="itemsRemovedEdit($event, 2)"
+                        (itemsAdded)="itemsAddedEdit($event, 2)"
+                        (itemsUpdated)="itemsUpdated($event, 2)"
+                        (selectionChanged)="selectionChanged($event, 2)"
+                      >
+                        <ng-template let-item>
+                          {{ item.pant_Descripcion }}
+                        </ng-template>
+                      </multi-drag-drop>
+                    </div>
+                  </div>
 
                 <div class="row mt-3">
                     <div class="col-md-offset-2 col-3">
-                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        <button pButton icon="pi pi-check" type="submit" label="Editar"  class="btn btn-primary"></button>
                     </div>
                     <div class="col-md-offset-2 col-3" id="">
-                        <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        <button pButton icon="pi pi-times" type="button" (click)="cancelar()" label="Cancelar" class="btn btn-danger"></button>
                     </div>
                 </div>
             </div>
@@ -185,7 +179,7 @@
                     <td>
                         <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(rol.role_Id)">Editar</button> |
                         <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(rol.role_Id)">Detalle</button> |
-                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteContenido(rol.role_Id)">Eliminar</button>
+                        <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteRol(rol.role_Id)">Eliminar</button>
                     </td>
                   </tr>
             </ng-template>
@@ -209,3 +203,68 @@
             </div>
         </div>
 </p-dialog>
+
+
+
+
+<!-- DESPLEGAR DETALLE -->
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles de Rol</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col" style="font-weight:700">
+                    <div>ID</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Descripcion<div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Codigo">{{ roleId }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ roleDescripcion }}</label></div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ usuariocreacion }}</td>
+                                    <td>{{ roleFechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ usuariomodificacion }}</td>
+                                    <td>{{ roleFechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

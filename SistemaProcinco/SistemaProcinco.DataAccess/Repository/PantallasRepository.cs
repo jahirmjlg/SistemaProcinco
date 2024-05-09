@@ -87,6 +87,23 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+        public IEnumerable<tbPantallas> ListPantallasRol(int Role_Id)
+        {
+            string sql = ScriptsDatabase.PantallasRolFiltro;
+
+            List<tbPantallas> result = new List<tbPantallas>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Role_Id", Role_Id);
+                result = db.Query<tbPantallas>(sql, parametro, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
+        }
+
         public RequestStatus Update(tbPantallas item)
         {
             string sql = ScriptsDatabase.PantallasActualizar;
