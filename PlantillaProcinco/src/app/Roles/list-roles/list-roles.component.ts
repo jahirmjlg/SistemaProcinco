@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {RolesService} from '../../Services/roles.service';
 import {Role} from 'src/app/Models/RolesViewModel';
 import {Router} from '@angular/router';
 import { PantallasService } from 'src/app/Services/pantallas.service';
 import { Pantalla } from 'src/app/Models/PantallasViewModel';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, AfterContentInit } from '@angular/core';
 import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.service';
@@ -18,6 +18,9 @@ import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
   providers: [ConfirmationService, MessageService]
 })
 export class ListRolesComponent {
+
+    @ViewChild('inputclick', {static: false}) inputClickButton: ElementRef;
+
 
     Tabla: boolean = true;
 
@@ -231,6 +234,7 @@ getScreensArrayEdit(): FormArray {
 
                     this.CollapseEdit = false;
                     this.Tabla = true;
+                    window.location.reload();
             } else {
 
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Rol', life: 3000 });
@@ -243,6 +247,10 @@ getScreensArrayEdit(): FormArray {
             );
             } else {
             console.log('Formulario inválido');
+            console.log('Invalido: ' + this.editarRolForm.get('role_Id').value +
+             ' 2: ' + this.editarRolForm.get('role_Descripcion').value + ' 3: ' +
+             this.editarRolForm.get('screens').value)
+
 
             }
         }
@@ -367,31 +375,41 @@ getScreensArrayEdit(): FormArray {
       Fill(id) {
         this.service.fillRol(id).subscribe({
             next: (data: Role) => {
+                this.service.getPantallasFiltro(id).subscribe((Response: any)=>{
+                    var pantallas = Response;
+                    // if(this.itemsGroup1Edit.length == 0)
+                    //     {
+                            pantallas.forEach(item => {
+                                this.itemsGroup1Edit.push({
+                                    pant_Id: item.pant_Id,
+                                    pant_Descripcion: item.pant_Descripcion
+                                })
+
+                            });
+                        // }
+                });
+
+                // if(this.itemsGroup2Edit.length == 0)
+                //     {
+                        this.service.getPantallasPorRol(id).subscribe((Response: any)=>{
+                            var pantallasfiltro = Response;
+                            pantallasfiltro.forEach(item => {
+                                this.itemsGroup2Edit.push({
+                                    pant_Id: item.pant_Id,
+                                    pant_Descripcion: item.pant_Descripcion
+                                })
+
+                            });
+                        });
+                    // }
+
+
+                    // setTimeout(() => {
+                    // this.inputClickButton.nativeElement.click();
+                    //   }, 3000);
+
                 this.editarRolForm.get('role_Id').setValue(data[0].role_Id);
                 this.editarRolForm.get('role_Descripcion').setValue(data[0].role_Descripcion);
-
-                this.service.getPantallasFiltro(id).subscribe((Response: any)=>{
-
-                    Response.forEach(item => {
-                        this.itemsGroup1Edit.push({
-                            pant_Id: item.pant_Id,
-                            pant_Descripcion: item.pant_Descripcion
-                        })
-
-                    });
-                });
-
-
-                this.service.getPantallasPorRol(id).subscribe((Response: any)=>{
-
-                    Response.forEach(item => {
-                        this.itemsGroup2Edit.push({
-                            pant_Id: item.pant_Id,
-                            pant_Descripcion: item.pant_Descripcion
-                        })
-
-                    });
-                });
 
                 this.CollapseEdit = true;
                 this.Tabla=false;
