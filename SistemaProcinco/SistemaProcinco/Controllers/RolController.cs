@@ -90,8 +90,8 @@ namespace SistemaProcinco.API.Controllers
             {
                 Role_Id = data.role_Id,
                 Role_Descripcion = rol,
-                Role_UsuarioCreacion = 1,
-                Role_FechaCreacion = DateTime.Now
+                Role_UsuarioModificacion = 1,
+                Role_FechaModificacion = DateTime.Now
             };
             var list = _accesoService.EditarRoles(modelo);
 

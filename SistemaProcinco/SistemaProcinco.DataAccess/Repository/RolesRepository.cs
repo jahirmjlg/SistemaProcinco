@@ -85,7 +85,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Role_Id", item.Role_Id);
                 parametro.Add("@Role_Descripcion", item.Role_Descripcion);
                 parametro.Add("@Role_UsuarioModificacion", item.Role_UsuarioModificacion);
-                parametro.Add("@Role_FechaModificacion", item.Role_FechaModificacion);
+                parametro.Add("@Role_FechaModificacion", DateTime.Now);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

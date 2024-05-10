@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
-    // permisosPermitidos: Set<string> = new Set();
+    permisosPermitidos: Set<string> = new Set();
 
     constructor(private servicioLogin: ServiceService, private cookieService: CookieService, public layoutService: LayoutService, private layoutcomponent: AppLayoutComponent) { }
 
@@ -24,9 +24,9 @@ export class AppMenuComponent implements OnInit {
     }
 
 
-    ngOnInit() {
+    // ngOnInit() {
 
-        this.model = [
+        modelo = [
             {
                 label: 'Procinco',
                 icon: 'pi pi-fw pi-globe',
@@ -292,6 +292,7 @@ export class AppMenuComponent implements OnInit {
             //     ]
             // }
         ];
+    // }
 
     //     menuCompleto1 = [
     //         {
@@ -419,80 +420,119 @@ export class AppMenuComponent implements OnInit {
 
 
 
+        ngOnInit() {
+            const roleId = Number.parseInt(this.cookieService.get('roleID'));
+
+            this.servicioLogin.getPantallasDeRol(roleId).subscribe(pantallasPermitidas => {
+
+                const nombresPermitidos = new Set(pantallasPermitidas.map(pant => pant.pantalla.toLowerCase().trim()));
+
+                // Función para filtrar los subítems
+                const filtrarSubitems = (subitems) => {
+                    return subitems.filter(opcion => {
+                        // Normaliza el nombre del subítem
+                        const nombreLowerCase = opcion.label.toLowerCase().trim();
+                        // Verifica si el subítem está en los nombres permitidos
+                        return nombresPermitidos.has(nombreLowerCase);
+                    });
+                };
+
+                // Filtrar el menú completo por secciones y subsecciones
+                this.model = this.menuCompleto
+                    .map(section => {
+                        const itemsFiltrados = section.items.map(subSection => {
+                            // Filtra los subítems dentro de cada subsección
+                            const subItemsFiltrados = filtrarSubitems(subSection.items || []);
+                            return {
+                                ...subSection,
+                                items: subItemsFiltrados
+                            };
+                        }).filter(subSection => subSection.items.length > 0);
+
+                        // Devuelve la sección principal solo si hay subítems permitidos
+                        return {
+                            ...section,
+                            items: itemsFiltrados
+                        };
+                    })
+                    .filter(section => section.items.length > 0);
+            });
+        }
 
 
 
 
-        // menuCompleto = [
-        //     {
-        //         label: 'Procinco',
-        //         icon: 'pi pi-fw pi-globe',
-        //         items: [
-        //             {
-        //                 label: 'Acceso',
-        //                 icon: 'pi pi-fw pi-user',
-        //                 items: [
-        //                     { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/pages/usuarios'] },
-        //                     { label: 'Roles', icon: 'pi pi-fw pi-user', routerLink: ['/pages/roles'] },
-        //                     { label: 'Login', icon: 'pi pi-fw pi-user', routerLink: ['/auth/login'] },
-        //                     { label: 'enviar codigo', icon: 'pi pi-fw pi-user', routerLink: ['/pages/enviarcodigo'] }
-        //                 ]
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         items: [
-        //             {
-        //                 label: 'General',
-        //                 icon: 'pi pi-fw pi-cog',
-        //                 items: [
-        //                     { label: 'Empleados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/empleados'] },
-        //                     { label: 'Estados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estados'] },
-        //                     { label: 'Ciudades', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/ciudades'] },
-        //                     { label: 'Estados Civiles', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estadosciviles'] },
-        //                 ]
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         items: [
-        //             {
-        //                 label: 'Procinco',
-        //                 icon: 'pi pi-fw pi-globe',
-        //                 items: [
-        //                     { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimp'] },
-        //                     { label: 'Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursos'] },
-        //                     { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
-        //                     {
-        //                         label: 'Contenido',
-        //                         icon: 'pi pi-fw pi-globe',
-        //                         routerLink: ['/pages/contenido']
-        //                     },
-        //                     {
-        //                         label: 'Categorias',
-        //                         icon: 'pi pi-fw pi-globe',
-        //                         routerLink: ['/pages/categorias']
-        //                     },
-        //                     {
-        //                         label: 'Informes de Empleados',
-        //                         icon: 'pi pi-fw pi-globe',
-        //                         routerLink: ['/pages/informesempleados']
-        //                     },
-        //                     {
-        //                         label: 'Titulos',
-        //                         icon: 'pi pi-fw pi-globe',
-        //                         routerLink: ['/pages/titulos']
-        //                     },
-        //                     {
-        //                         label: 'cargos',
-        //                         icon: 'pi pi-fw pi-globe',
-        //                         routerLink: ['/pages/cargos']
-        //                     },
-        //                 ]
-        //             }
-        //         ]
-        //     }
-        // ];
+
+        menuCompleto = [
+            {
+                label: 'Procinco',
+                icon: 'pi pi-fw pi-globe',
+                items: [
+                    {
+                        label: 'Acceso',
+                        icon: 'pi pi-fw pi-user',
+                        items: [
+                            { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/pages/usuarios'] },
+                            { label: 'Roles', icon: 'pi pi-fw pi-user', routerLink: ['/pages/roles'] },
+                            { label: 'Login', icon: 'pi pi-fw pi-user', routerLink: ['/auth/login'] },
+                            { label: 'enviar codigo', icon: 'pi pi-fw pi-user', routerLink: ['/pages/enviarcodigo'] }
+                        ]
+                    }
+                ]
+            },
+            {
+                items: [
+                    {
+                        label: 'General',
+                        icon: 'pi pi-fw pi-cog',
+                        items: [
+                            { label: 'Empleados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/empleados'] },
+                            { label: 'Estados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estados'] },
+                            { label: 'Ciudades', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/ciudades'] },
+                            { label: 'Estados Civiles', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estadosciviles'] },
+                        ]
+                    }
+                ]
+            },
+            {
+                items: [
+                    {
+                        label: 'Procinco',
+                        icon: 'pi pi-fw pi-globe',
+                        items: [
+                            { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimp'] },
+                            { label: 'Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursos'] },
+                            { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
+                            {
+                                label: 'Contenido',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/contenido']
+                            },
+                            {
+                                label: 'Categorias',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/categorias']
+                            },
+                            {
+                                label: 'Informes de Empleados',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/informesempleados']
+                            },
+                            {
+                                label: 'Titulos',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/titulos']
+                            },
+                            {
+                                label: 'cargos',
+                                icon: 'pi pi-fw pi-globe',
+                                routerLink: ['/pages/cargos']
+                            },
+                        ]
+                    }
+                ]
+            }
+        ];
 
 
     }
@@ -500,4 +540,4 @@ export class AppMenuComponent implements OnInit {
 
 
 
-}
+

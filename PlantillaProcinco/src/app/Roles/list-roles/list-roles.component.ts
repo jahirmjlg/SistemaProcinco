@@ -19,9 +19,6 @@ import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
 })
 export class ListRolesComponent {
 
-    @ViewChild('inputclick', {static: false}) inputClickButton: ElementRef;
-
-
     Tabla: boolean = true;
 
     Collapse: boolean = false;
@@ -219,7 +216,7 @@ getScreensArrayEdit(): FormArray {
           this.itemsGroup2Edit.forEach(screen => this.addScreenEdit(screen));
 
 
-          console.log(contenidoData);
+          console.log(this.editarRolForm.value);
           this.service.editRol(this.editarRolForm.value).subscribe(
            response => {
             if (response.code == 200)
@@ -381,8 +378,6 @@ getScreensArrayEdit(): FormArray {
             next: (data: Role) => {
                 this.service.getPantallasFiltro(id).subscribe((Response: any)=>{
                     var pantallas = Response;
-                    // if(this.itemsGroup1Edit.length == 0)
-                    //     {
                             pantallas.forEach(item => {
                                 this.itemsGroup1Edit.push({
                                     pant_Id: item.pant_Id,
@@ -391,11 +386,9 @@ getScreensArrayEdit(): FormArray {
 
                             });
                             this.cdRef.detectChanges();
-                        // }
+
                 });
 
-                // if(this.itemsGroup2Edit.length == 0)
-                //     {
                         this.service.getPantallasPorRol(id).subscribe((Response: any)=>{
                             var pantallasfiltro = Response;
                             pantallasfiltro.forEach(item => {
@@ -406,15 +399,16 @@ getScreensArrayEdit(): FormArray {
 
                             });
                         });
-                    // }
 
 
-                    // setTimeout(() => {
-                    // this.inputClickButton.nativeElement.click();
-                    //   }, 3000);
+
 
                 this.editarRolForm.get('role_Id').setValue(data[0].role_Id);
                 this.editarRolForm.get('role_Descripcion').setValue(data[0].role_Descripcion);
+
+                setTimeout(() => {
+                    document.getElementById('miInput').click();
+                  }, 100);
 
                 this.CollapseEdit = true;
                 this.Tabla=false;
