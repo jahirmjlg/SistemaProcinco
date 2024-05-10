@@ -18,7 +18,6 @@ export class RolesService {
 
   UrlRol = this.service.urlLocalhost + 'Rol/';
 
-  UrlPantallasRoles = this.service.urlLocalhost + 'PantallaPorRol/'
 
   UrlPantalla = this.service.urlLocalhost + 'Pantalla/';
 

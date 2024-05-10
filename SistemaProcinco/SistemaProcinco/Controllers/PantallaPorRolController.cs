@@ -24,19 +24,22 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("Listado")]
-        public IActionResult Index(int Role_Id)
+        [HttpGet("Listado/{id}")]
+        public IActionResult Index(int id)
         {
-            var listado = _accesoService.ListaPantallasPorRoles(Role_Id);
+            var listado = _accesoService.ListaPantallasPorRoles(id);
             if (listado.Success == true)
             {
-                return Ok(listado);
+                return Ok(listado.Data);
             }
             else
             {
                 return Problem();
             }
         }
+
+
+
 
         [HttpPost("PantallaPorRolCrear")]
         public IActionResult Insert(PantallasPorRolesViewModel item)

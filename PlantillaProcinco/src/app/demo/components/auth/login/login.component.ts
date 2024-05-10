@@ -90,6 +90,7 @@ export class LoginComponent {
                 if (response.code == 200) {
 
                     this.cookieService.set('namee', response.data.empl_Nombre);
+                    this.cookieService.set('roleID', response.data.role_Id);
 
                     console.log(response)
                     this.router.navigate(['/pages/empty']);

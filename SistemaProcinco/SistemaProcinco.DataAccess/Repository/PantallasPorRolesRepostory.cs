@@ -74,7 +74,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public IEnumerable<tbPantallasPorRoles> List1(int Role_Id)
         {
-            string sql = ScriptsDatabase.PantallasPorRolesLlenarEditar;
+            string sql = ScriptsDatabase.PantallasPorRoll;
 
             List<tbPantallasPorRoles> result = new List<tbPantallasPorRoles>();
 

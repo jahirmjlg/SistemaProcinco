@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import {RolesService} from '../../Services/roles.service';
 import {Role} from 'src/app/Models/RolesViewModel';
 import {Router} from '@angular/router';
@@ -70,7 +70,7 @@ export class ListRolesComponent {
 
 
   //ultimos dos
-  constructor(private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
+  constructor(private cdRef: ChangeDetectorRef, private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
 
   ngOnInit() {
     this.crearRolForm = this.formBuilder.group({
@@ -373,6 +373,10 @@ getScreensArrayEdit(): FormArray {
 
 
       Fill(id) {
+        this.itemsGroup1Edit = [];
+    this.itemsGroup2Edit = [];
+    this.editarRolForm.reset();
+
         this.service.fillRol(id).subscribe({
             next: (data: Role) => {
                 this.service.getPantallasFiltro(id).subscribe((Response: any)=>{
@@ -386,6 +390,7 @@ getScreensArrayEdit(): FormArray {
                                 })
 
                             });
+                            this.cdRef.detectChanges();
                         // }
                 });
 

@@ -6,3 +6,34 @@
     </ng-container>
 
 </ul>
+
+
+  <!-- <ul *ngFor="let section of model">
+    <li *ngIf="section.items.length > 0">
+      <span>{{ section.label }}</span>
+      <ul>
+        <li *ngFor="let item of section.items">
+          <a *ngIf="permisoDisponible(item.label)" [routerLink]="item.routerLink">{{ item.label }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+<ul *ngFor="let section of model">
+    <li>
+      <span>{{ section.label }}</span>
+      <ul>
+        <li *ngFor="let subSection of section.items">
+          <span>{{ subSection.label }}</span>
+          <ul>
+            <li *ngFor="let item of subSection.items">
+              <a [routerLink]="item.routerLink">{{ item.label }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul> -->
+
+

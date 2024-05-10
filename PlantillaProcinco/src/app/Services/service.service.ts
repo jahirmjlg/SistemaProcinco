@@ -10,10 +10,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
+interface Pantalla {
+    pantalla: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
+
 
     constructor(private http:HttpClient) {}
 
@@ -22,6 +28,9 @@ export class ServiceService {
         //#region General
 
         //#endregion
+
+        UrlPantallasRoles = this.urlLocalhost + 'PantallaPorRol/'
+
 
         urlPreview = this.urlLocalhost + 'CursosImpartidos/Preview';
 
@@ -32,6 +41,13 @@ export class ServiceService {
         login(loginData: Login): Observable<any> {
             return this.http.get<any>(`${this.UrlLogin}${loginData.usuario},${loginData.contra}`, {});
           }
+
+          getPantallasDeRol(idRoll: Number) {
+            return this.http.get<Pantalla[]>(`${this.UrlPantallasRoles}Listado/${idRoll}`);
+          }
+
+
+
 
         //#endregion
 
