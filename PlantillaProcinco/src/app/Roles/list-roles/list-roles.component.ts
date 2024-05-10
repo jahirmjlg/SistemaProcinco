@@ -53,7 +53,6 @@ export class ListRolesComponent {
 
   crearRolForm: FormGroup
   editarRolForm: FormGroup
-  crearParoForm: FormGroup
 
 
   //Detalle
@@ -107,35 +106,6 @@ export class ListRolesComponent {
           CUSTOM_ELEMENTS_SCHEMA
         ];
   }
-
-  submitForm(): void {
-    if (this.crearParoForm.valid) {
-      const pantallasSeleccionadas = Object.keys(this.crearParoForm.get('checkboxes').value);
-
-
-      pantallasSeleccionadas.forEach(id => {
-        const paroInsertar: PantallaPorRol = {
-          paPr_Id: null,
-          pant_Id: id,
-          pantalla: '',
-          role_Id: 7,
-          rol: '',
-          paPr_UsuarioCreacion: 1,
-          paPr_FechaCreacion: '',
-          paPr_UsuarioModificacion: null,
-          paPr_FechaModificacion: '',
-          paPr_Estado: null,
-          creacion: '',
-          modificacion: ''
-        };
-
-      });
-    } else {
-      console.log('Formulario inválidoo');
-
-    }
-  }
-
 
   getScreensArray(): FormArray {
     return this.crearRolForm.get('screens') as FormArray;
@@ -231,7 +201,14 @@ getScreensArrayEdit(): FormArray {
 
                     this.CollapseEdit = false;
                     this.Tabla = true;
-                    window.location.reload();
+                    // window.location.reload();
+
+                    this.editarRolForm = new FormGroup({
+                        role_Id: new FormControl("",Validators.required),
+                        role_Descripcion: new FormControl("", Validators.required),
+                        screens: this.formBuilder.array([])
+                    })
+
             } else {
 
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Rol', life: 3000 });
