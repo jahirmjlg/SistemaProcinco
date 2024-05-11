@@ -385,7 +385,7 @@ getScreensArrayEdit(): FormArray {
 
                 setTimeout(() => {
                     document.getElementById('miInput').click();
-                  }, 100);
+                  }, 250);
 
                 this.CollapseEdit = true;
                 this.Tabla=false;

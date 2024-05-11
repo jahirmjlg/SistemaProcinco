@@ -9,6 +9,7 @@ import { emptyInputValidator } from './CustomValidatorss';
 import { Router } from '@angular/router';
 
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'src/app/Services/authGuard.service';
 
 @Component({
     selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent {
 
     loginForm: FormGroup;
 
-    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: ServiceService, private router:Router, private cookieService: CookieService) {
+    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: ServiceService,
+         private router:Router, private cookieService: CookieService, private authService:AuthService) {
 
         this.loginForm = this.formBuilder.group({
             usuario: ['', [Validators.required, emptyInputValidator()]],
@@ -91,6 +93,9 @@ export class LoginComponent {
 
                     this.cookieService.set('namee', response.data.empl_Nombre);
                     this.cookieService.set('roleID', response.data.role_Id);
+                    this.cookieService.set('esAdmin', response.data.usua_EsAdmin);
+
+                    this.authService.loadPermissions();
 
                     console.log(response)
                     this.router.navigate(['/pages/empty']);

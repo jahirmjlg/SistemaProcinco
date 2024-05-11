@@ -24,8 +24,6 @@ export class AppMenuComponent implements OnInit {
     }
 
 
-    // ngOnInit() {
-
         modelo = [
             {
                 label: 'Procinco',
@@ -292,156 +290,33 @@ export class AppMenuComponent implements OnInit {
             //     ]
             // }
         ];
-    // }
-
-    //     menuCompleto1 = [
-    //         {
-    //             label: 'Procinco',
-    //             icon: 'pi pi-fw pi-globe',
-    //             items: [
-    //                 {
-    //                     label: 'Acceso',
-    //                     icon: 'pi pi-fw pi-user',
-    //                     items: [
-    //                         { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/pages/usuarios'] },
-    //                         { label: 'Roles', icon: 'pi pi-fw pi-user', routerLink: ['/pages/roles'] },
-    //                         { label: 'Login', icon: 'pi pi-fw pi-user', routerLink: ['/auth/login'] },
-    //                         { label: 'enviar codigo', icon: 'pi pi-fw pi-user', routerLink: ['/pages/enviarcodigo'] }
-    //                     ]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             items: [
-    //                 {
-    //                     label: 'General',
-    //                     icon: 'pi pi-fw pi-cog',
-    //                     items: [
-    //                         { label: 'Empleados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/empleados'] },
-    //                         { label: 'Estados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estados'] },
-    //                         { label: 'Ciudades', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/ciudades'] },
-    //                         { label: 'Estados Civiles', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estadosciviles'] },
-    //                     ]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             items: [
-    //                 {
-    //                     label: 'Procinco',
-    //                     icon: 'pi pi-fw pi-globe',
-    //                     items: [
-    //                         { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimp'] },
-    //                         { label: 'Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursos'] },
-    //                         { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
-    //                         {
-    //                             label: 'Contenido',
-    //                             icon: 'pi pi-fw pi-globe',
-    //                             routerLink: ['/pages/contenido']
-    //                         },
-    //                         {
-    //                             label: 'Categorias',
-    //                             icon: 'pi pi-fw pi-globe',
-    //                             routerLink: ['/pages/categorias']
-    //                         },
-    //                         {
-    //                             label: 'Informes de Empleados',
-    //                             icon: 'pi pi-fw pi-globe',
-    //                             routerLink: ['/pages/informesempleados']
-    //                         },
-    //                         {
-    //                             label: 'Titulos',
-    //                             icon: 'pi pi-fw pi-globe',
-    //                             routerLink: ['/pages/titulos']
-    //                         },
-    //                         {
-    //                             label: 'cargos',
-    //                             icon: 'pi pi-fw pi-globe',
-    //                             routerLink: ['/pages/cargos']
-    //                         },
-    //                     ]
-    //                 }
-    //             ]
-    //         }
-    //     ];
-    // }
 
 
-
-
-
-        // ngOnInit() {
-        //     const roleId = Number.parseInt(this.cookieService.get('roleID'));
-
-        //     // Llamada al servicio para obtener las pantallas permitidas para este rol
-        //     this.servicioLogin.getPantallasDeRol(roleId).subscribe(pantallasPermitidas => {
-        //         // Crea un conjunto de nombres permitidos, en minúsculas y sin espacios
-        //         const nombresPermitidos = new Set(pantallasPermitidas.map(pant => pant.pantalla.toLowerCase().trim()));
-        //         console.log('Pantallas permitidas:', Array.from(nombresPermitidos));
-
-        //         // Función para filtrar los subítems
-        //         const filtrarSubitems = (subitems) => {
-        //             return subitems.filter(opcion => {
-        //                 // Normaliza el nombre del subítem
-        //                 const nombreLowerCase = opcion.label.toLowerCase().trim();
-        //                 // Verifica si el subítem está en los nombres permitidos
-        //                 const coincide = nombresPermitidos.has(nombreLowerCase);
-        //                 console.log(`Comparando subitem: '${nombreLowerCase}', coincide: ${coincide}`);
-        //                 return coincide; // Devuelve el subítem si coincide
-        //             });
-        //         };
-
-        //         // Filtrar el menú completo por secciones y subsecciones
-        //         this.model = this.menuCompleto
-        //             .map(section => {
-        //                 console.log(`Procesando sección: ${section.label || 'Sin Nombre'}`);
-        //                 const itemsFiltrados = section.items.map(subSection => {
-        //                     // Filtra los subítems dentro de cada subsección
-        //                     const subItemsFiltrados = filtrarSubitems(subSection.items || []);
-        //                     return {
-        //                         label: subSection.label || 'Sin Nombre',
-        //                         icon: subSection.icon || 'pi pi-fw pi-question',
-        //                         items: subItemsFiltrados
-        //                     };
-        //                 }).filter(subSection => subSection.items.length > 0);
-
-        //                 // Devuelve la sección principal solo si hay subítems permitidos
-        //                 return {
-        //                     label: section.label || 'Sin Nombre',
-        //                     icon: section.icon || 'pi pi-fw pi-question',
-        //                     items: itemsFiltrados
-        //                 };
-        //             })
-        //             .filter(section => section.items.length > 0);
-
-        //         console.log('Menú filtrado:', this.model);
-        //     });
-        // }
 
 
 
         ngOnInit() {
+        const admin = this.cookieService.get('esAdmin').toString()
+
+        if (admin != "true")
+        {
+
             const roleId = Number.parseInt(this.cookieService.get('roleID'));
 
             this.servicioLogin.getPantallasDeRol(roleId).subscribe(pantallasPermitidas => {
 
                 const nombresPermitidos = new Set(pantallasPermitidas.map(pant => pant.pantalla.toLowerCase().trim()));
 
-                // Función para filtrar los subítems
                 const filtrarSubitems = (subitems) => {
                     return subitems.filter(opcion => {
-                        // Normaliza el nombre del subítem
                         const nombreLowerCase = opcion.label.toLowerCase().trim();
-                        // Verifica si el subítem está en los nombres permitidos
                         return nombresPermitidos.has(nombreLowerCase);
                     });
                 };
 
-                // Filtrar el menú completo por secciones y subsecciones
                 this.model = this.menuCompleto
                     .map(section => {
                         const itemsFiltrados = section.items.map(subSection => {
-                            // Filtra los subítems dentro de cada subsección
                             const subItemsFiltrados = filtrarSubitems(subSection.items || []);
                             return {
                                 ...subSection,
@@ -449,7 +324,6 @@ export class AppMenuComponent implements OnInit {
                             };
                         }).filter(subSection => subSection.items.length > 0);
 
-                        // Devuelve la sección principal solo si hay subítems permitidos
                         return {
                             ...section,
                             items: itemsFiltrados
@@ -457,6 +331,16 @@ export class AppMenuComponent implements OnInit {
                     })
                     .filter(section => section.items.length > 0);
             });
+
+
+        }
+        else
+        {
+            this.model = this.menuCompleto;
+
+        }
+
+
         }
 
 
