@@ -42,6 +42,14 @@ interface Pantalla {
       }
 
       isUrlAllowed(url: string): boolean {
+
+        const admin = this.cookieService.get('esAdmin').toString()
+
+        if (admin != "true"){
+            return true;
+        }
+
+
         const urlSegments = url.split('/').filter(segment => segment);
 
         const screenNameIndex = urlSegments.indexOf('pages') + 1;
@@ -51,7 +59,7 @@ interface Pantalla {
         }
 
         this.router.navigate(['/login']);
-        window.location.reload();
+        // window.location.reload();
       return false;
     }
   }
