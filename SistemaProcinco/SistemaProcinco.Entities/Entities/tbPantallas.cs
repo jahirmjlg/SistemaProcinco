@@ -14,6 +14,13 @@ namespace SistemaProcinco.Entities.Entities
             tbPantallasPorRoles = new HashSet<tbPantallasPorRoles>();
         }
 
+        //NOTMAPPED
+        [NotMapped]
+        public string Creacion { get; set; }
+
+        [NotMapped]
+        public string Modificacion { get; set; }
+
         public int Pant_Id { get; set; }
         public string Pant_Descripcion { get; set; }
         public int Pant_UsuarioCreacion { get; set; }
@@ -21,10 +28,7 @@ namespace SistemaProcinco.Entities.Entities
         public int? Pant_UsuarioModificacion { get; set; }
         public DateTime? Pant_FechaModificacion { get; set; }
         public bool? Pant_Estado { get; set; }
-        [NotMapped]
-        public string Creacion { get; set; }
-        [NotMapped]
-        public string Modificacion { get; set; }
+
         public virtual tbUsuarios Pant_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Pant_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }

@@ -14,6 +14,13 @@ namespace SistemaProcinco.Entities.Entities
             tbEmpleados = new HashSet<tbEmpleados>();
         }
 
+        //NOTMAPPED
+        [NotMapped]
+        public string UsuarioCreacion { get; set; }
+        [NotMapped]
+        public string UsuarioModificacion { get; set; }
+
+
         public int Carg_Id { get; set; }
         public string Carg_Descripcion { get; set; }
         public int Carg_UsuarioCreacion { get; set; }
@@ -21,10 +28,7 @@ namespace SistemaProcinco.Entities.Entities
         public int? Carg_UsuarioModificacion { get; set; }
         public DateTime? Carg_FechaModificacion { get; set; }
         public bool? Carg_Estado { get; set; }
-        [NotMapped]
-        public string UsuarioCreacion { get; set; }
-        [NotMapped]
-        public string UsuarioModificacion { get; set; }
+
         public virtual tbUsuarios Carg_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Carg_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }

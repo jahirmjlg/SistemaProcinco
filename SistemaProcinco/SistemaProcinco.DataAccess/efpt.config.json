@@ -5,7 +5,7 @@
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
-   "ModelNamespace": null,
+   "ModelNamespace": "Context",
    "OutputContextPath": null,
    "OutputPath": "Context",
    "ProjectRootNamespace": "SistemaProcinco.DataAccess",
@@ -38,11 +38,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Grl].[tbEmpresas]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Grl].[tbEstados]",
          "ObjectType": 0
       },
       {
          "Name": "[Grl].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Grl].[tbParticipantes]",
          "ObjectType": 0
       },
       {

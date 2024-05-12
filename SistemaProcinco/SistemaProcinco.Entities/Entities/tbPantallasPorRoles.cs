@@ -9,22 +9,28 @@ namespace SistemaProcinco.Entities.Entities
 {
     public partial class tbPantallasPorRoles
     {
-        public int PaPr_Id { get; set; }
-        public int Pant_Id { get; set; }
-        [NotMapped]
-        public string Pantalla { get; set; }
-        public int Role_Id { get; set; }
+
+        //NOTMAPPED
         [NotMapped]
         public string Rol { get; set; }
+        [NotMapped]
+        public string Pantalla { get; set; }
+        [NotMapped]
+        public string Creacion { get; set; }
+
+        [NotMapped]
+        public string Modificacion { get; set; }
+
+
+        public int PaPr_Id { get; set; }
+        public int Pant_Id { get; set; }
+        public int Role_Id { get; set; }
         public int? PaPr_UsuarioCreacion { get; set; }
         public DateTime? PaPr_FechaCreacion { get; set; }
         public int? PaPr_UsuarioModificacion { get; set; }
         public DateTime? PaPr_FechaModificacion { get; set; }
         public bool? PaPr_Estado { get; set; }
-        [NotMapped]
-        public string Creacion { get; set; }
-        [NotMapped]
-        public string Modificacion { get; set; }
+
         public virtual tbUsuarios PaPr_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios PaPr_UsuarioModificacionNavigation { get; set; }
         public virtual tbPantallas Pant { get; set; }

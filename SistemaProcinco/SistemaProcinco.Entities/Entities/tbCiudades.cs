@@ -12,24 +12,31 @@ namespace SistemaProcinco.Entities.Entities
         public tbCiudades()
         {
             tbEmpleados = new HashSet<tbEmpleados>();
+            tbEmpresas = new HashSet<tbEmpresas>();
+            tbParticipantes = new HashSet<tbParticipantes>();
         }
 
-        public string Ciud_Id { get; set; }
-        public string Ciud_Descripcion { get; set; }
-        public string Esta_Id { get; set; }
+        //NOTMAPPED
         [NotMapped]
         public string Esta_Descripcion { get; set; }
-        public int Ciud_UsuarioCreacion { get; set; }
-        public DateTime Ciud_FechaCreacion { get; set; }
-        public int? Ciud_UsuarioModificacion { get; set; }
-        public DateTime? Ciud_FechaModificacion { get; set; }
         [NotMapped]
         public string UsuarioCreacion { get; set; }
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+
+        public string Ciud_Id { get; set; }
+        public string Ciud_Descripcion { get; set; }
+        public string Esta_Id { get; set; }
+        public int Ciud_UsuarioCreacion { get; set; }
+        public DateTime Ciud_FechaCreacion { get; set; }
+        public int? Ciud_UsuarioModificacion { get; set; }
+        public DateTime? Ciud_FechaModificacion { get; set; }
+
         public virtual tbUsuarios Ciud_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Ciud_UsuarioModificacionNavigation { get; set; }
         public virtual tbEstados Esta { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
+        public virtual ICollection<tbEmpresas> tbEmpresas { get; set; }
+        public virtual ICollection<tbParticipantes> tbParticipantes { get; set; }
     }
 }

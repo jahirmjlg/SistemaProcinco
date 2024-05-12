@@ -29,6 +29,8 @@ namespace SistemaProcinco.Entities.Entities
             tbCursosImpartidosCurIm_UsuarioModificacionNavigation = new HashSet<tbCursosImpartidos>();
             tbEmpleadosEmpl_UsuarioCreacionNavigation = new HashSet<tbEmpleados>();
             tbEmpleadosEmpl_UsuarioModificacionNavigation = new HashSet<tbEmpleados>();
+            tbEmpresasEmpre_UsuarioCreacionNavigation = new HashSet<tbEmpresas>();
+            tbEmpresasEmpre_UsuarioModificacionNavigation = new HashSet<tbEmpresas>();
             tbEstadosCivilesEstc_UsuarioCreacionNavigation = new HashSet<tbEstadosCiviles>();
             tbEstadosCivilesEstc_UsuarioModificacionNavigation = new HashSet<tbEstadosCiviles>();
             tbEstadosEsta_UsuarioCreacionNavigation = new HashSet<tbEstados>();
@@ -37,6 +39,8 @@ namespace SistemaProcinco.Entities.Entities
             tbPantallasPant_UsuarioModificacionNavigation = new HashSet<tbPantallas>();
             tbPantallasPorRolesPaPr_UsuarioCreacionNavigation = new HashSet<tbPantallasPorRoles>();
             tbPantallasPorRolesPaPr_UsuarioModificacionNavigation = new HashSet<tbPantallasPorRoles>();
+            tbParticipantesPart_UsuarioCreacionNavigation = new HashSet<tbParticipantes>();
+            tbParticipantesPart_UsuarioModificacionNavigation = new HashSet<tbParticipantes>();
             tbRolesRole_UsuarioCreacionNavigation = new HashSet<tbRoles>();
             tbRolesRole_UsuarioModificacionNavigation = new HashSet<tbRoles>();
             tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation = new HashSet<tbTitulosPorEmpleado>();
@@ -45,24 +49,13 @@ namespace SistemaProcinco.Entities.Entities
             tbTitulosTitl_UsuarioModificacionNavigation = new HashSet<tbTitulos>();
         }
 
-        public int Usua_Id { get; set; }
-        public string Usua_Usuario { get; set; }
-        public string Usua_Contraseña { get; set; }
-        public bool? Usua_EsAdmin { get; set; }
-        [NotMapped]
-        public string Usua_Admin1 { get; set; }
-        public int Role_Id { get; set; }
+        //NOTMAPPED
         [NotMapped]
         public string Role_Descripcion { get; set; }
-        public int? Usua_UsuarioCreacion { get; set; }
-        public DateTime Usua_FechaCreacion { get; set; }
-        public int? Usua_UsuarioModificacion { get; set; }
-        public DateTime? Usua_FechaModificacion { get; set; }
-        public bool? Usua_Estado { get; set; }
-        public int? Empl_Id { get; set; }
-        public string Usua_VerificarCorreo { get; set; }
         [NotMapped]
         public string correo { get; set; }
+        [NotMapped]
+        public string adminfalso { get; set; }
         [NotMapped]
         public string Empl_Nombre { get; set; }
         [NotMapped]
@@ -70,6 +63,23 @@ namespace SistemaProcinco.Entities.Entities
 
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+        [NotMapped]
+        public string Usua_Admin1 { get; set; }
+
+
+        public int Usua_Id { get; set; }
+        public string Usua_Usuario { get; set; }
+        public string Usua_Contraseña { get; set; }
+        public bool? Usua_EsAdmin { get; set; }
+        public int Role_Id { get; set; }
+        public int? Usua_UsuarioCreacion { get; set; }
+        public DateTime Usua_FechaCreacion { get; set; }
+        public int? Usua_UsuarioModificacion { get; set; }
+        public DateTime? Usua_FechaModificacion { get; set; }
+        public bool? Usua_Estado { get; set; }
+        public int? Empl_Id { get; set; }
+        public string Usua_VerificarCorreo { get; set; }
+
         public virtual tbEmpleados Empl { get; set; }
         public virtual tbRoles Role { get; set; }
         public virtual tbUsuarios Usua_UsuarioCreacionNavigation { get; set; }
@@ -92,6 +102,8 @@ namespace SistemaProcinco.Entities.Entities
         public virtual ICollection<tbCursosImpartidos> tbCursosImpartidosCurIm_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbEmpresas> tbEmpresasEmpre_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbEmpresas> tbEmpresasEmpre_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesEstc_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesEstc_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEstados> tbEstadosEsta_UsuarioCreacionNavigation { get; set; }
@@ -100,6 +112,8 @@ namespace SistemaProcinco.Entities.Entities
         public virtual ICollection<tbPantallas> tbPantallasPant_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaPr_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaPr_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbParticipantes> tbParticipantesPart_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbParticipantes> tbParticipantesPart_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation { get; set; }

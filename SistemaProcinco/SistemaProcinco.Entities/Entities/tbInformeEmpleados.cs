@@ -9,23 +9,28 @@ namespace SistemaProcinco.Entities.Entities
 {
     public partial class tbInformeEmpleados
     {
+
+        //NOTMAPPED
+        [NotMapped]
+        public string Cursos { get; set; }
+        [NotMapped]
+        public string Nombre { get; set; }
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
+
+
         public int InfoE_Id { get; set; }
         public int? InfoE_Calificacion { get; set; }
         public int? Empl_Id { get; set; }
-        [NotMapped]
-        public string Nombre { get; set; }
         public int? Curso_Id { get; set; }
-        [NotMapped]
-        public string Cursos { get; set; }
         public string InfoE_Observaciones { get; set; }
         public int? InfoE_UsuarioCreacion { get; set; }
         public DateTime? InfoE_FechaCreacion { get; set; }
         public int? InfoE_UsuarioModificacion { get; set; }
         public DateTime? InfoE_FechaModificacion { get; set; }
-        [NotMapped]
-        public string Creacion { get; set; }
-        [NotMapped]
-        public string Modificacion { get; set; }
+
         public virtual tbCursos Curso { get; set; }
         public virtual tbEmpleados Empl { get; set; }
     }

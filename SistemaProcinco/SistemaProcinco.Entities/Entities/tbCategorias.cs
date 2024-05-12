@@ -11,8 +11,15 @@ namespace SistemaProcinco.Entities.Entities
     {
         public tbCategorias()
         {
+            tbContenido = new HashSet<tbContenido>();
             tbCursos = new HashSet<tbCursos>();
         }
+
+        //NOTMAPPED
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modificacion { get; set; }
 
         public int Cate_Id { get; set; }
         public string Cate_Descripcion { get; set; }
@@ -22,12 +29,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? Cate_UsuarioModificacion { get; set; }
         public DateTime? Cate_FechaModificacion { get; set; }
         public bool? Cate_Estado { get; set; }
-        [NotMapped]
-        public string Creacion { get; set; }
-        [NotMapped]
-        public string Modificacion { get; set; }
+
         public virtual tbUsuarios Cate_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Cate_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbContenido> tbContenido { get; set; }
         public virtual ICollection<tbCursos> tbCursos { get; set; }
     }
 }

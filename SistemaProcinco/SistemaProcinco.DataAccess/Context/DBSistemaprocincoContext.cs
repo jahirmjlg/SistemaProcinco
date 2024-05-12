@@ -27,11 +27,13 @@ namespace SistemaProcinco.DataAccess.Context
         public virtual DbSet<tbCursos> tbCursos { get; set; }
         public virtual DbSet<tbCursosImpartidos> tbCursosImpartidos { get; set; }
         public virtual DbSet<tbEmpleados> tbEmpleados { get; set; }
+        public virtual DbSet<tbEmpresas> tbEmpresas { get; set; }
         public virtual DbSet<tbEstados> tbEstados { get; set; }
         public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
         public virtual DbSet<tbInformeEmpleados> tbInformeEmpleados { get; set; }
         public virtual DbSet<tbPantallas> tbPantallas { get; set; }
         public virtual DbSet<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
+        public virtual DbSet<tbParticipantes> tbParticipantes { get; set; }
         public virtual DbSet<tbRoles> tbRoles { get; set; }
         public virtual DbSet<tbTitulos> tbTitulos { get; set; }
         public virtual DbSet<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }
@@ -163,6 +165,10 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.Property(e => e.Cont_FechaModificacion).HasColumnType("datetime");
 
+                entity.HasOne(d => d.Cate)
+                    .WithMany(p => p.tbContenido)
+                    .HasForeignKey(d => d.Cate_Id);
+
                 entity.HasOne(d => d.Cont_UsuarioCreacionNavigation)
                     .WithMany(p => p.tbContenidoCont_UsuarioCreacionNavigation)
                     .HasForeignKey(d => d.Cont_UsuarioCreacion)
@@ -237,6 +243,10 @@ namespace SistemaProcinco.DataAccess.Context
                 entity.HasOne(d => d.Curso_UsuarioModificacionNavigation)
                     .WithMany(p => p.tbCursosCurso_UsuarioModificacionNavigation)
                     .HasForeignKey(d => d.Curso_UsuarioModificacion);
+
+                entity.HasOne(d => d.Empre)
+                    .WithMany(p => p.tbCursos)
+                    .HasForeignKey(d => d.Empre_Id);
             });
 
             modelBuilder.Entity<tbCursosImpartidos>(entity =>
@@ -270,6 +280,10 @@ namespace SistemaProcinco.DataAccess.Context
                 entity.HasOne(d => d.Curso)
                     .WithMany(p => p.tbCursosImpartidos)
                     .HasForeignKey(d => d.Curso_Id);
+
+                entity.HasOne(d => d.Empl)
+                    .WithMany(p => p.tbCursosImpartidos)
+                    .HasForeignKey(d => d.Empl_Id);
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>
@@ -279,7 +293,7 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.ToTable("tbEmpleados", "Grl");
 
-                entity.Property(e => e.Ciud_Id)
+                entity.Property(e => e.Ciud_id)
                     .HasMaxLength(4)
                     .IsUnicode(false);
 
@@ -324,7 +338,7 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.HasOne(d => d.Ciud)
                     .WithMany(p => p.tbEmpleados)
-                    .HasForeignKey(d => d.Ciud_Id)
+                    .HasForeignKey(d => d.Ciud_id)
                     .HasConstraintName("FK_tbEmpleados_tbCiudades_Ciud_Id");
 
                 entity.HasOne(d => d.Empl_UsuarioCreacionNavigation)
@@ -340,6 +354,42 @@ namespace SistemaProcinco.DataAccess.Context
                 entity.HasOne(d => d.Estc)
                     .WithMany(p => p.tbEmpleados)
                     .HasForeignKey(d => d.Estc_Id);
+            });
+
+            modelBuilder.Entity<tbEmpresas>(entity =>
+            {
+                entity.HasKey(e => e.Empre_Id)
+                    .HasName("PK__tbEmpres__482561D618E54853");
+
+                entity.ToTable("tbEmpresas", "Grl");
+
+                entity.Property(e => e.Ciud_Id)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Empre_Descripcion)
+                    .HasMaxLength(70)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Empre_Direccion).IsUnicode(false);
+
+                entity.Property(e => e.Empre_Estado).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Empre_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Empre_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ciud)
+                    .WithMany(p => p.tbEmpresas)
+                    .HasForeignKey(d => d.Ciud_Id);
+
+                entity.HasOne(d => d.Empre_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbEmpresasEmpre_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Empre_UsuarioCreacion);
+
+                entity.HasOne(d => d.Empre_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbEmpresasEmpre_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Empre_UsuarioModificacion);
             });
 
             modelBuilder.Entity<tbEstados>(entity =>
@@ -500,6 +550,72 @@ namespace SistemaProcinco.DataAccess.Context
                     .HasForeignKey(d => d.Role_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbPantallasxRol_tbRoles_Role_Id");
+            });
+
+            modelBuilder.Entity<tbParticipantes>(entity =>
+            {
+                entity.HasKey(e => e.Part_Id)
+                    .HasName("PK__tbPartic__14CFF41017D35259");
+
+                entity.ToTable("tbParticipantes", "Grl");
+
+                entity.Property(e => e.Ciud_id)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_Apellido)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_Correo)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_DNI)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_Direccion)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_Estado).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Part_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Part_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Part_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.Part_Nombre)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Part_Sexo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.Ciud)
+                    .WithMany(p => p.tbParticipantes)
+                    .HasForeignKey(d => d.Ciud_id)
+                    .HasConstraintName("FK_tbParticipantes_tbCiudades_Ciud_Id");
+
+                entity.HasOne(d => d.Empre)
+                    .WithMany(p => p.tbParticipantes)
+                    .HasForeignKey(d => d.Empre_Id);
+
+                entity.HasOne(d => d.Estc)
+                    .WithMany(p => p.tbParticipantes)
+                    .HasForeignKey(d => d.Estc_Id);
+
+                entity.HasOne(d => d.Part_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbParticipantesPart_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.Part_UsuarioCreacion);
+
+                entity.HasOne(d => d.Part_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbParticipantesPart_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.Part_UsuarioModificacion);
             });
 
             modelBuilder.Entity<tbRoles>(entity =>

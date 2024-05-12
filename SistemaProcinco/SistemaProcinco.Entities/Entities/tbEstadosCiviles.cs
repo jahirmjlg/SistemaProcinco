@@ -12,7 +12,14 @@ namespace SistemaProcinco.Entities.Entities
         public tbEstadosCiviles()
         {
             tbEmpleados = new HashSet<tbEmpleados>();
+            tbParticipantes = new HashSet<tbParticipantes>();
         }
+
+        //NOTMAPPED
+        [NotMapped]
+        public string UsuarioCreacion { get; set; }
+        [NotMapped]
+        public string UsuarioModificacion { get; set; }
 
         public int Estc_Id { get; set; }
         public string Estc_Descripcion { get; set; }
@@ -21,12 +28,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? Estc_UsuarioModificacion { get; set; }
         public DateTime? Estc_FechaModificacion { get; set; }
         public bool? Estc_Estado { get; set; }
-        [NotMapped]
-        public string UsuarioCreacion { get; set; }
-        [NotMapped]
-        public string UsuarioModificacion { get; set; }
+
         public virtual tbUsuarios Estc_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Estc_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
+        public virtual ICollection<tbParticipantes> tbParticipantes { get; set; }
     }
 }
