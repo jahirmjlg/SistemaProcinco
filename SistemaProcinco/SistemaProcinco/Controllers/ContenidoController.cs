@@ -43,6 +43,7 @@ namespace SistemaProcinco.API.Controllers
             {
                 Cont_Descripcion = item.Cont_Descripcion,
                 Cont_DuracionHoras = item.Cont_DuracionHoras,
+                Cate_Id = item.Cate_Id,
                 Cont_UsuarioCreacion = 1,
                 Cont_FechaCreacion = DateTime.Now
             };
@@ -56,6 +57,22 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+
+        [HttpGet("ContenidoPorCategoriaBuscar/{id}")]
+        public IActionResult DetailsContenidoPorCategoria(int id)
+        {
+            var list = _procincoService.BuscarContenidoPorCategoria(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
 
         [HttpPut("ContenidoEditar")]
         public IActionResult Edit(ContenidoViewModel item)

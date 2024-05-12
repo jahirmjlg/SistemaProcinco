@@ -7,7 +7,17 @@ using System.Threading.Tasks;
 namespace SistemaProcinco.DataAccess.Repository
 {
     class ScriptsDatabase
+
     {
+
+
+
+
+        #region
+        public static string EmpresaListar = "Grl.[SP_Empresa_Seleccionar]";
+
+        #endregion
+
         #region Pantallas 
         public static string PantallasFiltrar = "[Acc].[SP_Pantallas_Listado]";
 
@@ -110,6 +120,7 @@ namespace SistemaProcinco.DataAccess.Repository
         #endregion
 
         #region Contenido
+        public static string ContenidoPorCategoriaBuscar = "[Pro].[SP_ContenidoPorCategoria_Seleccionar]";
         public static string ContenidoListar = "[Pro].[SP_Contenido_Seleccionar]";
         public static string ContenidoCrear = "[Pro].[SP_Contenido_Insertar]";
         public static string ContenidoActualizar = "[Pro].[SP_Contenido_Actualizar]";
@@ -129,10 +140,12 @@ namespace SistemaProcinco.DataAccess.Repository
         #endregion
 
         #region Cursos
+        public static string CursosCrearId = "[Pro].[SP_CursoId_Insertar]";
         public static string CursosListar = "[Pro].[SP_Curso_Seleccionar]";
         public static string CursosCrear = "[Pro].[SP_Curso_Insertar]";
         public static string CursosActualizar = "[Pro].[SP_Curso_Actualizar]";
         public static string CursosEliminar = "[Pro].[SP_Curso_Eliminar]";
+        public static string CursosPorCategoriaBuscar = "Pro.SP_CursosPorCategoria_Seleccionar";
         public static string CursosBuscar = "[Pro].[SP_Curso_Buscar]";
         #endregion
 

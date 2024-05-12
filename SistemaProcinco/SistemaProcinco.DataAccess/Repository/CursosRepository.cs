@@ -40,6 +40,20 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+        public IEnumerable<tbCursos> FindCattegoria(int? id)
+        {
+            string sql = ScriptsDatabase.CursosPorCategoriaBuscar;
+            List<tbCursos> result = new List<tbCursos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Cate_Id", id);
+                result = db.Query<tbCursos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
         public RequestStatus Insert(tbCursos item)
         {
             string sql = ScriptsDatabase.CursosCrear;
@@ -51,10 +65,38 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
                 parametro.Add("@Curso_Imagen", item.Curso_Imagen);
                 parametro.Add("@Cate_Id", item.Cate_Id);
+                parametro.Add("@Empre_Id", item.Empre_Id);
+
                 parametro.Add("@Curso_UsuarioCreacion", item.Curso_UsuarioCreacion);
                 parametro.Add("@Curso_FechaCreacion", item.Curso_FechaCreacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
+        }
+
+
+        public (RequestStatus, int) InsertId(tbCursos item)
+        {
+            string sql = ScriptsDatabase.CursosCrearId;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Curso_Descripcion", item.Curso_Descripcion);
+                parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
+                parametro.Add("@Curso_Imagen", item.Curso_Imagen);
+                parametro.Add("@Cate_Id", item.Cate_Id);
+                parametro.Add("@Empre_Id", item.Empre_Id);
+
+                parametro.Add("@Curso_UsuarioCreacion", item.Curso_UsuarioCreacion);
+                parametro.Add("@Curso_FechaCreacion", item.Curso_FechaCreacion);
+                parametro.Add("@Curso_Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                int curso_Id = parametro.Get<int>("@Curso_Id");
+
+                string mensaje = (result == 1) ? "exito" : "error";
+                return (new RequestStatus { CodeStatus = result, MessageStatus = "" }, curso_Id);
             }
         }
 

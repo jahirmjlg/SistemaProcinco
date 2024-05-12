@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
+
 #nullable disable
 
 namespace SistemaProcinco.Entities.Entities
@@ -29,5 +32,12 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Empre_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbCursos> tbCursos { get; set; }
         public virtual ICollection<tbParticipantes> tbParticipantes { get; set; }
+
+        [NotMapped]
+        public string UsuarioCreacion { get; set; }
+        [NotMapped]
+        public string UsuarioModificacion { get; set; }
+
     }
 }
+

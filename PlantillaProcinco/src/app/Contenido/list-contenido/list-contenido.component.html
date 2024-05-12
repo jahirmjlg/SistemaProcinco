@@ -14,7 +14,6 @@
                         <div class="col-sm-2">
                         <label for="firstname2" class="form-label">Contenido</label>
                         </div>
-
                         <input pInputText id="firstname2" class="form-control" formControlName="cont_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoForm.controls['cont_Descripcion'].invalid" style="color: red !important;">Contenido Requerido</small>
                     </div>
@@ -26,6 +25,20 @@
 
                         <input pInputText id="firstname2" class="form-control" formControlName="cont_DuracionHoras" type="number" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoForm.controls['cont_DuracionHoras'].invalid" style="color: red !important;">Descripcion Requerida</small>
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="col-sm-2">
+                        <label for="firstname2">Categoria</label>
+                        </div>
+
+
+                        <select formControlName="cate_Id" class="form-control" pInputText id="" required autofocus>
+                        <option *ngFor="let cate of dropCategorias" [value]="cate.value">{{ cate.text }}</option>
+                    </select>
+                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearContenidoForm.get('cate_Id').value === '0'" style="color: red !important;">Categoria Requerida</small>
+
                     </div>
                 </div>
 

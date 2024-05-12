@@ -23,11 +23,18 @@ export class CursoService {
 
 
       //INSERTAR
-
+    
       insertCurso(cursoInsert: Curso): Observable<any> {
         return this.http.post<any>(`${this.UrlCurso}CursosCrear`,cursoInsert);
         }
 
+//deviuelve el id
+// https://localhost:44358/Cursos/CursosCrearId
+
+        insertCursoId(cursoInsert: Curso): Observable<any> {
+          return this.http.post<any>(`${this.UrlCurso}CursosCrearId`,cursoInsert);
+          }
+  
         //EDITAR
         editCurso(cursoEdit: Curso): Observable<any> {
             return this.http.put<any>(`${this.UrlCurso}CursosEditar`,cursoEdit);
@@ -37,6 +44,13 @@ export class CursoService {
         fillCurso(id: String): Observable<any> {
             return this.http.get<any>(`${this.UrlCurso}CursosBuscar/${id}`);
             }
+
+
+               //LLENAR CURSOS POR CATEGORIA
+               fillCursoPorCategoria(id: number): Observable<any> {
+                return this.http.get<any>(`${this.UrlCurso}CursosPorCategoriaBuscar/${id}`);
+            }
+            
 
         //ELIMINAR
         deleteCurso(ID): Observable<any>{

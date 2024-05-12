@@ -14,4 +14,5 @@ export class ContenidoPorCursos {
     conPc_FechaModificacion?:String;
     creacion!: String;
     modificacion!:String;
+    cate_Id! : String;
 }

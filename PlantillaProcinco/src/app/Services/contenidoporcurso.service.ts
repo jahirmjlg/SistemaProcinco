@@ -21,6 +21,7 @@ export class ContenidoporcursoService {
     return this.http.post<any>(`${this.UrlContenidoPorCurso}ContenidoPorCursoCrear`,contenidoInsert);
   }
 
+
   editContenidoPorCurso(contenidocursoEditar: ContenidoPorCursos): Observable<any> {
     return this.http.put<any>(`${this.UrlContenidoPorCurso}ContenidoPorCursoEditar`, contenidocursoEditar);
   }
