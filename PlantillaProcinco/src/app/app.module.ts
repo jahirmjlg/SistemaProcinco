@@ -19,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -26,7 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService, AuthGuard
     ],
     bootstrap: [AppComponent],
 })

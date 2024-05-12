@@ -33,7 +33,12 @@ interface Pantalla {
           next: (pantallas: Pantalla[]) => {
             console.log(pantallas)
 
-            this.allowedScreens = new Set(pantallas.map(pant => pant.pantalla.toLowerCase().trim()));
+            this.allowedScreens = new Set(
+                pantallas.map(pant =>
+                    pant.pantalla.toLowerCase().replace(/\s+/g, '')
+                ));
+
+            console.log("Allowed screens :", Array.from(this.allowedScreens));
           },
           error: (error) => {
             console.error('Error', error);
@@ -45,16 +50,18 @@ interface Pantalla {
 
         const admin = this.cookieService.get('esAdmin').toString()
 
-        if (admin != "true"){
+        if (admin === "true"){
+            console.log("authh")
+
             return true;
         }
 
-
-        const urlSegments = url.split('/').filter(segment => segment);
+        const urlSegments = url.split('/').filter(segment => segment.trim() !== '');
 
         const screenNameIndex = urlSegments.indexOf('pages') + 1;
         if (screenNameIndex > 0 && screenNameIndex < urlSegments.length) {
             const screenName = urlSegments[screenNameIndex].toLowerCase().trim();
+            console.log(`Screen name extracted: ${screenName}`);
             return this.allowedScreens.has(screenName);
         }
 
