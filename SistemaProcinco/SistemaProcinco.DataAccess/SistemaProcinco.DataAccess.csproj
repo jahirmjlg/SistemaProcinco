@@ -16,8 +16,4 @@
     <ProjectReference Include="..\SistemaProcinco.Entities\SistemaProcinco.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Context\" />
-  </ItemGroup>
-
 </Project>

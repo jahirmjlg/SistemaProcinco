@@ -41,7 +41,7 @@ namespace SistemaProcinco.Entities.Entities
         public string Empl_Sexo { get; set; }
         public int? Estc_Id { get; set; }
         public string Empl_Direccion { get; set; }
-        public string Ciud_id { get; set; }
+        public string Ciud_Id { get; set; }
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }
         public int? Empl_UsuarioModificacion { get; set; }

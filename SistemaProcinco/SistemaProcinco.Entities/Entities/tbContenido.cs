@@ -34,7 +34,6 @@ namespace SistemaProcinco.Entities.Entities
         public int? Cont_UsuarioModificacion { get; set; }
         public DateTime? Cont_FechaModificacion { get; set; }
         public bool? Cont_Estado { get; set; }
-        public int? Cate_Id { get; set; }
 
         public virtual tbCategorias Cate { get; set; }
         public virtual tbUsuarios Cont_UsuarioCreacionNavigation { get; set; }
