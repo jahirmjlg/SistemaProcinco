@@ -5,6 +5,7 @@ export class Contenido {
     cont_UsuarioCreacion !: Number;
     cont_FechaCreacion !: String;
     cont_UsuarioModificacion !: String;
+    cate_id !: String;
     cont_FechaModificacion !: String;
     usuarioCreacion !: String;
     usuarioModificacion !: String;

@@ -40,6 +40,21 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+
+        public IEnumerable<tbContenido> FindCategoria(int? id)
+        {
+            string sql = ScriptsDatabase.ContenidoPorCategoriaBuscar;
+            List<tbContenido> result = new List<tbContenido>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Cate_Id", id);
+                result = db.Query<tbContenido>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
         public RequestStatus Insert(tbContenido item)
         {
             string sql = ScriptsDatabase.ContenidoCrear;
@@ -51,6 +66,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Cont_DuracionHoras", item.Cont_DuracionHoras);
                 parametro.Add("@Cont_UsuarioCreacion", item.Cont_UsuarioCreacion);
                 parametro.Add("@Cont_FechaCreacion", item.Cont_FechaCreacion);
+                parametro.Add("@Cate_Id", item.Cate_Id);
+
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }

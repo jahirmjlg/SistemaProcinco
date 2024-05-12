@@ -14,15 +14,37 @@ namespace SistemaProcinco.BusinessLogic.Services
         public readonly CiudadesRepository _ciudadesRepository;
         public readonly EstadosRepository _estadosRepository;
         public readonly EstadosCivilesRepository _estadosCivilesRepository;
+        public readonly EmpresasRepository _empresasRepository;
         public readonly EmpleadosRepository _empleadosRepository;
-        public GeneralService(CiudadesRepository ciudadesRepository, EstadosRepository estadosRepository, EstadosCivilesRepository estadosCivilesRepository, EmpleadosRepository empleadosRepository)
+        public GeneralService(CiudadesRepository ciudadesRepository, EmpresasRepository empresasRepository,
+            EstadosRepository estadosRepository, EstadosCivilesRepository estadosCivilesRepository, EmpleadosRepository empleadosRepository)
         {
             _ciudadesRepository = ciudadesRepository;
             _estadosRepository = estadosRepository;
             _estadosCivilesRepository = estadosCivilesRepository;
             _empleadosRepository = empleadosRepository;
+            _empresasRepository = empresasRepository;
+
 
         }
+        #region empresas
+        public ServicesResult ListEmpresas()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empresasRepository.List();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+        #endregion
 
         #region Ciudades
         public ServicesResult ListaCiudades()

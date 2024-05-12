@@ -71,6 +71,8 @@ namespace SistemaProcinco.API.Controllers
                 Curso_DuracionHoras = item.Curso_DuracionHoras,
                 Curso_Imagen = item.Curso_Imagen,
                 Cate_Id = item.Cate_Id,
+                Empre_Id = item.Empre_Id,
+
                 Curso_UsuarioCreacion = 1,
                 Curso_FechaCreacion = DateTime.Now
             };
@@ -85,6 +87,45 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+
+
+
+        [HttpPost("CursosCrearId")]
+        public IActionResult InsertId(CursosViewModel item)
+        {
+            var model = _mapper.Map<tbCursos>(item);
+            var modelo = new tbCursos()
+            {
+                Curso_Descripcion = item.Curso_Descripcion,
+                Curso_DuracionHoras = item.Curso_DuracionHoras,
+                Curso_Imagen = item.Curso_Imagen,
+                Cate_Id = item.Cate_Id,
+                Empre_Id = item.Empre_Id,
+
+                Curso_UsuarioCreacion = 1,
+                Curso_FechaCreacion = DateTime.Now
+            };
+            (var list, int CursoId) = _procincoService.InsertarCursosId(modelo);
+            list.Message = CursoId.ToString();
+
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+      
+        
+        
+        
+        
+        
+        
+        
         [HttpPut("CursosEditar")]
         public IActionResult Edit(CursosViewModel item)
         {
@@ -129,6 +170,20 @@ namespace SistemaProcinco.API.Controllers
         public IActionResult Details(int id)
         {
             var list = _procincoService.BuscarCursos(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("CursosPorCategoriaBuscar/{id}")]
+        public IActionResult DetailsCurso(int id)
+        {
+            var list = _procincoService.BuscarCursosPorCategoria(id);
             if (list.Success == true)
             {
                 return Json(list.Data);

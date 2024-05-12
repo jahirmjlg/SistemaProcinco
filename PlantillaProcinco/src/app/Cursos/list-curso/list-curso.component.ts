@@ -2,7 +2,7 @@ import { Component, ViewChild} from '@angular/core';
 import {CursoService} from '../../Services/curso.service';
 import {Curso} from 'src/app/Models/CursosViewModel';
 import {Router} from '@angular/router';
-
+import {EmpresaService} from '../../Services/empresa.service';
 import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -12,6 +12,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CookieService } from 'ngx-cookie-service';
 import { dropCategorias } from 'src/app/Models/CategoriasViewModel';
 import { FileUpload } from 'primeng/fileupload';
+import { dropEmpresas } from 'src/app/Models/EmpresaViewModel';
 
 @Component({
   selector: 'app-list-curso',
@@ -21,7 +22,6 @@ import { FileUpload } from 'primeng/fileupload';
   <input type="file" (change)="onFileSelected($event)">
   <button (click)="onUpload()">Upload</button>
 `
-
 })
 export class ListCursoComponent {
 
@@ -36,6 +36,8 @@ export class ListCursoComponent {
         //BOOLEANS EDITAR
         CollapseEdit: boolean = false;
         isSubmitEdit: boolean = false;
+    empleadosddl: any[] = [];
+
 
         //BOOLEAN DETALLE
         CollapseDetalle: boolean = false;
@@ -46,6 +48,8 @@ export class ListCursoComponent {
 
         //VARIABLE EN LA QUE ITERA EL DDL
     dropCategorias: any[] = [];
+    dropEmpresas: any[] = [];
+
 
     //File
     selectedFile: File;
@@ -61,6 +65,7 @@ export class ListCursoComponent {
     UsuarioModificacion: String = "";
     FechaCreacion: String = "";
     FechaModificacion: String = "";
+    empresa: String = "";
 
 
 
@@ -86,6 +91,7 @@ export class ListCursoComponent {
 
     constructor(private cursoservice: CursoService, private router: Router,
                 private formBuilder: FormBuilder, private cookieService: CookieService,
+                private empresaservice: EmpresaService,
                 private messageService: MessageService) {
 
 
@@ -136,7 +142,7 @@ export class ListCursoComponent {
             curso_DuracionHoras: ['', [Validators.required]],
             curso_Imagen: ['', [Validators.required]],
             cate_Id: ['0', [Validators.required]],
-
+            empre_Id: ['0', [Validators.required]],
           });
 
           this.editarCursoForm = new FormGroup({
@@ -145,6 +151,7 @@ export class ListCursoComponent {
             curso_DuracionHoras: new FormControl("",Validators.required),
             curso_Imagen: new FormControl("",Validators.required),
             cate_Id: new FormControl("0",Validators.required),
+            empre_Id: new FormControl("0",Validators.required),
         });
 
         this.cursoservice.getDdlCategorias().subscribe((data: dropCategorias[]) => {
@@ -153,6 +160,15 @@ export class ListCursoComponent {
         }, error => {
             console.log(error);
         });
+
+
+        this.empresaservice.getDdlEmpresas().subscribe((data: dropEmpresas[]) => {
+          this.dropEmpresas = data;
+          console.log(data);
+      }, error => {
+          console.log(error);
+      });
+
 
 
         // Respuesta de la api
@@ -171,6 +187,8 @@ export class ListCursoComponent {
             CUSTOM_ELEMENTS_SCHEMA
           ];
     }
+
+
 
 
 
@@ -281,6 +299,7 @@ export class ListCursoComponent {
                this.FechaCreacion = data[0].curso_FechaCreacion
                this.UsuarioModificacion = data[0].modificacion
                this.FechaModificacion = data[0].curso_FechaModificacion
+               this.FechaModificacion = data[0].curso_FechaModificacion
 
             }
           });
@@ -336,6 +355,8 @@ export class ListCursoComponent {
                     curso_Descripcion: new FormControl(data[0].curso_Descripcion,Validators.required),
                     curso_DuracionHoras: new FormControl(data[0].curso_DuracionHoras,Validators.required),
                     curso_Imagen: new FormControl(data[0].curso_Imagen,Validators.required),
+                    empre_Id: new FormControl(data[0].empre_Id,Validators.required),
+                    
                     cate_Id: new FormControl(data[0].cate_Id,Validators.required),
                 });
 
@@ -346,6 +367,11 @@ export class ListCursoComponent {
 
             }
           });
+
+
+          
+          this.CollapseEdit = true;
+          this.Tabla=false;
 
     }
 

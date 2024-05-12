@@ -491,6 +491,28 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+
+        public ServicesResult BuscarContenidoPorCategoria(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoRepository.FindCategoria(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
         #endregion
 
         #region Cursos
@@ -532,7 +554,29 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
-        public ServicesResult InsertarCursos (tbCursos item)
+
+        public ServicesResult BuscarCursosPorCategoria(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.FindCattegoria(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarCursos(tbCursos item)
         {
             var result = new ServicesResult();
             try
@@ -554,7 +598,33 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
-        public ServicesResult EditarCursos (tbCursos item)
+
+
+        public (ServicesResult, int) InsertarCursosId(tbCursos item)
+        {
+            var result = new ServicesResult();
+            int cursoId = 0;
+            try
+            {
+                var lost = _cursosRepository.InsertId(item);
+                cursoId = lost.Item2;
+                if (lost.Item1.CodeStatus > 0)
+                {
+                    return (result.Ok(lost), cursoId);
+
+                }
+                else
+                {
+                    return (result.Error(lost), cursoId);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (result.Error(ex.Message), cursoId);
+            }
+        }
+
+        public ServicesResult EditarCursos(tbCursos item)
         {
             var result = new ServicesResult();
             try

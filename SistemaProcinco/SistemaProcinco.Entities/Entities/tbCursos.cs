@@ -20,6 +20,8 @@ namespace SistemaProcinco.Entities.Entities
         public string Curso_Descripcion { get; set; }
         public int? Curso_DuracionHoras { get; set; }
         public string Curso_Imagen { get; set; }
+        public int Empre_Id { get; set; }
+
         public int? Cate_Id { get; set; }
         [NotMapped]
         public string Categoria { get; set;}

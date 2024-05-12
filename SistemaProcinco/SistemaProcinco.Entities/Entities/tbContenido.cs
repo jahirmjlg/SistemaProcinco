@@ -9,6 +9,12 @@ namespace SistemaProcinco.Entities.Entities
 {
     public partial class tbContenido
     {
+        [NotMapped]
+        public string categoria { get; set; }
+        [NotMapped]
+        public string Cate_Descripcion { get; set; }
+        public int Cate_Id { get; set; }
+
         public tbContenido()
         {
             tbContenidoPorCurso = new HashSet<tbContenidoPorCurso>();

@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { dropCategorias } from 'src/app/Models/CategoriasViewModel';
 
 @Component({
   selector: 'app-list-contenido',
@@ -26,6 +27,7 @@ export class ListContenidoComponent implements OnInit {
     isSubmitEdit: boolean = false;
 
     CollapseDetalle: boolean = false;
+    dropCategorias: any[] = [];
 
     deleteContenidoBool: boolean = false;
 
@@ -37,6 +39,7 @@ export class ListContenidoComponent implements OnInit {
     FechaCreacion: String = "";
     FechaModificacion: String = "";
     ID: String = "";
+    categoria: String = "";
 
 
     cols: any[] = [];
@@ -54,30 +57,57 @@ export class ListContenidoComponent implements OnInit {
     editarContenidoForm: FormGroup
     //ultimos dos
     constructor(private messageService: MessageService, private contenidoservice: ContenidoService, private router: Router,
-        private formBuilder: FormBuilder, private cookieService: CookieService) { }
+        private formBuilder: FormBuilder, 
+        private cookieService: CookieService) { }
 
     ngOnInit() {
 
 
         this.crearContenidoForm = this.formBuilder.group({
             cont_Descripcion: ['', [Validators.required]],
-            cont_DuracionHoras: ['0', [Validators.required]],
+            cate_Id: ['0', [Validators.required]],
+          
+          cont_DuracionHoras: ['0', [Validators.required]],
         });
 
         this.editarContenidoForm = new FormGroup({
             ID: new FormControl("",Validators.required),
             cont_Descripcion: new FormControl("", Validators.required),
+            cate_Id: new FormControl("0",Validators.required),
             cont_DuracionHoras: new FormControl("", Validators.required),
          })
 
+
+
+         this.contenidoservice.getDdlCategorias().subscribe((data: dropCategorias[]) => {
+            this.dropCategorias = data;
+            console.log(data);
+        }, error => {
+            console.log(error);
+        });
+
         // Respuesta de la api
         this.contenidoservice.getContenido().subscribe((Response: any)=> {
+           
             console.log(Response.data);
             this.contenido = Response.data;
 
           }, error=>{
             console.log(error);
           });
+
+
+
+        //   this.contenidoservice.getDdlCategorias
+
+          this.contenidoservice.getDdlCategorias().subscribe((data: dropCategorias[]) => {
+            this.dropCategorias = data;
+            console.log(data);
+        }, error => {
+            console.log(error);
+        });
+
+
 
           //
        
@@ -175,7 +205,8 @@ export class ListContenidoComponent implements OnInit {
 
         this.contenidoservice.fillContenido(id).subscribe({
             next: (data: Contenido) => {
-               this.cont_Id = data[0].cont_Id,
+                this.categoria = data[0].categoria,
+                this.cont_Id = data[0].cont_Id,
                this.Contenido = data[0].cont_Descripcion,
                this.ContenidoDuracion = data[0].cont_DuracionHoras,
                this.UsuarioCreacion = data[0].usuarioCreacion,
@@ -222,6 +253,8 @@ export class ListContenidoComponent implements OnInit {
             next: (data: Contenido) => {
                 this.ID = data[0].cont_Id,
                 this.editarContenidoForm = new FormGroup({
+                    cate_Id: new FormControl(data[0].cate_Id,Validators.required),
+
                     cont_Id: new FormControl(data[0].cont_Id),
                     cont_Descripcion: new FormControl(data[0].cont_Descripcion,Validators.required),
                     cont_DuracionHoras: new FormControl(data[0].cont_DuracionHoras,Validators.required),

@@ -10,7 +10,14 @@ namespace SistemaProcinco.Common.Models
     public class ContenidoViewModel
     {
         public int Cont_Id { get; set; }
+        [NotMapped]
+
+        public int Cate_Id { get; set; }
         public string Cont_Descripcion { get; set; }
+        [NotMapped]
+        public string categoria { get; set; }
+        [NotMapped]
+        public string Cate_Descripcion { get; set; }
         public int? Cont_DuracionHoras { get; set; }
         public int Cont_UsuarioCreacion { get; set; }
         public DateTime Cont_FechaCreacion { get; set; }

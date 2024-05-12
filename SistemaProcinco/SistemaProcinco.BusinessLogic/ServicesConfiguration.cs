@@ -32,6 +32,8 @@ namespace SistemaProcinco.BusinessLogic
             service.AddScoped<CursosRepository>();
             service.AddScoped<CursosImpartidosRepository>();
             service.AddScoped<ContenidoPorCursoRepository>();
+            service.AddScoped<EmpresasRepository>();
+
             SistemaProcincoContext.BuildConnectionString(conn);
 
         }
