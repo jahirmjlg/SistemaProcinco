@@ -6,8 +6,8 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            { path: '', loadChildren: () => import('./demo/components/auth/login/login.module').then(m => m.LoginModule) },
-
+            { path: 'login', loadChildren: () => import('./demo/components/auth/login/login.module').then(m => m.LoginModule) },
+            { path: '', redirectTo: '/login', pathMatch: 'full' },
             {
                 path: '', component: AppLayoutComponent,
                 children: [

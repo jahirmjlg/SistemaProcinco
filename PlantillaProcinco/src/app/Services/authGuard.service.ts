@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {ServiceService} from '../Services/service.service'
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 interface Pantalla {
     pantalla: string;
@@ -15,7 +16,8 @@ interface Pantalla {
   export class AuthService {
     private allowedScreens: Set<string>;
 
-    constructor(private http: HttpClient, private service: ServiceService, private cookieService: CookieService) {
+    constructor(private http: HttpClient, private service: ServiceService,
+        private cookieService: CookieService, private router: Router) {
       this.allowedScreens = new Set();
     }
 
@@ -29,6 +31,8 @@ interface Pantalla {
 
         this.service.getPantallasDeRol(roleId).subscribe({
           next: (pantallas: Pantalla[]) => {
+            console.log(pantallas)
+
             this.allowedScreens = new Set(pantallas.map(pant => pant.pantalla.toLowerCase().trim()));
           },
           error: (error) => {
@@ -46,6 +50,8 @@ interface Pantalla {
             return this.allowedScreens.has(screenName);
         }
 
-        return false;
+        this.router.navigate(['/login']);
+        window.location.reload();
+      return false;
     }
   }

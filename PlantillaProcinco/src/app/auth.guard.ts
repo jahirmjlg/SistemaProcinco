@@ -14,11 +14,10 @@ import { Observable } from 'rxjs';
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       const url: string = state.url;
-      if (this.authService.isUrlAllowed(url)) {
-        return true;
+      if (!this.authService.isUrlAllowed(url)) {
+        this.router.navigate(['/login']);
+        return false;
       }
-
-      this.router.navigate(['/notfound']);
-      return false;
+      return true;
     }
   }
