@@ -424,7 +424,6 @@ namespace SistemaProcinco.API.Controllers
                                     <th>Nombre</th>
                                     <th>Fecha Inicio</th>
                                     <th>Fecha Fin</th>
-                                    <th>Finalizado</th>
                                     <th>Pago Total</th>
 
                                 </tr>
@@ -444,7 +443,6 @@ namespace SistemaProcinco.API.Controllers
                             <td>{curso.Nombre}</td>
                             <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
                             <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
-                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
                             <td>{curso.Empl_Total}</td>
 
                         </tr>";
@@ -457,8 +455,8 @@ namespace SistemaProcinco.API.Controllers
                             <td>{curso.Cursos}</td>
                             <td>{curso.Nombre}</td>
                             <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                            <td style='color: #14b81b'>Sin Finalizar</td>
-                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                            <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                            <td>{curso.Empl_Total}</td>
                         </tr>";
                     }
                 }

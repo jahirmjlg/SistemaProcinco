@@ -377,3 +377,32 @@
             </div>
         </div>
 </p-dialog>
+
+
+
+
+
+<p-dialog [(visible)]="imprimirFacturaBool" header="Finalizar Curso" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea Imprimir la Factura?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="showPDF()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="imprimirFacturaBool = false"></button>
+            </div>
+        </div>
+</p-dialog>
+
+
+<div class="card" style="text-align: end;" [ngClass]="{'collapse': showPdf === false}">
+    <div><button class="btn btn-danger" (click)="showPdf = false" style="max-width: 100px;">Cerrar</button></div>
+    <div class="flex align-items-center justify-content-center mt-3">
+        <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
+            <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
+          </object>
+    </div>
+</div>

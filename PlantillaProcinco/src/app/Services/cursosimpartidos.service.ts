@@ -18,8 +18,6 @@ export class CursosImpartidosService {
 
   UrlCursoImp = this.service.urlLocalhost + 'CursosImpartidos/';
 
-
-
   getCursosImpartidos() {
   return this.http.get<CursosImpartidos[]>(`${this.UrlCursoImp}Listado`);
   }
@@ -63,6 +61,12 @@ export class CursosImpartidosService {
 
   finalizarCursosIm(ID): Observable<any>{
     return this.http.put<any>(`${this.UrlCursoImp}Finalizar/${ID}`,{});
+  }
+
+
+
+  getPreviewFacturaUrl(ID): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}PreviewFactura/${ID}`, { responseType: 'text' as 'json' });
   }
 
 }

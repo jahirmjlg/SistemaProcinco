@@ -8,6 +8,8 @@ import { CursosImpartidos } from 'src/app/Models/CursosImpartidos';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { Table, TableModule } from 'primeng/table';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ServiceService } from 'src/app/Services/service.service';
 
 @Component({
   selector: 'app-list-cursosimpartidos',
@@ -31,8 +33,10 @@ export class ListCursosimpartidosComponent {
     //BOOLEAN DELETE
     deleteCursoImpartidoBool: boolean = false;
     finalizarCursoImpartidoBool: boolean = false;
+    imprimirFacturaBool: boolean = false;
 
 
+    showPdf: boolean = false;
 
     ImagenEncontrada: boolean = false;
 
@@ -52,6 +56,9 @@ export class ListCursosimpartidosComponent {
 
     IDFinalizar: String = "";
 
+    IDFactura: String = "";
+
+    public safeUrl: SafeResourceUrl;
 
     cols: any[] = [];
     statuses: any[] = [];
@@ -74,7 +81,16 @@ export class ListCursosimpartidosComponent {
     editarCursosImpartidosForm: FormGroup
 
     constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router,
-         private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule) { }
+         private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule,
+         private sanitizer: DomSanitizer, private service: ServiceService) { }
+
+
+
+
+         getSafeUrl(url: string) {
+            return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+          }
+
 
     ngOnInit() {
 
@@ -418,6 +434,8 @@ export class ListCursosimpartidosComponent {
     }
 
 
+
+
     finalizarCursoImpartido(ID) {
         this.finalizarCursoImpartidoBool = true;
         this.IDFinalizar = ID;
@@ -444,6 +462,30 @@ export class ListCursosimpartidosComponent {
                 }
             },
         });
+    }
+
+
+    showPDF()
+    {
+        this.showPdf = true;
+        this.imprimirFacturaBool = false;
+
+    }
+
+
+    imprimirFactura(ID) {
+        this.imprimirFacturaBool = true;
+        this.IDFactura = ID;
+        this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura)
+
+        this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura).subscribe(
+            (url) => {
+              this.safeUrl = this.getSafeUrl(url);
+            },
+            (error) => {
+              console.error('Error al obtener la URL del PDF:', error);
+            }
+          );
     }
 
 
