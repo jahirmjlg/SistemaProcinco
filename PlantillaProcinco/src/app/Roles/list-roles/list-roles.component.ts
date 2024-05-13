@@ -65,7 +65,15 @@ export class ListRolesComponent {
 
 
   //ultimos dos
-  constructor(private cdRef: ChangeDetectorRef, private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
+  constructor(
+    private cdRef: ChangeDetectorRef,
+     private messageService: MessageService,
+     private service: RolesService,
+     private router: Router,
+     private formBuilder: FormBuilder,
+      private cookieService: CookieService,
+       private pantallaservice: PantallasService,
+       private paroservice : PantallasPorRolesService ) { }
 
   ngOnInit() {
     this.crearRolForm = this.formBuilder.group({

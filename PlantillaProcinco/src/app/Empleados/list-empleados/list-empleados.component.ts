@@ -211,6 +211,8 @@ validarTextoAlfa(event: KeyboardEvent) {
           this.itemsGroup1 = Response.data;
       });
 
+
+
         // this.empleadoservice.getDdlCiudades().subscribe((data: dropCiudades[]) => {
         //     this.ciudadesddl = data;
         //     console.log(data);
@@ -315,7 +317,6 @@ validarTextoAlfa(event: KeyboardEvent) {
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
                     // this.cookieService.set('namee', response.data.empl_Nombre);
-
                     console.log(response)
                     // this.router.navigate(['/pages/estados']);
                     this.empleadoservice.getEmpleado().subscribe((Response: any)=> {
@@ -352,7 +353,10 @@ validarTextoAlfa(event: KeyboardEvent) {
 
         if (this.editarEmpleadoForm.valid) {
           const empleadoData: Empleado = this.editarEmpleadoForm.value;
+          this.itemsGroup2Edit.forEach(screen => this.addScreenEdit(screen));
+
           this.empleadoservice.editEmpleado(empleadoData).subscribe(
+
             response => {
 
                 if (response.code == 200) {
@@ -455,8 +459,41 @@ validarTextoAlfa(event: KeyboardEvent) {
 
     //LLENAR EDITAR && DETALLE
     Fill(id) {
+        this.itemsGroup1Edit = [];
+        this.itemsGroup2Edit = [];
+        this.editarEmpleadoForm.reset();
+
         this.empleadoservice.fillEmpleado(id).subscribe({
             next: (data: Empleado) => {
+
+
+                this.tituloService.fillTitulo(id).subscribe((Response: any)=>{
+                    var titulos = Response;
+                    titulos.forEach(item => {
+                        this.itemsGroup1Edit.push({
+                            titl_Id: item.titl_Id,
+                            titl_Descripcion: item.pant_Descripcion
+                        })
+
+                    });
+                    this.cdRef.detectChanges();
+
+        });
+
+
+        // this.tituloService.getPantallasPorRol(id).subscribe((Response: any)=>{
+        //     var pantallasfiltro = Response;
+        //     pantallasfiltro.forEach(item => {
+        //         this.itemsGroup2Edit.push({
+        //             titl_Id: item.titl_Id,
+        //             titl_Descripcion: item.titl_Descripcion
+        //         })
+
+        //     });
+        // });
+
+
+
                 this.editarEmpleadoForm = new FormGroup({
                     empl_Id: new FormControl(id,Validators.required),
                     empl_DNI: new FormControl(data[0].empl_DNI,Validators.required),

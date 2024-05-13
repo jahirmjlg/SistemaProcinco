@@ -8,6 +8,7 @@ import { ServiceService } from './service.service';
 import { Cargo } from '../Models/CargosViewModel';
 import { EstadoCivil } from '../Models/EstadosCivilesViewModel';
 import { Ciudad } from '../Models/CiudadViewModel';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class EmpleadosService {
   }
 
 
-  insertEmpleado(empleadoInsert: Empleado): Observable<any> {
+  insertEmpleado(empleadoInsert: FormGroup): Observable<any> {
     return this.http.post<any>(`${this.UrlEmpleado}EmpleadoCrear`,empleadoInsert);
     }
 
