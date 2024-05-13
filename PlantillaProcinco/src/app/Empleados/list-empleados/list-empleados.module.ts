@@ -18,6 +18,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
+import { MultiDragDropComponent } from './MultiDrag/multi-drag-drop.component';
 
 @NgModule({
     imports: [
@@ -39,6 +40,6 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         InputNumberModule,
         DialogModule
     ],
-    declarations: [ListEmpleadosComponent]
+    declarations: [ListEmpleadosComponent, MultiDragDropComponent]
 })
 export class ListEmpleadosModule { }

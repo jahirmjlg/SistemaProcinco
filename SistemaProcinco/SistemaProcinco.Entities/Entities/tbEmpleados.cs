@@ -11,37 +11,57 @@ namespace SistemaProcinco.Entities.Entities
     {
         public tbEmpleados()
         {
-            tbCursosImpartidos = new HashSet<tbCursosImpartidos>();
             tbInformeEmpleados = new HashSet<tbInformeEmpleados>();
             tbTitulosPorEmpleado = new HashSet<tbTitulosPorEmpleado>();
             tbUsuarios = new HashSet<tbUsuarios>();
         }
 
-        //NOTMAPPED
-        [NotMapped]
-        public string EstadoCivil { get; set; }
-        [NotMapped]
-        public string Ciud_Descripcion { get; set; }
+
         [NotMapped]
         public string UsuarioCreacion { get; set; }
+
         [NotMapped]
         public string UsuarioModificacion { get; set; }
 
+
+
+
+
         [NotMapped]
-        public string Esta_Id { get; set; }
+        public List<tbPantallas> titulos { get; set; }
 
-
+        [NotMapped]
+        public List<int> TitulosID { get; set; }
         public int Empl_Id { get; set; }
         public string Empl_DNI { get; set; }
         public int? Carg_Id { get; set; }
+        [NotMapped]
+        public string Cargo { get; set; }
         public string Empl_Nombre { get; set; }
         public string Empl_Apellido { get; set; }
         public string Empl_Correo { get; set; }
         public DateTime? Empl_FechaNacimiento { get; set; }
         public string Empl_Sexo { get; set; }
+        [NotMapped]
+        public string Sexo { get; set; }
+
         public int? Estc_Id { get; set; }
+
+        [NotMapped]
+        public string EstadoCivil { get; set; }
+
         public string Empl_Direccion { get; set; }
         public string Ciud_Id { get; set; }
+        [NotMapped]
+        public string Ciud_Descripcion { get; set; }
+
+
+        [NotMapped]
+        public string Esta_Id { get; set; }
+
+
+
+
         public int? Empl_UsuarioCreacion { get; set; }
         public DateTime? Empl_FechaCreacion { get; set; }
         public int? Empl_UsuarioModificacion { get; set; }
@@ -54,7 +74,6 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios Empl_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Empl_UsuarioModificacionNavigation { get; set; }
         public virtual tbEstadosCiviles Estc { get; set; }
-        public virtual ICollection<tbCursosImpartidos> tbCursosImpartidos { get; set; }
         public virtual ICollection<tbInformeEmpleados> tbInformeEmpleados { get; set; }
         public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }

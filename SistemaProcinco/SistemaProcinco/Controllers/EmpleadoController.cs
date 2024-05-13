@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SistemaProcinco.BunisessLogic;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -17,10 +18,15 @@ namespace SistemaProcinco.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly GeneralService _generalService;
-        public EmpleadoController(IMapper mapper, GeneralService generalService)
+
+        private readonly ProcincoService _procincoService;
+
+
+        public EmpleadoController(IMapper mapper, GeneralService generalService, ProcincoService procincoService)
         {
             _mapper = mapper;
             _generalService = generalService;
+            _procincoService = procincoService;
         }
 
         [HttpGet("Listado")]
@@ -38,28 +44,47 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpPost("EmpleadoCrear")]
-        public IActionResult Insert(EmpleadosViewModel item)
+        public IActionResult Insert([FromBody] RoleWithScreens1 data)
         {
-            var model = _mapper.Map<tbEmpleados>(item);
+
+            var result = new ServicesResult();
+            var pantallas = data.Screens;
+
             var modelo = new tbEmpleados()
             {
-                Empl_DNI = item.Empl_DNI,
-                Carg_Id = item.Carg_Id,
-                Empl_Nombre = item.Empl_Nombre,
-                Empl_Apellido = item.Empl_Apellido,
-                Empl_Correo = item.Empl_Correo,
-                Empl_FechaNacimiento = item.Empl_FechaNacimiento,
-                Empl_Sexo = item.Empl_Sexo,
-                Estc_Id = item.Estc_Id,
-                Empl_Direccion = item.Empl_Direccion,
-                Ciud_Id = item.Ciud_Id,
+                Empl_DNI = data.Empl_DNI,
+                Carg_Id = data.Carg_Id,
+                Empl_Nombre = data.Empl_Nombre,
+                Empl_Apellido = data.Empl_Apellido,
+                Empl_Correo = data.Empl_Correo,
+                Empl_FechaNacimiento = data.Empl_FechaNacimiento,
+                Empl_Sexo = data.Empl_Sexo,
+                Estc_Id = data.Estc_Id,
+                Empl_Direccion = data.Empl_Direccion,
+                Ciud_Id = data.Ciud_Id,
                 Empl_UsuarioCreacion = 1,
                 Empl_FechaCreacion = DateTime.Now
 
 
             };
-            var list = _generalService.InsertarEmpleados(modelo);
-            if (list.Success == true)
+            (var list, int Empl_IdScope) = _generalService.InsertaEmpleados(modelo);
+
+            foreach (var pantalla in pantallas)
+            {
+                var modelo2 = new tbTitulosPorEmpleado()
+                {
+                    Titl_Id = pantalla.titl_Id,
+                    Empl_Id = Empl_IdScope,
+                    TitPe_UsuarioCreacion = 1,
+                    TitPe_FechaCreacion = DateTime.Now
+                };
+
+                result = _procincoService.InsertarTitulosPorEmpleados(modelo2);
+
+            }
+
+
+            if (result.Success == true)
             {
                 return Ok(list);
             }
@@ -147,6 +172,39 @@ namespace SistemaProcinco.API.Controllers
             esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
 
             return Ok(esta.ToList());
+        }
+
+        //////////////////////////////
+        //
+
+
+        [HttpGet("ListadoTitulos")]
+        public IActionResult ListaTitulos()
+        {
+            var listado = _generalService.ListaTitulosPorEmpleados();
+            if (listado.Success == true)
+            {
+                return Ok(listado);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("FiltrarTitulos/{id}")]
+        public IActionResult FiltrarTitulos(int id)
+        {
+            var listado = _generalService.ListarTitulosFiltrado(id);
+            if (listado.Success == true)
+            {
+                return Ok(listado);
+            }
+            else
+            {
+                return Problem();
+            }
         }
 
 

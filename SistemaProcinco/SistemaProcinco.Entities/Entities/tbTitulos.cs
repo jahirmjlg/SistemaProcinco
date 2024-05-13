@@ -14,12 +14,6 @@ namespace SistemaProcinco.Entities.Entities
             tbTitulosPorEmpleado = new HashSet<tbTitulosPorEmpleado>();
         }
 
-        //NOTMAPPED
-        [NotMapped]
-        public string UsuarioCreacion { get; set; }
-        [NotMapped]
-        public string UsuarioModificacion { get; set; }
-
         public int Titl_Id { get; set; }
         public string Titl_Descripcion { get; set; }
         public decimal? Titl_ValorMonetario { get; set; }
@@ -28,7 +22,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? Titl_UsuarioModificacion { get; set; }
         public DateTime? Titl_FechaModificacion { get; set; }
         public bool? Titl_Estado { get; set; }
-
+        [NotMapped]
+        public string UsuarioCreacion { get; set; }
+        [NotMapped]
+        public string UsuarioModificacion { get; set; }
         public virtual tbUsuarios Titl_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Titl_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }

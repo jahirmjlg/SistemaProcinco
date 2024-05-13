@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SistemaProcinco.BunisessLogic;
 using SistemaProcinco.BusinessLogic.Services;
 using SistemaProcinco.Common.Models;
 using SistemaProcinco.Entities.Entities;
@@ -7,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace SistemaProcinco.API.Controllers
 {
@@ -108,5 +111,19 @@ namespace SistemaProcinco.API.Controllers
                 return Problem();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

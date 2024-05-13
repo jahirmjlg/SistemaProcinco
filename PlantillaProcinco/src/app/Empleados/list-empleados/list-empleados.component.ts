@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef,  Component } from '@angular/core';
 import {EmpleadosService} from '../../Services/empleados.service';
 import {Empleado} from 'src/app/Models/EmpleadosViewModel';
 import {Router} from '@angular/router';
-
 import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
+import { TitulosporempleadoService } from 'src/app/Services/titulosporempleado.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { dropEstados } from 'src/app/Models/EstadoViewModel';
 import { dropCargos } from 'src/app/Models/CargosViewModel';
 import { dropEstadosCiviles } from 'src/app/Models/EstadosCivilesViewModel';
 import { dropCiudades } from 'src/app/Models/CiudadViewModel';
+import { Titulo } from 'src/app/Models/TitulosViewModel';
+import { TitulosService } from 'src/app/Services/titulos.service';
 
 @Component({
   selector: 'app-list-empleados',
   templateUrl: './list-empleados.component.html',
+  styleUrls: ['./list-empleados.component.scss'],
   providers: [MessageService]
 })
 export class ListEmpleadosComponent {
@@ -25,6 +28,10 @@ export class ListEmpleadosComponent {
 
     Tabla: boolean = true;
 
+
+    empleado! : Empleado[];
+    titulos! : Titulo[];
+  
     //BOOLEANS INSERTAR
     Collapse: boolean = false;
     isSubmit: boolean = false;
@@ -40,6 +47,17 @@ export class ListEmpleadosComponent {
                 deleteEmpleadoBool: boolean = false;
 
 
+                ID: String = "";
+
+                itemsGroup1: { titl_Id: number, titl_Descripcion: string }[] = [];
+                itemsGroup2: { titl_Id: number, titl_Descripcion: string }[] = [];
+            
+                itemsGroup1Edit: { titl_Id: number, titl_Descripcion: string }[] = [];
+                itemsGroup2Edit: { titl_Id: number, titl_Descripcion: string }[] = [];
+            
+            
+
+
         //VARIABLE EN LA QUE ITERA EL DDL
     estadosddl: any[] = [];
     cargosddl: any[] = [];
@@ -47,6 +65,9 @@ export class ListEmpleadosComponent {
     ciudadesddl: any[] = [];
 
     ciudadID: String = "";
+
+    titulo!:Titulo[];
+
 
 
     // DETALLE
@@ -78,8 +99,7 @@ export class ListEmpleadosComponent {
       ];
 
 
-    //   variable para iterar
-    empleado!:Empleado[];
+ 
 
     //CREAR EL FORMGROUP EN EL QUE SE CREAN LAS PROPIEDADES
     crearEmpleadoForm: FormGroup
@@ -88,10 +108,13 @@ export class ListEmpleadosComponent {
 
 
 
-    constructor(private empleadoservice: EmpleadosService, private router: Router,
+    constructor(    private cdRef: ChangeDetectorRef, 
+      private empleadoservice: EmpleadosService, private router: Router,
                 private formBuilder: FormBuilder, private cookieService: CookieService,
-                private messageService: MessageService) {
-
+                private messageService: MessageService, private tituloService: TitulosService,
+              
+               private tituloporempleadoservice: TitulosporempleadoService, 
+              ) {
 
      }
 
@@ -174,6 +197,12 @@ validarTextoAlfa(event: KeyboardEvent) {
             console.log(error);
         });
 
+
+        this.tituloService.getTitulos().subscribe((Response: any)=>{
+          console.log(Response.data);
+          this.titulo = Response.data;
+      });
+
         // this.empleadoservice.getDdlCiudades().subscribe((data: dropCiudades[]) => {
         //     this.ciudadesddl = data;
         //     console.log(data);
@@ -192,6 +221,12 @@ validarTextoAlfa(event: KeyboardEvent) {
             console.log(error);
           });
 
+        
+
+
+
+ 
+
           //
 
 
@@ -201,6 +236,39 @@ validarTextoAlfa(event: KeyboardEvent) {
             CUSTOM_ELEMENTS_SCHEMA
           ];
     }
+
+
+
+
+
+    gettitlesArray(): FormArray {
+      return this.crearEmpleadoForm.get('titles') as FormArray;
+  }
+  
+    addTitle(screen): void {
+      this.gettitlesArray().push(
+          this.formBuilder.group({
+              titl_Id: [screen.titl_Id, Validators.required],
+              titl_Description: [screen.titl_Descripcion, Validators.required]
+          })
+      );
+  }
+  
+  
+  getScreensArrayEdit(): FormArray {
+      return this.editarEmpleadoForm.get('titles') as FormArray;
+  }
+  
+    addScreenEdit(screen): void {
+      this.getScreensArrayEdit().push(
+          this.formBuilder.group({
+            titl_Id: [screen.titl_Id, Validators.required],
+            titl_Descripcion: [screen.titl_Descripcion, Validators.required]
+          })
+      );
+  }
+  
+  
 
 
     onEstadoChange(estadoID) {
@@ -412,5 +480,166 @@ validarTextoAlfa(event: KeyboardEvent) {
           });
 
     }
+  
+
+
+
+
+
+
+      //EVENTOS DRAG
+
+      itemsRemoved(ev, list) {
+        if (list === 1) {
+          // Mover de la primera tabla a la segunda.
+          this.itemsGroup2.push(...ev.filter(item => !this.itemsGroup2.some(existing => existing.titl_Id === item.titl_Id)));
+          this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
+        } else {
+          // Mover de la segunda tabla a la primera.
+          this.itemsGroup1.push(...ev.filter(item => !this.itemsGroup1.some(existing => existing.titl_Id === item.titl_Id)));
+          this.itemsGroup2 = this.itemsGroup2.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
+        }
+      }
+
+      itemsAdded(ev: any[], list: number) {
+
+        if (list === 1) {
+            ev.forEach(item => {
+                if (!this.itemsGroup1.some(existing => existing.titl_Id === item.titl_Id)) {
+                    this.itemsGroup1.push(item);
+                }
+            });
+        } else {
+            ev.forEach(item => {
+                if (!this.itemsGroup2.some(existing => existing.titl_Id === item.titl_Id)) {
+                    this.itemsGroup2.push(item);
+                }
+            });
+        }
+
+        if (list === 1) {
+            this.itemsGroup2 = this.itemsGroup2.filter(item => !ev.some(addedItem => addedItem.titl_Id === item.titl_Id));
+        } else {
+            this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(addedItem => addedItem.titl_Id === item.titl_Id));
+        }
+    }
+      itemsUpdated(ev, list) {
+      }
+
+      selectionChanged(ev, list) {
+      }
+
+
+
+
+
+
+
+      ///EDITAR
+
+      itemsRemovedEdit(ev, list) {
+        if (list === 1) {
+          // Mover de la primera tabla a la segunda.
+          this.itemsGroup2Edit.push(...ev.filter(item => !this.itemsGroup2Edit.some(existing => existing.titl_Id === item.titl_Id)));
+          this.itemsGroup1Edit = this.itemsGroup1Edit.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
+        } else {
+          // Mover de la segunda tabla a la primera.
+          this.itemsGroup1Edit.push(...ev.filter(item => !this.itemsGroup1Edit.some(existing => existing.titl_Id === item.titl_Id)));
+          this.itemsGroup2Edit = this.itemsGroup2Edit.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
+        }
+        }
+
+      itemsAddedEdit(ev: any[], list: number) {
+
+        if (list === 1) {
+            ev.forEach(item => {
+                if (!this.itemsGroup1Edit.some(existing => existing.titl_Id === item.titl_Id)) {
+                    this.itemsGroup1Edit.push(item);
+                }
+            });
+        } else {
+            ev.forEach(item => {
+                if (!this.itemsGroup2Edit.some(existing => existing.titl_Id === item.titl_Id)) {
+                    this.itemsGroup2Edit.push(item);
+                }
+            });
+        }
+
+        if (list === 1) {
+            this.itemsGroup2Edit = this.itemsGroup2Edit.filter(item => !ev.some(addedItem => addedItem.titl_Id === item.titl_Id));
+        } else {
+            this.itemsGroup1Edit = this.itemsGroup1Edit.filter(item => !ev.some(addedItem => addedItem.titl_Id === item.titl_Id));
+        }
+        }
+
+
+
+
+
+
+        Fill1(id) {
+          this.itemsGroup1Edit = [];
+      this.itemsGroup2Edit = [];
+      this.editarEmpleadoForm.reset();
+  
+          this.empleadoservice.fillEmpleado(id).subscribe({
+              next: (data: Empleado) => {
+                  this.tituloporempleadoservice.getTitulosFiltro(id).subscribe((Response: any)=>{
+                      var pantallas = Response;
+                              pantallas.forEach(item => {
+                                  this.itemsGroup1Edit.push({
+                                      titl_Id: item.titl_Id,
+                                      titl_Descripcion: item.titl_Descripcion
+                                  })
+  
+                              });
+                              this.cdRef.detectChanges();
+  
+                  });
+  
+                          this.tituloporempleadoservice.getTitulosPorEmpleadoo(id).subscribe((Response: any)=>{
+                              var pantallasfiltro = Response;
+                              pantallasfiltro.forEach(item => {
+                                  this.itemsGroup2Edit.push({
+                                      titl_Id: item.titl_Id,
+                                      titl_Descripcion: item.titl_Descripcion
+                                  })
+  
+                              });
+                          });
+  
+  
+  
+  
+                  this.editarEmpleadoForm.get('empl_Id').setValue(data[0].empl_Id);
+                  this.editarEmpleadoForm.get('empl_Nombre').setValue(data[0].empl_Nombre);
+  
+                  setTimeout(() => {
+                      document.getElementById('miInput').click();
+                    }, 250);
+  
+                  this.CollapseEdit = true;
+                  this.Tabla=false;
+  
+                  console.log(data)
+  
+              }
+            });
+  
+      }
+  
+  
+      cancelar()
+      {
+          this.CollapseEdit=false;
+          this.Tabla=true;
+          this.isSubmitEdit=false
+          this.itemsGroup1Edit = []
+          this.itemsGroup2Edit = []
+  
+      }
+  
+
+
 
 }

@@ -16,14 +16,21 @@ namespace SistemaProcinco.BusinessLogic.Services
         public readonly EstadosCivilesRepository _estadosCivilesRepository;
         public readonly EmpresasRepository _empresasRepository;
         public readonly EmpleadosRepository _empleadosRepository;
+        public readonly TitulosPorEmpleadosRepository _titulosporempleadosRepository;
+
+
         public GeneralService(CiudadesRepository ciudadesRepository, EmpresasRepository empresasRepository,
-            EstadosRepository estadosRepository, EstadosCivilesRepository estadosCivilesRepository, EmpleadosRepository empleadosRepository)
+            EstadosRepository estadosRepository, EstadosCivilesRepository estadosCivilesRepository, EmpleadosRepository empleadosRepository,
+            TitulosPorEmpleadosRepository titulosPorEmpleadosRepository)
         {
             _ciudadesRepository = ciudadesRepository;
             _estadosRepository = estadosRepository;
             _estadosCivilesRepository = estadosCivilesRepository;
             _empleadosRepository = empleadosRepository;
             _empresasRepository = empresasRepository;
+
+            _titulosporempleadosRepository = titulosPorEmpleadosRepository;
+
 
 
         }
@@ -92,7 +99,7 @@ namespace SistemaProcinco.BusinessLogic.Services
             try
             {
                 var list = _ciudadesRepository.FindDetalle(Id);
-                if(list.Count() > 0)
+                if (list.Count() > 0)
                 {
                     return result.Ok(list);
                 }
@@ -309,12 +316,12 @@ namespace SistemaProcinco.BusinessLogic.Services
                 }
                 else
                 {
-                        return result.Error(lost);
+                    return result.Error(lost);
                 }
             }
             catch (Exception ex)
             {
-                    return result.Error(ex);
+                return result.Error(ex);
             }
         }
         public ServicesResult InsertarEstadosCiviles(tbEstadosCiviles item)
@@ -418,29 +425,33 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
             catch (Exception ex)
             {
-                    return result.Error(ex);
+                return result.Error(ex);
             }
         }
 
-        public ServicesResult InsertarEmpleados(tbEmpleados item)
+        public (ServicesResult, int) InsertaEmpleados(tbEmpleados item)
         {
             var result = new ServicesResult();
+            int rolid = 0;
             try
             {
-                var lost = _empleadosRepository.Insert(item);
-                if (lost.CodeStatus > 0)
+
+                var lost = _empleadosRepository.Insert1(item);
+                rolid = lost.Item2;
+
+                if (lost.Item1.CodeStatus > 0)
                 {
-                    return result.Ok(lost);
+                    return (result.Ok(lost), rolid);
 
                 }
                 else
                 {
-                    return result.Error(lost);
+                    return (result.Error(lost), rolid);
                 }
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                return (result.Error(ex.Message), rolid);
             }
         }
 
@@ -488,6 +499,306 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+
+
+
+
+
+
+
+
+
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+        //treviewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+
+        #region empleados
+        public ServicesResult ListaEmpleados1()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _empleadosRepository.List1();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        public ServicesResult EditarEmpleados1(tbEmpleados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Update1(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarEmpleados1(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Delete1(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+
+
+
+
+        public (ServicesResult, int) InsertarEmpleados1(tbEmpleados item)
+        {
+            var result = new ServicesResult();
+            int rolid = 0;
+            try
+            {
+                var lost = _empleadosRepository.Insert1(item);
+                rolid = lost.Item2;
+
+                if (lost.Item1.CodeStatus > 0)
+                {
+                    return (result.Ok(lost), rolid);
+
+                }
+                else
+                {
+                    return (result.Error(lost), rolid);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (result.Error(ex.Message), rolid);
+            }
+        }
+
+        public ServicesResult BuscarEmpleados1(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Find1(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+        public ServicesResult obterRol(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _empleadosRepository.Fill1(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+
+
+
+
+        public ServicesResult ListadoTitulos()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _empleadosRepository.List();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult ListadoTitulosFiltrado()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _empleadosRepository.List1();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        #endregion
+
+
+
+
+        #region TITULOS POR EMPLEADO
+
+        public ServicesResult ListaTitulosPorEmpleados()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosporempleadosRepository.List();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+        public ServicesResult ListarTitulosFiltrado(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosporempleadosRepository.List1(id);
+                return result.Ok(lost);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarTitulosPorEmpleados(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosporempleadosRepository.Delete1(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+        public ServicesResult InsertarTitulosPorEmpleados(tbTitulosPorEmpleado item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosporempleadosRepository.Insert1(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
 }

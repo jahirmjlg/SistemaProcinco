@@ -1,6 +1,8 @@
 export class Empleado {
     empl_Id !: Number;
     empl_DNI  !: String;
+    titulo  !: String;
+
     carg_Id !: Number;
     cargo !: String;
     empl_Nombre !: String;
@@ -27,4 +29,11 @@ export class Empleado {
 export class dropEmpleados{
     value?:String;
     text?:String;
+}
+
+
+export interface EmpleadoWithTitulos {
+    screens: [{ titl_Id: number, titl_Descripcion: string }];
+
+    empl_Nombre: Empleado;
 }

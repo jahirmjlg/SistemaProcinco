@@ -281,9 +281,9 @@ namespace SistemaProcinco.DataAccess.Context
                     .WithMany(p => p.tbCursosImpartidos)
                     .HasForeignKey(d => d.Curso_Id);
 
-                entity.HasOne(d => d.Empl)
-                    .WithMany(p => p.tbCursosImpartidos)
-                    .HasForeignKey(d => d.Empl_Id);
+                entity.HasOne(d => d.Empl);
+                    //.WithMany(p => p.tbCursosImpartidos)
+                    //.HasForeignKey(d => d.Empl_Id);
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>

@@ -188,11 +188,24 @@ namespace SistemaProcinco.DataAccess.Repository
         #endregion
 
         #region Titulos Por Empleados
-        public static string TitulosPorEmpleadosListar = "[Pro].[SP_TitulosPorEmpleado_Seleccionar]";
+        public static string TitulosPorEmpleadosListar = "[Pro].[SP_Titulos_Seleccionar]";
         public static string TitulosPorEmpleadosCrear = "[Pro].[SP_TituloPorEmpleado_Insertar]";
         public static string TitulosPorEmpleadosActualizar = "[Pro].[SP_TituloPorEmpleado_Actualizar]";
-        public static string TitulosPorEmpleadosEliminar = "Pro.SP_TituloPorEmpleado_Eliminar";
+        //public static string TitulosPorEmpleadosEliminar = "Pro.SP_TituloPorEmpleado_Eliminar";
         public static string TitulosPorEmpleadosBuscar = "[Pro].[SP_TitulosPorEmpleado_Buscar]";
+        public static string TitulosPorEmpleadosEliminarrr = "[Pro].[SP_TituloPorEmpleadoo_Eliminar]";
+
+        #endregion
+
+
+
+
+        #region titulospor empleado
+        public static string TitulosPorEmpleadosListadoFiltrado = "[Pro].[SP_Titulos_Filtrado]";
+        public static string TitulosPorEmpleadosEliminar = "[Pro].[SP_TituloPorEmpleadoo_Eliminar]";
+
+
+
         #endregion
     }
 }
