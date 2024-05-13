@@ -143,12 +143,13 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Direccion", item.Empl_Direccion);
                 parametro.Add("@Ciud_Id", item.Ciud_Id);
                 parametro.Add("@Empl_UsuarioCreacion", item.Empl_UsuarioCreacion);
-                parametro.Add("@empl_id", DbType.Int32, direction: ParameterDirection.Output);
+                parametro.Add("@Empl_FechaCreacion", DateTime.Now);
+                parametro.Add("@Empl_id", DbType.Int32, direction: ParameterDirection.Output);
 
 
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
-                int roleId = parametro.Get<int>("@empl_id");
+                int roleId = parametro.Get<int>("@Empl_id");
 
                 string mensaje = (result == 1) ? "exito" : "error";
                 return (new RequestStatus { CodeStatus = result, MessageStatus = "" }, roleId);

@@ -3,7 +3,7 @@ import {EmpleadosService} from '../../Services/empleados.service';
 import {Empleado} from 'src/app/Models/EmpleadosViewModel';
 import {Router} from '@angular/router';
 import { Product } from 'src/app/demo/api/product';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { TitulosporempleadoService } from 'src/app/Services/titulosporempleado.service';
@@ -17,11 +17,12 @@ import { dropCiudades } from 'src/app/Models/CiudadViewModel';
 import { Titulo } from 'src/app/Models/TitulosViewModel';
 import { TitulosService } from 'src/app/Services/titulos.service';
 
+
 @Component({
   selector: 'app-list-empleados',
   templateUrl: './list-empleados.component.html',
   styleUrls: ['./list-empleados.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class ListEmpleadosComponent {
 
@@ -31,7 +32,7 @@ export class ListEmpleadosComponent {
 
     empleado! : Empleado[];
     titulos! : Titulo[];
-  
+
     //BOOLEANS INSERTAR
     Collapse: boolean = false;
     isSubmit: boolean = false;
@@ -51,11 +52,11 @@ export class ListEmpleadosComponent {
 
                 itemsGroup1: { titl_Id: number, titl_Descripcion: string }[] = [];
                 itemsGroup2: { titl_Id: number, titl_Descripcion: string }[] = [];
-            
+
                 itemsGroup1Edit: { titl_Id: number, titl_Descripcion: string }[] = [];
                 itemsGroup2Edit: { titl_Id: number, titl_Descripcion: string }[] = [];
-            
-            
+
+
 
 
         //VARIABLE EN LA QUE ITERA EL DDL
@@ -99,7 +100,10 @@ export class ListEmpleadosComponent {
       ];
 
 
- 
+      emple! : Empleado;
+      title! : Titulo;
+
+
 
     //CREAR EL FORMGROUP EN EL QUE SE CREAN LAS PROPIEDADES
     crearEmpleadoForm: FormGroup
@@ -108,21 +112,22 @@ export class ListEmpleadosComponent {
 
 
 
-    constructor(    private cdRef: ChangeDetectorRef, 
-      private empleadoservice: EmpleadosService, private router: Router,
-                private formBuilder: FormBuilder, private cookieService: CookieService,
-                private messageService: MessageService, private tituloService: TitulosService,
-              
-               private tituloporempleadoservice: TitulosporempleadoService, 
-              ) {
-
-     }
+    constructor(
+               private cdRef: ChangeDetectorRef,
+               private messageService: MessageService,
+                private empleadoservice: EmpleadosService,
+                private router: Router,
+                private formBuilder: FormBuilder,
+                private cookieService: CookieService,
+                 private tituloService: TitulosService,
+               private tituloporempleadoservice: TitulosporempleadoService,
+              ) {}
 
      validarNumeros(event: KeyboardEvent) {
       const errorSpan = document.getElementById('error-span');
       if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
         event.preventDefault();
-  
+
       }
       else{
       }
@@ -133,8 +138,8 @@ export class ListEmpleadosComponent {
           event.preventDefault();
       }
     }
-    
-    
+
+
 validarTextoAlfa(event: KeyboardEvent) {
   if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
       event.preventDefault();
@@ -156,6 +161,9 @@ validarTextoAlfa(event: KeyboardEvent) {
             empl_Direccion: ['', [Validators.required]],
             ciud_Id: ['0', [Validators.required]],
             esta_Id: ['0', [Validators.required]],
+            screens: this.formBuilder.array([])
+
+
           });
 
           this.editarEmpleadoForm = new FormGroup({
@@ -171,17 +179,17 @@ validarTextoAlfa(event: KeyboardEvent) {
             empl_Direccion: new FormControl("",Validators.required),
             ciud_Id: new FormControl("0",Validators.required),
             esta_Id: new FormControl(this.ciudadID,Validators.required),
+            screens: this.formBuilder.array([])
         });
 
 
         this.empleadoservice.getDdlEstados().subscribe((data: dropEstados[]) => {
             this.estadosddl = data;
             console.log(data);
-
-
         }, error => {
             console.log(error);
         });
+
 
         this.empleadoservice.getDdlCargos().subscribe((data: dropCargos[]) => {
             this.cargosddl = data;
@@ -199,8 +207,8 @@ validarTextoAlfa(event: KeyboardEvent) {
 
 
         this.tituloService.getTitulos().subscribe((Response: any)=>{
-          console.log(Response.data);
-          this.titulo = Response.data;
+          console.log('RESPUESTA API: ' + Response.data);
+          this.itemsGroup1 = Response.data;
       });
 
         // this.empleadoservice.getDdlCiudades().subscribe((data: dropCiudades[]) => {
@@ -221,11 +229,11 @@ validarTextoAlfa(event: KeyboardEvent) {
             console.log(error);
           });
 
-        
 
 
 
- 
+
+
 
           //
 
@@ -242,33 +250,33 @@ validarTextoAlfa(event: KeyboardEvent) {
 
 
     gettitlesArray(): FormArray {
-      return this.crearEmpleadoForm.get('titles') as FormArray;
+      return this.crearEmpleadoForm.get('screens') as FormArray;
   }
-  
-    addTitle(screen): void {
+
+    addTitle(screens): void {
       this.gettitlesArray().push(
           this.formBuilder.group({
-              titl_Id: [screen.titl_Id, Validators.required],
-              titl_Description: [screen.titl_Descripcion, Validators.required]
+              titl_Id: [screens.titl_Id, Validators.required],
+              titl_Descripcion: [screens.titl_Descripcion, Validators.required]
           })
       );
   }
-  
-  
+
+
   getScreensArrayEdit(): FormArray {
-      return this.editarEmpleadoForm.get('titles') as FormArray;
+      return this.editarEmpleadoForm.get('screens') as FormArray;
   }
-  
-    addScreenEdit(screen): void {
+
+    addScreenEdit(screens): void {
       this.getScreensArrayEdit().push(
           this.formBuilder.group({
-            titl_Id: [screen.titl_Id, Validators.required],
-            titl_Descripcion: [screen.titl_Descripcion, Validators.required]
+            titl_Id: [screens.titl_Id, Validators.required],
+            titl_Descripcion: [screens.titl_Descripcion, Validators.required]
           })
       );
   }
-  
-  
+
+
 
 
     onEstadoChange(estadoID) {
@@ -297,7 +305,9 @@ validarTextoAlfa(event: KeyboardEvent) {
             const errorSpan = document.getElementById('error-span');
         if (this.crearEmpleadoForm.valid) {
           const empleadoData: Empleado = this.crearEmpleadoForm.value;
-          this.empleadoservice.insertEmpleado(empleadoData).subscribe(
+          this.itemsGroup2.forEach(screen => this.addTitle(screen));
+          console.log(empleadoData[0]);
+          this.empleadoservice.insertEmpleado(this.crearEmpleadoForm.value).subscribe(
             response => {
 
                 if (response.code == 200) {
@@ -480,7 +490,7 @@ validarTextoAlfa(event: KeyboardEvent) {
           });
 
     }
-  
+
 
 
 
@@ -491,6 +501,7 @@ validarTextoAlfa(event: KeyboardEvent) {
 
       itemsRemoved(ev, list) {
         if (list === 1) {
+            console.log("SI entra")
           // Mover de la primera tabla a la segunda.
           this.itemsGroup2.push(...ev.filter(item => !this.itemsGroup2.some(existing => existing.titl_Id === item.titl_Id)));
           this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
@@ -581,7 +592,7 @@ validarTextoAlfa(event: KeyboardEvent) {
           this.itemsGroup1Edit = [];
       this.itemsGroup2Edit = [];
       this.editarEmpleadoForm.reset();
-  
+
           this.empleadoservice.fillEmpleado(id).subscribe({
               next: (data: Empleado) => {
                   this.tituloporempleadoservice.getTitulosFiltro(id).subscribe((Response: any)=>{
@@ -591,12 +602,12 @@ validarTextoAlfa(event: KeyboardEvent) {
                                       titl_Id: item.titl_Id,
                                       titl_Descripcion: item.titl_Descripcion
                                   })
-  
+
                               });
                               this.cdRef.detectChanges();
-  
+
                   });
-  
+
                           this.tituloporempleadoservice.getTitulosPorEmpleadoo(id).subscribe((Response: any)=>{
                               var pantallasfiltro = Response;
                               pantallasfiltro.forEach(item => {
@@ -604,31 +615,31 @@ validarTextoAlfa(event: KeyboardEvent) {
                                       titl_Id: item.titl_Id,
                                       titl_Descripcion: item.titl_Descripcion
                                   })
-  
+
                               });
                           });
-  
-  
-  
-  
+
+
+
+
                   this.editarEmpleadoForm.get('empl_Id').setValue(data[0].empl_Id);
                   this.editarEmpleadoForm.get('empl_Nombre').setValue(data[0].empl_Nombre);
-  
+
                   setTimeout(() => {
                       document.getElementById('miInput').click();
                     }, 250);
-  
+
                   this.CollapseEdit = true;
                   this.Tabla=false;
-  
+
                   console.log(data)
-  
+
               }
             });
-  
+
       }
-  
-  
+
+
       cancelar()
       {
           this.CollapseEdit=false;
@@ -636,9 +647,9 @@ validarTextoAlfa(event: KeyboardEvent) {
           this.isSubmitEdit=false
           this.itemsGroup1Edit = []
           this.itemsGroup2Edit = []
-  
+
       }
-  
+
 
 
 

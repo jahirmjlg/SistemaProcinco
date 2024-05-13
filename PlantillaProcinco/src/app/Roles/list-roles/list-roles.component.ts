@@ -10,7 +10,6 @@ import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@ang
 import { CookieService } from 'ngx-cookie-service';
 import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.service';
 import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
-
 @Component({
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',

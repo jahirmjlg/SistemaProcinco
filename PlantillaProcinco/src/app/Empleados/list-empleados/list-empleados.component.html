@@ -161,9 +161,9 @@
                                   {{ item.titl_Descripcion }}
                                 </ng-template>
                               </multi-drag-drop>
-        
+
                               <br/>
-        
+
                               <multi-drag-drop
                                 [items]="itemsGroup2"
                                 (itemsRemoved)="itemsRemoved($event, 2)"
@@ -348,6 +348,42 @@
 
                         </div>
 
+
+
+
+
+
+                        <h3>Titulos Por Empleado</h3>
+
+                        <div cdkDropListGroup>
+                            <div class="lists-container">
+                              <multi-drag-drop
+                                [items]="itemsGroup1Edit"
+                                (itemsRemoved)="itemsRemoved($event, 1)"
+                                (itemsAdded)="itemsAdded($event, 1)"
+                                (itemsUpdated)="itemsUpdated($event, 1)"
+                                (selectionChanged)="selectionChanged($event, 1)"
+                              >
+                                <ng-template let-item>
+                                  {{ item.titl_Descripcion }}
+                                </ng-template>
+                              </multi-drag-drop>
+
+                              <br/>
+
+                              <multi-drag-drop
+                                [items]="itemsGroup2Edit"
+                                (itemsRemoved)="itemsRemoved($event, 2)"
+                                (itemsAdded)="itemsAdded($event, 2)"
+                                (itemsUpdated)="itemsUpdated($event, 2)"
+                                (selectionChanged)="selectionChanged($event, 2)"
+                              >
+                                <ng-template let-item>
+                                  {{ item.titl_Descripcion }}
+                                </ng-template>
+                              </multi-drag-drop>
+                            </div>
+                          </div>
 
 
 
