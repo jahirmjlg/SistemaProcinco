@@ -707,6 +707,29 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+        public ServicesResult BuscarFactura(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.Find(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
         public ServicesResult BuscarCursosImpartidos(int Id)
         {
             var result = new ServicesResult();
@@ -781,6 +804,29 @@ namespace SistemaProcinco.BusinessLogic.Services
                 if (lost.CodeStatus > 0)
                 {
                     return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+        public ServicesResult FinalizarCursosImpartidos(tbCursosImpartidos item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.Finalizar(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
                 }
                 else
                 {

@@ -30,6 +30,8 @@ export class ListCursosimpartidosComponent {
 
     //BOOLEAN DELETE
     deleteCursoImpartidoBool: boolean = false;
+    finalizarCursoImpartidoBool: boolean = false;
+
 
 
     ImagenEncontrada: boolean = false;
@@ -47,6 +49,9 @@ export class ListCursosimpartidosComponent {
     modificacion: String = "";
     curIm_FechaModificacion: String = "";
     ID: String = "";
+
+    IDFinalizar: String = "";
+
 
     cols: any[] = [];
     statuses: any[] = [];
@@ -407,6 +412,35 @@ export class ListCursosimpartidosComponent {
                     console.log(response)
                 this.deleteCursoImpartidoBool = false;
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
+                }
+            },
+        });
+    }
+
+
+    finalizarCursoImpartido(ID) {
+        this.finalizarCursoImpartidoBool = true;
+        this.IDFinalizar = ID;
+    }
+
+
+    finalizar() {
+        this.cursosimpartidosservice.finalizarCursosIm(this.IDFinalizar).subscribe({
+            next: (response) => {
+                if(response.code == 200){
+                    this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
+                        console.log(Response.data);
+                        this.cursosimpartidos = Response.data;
+                    });
+                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Curso Finalizado Exitosamente', life: 3000 });
+
+                    this.finalizarCursoImpartidoBool = false;
+
+
+                }
+                else{
+                    console.log(response)
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Finalizar el Curso', life: 3000 });
                 }
             },
         });

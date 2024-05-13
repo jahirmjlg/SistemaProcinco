@@ -436,6 +436,24 @@ export class AppMenuComponent implements OnInit {
                     }
                 ]
             },
+            {
+                items: [
+                    {
+                        label: 'Dashboards', icon: 'pi pi-database',
+                        items: [
+
+
+                            {
+                                label: 'Dashboard 1',
+                                icon: 'pi pi-fw pi-database',
+                                routerLink: ['/uikit/charts']
+                            }
+
+
+                        ]
+                    },
+                ]
+            },
         ];
 
 

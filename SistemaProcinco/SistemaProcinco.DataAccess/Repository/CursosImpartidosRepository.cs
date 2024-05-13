@@ -109,6 +109,21 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+        public RequestStatus Finalizar(tbCursosImpartidos item)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosFinalizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@CurIm_Id", item.CurIm_Id);
+                parametro.Add("@CurIm_UsuarioFinalizacion", item.CurIm_UsuarioFinalizacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
+        }
+
 
 
         public IEnumerable<tbCursosImpartidos> BuscarEmpleado(string Empl_DNI)

@@ -27,7 +27,7 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Curso_Descripcion { get; set; }
         [NotMapped]
-        public decimal? PagoEmpleado { get; set; }
+        public decimal? Empl_Total { get; set; }
         [NotMapped]
         public string Curso_Imagen { get; set; }
         [NotMapped]

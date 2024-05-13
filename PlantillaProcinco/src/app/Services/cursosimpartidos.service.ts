@@ -60,4 +60,9 @@ export class CursosImpartidosService {
     }
 
 
+
+  finalizarCursosIm(ID): Observable<any>{
+    return this.http.put<any>(`${this.UrlCursoImp}Finalizar/${ID}`,{});
+  }
+
 }

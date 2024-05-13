@@ -229,7 +229,8 @@
                             <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(cursosimp.curIm_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
                             <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(cursosimp.curIm_Id)"><i class="pi pi-file"></i>Detalle</button> |
                             <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-trash"></i>Eliminar</button> |
-                            <button class="btn btn-warning fa fa-window-close btn-sm" (click)="finalizarCursoImpartido(cursosimp.curIm_Id)" style="background-color: #e33f09; border-color: #e33f09; color: #fff"><i class="pi pi-check"></i>Finalizar</button>
+                            <button class="btn btn-warning fa fa-window-close btn-sm" [ngClass]="{'collapse': cursosimp.curIm_Finalizar === false}" (click)="finalizarCursoImpartido(cursosimp.curIm_Id)" style="background-color: #e33f09; border-color: #e33f09; color: #fff"><i class="pi pi-check"></i>Finalizar</button>
+                            <button class="btn btn-warning fa fa-window-close btn-sm" [ngClass]="{'collapse': cursosimp.curIm_Finalizar === true}" (click)="imprimirFactura(cursosimp.curIm_Id)" style="background-color: #007c9b; border-color: #007c9b; color: #fff"><i class="pi pi-file-pdf"></i>Imprimir</button>
                         </td>
                     </tr>
                 </ng-template>
@@ -332,7 +333,6 @@
 
 
 
-<!-- Mostrar Participantes -->
 
 <p-dialog header="Listado de Participantes" [(visible)]="displayParticipantes" [style]="{width: '50vw'}" [modal]="true" [dismissableMask]="true" [blockScroll]="true">
 
@@ -361,3 +361,19 @@
 </p-dialog>
 
 
+
+
+<p-dialog [(visible)]="finalizarCursoImpartidoBool" header="Finalizar Curso" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea Finalizar el Curso?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="finalizar()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="finalizarCursoImpartidoBool = false"></button>
+            </div>
+        </div>
+</p-dialog>
