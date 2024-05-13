@@ -47,6 +47,11 @@ const routes: Routes = [
     { path: 'contenidoporcurso', data: { breadcrumb: 'ContenidoPorCurso' }, loadChildren: () => import('../../../ContenidoPorCurso/list-contenidoporcurso/list-contenidoporcursos.module').then(m => m.ListContenidoPorCursosModule), canActivate: [AuthGuard] },
     { path: 'treecontenidoporcurso', data: { breadcrumb: 'treeContenidoPorCurso' }, loadChildren: () => import('../../../ContenidoPorCursoT/tree-contenidoPorCurso.module').then(m => m.TreeContenidoPorCursoModule), canActivate: [AuthGuard] },
 
+
+    { path: 'reportecursosimp', data: { breadcrumb: 'ReporteCursosImp' }, loadChildren: () => import('../../../Reportes/list-reportes-cursos-impartidos/reportes-cursos-impartidos.module').then(m => m.ReportesCursosImpartidosModule) },
+
+
+
     { path: '**', redirectTo: '/notfound' }
 ];
 

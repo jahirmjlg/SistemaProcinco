@@ -421,7 +421,21 @@ export class AppMenuComponent implements OnInit {
                         ]
                     }
                 ]
-            }
+            },
+            {
+                items: [
+                    {
+                        label: 'Reportes',
+                        icon: 'pi pi-folder-open',
+                        items: [
+                            { label: 'Reporte Cursos Impartidos', icon: 'pi pi-file-pdf', routerLink: ['/pages/reportecursosimp'] },
+                            { label: 'Reporte 2', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
+                            { label: 'Reporte 3', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
+                            { label: 'Reporte 4', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
+                        ]
+                    }
+                ]
+            },
         ];
 
 
