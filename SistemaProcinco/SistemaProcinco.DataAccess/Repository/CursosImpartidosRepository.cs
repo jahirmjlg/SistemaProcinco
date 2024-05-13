@@ -101,8 +101,6 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Id", item.Empl_Id);
                 parametro.Add("@CurIm_FechaInicio", item.CurIm_FechaInicio);
                 parametro.Add("@CurIm_FechaFin", item.CurIm_FechaFin);
-                parametro.Add("@CurIm_UsuarioFinalizacion", item.CurIm_UsuarioFinalizacion);
-                parametro.Add("@CurIm_Finalizar", item.CurIm_Finalizar);
                 parametro.Add("@CurIm_UsuarioModificacion", item.CurIm_UsuarioModificacion);
                 parametro.Add("@CurIm_FechaModificacion", item.CurIm_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
@@ -140,7 +138,18 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
-
+        public IEnumerable<tbCursosImpartidos> BuscarParticipante(string Curso_Descripcion)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosParticipantes;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Curso_Descripcion", Curso_Descripcion);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
 
 
 

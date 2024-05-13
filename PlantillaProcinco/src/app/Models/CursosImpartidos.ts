@@ -16,11 +16,14 @@ export class CursosImpartidos
     // curIm_Estado!:boolean;
 
 
-    Empl_DNI!: String;
-    Empl_Nombre!: String;
-    Curso_DuracionHoras!: Number;
-    Cate_Descripcion!: String;
-    Curso_Descripcion!: String;
-    PagoEmpleado!: Number;
-    Curso_Imagen!: String;
+    empl_DNI!: String;
+    empl_Nombre!: String;
+    curso_DuracionHoras!: Number;
+    cate_Descripcion!: String;
+    curso_Descripcion!: String;
+    pagoEmpleado!: Number;
+    curso_Imagen!: String;
+    empre_Descripcion!: String;
+    part_Nombre!: String;
+    part_Id!: Number;
 }

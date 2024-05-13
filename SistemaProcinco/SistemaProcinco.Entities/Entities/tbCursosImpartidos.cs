@@ -13,7 +13,8 @@ namespace SistemaProcinco.Entities.Entities
         //NOTMAPPED
         [NotMapped]
         public string Cursos { get; set; }
-
+        [NotMapped]
+        public string Empre_Descripcion { get; set; }
 
         [NotMapped]
         public string Empl_DNI { get; set; }
@@ -29,6 +30,8 @@ namespace SistemaProcinco.Entities.Entities
         public decimal? PagoEmpleado { get; set; }
         [NotMapped]
         public string Curso_Imagen { get; set; }
+        [NotMapped]
+        public string Part_Nombre { get; set; }
 
         [NotMapped]
         public string Nombre { get; set; }
@@ -43,6 +46,8 @@ namespace SistemaProcinco.Entities.Entities
         public int Month { get; set; }
         [NotMapped]
         public int TotalCursos { get; set; }
+        [NotMapped]
+        public int? Part_Id { get; set; }
 
 
         public int CurIm_Id { get; set; }

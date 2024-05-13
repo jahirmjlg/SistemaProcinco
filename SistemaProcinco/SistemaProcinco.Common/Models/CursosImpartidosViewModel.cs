@@ -14,8 +14,10 @@ namespace SistemaProcinco.Common.Models
         public int? Empl_Id { get; set; }
         [NotMapped]
         public string Cursos { get; set; }
-
-
+        [NotMapped]
+        public string Empre_Descripcion { get; set; }
+        [NotMapped]
+        public string Part_Nombre { get; set; }
         [NotMapped]
         public string Empl_DNI { get; set; }
         [NotMapped]
@@ -30,11 +32,13 @@ namespace SistemaProcinco.Common.Models
         public decimal? PagoEmpleado { get; set; }
         [NotMapped]
         public string Curso_Imagen { get; set; }
-
-
+        [NotMapped]
+        public int? Part_Id { get; set; }
 
         [NotMapped]
         public string Nombre { get; set; }
+
+
         public DateTime? CurIm_FechaInicio { get; set; }
         public DateTime? CurIm_FechaFin { get; set; }
         public int CurIm_UsuarioFinalizacion { get; set; }

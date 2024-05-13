@@ -55,4 +55,9 @@ export class CursosImpartidosService {
 
 
 
+  BuscarParticipantes(Curso: String) {
+    return this.http.get<CursosImpartidos[]>(`${this.UrlCursoImp}BuscarParticipante/${Curso}`);
+    }
+
+
 }

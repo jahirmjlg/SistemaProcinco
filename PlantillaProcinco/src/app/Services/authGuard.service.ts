@@ -31,7 +31,13 @@ interface Pantalla {
 
         this.service.getPantallasDeRol(roleId).subscribe({
           next: (pantallas: Pantalla[]) => {
-            console.log(pantallas)
+
+            if (roleId !== null) {
+                const pantallaAdicional = {
+                    pantalla: "empty",
+                };
+                pantallas.push(pantallaAdicional);
+            }
 
             this.allowedScreens = new Set(
                 pantallas.map(pant =>

@@ -340,5 +340,19 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+        [HttpGet("BuscarParticipante/{curso}")]
+        public IActionResult BuscarParticipante(string curso)
+        {
+            var list = _procincoService.BuscarParticipante(curso);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
     }
 }

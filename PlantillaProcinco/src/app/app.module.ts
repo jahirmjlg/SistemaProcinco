@@ -20,10 +20,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule, BrowserModule, HttpClientModule, ReactiveFormsModule, DragDropModule, ListMostrarDropModule],
+    imports: [AppRoutingModule, AppLayoutModule, BrowserModule, HttpClientModule, ReactiveFormsModule,
+         DragDropModule, ListMostrarDropModule, InputTextModule, TableModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,

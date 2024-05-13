@@ -16,7 +16,7 @@
 
                             <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)" (change)="onDNIChange(crearCursosImpartidosForm.get('empl_DNI').value)"/>
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (change)="onDNIChange(crearCursosImpartidosForm.get('empl_DNI').value)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
                         </div>
 
@@ -59,12 +59,13 @@
                                 <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{crearCursosImpartidosForm.get('curso_Imagen').value}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">Duración</h5>
-                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold; background-color: #1d2b37e6; color: #fff" formControlName="curso_DuracionHoras" type="number" readonly/>
                                         <label for="">horas</label>
 
                                     <h5 class="card-title">Categoria</h5>
-                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none;" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
+                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none; font-weight: bold;  background-color: #1d2b37e6; color: #fff" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
 
+                                    <button pButton type="button" label="Ver participantes" (click)="showDialog()" class="mt-3" style="border-radius: 15px;"></button>
                             </div>
                               </div>
                             </div>
@@ -75,11 +76,12 @@
                         </div>
 
                     <div class="row mt-3">
+
                         <div class="col-md-offset-2 col-3">
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                         </div>
                         <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false; ImagenEncontrada = false;" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +110,7 @@
 
                             <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
 
-                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (keydown)="validarNumeros($event)"/>
+                            <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (change)="onDNIChangeEdit(editarCursosImpartidosForm.get('empl_DNI').value)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
                         </div>
 
@@ -121,56 +123,59 @@
                         </div>
                     </div>
 
-                        <div class="card">
-                            <div class="row">
+                    <div class="card">
+                        <div class="row">
+
+                        <div class="col-6">
+
+                            <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (keydown)="validarNumeros($event)" (change)="onCursoChangeEdit(editarCursosImpartidosForm.get('curso_Descripcion').value)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
 
 
-                            <div class="col-6">
+                            <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
 
-                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
-
-                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (keydown)="validarNumeros($event)"/>
-                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+                            <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaInicio" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                            <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmit && editarCursosImpartidosForm.controls['curIm_FechaInicio'].invalid" style="color: red !important;">Fecha de Inicio  Requerida</small>
 
 
-                                <label for="firstname2" class="form-label mt-5" [ngClass]="{'collapse': ImagenEncontrada === false}" >Ingrese la Fecha de Inicio del Curso</label>
+                                <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-label mt-5">Ingrese la Fecha de Finalización del Curso</label>
 
-                                <input pInputText id="firstname2" class="form-control" [ngClass]="{'collapse': ImagenEncontrada === false}"  formControlName="curIm_FechaInicio" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
-                                <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curIm_FechaInicio'].invalid" style="color: red !important;">Fecha de Inicio  Requerida</small>
-
-
-                                    <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-label mt-5">Ingrese la Fecha de Finalización del Curso</label>
-
-                                    <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaFin" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
-                                    <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curIm_FechaFin'].invalid" style="color: red !important;">Fecha de Inicio Requerida</small>
-                            </div>
-
-                            <div class="col-sm-1"></div>
-                            <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
-                            <div class="card" style="width: 18rem;">
-                                <img src="https://getbootstrap.com/docs/5.3/assets/img/webpack.svg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Duración</h5>
-                                    <label id="cursoduracion" class="form-label" formControlName="curso_DuracionHoras" required autofocus>11:00</label>
-                                        <label for=""> horas</label>
-
-                                    <h5 class="card-title">Categoria</h5>
-                                <label id="cursoduracion" class="form-label" formControlName="cate_Descripcion" required autofocus>Front</label>
-                            </div>
-                              </div>
-                            </div>
+                                <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" formControlName="curIm_FechaFin" type="datetime-local" required autofocus (keydown)="validarNumeros($event)"/>
+                                <small class="ng-dirty ng-invalid" [ngClass]="{'collapse': ImagenEncontrada === false}"  *ngIf=" isSubmit && editarCursosImpartidosForm.controls['curIm_FechaFin'].invalid" style="color: red !important;">Fecha de Finalización Requerida</small>
+                        </div>
 
 
-                            </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-4" [ngClass]="{'collapse': ImagenEncontrada === false}" >
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{editarCursosImpartidosForm.get('curso_Imagen').value}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Duración</h5>
+                                <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}"  class="form-control" style="outline: none; border: none; display: inline-block; width: 55px; font-weight: bold;" formControlName="curso_DuracionHoras" type="number" readonly/>
+                                    <label for="">horas</label>
+
+                                <h5 class="card-title">Categoria</h5>
+                                <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none; font-weight: bold;  background-color: #1d2b37e6; color: #fff" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
+
+                                <button pButton type="button" label="Ver participantes" (click)="showDialog()" class="mt-3" style="border-radius: 15px;"></button>
 
                         </div>
+                          </div>
+                        </div>
+
+
+                        </div>
+
+                    </div>
 
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
                             <button pButton icon="pi pi-check" type="submit" label="Editar"  class="btn btn-primary"></button>
                         </div>
                         <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false; ImagenEncontrada = false;" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
                 </div>
@@ -224,7 +229,7 @@
                             <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(cursosimp.curIm_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
                             <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(cursosimp.curIm_Id)"><i class="pi pi-file"></i>Detalle</button> |
                             <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-trash"></i>Eliminar</button> |
-                            <button class="btn btn-warning fa fa-window-close btn-sm" (click)="finalizarCursoImpartido(cursosimp.curIm_Id)"><i class="pi pi-check"></i>Finalizar</button>
+                            <button class="btn btn-warning fa fa-window-close btn-sm" (click)="finalizarCursoImpartido(cursosimp.curIm_Id)" style="background-color: #e33f09; border-color: #e33f09; color: #fff"><i class="pi pi-check"></i>Finalizar</button>
                         </td>
                     </tr>
                 </ng-template>
@@ -327,6 +332,32 @@
 
 
 
+<!-- Mostrar Participantes -->
 
+<p-dialog header="Listado de Participantes" [(visible)]="displayParticipantes" [style]="{width: '50vw'}" [modal]="true" [dismissableMask]="true" [blockScroll]="true">
+
+  <input type="text" pInputText placeholder="Buscar..." (input)="applyFilter($event.target.value)" style="width: 100%; margin-bottom: 1rem;">
+
+  <p-table #dt [value]="participantes" [paginator]="true" [rows]="10" [globalFilterFields]="['part_Nombre', 'empre_Descripcion']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Empresa</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-participant>
+      <tr>
+        <td>{{ participant.part_Id }}</td>
+        <td>{{ participant.part_Nombre }}</td>
+        <td>{{ participant.empre_Descripcion }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-footer>
+    <button pButton type="button" label="Cerrar" (click)="displayParticipantes=false" class="ui-button-danger ui-button-rounded mt-4"></button>
+  </p-footer>
+</p-dialog>
 
 

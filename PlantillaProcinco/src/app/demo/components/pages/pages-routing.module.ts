@@ -5,7 +5,9 @@ import { AuthGuard } from 'src/app/auth.guard';
 
 const routes: Routes = [
     { path: 'crud', loadChildren: () => import('./crud/crud.module').then(m => m.CrudModule), canActivate: [AuthGuard] },
-    { path: 'empty', loadChildren: () => import('./empty/emptydemo.module').then(m => m.EmptyDemoModule) },
+
+    { path: 'empty', loadChildren: () => import('./empty/emptydemo.module').then(m => m.EmptyDemoModule), canActivate: [AuthGuard] },
+
     { path: 'timeline', loadChildren: () => import('./timeline/timelinedemo.module').then(m => m.TimelineDemoModule), canActivate: [AuthGuard] },
 
     { path: 'estados', data: { breadcrumb: 'Estados' }, loadChildren: () => import('../../../Estados/list-estados/list-estados.module').then(m => m.ListEstadosModule), canActivate: [AuthGuard] },

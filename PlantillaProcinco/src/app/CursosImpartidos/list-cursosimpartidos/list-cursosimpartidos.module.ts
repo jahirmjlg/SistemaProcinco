@@ -37,7 +37,7 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
     ],
     declarations: [ListCursosimpartidosComponent]
 })

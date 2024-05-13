@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import {CursosImpartidosService} from '../../Services/cursosimpartidos.service';
 import {Router} from '@angular/router';
 
@@ -7,6 +7,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CursosImpartidos } from 'src/app/Models/CursosImpartidos';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Table, TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-list-cursosimpartidos',
@@ -57,10 +58,18 @@ export class ListCursosimpartidosComponent {
     //   variable para iterar
     cursosimpartidos!:CursosImpartidos[];
 
+
+    @ViewChild('dt') table: Table;
+    displayParticipantes: boolean = false;
+    globalFilter: any = null;
+    participantes!:CursosImpartidos[];
+
+
     crearCursosImpartidosForm: FormGroup
     editarCursosImpartidosForm: FormGroup
 
-    constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) { }
+    constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router,
+         private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule) { }
 
     ngOnInit() {
 
@@ -141,6 +150,7 @@ export class ListCursosimpartidosComponent {
 
                     this.Collapse = false;
                     this.Tabla = true;
+                    this.ImagenEncontrada = false;
                 } else {
 
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
@@ -188,6 +198,7 @@ export class ListCursosimpartidosComponent {
 
                     this.CollapseEdit = false;
                     this.Tabla = true;
+                    this.ImagenEncontrada = false;
 
                 } else {
 
@@ -260,6 +271,19 @@ export class ListCursosimpartidosComponent {
                 });
                 }
 
+                showDialog() {
+                    this.displayParticipantes = true;
+                  }
+
+                  applyFilter(value: string) {
+                    if (this.table) {
+                      console.log('Filtrando por:', value);
+                      this.table.filterGlobal(value, 'contains');
+                    } else {
+                      console.log("Table not initialized");
+                    }
+                  }
+
 
     onCursoChange(curso){
 
@@ -273,10 +297,55 @@ export class ListCursosimpartidosComponent {
                        this.ImagenEncontrada = true;
                     }
                 });
+
+
+                        this.cursosimpartidosservice.BuscarParticipantes(curso).subscribe((Response: any)=> {
+                            console.log(Response);
+                            this.participantes = Response;
+
+                          }, error=>{
+                            console.log(error);
+                          });
+
                 }
 
 
+                ////////////////////
 
+                onDNIChangeEdit(dni){
+
+                        this.cursosimpartidosservice.BuscarEmpleado(dni).subscribe({
+                            next: (data: CursosImpartidos) => {
+                                console.log("lo que trae: " + data[0].empl_Nombre)
+                                this.editarCursosImpartidosForm.get('empl_Id').setValue(data[0].empl_Id);
+                                this.editarCursosImpartidosForm.get('empl_Nombre').setValue(data[0].empl_Nombre);
+                                    }
+                                });
+                            }
+
+
+                onCursoChangeEdit(curso){
+
+                        this.cursosimpartidosservice.BuscarCurso(curso).subscribe({
+                            next: (data: CursosImpartidos) => {
+                                console.log("lo que trae: " + data[0].curso_Imagen)
+                                this.editarCursosImpartidosForm.get('curso_Id').setValue(data[0].curso_Id);
+                                this.editarCursosImpartidosForm.get('curso_DuracionHoras').setValue(data[0].curso_DuracionHoras);
+                                this.editarCursosImpartidosForm.get('cate_Descripcion').setValue(data[0].cate_Descripcion);
+                                this.editarCursosImpartidosForm.get('curso_Imagen').setValue(data[0].curso_Imagen);
+
+                                       this.ImagenEncontrada = true;
+                                    }
+                                });
+
+                                this.cursosimpartidosservice.BuscarParticipantes(curso).subscribe((Response: any)=> {
+                                    console.log(Response);
+                                    this.participantes = Response;
+
+                                  }, error=>{
+                                    console.log(error);
+                                  });
+                            }
 
 
 
@@ -291,16 +360,23 @@ export class ListCursosimpartidosComponent {
                     curIm_FechaFin: new FormControl(data[0].curIm_FechaFin,Validators.required),
                     empl_Id: new FormControl(data[0].empl_Id,Validators.required),
 
-                    empl_DNI: new FormControl("",Validators.required),
+                    empl_DNI: new FormControl(data[0].empl_DNI,Validators.required),
                     empl_Nombre: new FormControl("",Validators.required),
                     curso_DuracionHoras: new FormControl("",Validators.required),
                     cate_Descripcion: new FormControl("",Validators.required),
-                    curso_Descripcion: new FormControl("",Validators.required),
+                    curso_Descripcion: new FormControl(data[0].cursos,Validators.required),
+                    curso_Imagen: new FormControl("",Validators.required),
+
                 });
+
+                this.onDNIChangeEdit(data[0].empl_DNI)
+
+                this.onCursoChangeEdit(data[0].cursos)
                 console.log(this.ID);
 
                 this.CollapseEdit = true;
                 this.Tabla=false;
+                this.ImagenEncontrada = true;
 
                 console.log(data)
 

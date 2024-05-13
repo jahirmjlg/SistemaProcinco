@@ -1,0 +1,48 @@
+/* Estilos para el diálogo */
+p-dialog .ui-dialog .ui-dialog-content {
+    padding: 1rem;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+input[pInputText] {
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+}
+
+button.ui-button-raised.ui-button-rounded {
+    border-radius: 20px;
+    background-color: #007ad9;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+button.ui-button-danger.ui-button-rounded {
+    border-radius: 20px;
+    background-color: #643294;
+    color: white;
+}
+
+/* Estilos para la tabla */
+p-table .ui-table .ui-table-thead > tr > th {
+    background-color: #6c7ae0;
+    color: white;
+    font-weight: bold;
+}
+
+p-table .ui-table .ui-table-tbody > tr > td {
+    background-color: white;
+    color: #333;
+}
+
+p-table .ui-table .ui-table-tbody > tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+p-table .ui-table .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    border-color: #007ad9;
+    background-color: #007ad9;
+    color: white;
+}

@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
 
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,8 +20,14 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService, private cookieService: CookieService) { }
+    constructor(public layoutService: LayoutService, private cookieService: CookieService, private router: Router) { }
 
+    logOut()
+    {
+        this.cookieService.deleteAll();
+        window.location.replace('/login');
+
+    }
 
     ngOnInit() {
         var empleado = document.getElementById('emp');
