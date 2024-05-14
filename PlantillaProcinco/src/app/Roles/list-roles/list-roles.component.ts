@@ -10,7 +10,6 @@ import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@ang
 import { CookieService } from 'ngx-cookie-service';
 import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.service';
 import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
-
 @Component({
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',
@@ -66,7 +65,15 @@ export class ListRolesComponent {
 
 
   //ultimos dos
-  constructor(private cdRef: ChangeDetectorRef, private messageService: MessageService, private service: RolesService, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService, private pantallaservice: PantallasService, private paroservice : PantallasPorRolesService ) { }
+  constructor(
+    private cdRef: ChangeDetectorRef,
+     private messageService: MessageService,
+     private service: RolesService,
+     private router: Router,
+     private formBuilder: FormBuilder,
+      private cookieService: CookieService,
+       private pantallaservice: PantallasService,
+       private paroservice : PantallasPorRolesService ) { }
 
   ngOnInit() {
     this.crearRolForm = this.formBuilder.group({

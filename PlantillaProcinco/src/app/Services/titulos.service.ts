@@ -13,6 +13,7 @@ export class TitulosService {
   constructor(private http:HttpClient, private service:ServiceService) { }
 
   UrlTitulos = this.service.urlLocalhost + 'Titulo/';
+  UrlEmpleados = this.service.urlLocalhost + 'Empleado/';
 
   getTitulos() {
   return this.http.get<Titulo[]>(`${this.UrlTitulos}Listado`);
@@ -33,5 +34,9 @@ export class TitulosService {
   deleteTitulo(ID): Observable<any> {
     return this.http.delete<any>(`${this.UrlTitulos}TitulosEliminar/${ID}`);
   }
+
+  getTitulosFiltro(ID: Number) {
+    return this.http.get<Titulo[]>(`${this.UrlEmpleados}FiltrarTitulos/${ID}`);
+    }
 
 }

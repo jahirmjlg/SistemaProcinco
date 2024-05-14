@@ -19,6 +19,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
 import { MultiDragDropComponent } from './MultiDrag/multi-drag-drop.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { MultiDragDropComponent } from './MultiDrag/multi-drag-drop.component';
         ListEmpleadosRoutingModule,
         ButtonModule,
         ReactiveFormsModule,
+        DragDropModule,
         RippleModule,
         ToastModule,
         ToolbarModule,

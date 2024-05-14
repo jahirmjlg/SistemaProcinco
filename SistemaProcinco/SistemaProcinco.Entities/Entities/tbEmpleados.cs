@@ -50,6 +50,9 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string EstadoCivil { get; set; }
 
+        [NotMapped]
+        public string Titl_Descripcion { get; set; }
+
         public string Empl_Direccion { get; set; }
         public string Ciud_Id { get; set; }
         [NotMapped]

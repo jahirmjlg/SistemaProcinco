@@ -39,5 +39,8 @@ namespace SistemaProcinco.Common.Models
 
         [NotMapped]
         public string Esta_Id { get; set; }
+
+        [NotMapped]
+        public string Titl_Descripcion { get; set; }
     }
 }
