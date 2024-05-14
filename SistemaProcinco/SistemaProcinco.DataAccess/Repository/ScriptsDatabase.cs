@@ -13,8 +13,14 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
-        #region
-        public static string EmpresaListar = "Grl.[SP_Empresa_Seleccionar]";
+        #region Empresas
+        public static string EmpresaListar = "Grl.[SP_Empresas_Seleccionar]";
+
+        public static string EmpresaInsertar = "[Grl].[SP_Empresas_Insertar]";
+        public static string EmpresaActualizar = "[Grl].[SP_Empresas_Actualizar]";
+        public static string EmpresaLlenar = "[Grl].[SP_Empresas_LlenarEditar]";
+        public static string EmpresaEliminar = "[Grl].[SP_Empresas_Eliminar]";
+
 
         #endregion
 

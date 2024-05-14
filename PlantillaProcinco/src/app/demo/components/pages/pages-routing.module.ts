@@ -16,7 +16,7 @@ const routes: Routes = [
 
     { path: 'contenido', data: { breadcrumb: 'Contenido' }, loadChildren: () => import('../../../Contenido/list-contenido/list-contenido.module').then(m => m.ListContenidoModule), canActivate: [AuthGuard] },
 
-    { path: 'informesempleados', data: { breadcrumb: 'InformesEmpleados' }, loadChildren: () => import('../../../InformeEmpleados/list-informesempleados/list-informesempleados.module').then(m => m.ListInformesEmpleadosModule), canActivate: [AuthGuard] },
+    { path: 'informesdeempleados', data: { breadcrumb: 'InformesEmpleados' }, loadChildren: () => import('../../../InformeEmpleados/list-informesempleados/list-informesempleados.module').then(m => m.ListInformesEmpleadosModule), canActivate: [AuthGuard] },
 
     { path: 'titulos', data: { breadcrumb: 'Titulos' }, loadChildren: () => import('../../../Titulos/list-titulos/list-titulos.module').then(m => m.ListTitulosModule), canActivate: [AuthGuard] },
 
@@ -32,7 +32,7 @@ const routes: Routes = [
 
     { path: 'cursos', data: { breadcrumb: 'Cursos' }, loadChildren: () => import('../../../Cursos/list-curso/list-curso.module').then(m => m.ListCursoModule), canActivate: [AuthGuard] },
 
-    { path: 'cursosimp', data: { breadcrumb: 'CursosImpartidos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule), canActivate: [AuthGuard] },
+    { path: 'cursosimpartidos', data: { breadcrumb: 'CursosImpartidos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule), canActivate: [AuthGuard] },
 
     { path: 'enviarcodigo', data: { breadcrumb: 'EnviarCodigo' }, loadChildren: () => import('../../../restablecer/validacion/validacion.module').then(m => m.ValidacionModule), canActivate: [AuthGuard] },
 

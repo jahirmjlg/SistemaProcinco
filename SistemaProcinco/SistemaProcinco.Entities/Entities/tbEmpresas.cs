@@ -38,6 +38,9 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string UsuarioModificacion { get; set; }
 
+        [NotMapped]
+        public string Ciud_Descripcion { get; set; }
+
     }
 }
 

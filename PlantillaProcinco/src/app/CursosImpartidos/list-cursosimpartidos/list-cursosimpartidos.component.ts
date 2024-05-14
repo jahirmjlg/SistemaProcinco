@@ -437,8 +437,17 @@ export class ListCursosimpartidosComponent {
 
 
     finalizarCursoImpartido(ID) {
+        const roleId = Number.parseInt(this.cookieService.get('roleID'));
+        if(roleId == 16)
+            {
         this.finalizarCursoImpartidoBool = true;
         this.IDFinalizar = ID;
+            }
+            else
+            {
+            this.messageService.add({ severity: 'warn', summary: 'Acción no Válida', detail: 'No tienes los permisos requeridos', life: 3000 });
+
+            }
     }
 
 
@@ -474,18 +483,28 @@ export class ListCursosimpartidosComponent {
 
 
     imprimirFactura(ID) {
-        this.imprimirFacturaBool = true;
-        this.IDFactura = ID;
-        this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura)
+        const roleId = Number.parseInt(this.cookieService.get('roleID'));
+        if(roleId == 17)
+            {
+                this.imprimirFacturaBool = true;
+                this.IDFactura = ID;
+                this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura)
 
-        this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura).subscribe(
-            (url) => {
-              this.safeUrl = this.getSafeUrl(url);
-            },
-            (error) => {
-              console.error('Error al obtener la URL del PDF:', error);
+                this.cursosimpartidosservice.getPreviewFacturaUrl(this.IDFactura).subscribe(
+                    (url) => {
+                      this.safeUrl = this.getSafeUrl(url);
+                    },
+                    (error) => {
+                      console.error('Error al obtener la URL del PDF:', error);
+                    }
+                  );
+
             }
-          );
+            else
+            {
+            this.messageService.add({ severity: 'warn', summary: 'Acción no Válida', detail: 'No tienes los permisos requeridos', life: 3000 });
+
+            }
     }
 
 

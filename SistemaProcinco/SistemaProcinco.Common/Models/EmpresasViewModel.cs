@@ -13,7 +13,7 @@ namespace SistemaProcinco.Common.Models
         public int Empre_Id { get; set; }
         public string Empre_Descripcion { get; set; }
         public string Empre_Direccion { get; set; }
-        public int Ciud_Id { get; set; }
+        public string Ciud_Id { get; set; }
         public int Empre_UsuarioCreacion { get; set; }
         public DateTime Empre_FechaCreacion { get; set; }
         public int? Empre_UsuarioModificacion { get; set; }
@@ -23,5 +23,8 @@ namespace SistemaProcinco.Common.Models
         public string UsuarioCreacion { get; set; }
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+
+        [NotMapped]
+        public string Ciud_Descripcion { get; set; }
     }
 }

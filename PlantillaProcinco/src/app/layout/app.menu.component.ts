@@ -384,7 +384,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Procinco',
                         icon: 'pi pi-fw pi-globe',
                         items: [
-                            { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimp'] },
+                            { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimpartidos'] },
                             { label: 'Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursos'] },
                             { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
                             {
@@ -406,7 +406,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Informes de Empleados',
                                 icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/pages/informesempleados']
+                                routerLink: ['/pages/informesdeempleados']
                             },
                             {
                                 label: 'Titulos',

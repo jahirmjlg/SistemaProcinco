@@ -10,6 +10,7 @@ export class Empresa {
     empre_Estado !: boolean | null;
     creacion !: string | null;
     modificacion !: string | null;
+    ciud_Descripcion !: string | null;
 }
 
 export class dropEmpresas {

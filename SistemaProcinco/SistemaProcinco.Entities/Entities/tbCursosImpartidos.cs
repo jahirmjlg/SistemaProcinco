@@ -15,7 +15,8 @@ namespace SistemaProcinco.Entities.Entities
         public string Cursos { get; set; }
         [NotMapped]
         public string Empre_Descripcion { get; set; }
-
+        [NotMapped]
+        public string CurIm_Finalizado { get; set; }
         [NotMapped]
         public string Empl_DNI { get; set; }
         [NotMapped]

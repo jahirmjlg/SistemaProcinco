@@ -8,7 +8,7 @@ export class CursosImpartidos
     curIm_FechaInicio!: String;
     curIm_FechaFin!: String;
     curIm_UsuarioFinalizacion !: Number;
-    // curIm_Finalizar!: boolean;
+    curIm_Finalizado!: String;
     curIm_UsuarioCreacion !: Number;
     curIm_FechaCreacion!: String;
     curIm_UsuarioModificacion !: Number;

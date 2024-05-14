@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Categoria } from '../Models/CategoriasViewModel';
 import {ServiceService} from './service.service'
 import { Observable, map } from 'rxjs';
+import { Empresa } from '../Models/EmpresaViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,12 @@ export class EmpresaService {
         //DDL
         getDdlEmpresas(): Observable<any> {
             return this.http.get<Categoria[]>(this.UrlEmpresa);
+        }
+
+
+
+    getEmpresas() {
+        return this.http.get<Empresa[]>(`${this.UrlEmpresa}Listado`);
         }
 
 
