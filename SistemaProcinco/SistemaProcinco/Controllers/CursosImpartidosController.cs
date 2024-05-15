@@ -63,90 +63,124 @@ namespace SistemaProcinco.API.Controllers
 
 
 
+        public class PdfFooterHelper : PdfPageEventHelper
+        {
+            private readonly string _footerText;
 
-        private MemoryStream CreatePdfStream()
+            public PdfFooterHelper(string footerText)
+            {
+                _footerText = footerText;
+            }
+
+            public override void OnEndPage(PdfWriter writer, Document document)
+            {
+                PdfPTable footer = new PdfPTable(2);
+                footer.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+                footer.DefaultCell.Border = 0;
+
+                PdfPCell footerTextCell = new PdfPCell(new Phrase(_footerText, new Font(Font.FontFamily.HELVETICA, 8)));
+                footerTextCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                footerTextCell.Border = Rectangle.NO_BORDER;
+
+                PdfPCell pageNumberCell = new PdfPCell(new Phrase($"Página {writer.PageNumber}", new Font(Font.FontFamily.HELVETICA, 8)));
+                pageNumberCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                pageNumberCell.Border = Rectangle.NO_BORDER;
+
+                footer.AddCell(footerTextCell);
+                footer.AddCell(pageNumberCell);
+
+                footer.WriteSelectedRows(0, -1, document.LeftMargin, document.BottomMargin - 10, writer.DirectContent);
+            }
+        }
+
+
+
+
+        private MemoryStream CreatePdfStream(string footerText = "Usuario Creacion")
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            using (Document document = new Document(PageSize.A4, 30, 30, 30, 30))
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45)) // Ajustar márgenes para encabezado y pie de página
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 writer.CloseStream = false;
 
+                // Evento para pie de página con texto adicional
+                writer.PageEvent = new PdfFooterHelper(footerText);
+
                 document.Open();
 
                 string css = @"
-                <style> 
-                    body { font-family: 'Arial'; font-size: 10pt; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-                    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
-                    th { background-color: #633394; color: #ffffff; }
-                    .header { position: fixed; top: 0; left: 0; right: 0; height: 120px; }
-                    .header img { position: absolute; left: 30px; top: 20px; width: 150px; height: auto; }
-                    .title { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 20pt; font-weight: bold; color: #633394; text-align: center; }
-                    .footer { position: fixed; bottom: 0; left: 0; right: 0; background-color: #633394; color: white; text-align: center; padding: 10px 0; height: 40px; }
-                </style>";
+        <style> 
+            body { font-family: 'Arial'; font-size: 10pt; }
+            table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
+            th { background-color: #633394; color: #ffffff; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .header img { width: 150px; height: auto; }
+            .title { font-size: 20pt; font-weight: bold; color: #633394; margin-top: 10px; }
+            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; }
+        </style>";
 
                 string htmlContent = @"
-                <html>
-                <head>
-                </head>
-                    <body>
-                        <div class='header'>
-                            <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
-                            <div class='title'>Reporte de Cursos Impartidos</div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Curso</th>
-                                    <th>Nombre</th>
-                                    <th>Fecha Inicio</th>
-                                    <th>Fecha Fin</th>
-                                    <th>Finalizado</th>
-                                </tr>
-                            </thead>
-                            <tbody>";
+        <html>
+        <head>
+        </head>
+        <body>
+            <div class='header'>
+                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
+                <div class='title'>Reporte de Cursos Impartidos</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Curso</th>
+                        <th>Nombre</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Finalizado</th>
+                    </tr>
+                </thead>
+                <tbody>";
 
                 var listado = _procincoService.ListaCursosImpartidos();
                 foreach (var curso in listado.Data)
                 {
-
                     if (curso.CurIm_FechaFin != null)
                     {
                         htmlContent += $@"
-                        <tr>
-                            <td>{curso.CurIm_Id}</td>
-                            <td>{curso.Cursos}</td>
-                            <td>{curso.Nombre}</td>
-                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                            <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
-                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
-                        </tr>";
+                <tr>
+                    <td>{curso.CurIm_Id}</td>
+                    <td>{curso.Cursos}</td>
+                    <td>{curso.Nombre}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                    <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                </tr>";
                     }
                     else
                     {
                         htmlContent += $@"
-                        <tr>
-                            <td>{curso.CurIm_Id}</td>
-                            <td>{curso.Cursos}</td>
-                            <td>{curso.Nombre}</td>
-                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                            <td style='color: #14b81b'>Sin Finalizar</td>
-                            <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
-                        </tr>";
+                <tr>
+                    <td>{curso.CurIm_Id}</td>
+                    <td>{curso.Cursos}</td>
+                    <td>{curso.Nombre}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td style='color: #14b81b'>Sin Finalizar</td>
+                    <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                </tr>";
                     }
                 }
 
-                    htmlContent += @"
-                        </tbody>
-                    </table>
-                    <div class='footer'>
-                        <p>© 2024 Procinco. Todos los derechos reservados.</p>
-                    </div>
-                </body>
-                </html>";
+                htmlContent += @"
+                </tbody>
+            </table>
+            <div class='footer'>
+                <p>© 2024 Procinco. Todos los derechos reservados.</p>
+            </div>
+        </body>
+        </html>";
 
                 using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
                 using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
@@ -160,6 +194,8 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
+
 
 
 
@@ -375,20 +411,11 @@ namespace SistemaProcinco.API.Controllers
 
 
 
-
-
-
-
-
-
-
-
-        
         private MemoryStream CreatePdfFactura(int id)
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            using (Document document = new Document(PageSize.A4, 30, 30, 30, 30))
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45)) // Ajustar márgenes para encabezado y pie de página
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 writer.CloseStream = false;
@@ -396,79 +423,62 @@ namespace SistemaProcinco.API.Controllers
                 document.Open();
 
                 string css = @"
-                <style> 
-                    body { font-family: 'Arial'; font-size: 10pt; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-                    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
-                    th { background-color: #633394; color: #ffffff; }
-                    .header { position: fixed; top: 0; left: 0; right: 0; height: 120px; }
-                    .header img { position: absolute; left: 30px; top: 20px; width: 150px; height: auto; }
-                    .title { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 20pt; font-weight: bold; color: #633394; text-align: center; }
-                    .footer { position: fixed; bottom: 0; left: 0; right: 0; background-color: #633394; color: white; text-align: center; padding: 10px 0; height: 40px; }
-                </style>";
-
-                string htmlContent = @"
-                <html>
-                <head>
-                </head>
-                    <body>
-                        <div class='header'>
-                            <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
-                            <div class='title'>Factura</div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Curso</th>
-                                    <th>Nombre</th>
-                                    <th>Fecha Inicio</th>
-                                    <th>Fecha Fin</th>
-                                    <th>Pago Total</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>";
+        <style> 
+            body { font-family: 'Arial'; font-size: 10pt; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .header img { width: 150px; height: auto; }
+            .title { font-size: 24pt; font-weight: bold; color: #633394; margin-top: 10px; }
+            .invoice-details { margin-top: 20px; }
+            .invoice-section { margin-bottom: 20px; }
+            .invoice-section h2 { font-size: 14pt; font-weight: bold; color: #633394; margin-bottom: 10px; }
+            .invoice-section p { margin: 0; padding: 5px 0; }
+            .invoice-section p span { font-weight: bold; }
+            .total { text-align: right; font-size: 12pt; font-weight: bold; margin-top: 10px; }
+            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; position: fixed; bottom: 0; left: 0; right: 0; height: 40px; }
+        </style>";
 
                 var listado = _procincoService.BuscarFactura(id);
-                foreach (var curso in listado.Data)
+                var curso = listado.Data[0];
+
+                if (curso == null)
                 {
-
-                    if (curso.CurIm_FechaFin != null)
-                    {
-                        htmlContent += $@"
-                        <tr>
-                            <td>{curso.CurIm_Id}</td>
-                            <td>{curso.Cursos}</td>
-                            <td>{curso.Nombre}</td>
-                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                            <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
-                            <td>{curso.Empl_Total}</td>
-
-                        </tr>";
-                    }
-                    else
-                    {
-                        htmlContent += $@"
-                        <tr>
-                            <td>{curso.CurIm_Id}</td>
-                            <td>{curso.Cursos}</td>
-                            <td>{curso.Nombre}</td>
-                            <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
-                            <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
-                            <td>{curso.Empl_Total}</td>
-                        </tr>";
-                    }
+                    throw new Exception("No se encontraron datos para el ID proporcionado.");
                 }
 
-                htmlContent += @"
-                        </tbody>
-                    </table>
-                    <div class='footer'>
-                        <p>© 2024 Procinco. Todos los derechos reservados.</p>
-                    </div>
-                </body>
-                </html>";
+                string htmlContent = $@"
+        <html>
+        <head>
+        </head>
+        <body>
+            <div class='header'>
+                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
+                <div class='title'>Factura</div>
+            </div>
+            <div class='invoice-details'>
+                <div class='invoice-section'>
+                    <h2>Detalles del Curso</h2>
+                    <p><span>ID:</span> {curso.CurIm_Id}</p>
+                    <p><span>Curso:</span> {curso.Cursos}</p>
+                    <p><span>Nombre:</span> {curso.Nombre}</p>
+                </div>
+                <div class='invoice-section'>
+                    <h2>Fechas</h2>
+                    <p><span>Fecha Inicio:</span> {curso.CurIm_FechaInicio:dd/MM/yyyy}</p>
+                    <p><span>Fecha Fin:</span> {curso.CurIm_FechaFin:dd/MM/yyyy}</p>
+                </div>
+                <div class='invoice-section'>
+                    <h2>Pago</h2>
+                    <p><span>Pago Total:</span> {curso.Empl_Total}</p>
+                </div>
+                <div class='total'>
+                    <p>Total: {curso.Empl_Total}</p>
+                </div>
+            </div>
+            <div class='footer'>
+                <p>© 2024 Procinco. Todos los derechos reservados.</p>
+            </div>
+        </body>
+        </html>";
 
                 using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
                 using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
@@ -482,6 +492,9 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
+
+
 
 
 

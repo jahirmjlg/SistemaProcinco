@@ -8,8 +8,8 @@ export class Empresa {
     empre_UsuarioModificacion !: number | null;
     empre_FechaModificacion !: string | null;
     empre_Estado !: boolean | null;
-    creacion !: string | null;
-    modificacion !: string | null;
+    UsuarioCreacion !: string | null;
+    UsuarioModificacion !: string | null;
     ciud_Descripcion !: string | null;
 }
 
