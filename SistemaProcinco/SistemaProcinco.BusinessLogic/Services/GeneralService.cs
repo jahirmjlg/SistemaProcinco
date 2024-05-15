@@ -17,11 +17,13 @@ namespace SistemaProcinco.BusinessLogic.Services
         public readonly EmpresasRepository _empresasRepository;
         public readonly EmpleadosRepository _empleadosRepository;
         public readonly TitulosPorEmpleadosRepository _titulosporempleadosRepository;
+        public readonly ParticipanteRepository _participanteRepository;
+
 
 
         public GeneralService(CiudadesRepository ciudadesRepository, EmpresasRepository empresasRepository,
             EstadosRepository estadosRepository, EstadosCivilesRepository estadosCivilesRepository, EmpleadosRepository empleadosRepository,
-            TitulosPorEmpleadosRepository titulosPorEmpleadosRepository)
+            TitulosPorEmpleadosRepository titulosPorEmpleadosRepository, ParticipanteRepository participanteRepository)
         {
             _ciudadesRepository = ciudadesRepository;
             _estadosRepository = estadosRepository;
@@ -31,7 +33,7 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             _titulosporempleadosRepository = titulosPorEmpleadosRepository;
 
-
+            _participanteRepository = participanteRepository;
 
         }
         #region Empresas
@@ -605,7 +607,114 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+        #region Participantes
 
+        public ServicesResult ListaParticipantes()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participanteRepository.List();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+        public ServicesResult BuscarParticipantes(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participanteRepository.Find(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+        public ServicesResult InsertarParticipantes(tbParticipantes item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participanteRepository.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarParticipantes(tbParticipantes item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participanteRepository.Update(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarParticipantes(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participanteRepository.Delete(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+        #endregion
 
 
 

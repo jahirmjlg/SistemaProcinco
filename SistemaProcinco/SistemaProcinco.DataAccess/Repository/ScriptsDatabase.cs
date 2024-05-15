@@ -10,7 +10,14 @@ namespace SistemaProcinco.DataAccess.Repository
 
     {
 
+        #region Participantes
+        public static string ParticipanteListar = "[Grl].[SP_Participantes_Seleccionar]";
+        public static string ParticipanteInsertar = "[Grl].[SP_Participantes_Insertar]";
+        public static string ParticipanteActualizar = "[Grl].[SP_Participantes_Actualizar]";
+        public static string ParticipanteLlenar = "[Grl].[SP_Participantes_LlenarEditar]";
+        public static string ParticipanteEliminar = "[Grl].[SP_Participantes_Eliminar]";
 
+        #endregion
 
 
         #region Empresas

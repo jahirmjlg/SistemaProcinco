@@ -24,6 +24,12 @@ const routes: Routes = [
 
     { path: 'empleados', data: { breadcrumb: 'Empleados' }, loadChildren: () => import('../../../Empleados/list-empleados/list-empleados.module').then(m => m.ListEmpleadosModule), canActivate: [AuthGuard] },
 
+    { path: 'empresas', data: { breadcrumb: 'Empresas' }, loadChildren: () => import('../../../Empresas/list-empresas/list-empresas.module').then(m => m.ListEmpresasModule), canActivate: [AuthGuard] },
+
+    { path: 'participantes', data: { breadcrumb: 'Participantes' }, loadChildren: () => import('../../../Participantes/list-participantes/list-participantes.module').then(m => m.ListParticipantesModule), canActivate: [AuthGuard] },
+
+
+
     { path: 'estadosciviles', data: { breadcrumb: 'EstadosCiviles' }, loadChildren: () => import('../../../EstadosCiviles/list-estadosciviles/list-estadosciviles.module').then(m => m.ListEstadosCivilesModule), canActivate: [AuthGuard] },
 
     { path: 'roles', data: { breadcrumb: 'Roles' }, loadChildren: () => import('../../../Roles/list-roles/list-roles.module').then(m => m.ListRolesModule), canActivate: [AuthGuard] },

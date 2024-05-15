@@ -559,7 +559,7 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.ToTable("tbParticipantes", "Grl");
 
-                entity.Property(e => e.Ciud_id)
+                entity.Property(e => e.Ciud_Id)
                     .HasMaxLength(4)
                     .IsUnicode(false);
 
@@ -598,7 +598,7 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.HasOne(d => d.Ciud)
                     .WithMany(p => p.tbParticipantes)
-                    .HasForeignKey(d => d.Ciud_id)
+                    .HasForeignKey(d => d.Ciud_Id)
                     .HasConstraintName("FK_tbParticipantes_tbCiudades_Ciud_Id");
 
                 entity.HasOne(d => d.Empre)

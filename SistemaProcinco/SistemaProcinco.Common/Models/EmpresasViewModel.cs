@@ -26,5 +26,9 @@ namespace SistemaProcinco.Common.Models
 
         [NotMapped]
         public string Ciud_Descripcion { get; set; }
+
+        [NotMapped]
+        public string Esta_Id { get; set; }
+
     }
 }

@@ -374,6 +374,10 @@ export class AppMenuComponent implements OnInit {
                             { label: 'Estados', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estados'] },
                             { label: 'Ciudades', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/ciudades'] },
                             { label: 'Estados Civiles', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/estadosciviles'] },
+                            { label: 'Empresas', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/empresas'] },
+                            { label: 'Participantes', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/participantes'] },
+
+
                         ]
                     }
                 ]

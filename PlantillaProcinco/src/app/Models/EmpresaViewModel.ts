@@ -11,6 +11,8 @@ export class Empresa {
     UsuarioCreacion !: string | null;
     UsuarioModificacion !: string | null;
     ciud_Descripcion !: string | null;
+    esta_Id!: String;
+
 }
 
 export class dropEmpresas {

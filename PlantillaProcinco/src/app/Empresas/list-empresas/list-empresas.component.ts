@@ -10,6 +10,8 @@ import { PantallasPorRolesService } from 'src/app/Services/pantallas-por-roles.s
 import { PantallaPorRol } from 'src/app/Models/PantallasPorRolesViewModel';
 import { Empresa } from 'src/app/Models/EmpresaViewModel';
 import { EmpresaService } from 'src/app/Services/empresa.service';
+import { dropEstados } from 'src/app/Models/EstadoViewModel';
+
 @Component({
   selector: 'app-list-empresas',
   templateUrl: './list-empresas.component.html',
@@ -31,6 +33,12 @@ export class ListEmpresasComponent {
     deleteRolBool: boolean = false;
 
     ID: String = "";
+
+    ciudadID: String = "";
+
+
+    estadosddl: any[] = [];
+    ciudadesddl: any[] = [];
 
 
   cols: any[] = [];
@@ -73,6 +81,7 @@ export class ListEmpresasComponent {
         empre_Descripcion: ['', [Validators.required]],
         empre_Direccion: ['', [Validators.required]],
         ciud_Id: ['', [Validators.required]],
+        esta_Id: ['0', [Validators.required]],
 
 
     });
@@ -82,6 +91,9 @@ export class ListEmpresasComponent {
         empre_Descripcion: new FormControl("", Validators.required),
         empre_Direccion: new FormControl("", Validators.required),
         ciud_Id: new FormControl("", Validators.required),
+        esta_Id: new FormControl("", Validators.required),
+
+
 
 
     })
@@ -91,6 +103,15 @@ export class ListEmpresasComponent {
         console.log(Response.data);
         this.empresa = Response.data;
     }, error=>{
+        console.log(error);
+    });
+
+
+
+    this.serviceEmp.getDdlEstados().subscribe((data: dropEstados[]) => {
+        this.estadosddl = data;
+        console.log(data);
+    }, error => {
         console.log(error);
     });
 
@@ -219,6 +240,22 @@ onSubmitInsert(): void {
 
 
 
+    onEstadoChange(estadoID) {
+        if (estadoID !== '0') {
+          this.serviceEmp.getDdlCiudades(estadoID).subscribe(
+            (data: any) => {
+              this.ciudadesddl = data;
+              this.crearEmpresaForm.get('ciud_Id').setValue('0');
+            },
+            error => {
+              console.error('Errorr:', error);
+            }
+          );
+        } else {
+          this.ciudadesddl = [];
+        }
+      }
+
 
 
 
@@ -228,9 +265,21 @@ onSubmitInsert(): void {
                 this.editarEmpresaForm = new FormGroup({
                     empre_Id: new FormControl(data[0].empre_Id,Validators.required),
                     empre_Descripcion: new FormControl(data[0].empre_Descripcion, Validators.required),
-                    empre_Direccion: new FormControl(data[0].empreDireccion, Validators.required),
+                    empre_Direccion: new FormControl(data[0].empre_Direccion, Validators.required),
                     ciud_Id: new FormControl(data[0].ciud_Id, Validators.required),
+                    esta_Id: new FormControl(data[0].esta_Id,Validators.required),
                 });
+
+                this.ciudadID = data[0].ciud_Id;
+                console.log("LA DATA: " + data[0] + " ID CIUDAD: " + this.ciudadID)
+                this.serviceEmp.getDdlCiudades(data[0].esta_Id).subscribe(
+                    (data: any) => {
+                      this.ciudadesddl = data;
+                      this.editarEmpresaForm.get('ciud_Id').setValue(this.ciudadID);
+                    }
+                  );
+
+
 
               this.CollapseEdit = true;
               this.Tabla=false;

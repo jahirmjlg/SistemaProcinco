@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListEmpresasComponent, } from './list-empresas.component';
-import { ListEmpresasRoutingModule } from './list-empresas-routing.module';
+import { ListParticipantesComponent } from './list-participantes.component';
+import { ListParticipantesRoutingModule } from './list-participantes-routing.module';
 
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -17,14 +17,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-
-
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
-
-
 
 @NgModule({
     imports: [
@@ -32,12 +26,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         TableModule,
         FileUploadModule,
         FormsModule,
-        ListEmpresasRoutingModule,
-        ReactiveFormsModule,
-
-        DragDropModule,
-
+        ListParticipantesRoutingModule,
         ButtonModule,
+        ReactiveFormsModule,
+        DragDropModule,
         RippleModule,
         ToastModule,
         ToolbarModule,
@@ -49,8 +41,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         InputNumberModule,
         DialogModule
     ],
-    declarations: [ListEmpresasComponent],
-    bootstrap:    [ ListEmpresasComponent ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    declarations: [ListParticipantesComponent]
 })
-export class ListEmpresasModule { }
+export class ListParticipantesModule { }

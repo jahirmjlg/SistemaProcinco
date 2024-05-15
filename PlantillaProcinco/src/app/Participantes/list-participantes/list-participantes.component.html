@@ -1,0 +1,547 @@
+<p-toast></p-toast>
+
+    <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+    <div class="" [ngClass]="{'collapse': Collapse === false}">
+
+        <form [formGroup]="crearParticipanteForm" (ngSubmit)="onSubmitInsert()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Agregar Participante</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Nombre</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Nombre" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['part_Nombre'].invalid}" (keydown)="validarTexto($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Apellido</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Apellido" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['part_Apellido'].invalid}" (keydown)="validarTexto($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_Apellido'].invalid" style="color: red !important;">Apellido Requerido</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">DNI</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_DNI" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['part_DNI'].invalid}" (keydown)="validarNumeros($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_DNI'].invalid" style="color: red !important;">DNI Requerido</small>
+                        </div>
+                            <div class="col-6 mt-2">
+
+                                <div class="col-sm-2">
+                                <label for="firstname2">Empresa</label>
+                                </div>
+
+                                <select formControlName="empre_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['empre_Id'].invalid}">
+                                <option *ngFor="let carg of empresasddl" [value]="carg.value">{{ carg.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.get('empre_Id').value === '0'" style="color: red !important;">Empresa Requerida</small>
+                            </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Correo</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['part_Correo'].invalid}" (keydown)="validarTextoAlfa($event)" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_Correo'].invalid" style="color: red !important;">Correo Requerido</small>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="">
+                            <label for="firstname2" class="form-label">Fecha de Nacimiento</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_FechaNacimiento" type="datetime-local" required autofocus  (keydown)="validarTextoAlfa($event)" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_FechaNacimiento'].invalid" style="color: red !important;">Fecha de Nacimiento Requerida</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                            <label for="firstname2" class="form-label">Sexo</label>
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" class="form-check-input" name="sexo" value="M" checked formControlName="part_Sexo"> Masculino
+                                    </label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" class="form-check-input" name="sexo" value="F" formControlName="part_Sexo"> Femenino
+                                    </label>
+                                </div>
+
+                                    <div class="col-6" style="margin-top: -30px;">
+
+
+                                        <label for="firstname2">Estado Civil</label>
+
+
+                                        <select formControlName="estc_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['estc_Id'].invalid}">
+                                        <option *ngFor="let estc of estadosCivilesddl" [value]="estc.value">{{ estc.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.get('estc_Id').value === '0'" style="color: red !important;">Estado Civil Requerido</small>
+                                    </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+
+
+                                <label for="firstname2">Estado</label>
+
+
+                                <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['esta_Id'].invalid}"
+                                (change)="onEstadoChange(crearParticipanteForm.get('esta_Id').value)">
+                                <option *ngFor="let esta of estadosddl" [value]="esta.value">{{ esta.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
+                            </div>
+
+                                    <div class="col-6">
+
+
+                                        <label for="firstname2">Ciudad Requerida</label>
+
+
+                                        <select formControlName="ciud_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['ciud_Id'].invalid}">
+                                        <option *ngFor="let ciud of ciudadesddl" [value]="ciud.value">{{ ciud.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.get('ciud_Id').value === '0'" style="color: red !important;">Ciudad Requerida</small>
+                                    </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label">Dirección Exacta</label>
+
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="part_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearParticipanteForm.controls['part_Direccion'].invalid}"  (keydown)="validarTextoAlfa($event)" />
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearParticipanteForm.controls['part_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
+                            </div>
+
+                        </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+    <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
+    <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+
+        <form [formGroup]="editarParticipanteForm" (ngSubmit)="onSubmitEdit()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Editar Participante</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Nombre</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Nombre" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['part_Nombre'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_Nombre'].invalid" style="color: red !important;">Nombre Requerido</small>
+                        </div>
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Apellido</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Apellido" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['part_Apellido'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_Apellido'].invalid" style="color: red !important;">Apellido Requerido</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">DNI</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_DNI" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['part_DNI'].invalid}" />
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_DNI'].invalid" style="color: red !important;">DNI Requerido</small>
+                        </div>
+                        <div class="col-6 mt-2">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2">Empresa</label>
+                            </div>
+
+                            <select formControlName="empre_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && editarParticipanteForm.controls['empre_Id'].invalid}">
+                            <option *ngFor="let carg of empresasddl" [value]="carg.value">{{ carg.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.get('empre_Id').value === '0'" style="color: red !important;">Empresa Requerida</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Correo</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_Correo" type="mail" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['part_Correo'].invalid}"  (keydown)="validarTextoAlfa($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_Correo'].invalid" style="color: red !important;">Correo Requerido</small>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="">
+                            <label for="firstname2" class="form-label">Fecha de Nacimiento</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="part_FechaNacimiento" type="datetime-local" required autofocus  (keydown)="validarTextoAlfa($event)"/>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_FechaNacimiento'].invalid" style="color: red !important;">Fecha de Nacimiento Requerida</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                            <label for="firstname2" class="form-label">Sexo</label>
+                            <div class="col-md-3">
+                                <label>
+                                    <input type="radio" id="rbMasculino" class="form-check-input" name="sexo" [checked]="editarParticipanteForm.get('part_Sexo').value === 'Masculino'" value="M" checked formControlName="part_Sexo"> Masculino
+                                  </label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>
+                                        <input type="radio" id="rbFemenino" class="form-check-input" name="sexo" [checked]="editarParticipanteForm.get('part_Sexo').value === 'Femenino'" value="F" formControlName="part_Sexo"> Femenino
+                                      </label>
+                                    </div>
+
+                                    <div class="col-6" style="margin-top: -30px;">
+
+
+                                        <label for="firstname2">Estado Civil</label>
+
+
+                                        <select formControlName="estc_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['estc_Id'].invalid}">
+                                        <option *ngFor="let estc of estadosCivilesddl" [value]="estc.value">{{ estc.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.get('estc_Id').value === '0'" style="color: red !important;">Estado Civil Requerido</small>
+                                    </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+
+
+                                <label for="firstname2">Estado</label>
+
+
+                                <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['esta_Id'].invalid}"
+                                (change)="onEstadoChange(editarParticipanteForm.get('esta_Id').value)">
+                                <option *ngFor="let esta of estadosddl" [value]="esta.value">{{ esta.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.get('esta_Id').value === '0'" style="color: red !important;">Estado Requerido</small>
+                            </div>
+
+                                    <div class="col-6">
+
+                                        <label for="firstname2">Ciudad Requerida</label>
+
+                                        <select formControlName="ciud_Id" class="form-control" pInputText id="" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['ciud_Id'].invalid}">
+                                        <option *ngFor="let ciud of ciudadesddl" [value]="ciud.value">{{ ciud.text }}</option>
+                                    </select>
+                                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.get('ciud_Id').value === '0'" style="color: red !important;">Ciudad Requerida</small>
+                                    </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label">Dirección Exacta</label>
+
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="part_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarParticipanteForm.controls['part_Direccion'].invalid}" (keydown)="validarTextoAlfa($event)" />
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarParticipanteForm.controls['part_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
+                            </div>
+
+                        </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Editar"  class="btn btn-primary"></button>
+                        </div>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+
+<!-- DESPLEGAR TABLA DE LISTADO -->
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
+    <div class="card-header">
+        <header class="w-100 d-flex justify-content-between p-2">
+            <h2>Listado de Participantes</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+
+        </header>
+    </div>
+
+<div class="card-body m-2 mt-4 p-3">
+    <div class="card px-6 py-6">
+
+        <p-table #dt [value]="participante" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <ng-template pTemplate="caption">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Sexo</th>
+                    <th>Ciudad</th>
+                    <th>Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-emp>
+                <tr>
+                    <td>{{emp.part_Id}}</td>
+                    <td>{{emp.part_Nombre}} {{emp.part_Apellido}}</td>
+                    <td>{{emp.sexo}}</td>
+                    <td>{{emp.ciud_Descripcion}}</td>
+
+                    <td>
+                      <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(emp.part_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
+                      <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(emp.part_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                      <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteParticipante(emp.part_Id)"><i class="pi pi-trash"></i>Eliminar</button>
+
+                    </td>
+                  </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+</div>
+
+
+
+<!-- DESPLEGAR DETALLE -->
+<div class="container" [ngClass]="{'collapse': CollapseDetalle === false}">
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Detalles Participante</h4>
+                <button pButton icon="pi pi-times" type="button" (click)="CollapseDetalle=false; Tabla=true;" label="Regresar" class="btn btn-warning"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>ID</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>DNI</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Empresa</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ partID }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ partDNI }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ empresa }}</label></div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>Nombre</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Apellido</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Correo</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ partNombre }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ partApellido }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ partCorreo }}</label></div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>Fecha de Nacimiento</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Sexo</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Estado Civil</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ partFechaNacimiento }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ partSexo }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Estado">{{ estadoCivil }}</label></div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col" style="font-weight:700">
+
+                    <div>Direccion</div>
+                </div>
+                <div class="col" style="font-weight:700">
+                    <div>Ciudad</div>
+                </div>
+                <div class="col" style="font-weight:700">
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div><label for="Municipio">{{ partDireccion }}</label></div>
+                </div>
+                <div class="col">
+                    <div><label for="Codigo">{{ ciudad }}</label></div>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5>Auditoria</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertar</td>
+                                    <td>{{ UsuarioCreacion }}</td>
+                                    <td>{{ FechaCreacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modificar</td>
+                                    <td>{{ UsuarioModificacion }}</td>
+                                    <td>{{ FechaModificacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DESPLEGAR MODAL DELETE -->
+<p-dialog [(visible)]="deleteParticipanteBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <h4><b>Desea eliminar el registro?</b></h4>
+    </div>
+        <div class="row mt-5">
+            <div class="col-4" id="">
+                <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+            </div>
+            <div class="col-4">
+                <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteParticipanteBool = false"></button>
+            </div>
+        </div>
+</p-dialog>
+

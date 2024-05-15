@@ -5,6 +5,8 @@ import {ServiceService} from './service.service'
 import { Observable, map } from 'rxjs';
 import { Empresa } from '../Models/EmpresaViewModel';
 import { FormGroup } from '@angular/forms';
+import { Ciudad } from '../Models/CiudadViewModel';
+import { Estado } from '../Models/EstadoViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,19 @@ export class EmpresaService {
   constructor(private http:HttpClient, private service:ServiceService) { }
 
   UrlCurso = this.service.urlLocalhost + 'Cursos/cargarImagen';
-  UrlEmpresa = this.service.urlLocalhost + 'Empresa/ddl';
+  UrlEmpresaddl = this.service.urlLocalhost + 'Empresa/ddl';
   UrlCategoria = this.service.urlLocalhost + 'Categoria/';
+
+  UrlEstados = this.service.urlLocalhost + 'Estado/ddl';
+  UrlCiudadesPorEstados = this.service.urlLocalhost + 'Ciudad/ddl/';
+
+  UrlEmpresa = this.service.urlLocalhost + 'Empresa/';
+
 
 
         //DDL
         getDdlEmpresas(): Observable<any> {
-            return this.http.get<Categoria[]>(this.UrlEmpresa);
+            return this.http.get<Categoria[]>(this.UrlEmpresaddl);
         }
 
 
@@ -48,6 +56,16 @@ export class EmpresaService {
         //ELIMINAR
         deleteEmpresa(ID): Observable<any>{
             return this.http.delete<any>(`${this.UrlEmpresa}EmpresaEliminar/${ID}`)
+            }
+
+
+
+            getDdlEstados(): Observable<any> {
+                return this.http.get<Estado[]>(this.UrlEstados);
+            }
+
+            getDdlCiudades(id) {
+                return this.http.get<Ciudad[]>(this.UrlCiudadesPorEstados + id);
             }
 
 }
