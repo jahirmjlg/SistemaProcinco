@@ -56,6 +56,11 @@ namespace SistemaProcinco.Entities.Entities
         public DateTime? FechaFin { get; set; }
         [NotMapped]
         public string UsuarioCrear { get; set; }
+        [NotMapped]
+        public string CurIm_Finalizacion { get; set; }
+
+        [NotMapped]
+        public string Part_DNI { get; set; }
 
 
         public int CurIm_Id { get; set; }

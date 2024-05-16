@@ -942,6 +942,44 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+
+
+
+        public ServicesResult ParticipantesFiltro(int curso, DateTime Fecha)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.ParticipantesCurso(curso, Fecha);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+        public ServicesResult FechasDDL(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.DDLFechas(id);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
         #endregion
 
         #region Informes Empleados

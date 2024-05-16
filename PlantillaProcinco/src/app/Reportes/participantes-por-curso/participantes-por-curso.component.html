@@ -1,0 +1,29 @@
+
+<form [formGroup]="formSelect">
+    <div class="card">
+
+        <div class="flex align-items-center justify-content-center mt-3" style="position: relative;">
+
+            <label for="firstname2">Seleccione Curso</label>
+
+
+            <select formControlName="curso_id" class="form-control" pInputText id="" required autofocus (change)="onCursoChange(formSelect.get('curso_id').value)">
+            <option *ngFor="let esta of cursosddl" [value]="esta.value">{{ esta.text }}</option>
+            </select>
+
+            <label for="firstname2">Seleccione Fecha</label>
+
+
+            <select formControlName="fecha_id" class="form-control" pInputText id="" required autofocus (change)="onFechaChange(formSelect.get('fecha_id').value)">
+            <option *ngFor="let esta of fechasddl" [value]="esta.value">{{ esta.text }}</option>
+            </select>
+
+        </div>
+        <div class="flex align-items-center justify-content-center mt-3">
+            <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
+                <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
+            </object>
+
+        </div>
+    </div>
+    </form>

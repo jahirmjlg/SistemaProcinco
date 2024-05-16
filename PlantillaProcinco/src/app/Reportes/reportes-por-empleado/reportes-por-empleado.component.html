@@ -1,12 +1,13 @@
 
-
+<form [formGroup]="formSelect">
 <div class="card">
+
     <div class="flex align-items-center justify-content-center mt-3" style="position: relative;">
 
         <label for="firstname2">Seleccione Empleado</label>
 
 
-        <select formControlName="esta_Id" class="form-control" pInputText id="" required autofocus (change)="onEmpleadoChange($event)">
+        <select formControlName="empl_id" class="form-control" pInputText id="" required autofocus (change)="onEmpleadoChange($event)">
         <option *ngFor="let esta of empleadosddl" [value]="esta.value">{{ esta.text }}</option>
         </select>
 
@@ -15,5 +16,7 @@
         <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
             <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
         </object>
+
     </div>
 </div>
+</form>

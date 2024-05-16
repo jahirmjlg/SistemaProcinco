@@ -184,6 +184,8 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public static string CursosImpartidosFiltroEmpleados = "[Pro].[SP_CursosImpartidos_FiltroEmpleados]";
 
+        public static string ParticipantesFiltro = "[Grl].[SP_Participantes_FiltroCursos]";
+        public static string FechasPorCursoDDL = "[Grl].[SP_FechasPorCurso]";
 
 
 

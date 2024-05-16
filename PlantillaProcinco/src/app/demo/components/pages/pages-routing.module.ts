@@ -54,6 +54,9 @@ const routes: Routes = [
     { path: 'treecontenidoporcurso', data: { breadcrumb: 'treeContenidoPorCurso' }, loadChildren: () => import('../../../ContenidoPorCursoT/tree-contenidoPorCurso.module').then(m => m.TreeContenidoPorCursoModule), canActivate: [AuthGuard] },
     { path: 'reporteporempleado', data: { breadcrumb: 'ReportePorEmpleado' }, loadChildren: () => import('../../../Reportes/reportes-por-empleado/reportes-por-empleado.module').then(m => m.ReportesPorEmpleadoModule), canActivate: [AuthGuard] },
 
+    { path: 'participantesporcurso', data: { breadcrumb: 'ParticipantesPorCurso' }, loadChildren: () => import('../../../Reportes/participantes-por-curso/participantes-por-curso.module').then(m => m.ParticipantesPorCursoModule), canActivate: [AuthGuard] },
+
+
 
     { path: 'reportecursosimp', data: { breadcrumb: 'ReporteCursosImp' }, loadChildren: () => import('../../../Reportes/list-reportes-cursos-impartidos/reportes-cursos-impartidos.module').then(m => m.ReportesCursosImpartidosModule) },
 

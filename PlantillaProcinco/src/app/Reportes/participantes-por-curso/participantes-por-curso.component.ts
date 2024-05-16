@@ -1,24 +1,25 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { dropCursos } from 'src/app/Models/CursosViewModel';
 import { ServiceService } from 'src/app/Services/service.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { dropEmpleados } from 'src/app/Models/EmpleadosViewModel';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
-  selector: 'app-reportes-por-empleado',
-  templateUrl: './reportes-por-empleado.component.html',
-  styleUrl: './reportes-por-empleado.component.scss',
-  providers: [ConfirmationService, MessageService]
-
+  selector: 'app-participantes-por-curso',
+  templateUrl: './participantes-por-curso.component.html',
+  styleUrl: './participantes-por-curso.component.scss'
 })
-export class ReportesPorEmpleadoComponent {
+export class ParticipantesPorCursoComponent {
 
 
-    empleadosddl: any[] = [];
+
+
+    cursosddl: any[] = [];
+    fechasddl: any[] = [];
+
+    IDCurso:Number;
 
     formSelect: FormGroup;
 
@@ -50,11 +51,12 @@ export class ReportesPorEmpleadoComponent {
       ngOnInit(): void {
 
         this.formSelect = this.formBuilder.group({
-            empl_id: ['0', [Validators.required]],
+            curso_id: ['0', [Validators.required]],
+            fecha_id: ['0', [Validators.required]],
         })
 
-        this.service.getDdlEmpleados().subscribe((data: dropEmpleados[]) => {
-            this.empleadosddl = data;
+        this.service.getDdlCursos().subscribe((data: dropCursos[]) => {
+            this.cursosddl = data;
             console.log(data);
         }, error => {
             console.log(error);
@@ -62,15 +64,29 @@ export class ReportesPorEmpleadoComponent {
         }
 
 
+        onCursoChange(ID) {
+            if (ID !== '0') {
+                this.IDCurso = ID;
+              this.service.getDdlFechas(ID).subscribe(
+                (data: any) => {
+                  this.fechasddl = data;
+                  this.formSelect.get('fecha_id').setValue('0');
+                },
+                error => {
+                  console.error('Errorr:', error);
+                }
+              );
+            } else {
+              this.fechasddl = [];
+            }
+          }
 
-        onEmpleadoChange(event: Event): void {
+
+        onFechaChange(data): void {
 
           const usuario : String = this.cookieService.get('usuName');
 
-          const selectElement = event.target as HTMLSelectElement;
-          const ID : Number = Number.parseInt(selectElement.value);
-
-          this.service.getPreviewPdfEmpleado(usuario,ID).subscribe(
+          this.service.getPreviewPdfParticipante(usuario, this.IDCurso,data).subscribe(
             (url) => {
               this.safeUrl = this.getSafeUrl(url);
             },

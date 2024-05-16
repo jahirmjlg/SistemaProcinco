@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Empleado } from '../Models/EmpleadosViewModel';
+import { Curso } from '../Models/CursosViewModel';
 
 
 interface Pantalla {
@@ -36,6 +37,10 @@ export class ServiceService {
         urlPreview = this.urlLocalhost + 'CursosImpartidos/';
 
         urlddl = this.urlLocalhost + 'Empleado/ddl';
+
+        urlddlCursos = this.urlLocalhost + 'Cursos/ddl';
+
+        urlddlFechas = this.urlLocalhost + 'CursosImpartidos/fechasDDL';
 
 
         //#region Acceso
@@ -67,5 +72,19 @@ export class ServiceService {
           getDdlEmpleados(): Observable<any> {
             return this.http.get<Empleado[]>(this.urlddl);
         }
+
+
+        getDdlCursos(): Observable<any> {
+            return this.http.get<Curso[]>(this.urlddlCursos);
+        }
+
+        getDdlFechas(id) {
+            return this.http.get<Ciudad[]>(`${this.urlddlFechas}/${id}`);
+        }
+
+
+        getPreviewPdfParticipante(usuario:String,curso:Number, fecha:String ): Observable<string> {
+            return this.http.get<string>(`${this.urlPreview}PreviewParticipantesFiltro/${usuario},${curso},${fecha}`, { responseType: 'text' as 'json' });
+          }
 
     }
