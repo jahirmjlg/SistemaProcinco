@@ -180,6 +180,9 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public static string CursosImpartidosMES = "[Pro].[ObtenerCursosPorMes]";
 
+        public static string CursosImpartidosEntreMeses = "[Pro].[SP_CursosImpartidos_EntreFechas]";
+
+
 
 
         #endregion

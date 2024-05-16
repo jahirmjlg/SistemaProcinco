@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {Router} from '@angular/router';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -15,6 +15,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ReportesCursosImpartidosComponent {
 
+
   schemas = [
       CUSTOM_ELEMENTS_SCHEMA
     ];
@@ -29,7 +30,10 @@ export class ReportesCursosImpartidosComponent {
 
     public safeUrl: SafeResourceUrl;
 
-    constructor(private sanitizer: DomSanitizer,public router: Router, private service: ServiceService){}
+    constructor(private sanitizer: DomSanitizer,public router: Router, private service: ServiceService,
+      private cookieService: CookieService
+
+    ){}
 
     getSafeUrl(url: string) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -37,7 +41,17 @@ export class ReportesCursosImpartidosComponent {
 
 
     ngOnInit(): void {
-        this.service.getPreviewPdfUrl().subscribe(
+
+      }
+
+      onGet(): void {
+        const fecha1 = document.getElementById('fecha1') as HTMLInputElement;
+        const fecha2 = document.getElementById('fecha2') as HTMLInputElement;
+
+        const usuario : String = this.cookieService.get('usuName');
+
+
+        this.service.getPreviewPdfUrl(usuario, fecha1.value, fecha2.value).subscribe(
           (url) => {
             this.safeUrl = this.getSafeUrl(url);
           },

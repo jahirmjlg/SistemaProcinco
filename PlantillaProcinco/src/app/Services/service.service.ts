@@ -51,8 +51,8 @@ export class ServiceService {
 
         //#endregion
 
-        getPreviewPdfUrl(): Observable<string> {
-            return this.http.get<string>(this.urlPreview, { responseType: 'text' as 'json' });
+        getPreviewPdfUrl(usuario:String,fechaInicio:String,fechaFin:String ): Observable<string> {
+            return this.http.get<string>(`${this.urlPreview}/${usuario},${fechaInicio},${fechaFin}`, { responseType: 'text' as 'json' });
           }
 
 

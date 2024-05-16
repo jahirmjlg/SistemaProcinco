@@ -91,6 +91,7 @@ export class LoginComponent {
 
                 if (response.code == 200) {
 
+                    this.cookieService.set('usuName', response.data.usua_Usuario);
                     this.cookieService.set('namee', response.data.empl_Nombre);
                     this.cookieService.set('roleID', response.data.role_Id);
                     this.cookieService.set('esAdmin', response.data.usua_EsAdmin);

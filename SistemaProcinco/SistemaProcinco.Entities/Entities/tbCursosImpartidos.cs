@@ -50,6 +50,13 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public int? Part_Id { get; set; }
 
+        [NotMapped]
+        public DateTime? FechaInicio { get; set; }
+        [NotMapped]
+        public DateTime? FechaFin { get; set; }
+        [NotMapped]
+        public string UsuarioCrear { get; set; }
+
 
         public int CurIm_Id { get; set; }
         public int? Curso_Id { get; set; }

@@ -62,6 +62,13 @@ namespace SistemaProcinco.API.Controllers
 
 
 
+        public class InterfazReporteFechas
+        {
+            public DateTime? FechaInicio { get; set; }
+            public DateTime? FechaFin { get; set; }
+            public String UsuarioCreacion { get; set; }
+        }
+
 
         public class PdfFooterHelper : PdfPageEventHelper
         {
@@ -96,17 +103,16 @@ namespace SistemaProcinco.API.Controllers
 
 
 
-        private MemoryStream CreatePdfStream(string footerText = "Usuario Creacion")
+        private MemoryStream CreatePdfStream(string usuCreacion, DateTime FechaInicio, DateTime FechaFin)
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45)) // Ajustar márgenes para encabezado y pie de página
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45))
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 writer.CloseStream = false;
 
-                // Evento para pie de página con texto adicional
-                writer.PageEvent = new PdfFooterHelper(footerText);
+                writer.PageEvent = new PdfFooterHelper(usuCreacion);
 
                 document.Open();
 
@@ -144,7 +150,7 @@ namespace SistemaProcinco.API.Controllers
                 </thead>
                 <tbody>";
 
-                var listado = _procincoService.ListaCursosImpartidos();
+                var listado = _procincoService.ListaCursosFechas(FechaInicio, FechaFin);
                 foreach (var curso in listado.Data)
                 {
                     if (curso.CurIm_FechaFin != null)
@@ -207,10 +213,10 @@ namespace SistemaProcinco.API.Controllers
 
         private static readonly Dictionary<string, byte[]> _pdfCache = new Dictionary<string, byte[]>();
 
-        [HttpGet("Preview")]
-        public ActionResult GeneratePreviewPdf()
+        [HttpGet("Preview/{usuCreacion},{FechaInicio},{FechaFin}")]
+        public ActionResult GeneratePreviewPdf(string usuCreacion, DateTime FechaInicio, DateTime FechaFin)
         {
-            MemoryStream pdfStream = CreatePdfStream();
+            MemoryStream pdfStream = CreatePdfStream(usuCreacion, FechaInicio, FechaFin);
             pdfStream.Position = 0;
             var pdfBytes = pdfStream.ToArray();
 
@@ -415,7 +421,7 @@ namespace SistemaProcinco.API.Controllers
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45)) // Ajustar márgenes para encabezado y pie de página
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45))
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
                 writer.CloseStream = false;

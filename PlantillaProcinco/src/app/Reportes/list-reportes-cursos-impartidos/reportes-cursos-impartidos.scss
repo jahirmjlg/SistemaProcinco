@@ -1,4 +1,23 @@
+.flex {
+    display: flex;
+}
 
-.hidden {
-    display: none;
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.close-button {
+    background-color: rgb(188, 0, 0);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }

@@ -79,14 +79,7 @@ export class AppLayoutComponent implements OnDestroy {
 
 
     ngOnInit(): void {
-        this.service.getPreviewPdfUrl().subscribe(
-          (url) => {
-            this.safeUrl = this.getSafeUrl(url);
-          },
-          (error) => {
-            console.error('Error al obtener la URL del PDF:', error);
-          }
-        );
+
       }
 
     hideMenu() {

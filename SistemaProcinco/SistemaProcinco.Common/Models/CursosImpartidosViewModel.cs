@@ -39,6 +39,13 @@ namespace SistemaProcinco.Common.Models
         public string Nombre { get; set; }
         [NotMapped]
         public string CurIm_Finalizado { get; set; }
+        [NotMapped]
+        public DateTime? FechaInicio { get; set; }
+        [NotMapped]
+        public DateTime? FechaFin { get; set; }
+        [NotMapped]
+        public string UsuarioCrear { get; set; }
+
 
         public DateTime? CurIm_FechaInicio { get; set; }
         public DateTime? CurIm_FechaFin { get; set; }

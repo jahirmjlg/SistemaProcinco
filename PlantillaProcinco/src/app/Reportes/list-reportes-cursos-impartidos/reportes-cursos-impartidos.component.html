@@ -1,7 +1,22 @@
-<div class="card">
+<!-- <div class="card">
     <div class="flex align-items-center justify-content-center mt-3">
         <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
             <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
           </object>
     </div>
+</div> -->
+
+
+<div class="card">
+    <div class="flex align-items-center justify-content-center mt-3" style="position: relative;">
+        <input type="datetime-local" id="fecha1" style="max-width: 250px;" class="mr-2 form-control">
+        <input type="datetime-local" id="fecha2" style="max-width: 250px;" class=" form-control">
+        <button class="btn btn-primary pi pi-filter" (click)="onGet()" style="position: absolute; top: 0; right: 0;">Filtrar</button>
+    </div>
+    <div class="flex align-items-center justify-content-center mt-3">
+        <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
+            <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
+        </object>
+    </div>
 </div>
+
