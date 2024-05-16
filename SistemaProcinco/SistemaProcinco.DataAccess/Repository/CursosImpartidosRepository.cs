@@ -181,6 +181,18 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+        public IEnumerable<tbCursosImpartidos> BuscarCursosEmpleado(int id)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosFiltroEmpleados;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Empl_Id", id);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
 
     }
 }

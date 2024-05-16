@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Empleado } from '../Models/EmpleadosViewModel';
 
 
 interface Pantalla {
@@ -32,7 +33,10 @@ export class ServiceService {
         UrlPantallasRoles = this.urlLocalhost + 'PantallaPorRol/'
 
 
-        urlPreview = this.urlLocalhost + 'CursosImpartidos/Preview';
+        urlPreview = this.urlLocalhost + 'CursosImpartidos/';
+
+        urlddl = this.urlLocalhost + 'Empleado/ddl';
+
 
         //#region Acceso
         UrlLogin = this.urlLocalhost + 'Usuario/UsuarioLogin/';
@@ -52,9 +56,16 @@ export class ServiceService {
         //#endregion
 
         getPreviewPdfUrl(usuario:String,fechaInicio:String,fechaFin:String ): Observable<string> {
-            return this.http.get<string>(`${this.urlPreview}/${usuario},${fechaInicio},${fechaFin}`, { responseType: 'text' as 'json' });
+            return this.http.get<string>(`${this.urlPreview}Preview/${usuario},${fechaInicio},${fechaFin}`, { responseType: 'text' as 'json' });
           }
 
 
+          getPreviewPdfEmpleado(usuario:String,Empleado:Number ): Observable<string> {
+            return this.http.get<string>(`${this.urlPreview}PreviewPorEmpleado/${usuario},${Empleado}`, { responseType: 'text' as 'json' });
+          }
+
+          getDdlEmpleados(): Observable<any> {
+            return this.http.get<Empleado[]>(this.urlddl);
+        }
 
     }
