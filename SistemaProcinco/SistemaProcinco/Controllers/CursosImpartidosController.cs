@@ -15,6 +15,7 @@ using iTextSharp.text.pdf;
 using System.Data;
 using iTextSharp.tool.xml;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace SistemaProcinco.API.Controllers
 {
@@ -852,12 +853,13 @@ namespace SistemaProcinco.API.Controllers
         [HttpGet("fechasDDL/{id}")]
         public IActionResult Lista(int id)
         {
+            
             var listado = _procincoService.FechasDDL(id);
             var drop = listado.Data as List<tbCursosImpartidos>;
             var date = drop.Select(x => new SelectListItem
             {
-                Text = x.CurIm_FechaInicio.ToString(),
-                Value = x.CurIm_FechaInicio.ToString()
+                Text = DateTime.Parse(x.CurIm_FechaInicio.ToString()).ToString("yyyy-MM-dd HH:mm"),
+                Value = DateTime.Parse(x.CurIm_FechaInicio.ToString()).ToString("yyyy-MM-dd HH:mm")
 
             }).ToList();
 
@@ -865,7 +867,6 @@ namespace SistemaProcinco.API.Controllers
 
             return Ok(date.ToList());
         }
-
 
 
     }
