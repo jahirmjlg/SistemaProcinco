@@ -118,14 +118,14 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-      
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         [HttpPut("CursosEditar")]
         public IActionResult Edit(CursosViewModel item)
         {
@@ -245,6 +245,17 @@ namespace SistemaProcinco.API.Controllers
 
             return Ok(esta.ToList());
         }
+
+
+
+
+
+
+        //TREVIEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+
+
+
 
     }
 }

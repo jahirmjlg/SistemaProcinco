@@ -1,6 +1,7 @@
 <p-toast></p-toast>
 <!-- DESPLEGAR FORMULARIO DE INSERTAR -->
         <div class="" [ngClass]="{'collapse': Collapse === false}">
+            <div id="error-span" class="collapse">Error: No se pudo enviar el formulario</div>
 
             <form [formGroup]="crearCursoForm" (ngSubmit)="onSubmitInsert()">
                 <div class="card">
@@ -76,29 +77,33 @@
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.get('empre_Id').value === '0'" style="color: red !important;">Empresa Requerida</small>
 
                         </div>
+                        <!-- <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"
+                        (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)">
+                </p-tree> -->
+                   
+                <p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1">
+                    <ng-template let-node pTemplate="default">
+                        <p-treeNode [node]="node" [leaf]="!node.children">
+                            {{ node.label }}
+                        </p-treeNode>
+                    </ng-template>
+                </p-tree>
+                <div class="row mt-6">
+                    <div class="col-md-offset-2 col-6">
+                        <button pButton icon="pi pi-check" type="submit" label="Agregar" class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-6" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
 
-						<p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1">
-							<ng-template let-node pTemplate="default">
-								<p-treeNode [node]="node" [leaf]="!node.children">
-									{{ node.label }}
-									<ng-container *ngIf="node.children && node.expanded">
-										<!-- <ul>
-											<li *ngFor="let child of node.children">
-												{{ child.label }}
-											</li>
-										</ul> -->
-									</ng-container>
-								</p-treeNode>
-							</ng-template>
-						</p-tree>
-                        <div class="row mt-6">
-                            <div class="col-md-offset-2 col-6">
-                                <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
-                            </div>
-                            <div class="col-md-offset-2 col-6" id="">
-                                <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
-                            </div>
-                        </div>
+
+                        <!-- prueba noton  -->
+<!-- 
+                        <div style="display: flex; justify-content: flex-end; margin-top: 1rem; grid-gap: 5px;">
+                            <button pButton  type="button" (click)="onSubmit()" label="Agregar"  icon="pi pi-check" size="small" class="p-button-outlined"></button>
+            
+                          </div> -->
                     </div>
                 </div>
 
@@ -159,6 +164,15 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1">
+                        <ng-template let-node pTemplate="default">
+                            <p-treeNode [node]="node" [leaf]="!node.children">
+                                {{ node.label }}
+                            </p-treeNode>
+                        </ng-template>
+                    </p-tree>
 
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
@@ -343,17 +357,4 @@
 
 <br>
 
-		<p-tree [value]="categoriasConCursos" selectionMode="checkbox" [(selection)]="selectedFiles1" hidden>
-			<ng-template let-node pTemplate="default">
-				<p-treeNode [node]="node" [leaf]="!node.children">
-					{{ node.label }}
-					<ng-container *ngIf="node.children && node.expanded">
-						<!-- <ul>
-							<li *ngFor="let child of node.children">
-								{{ child.label }}
-							</li>
-						</ul> -->
-					</ng-container>
-				</p-treeNode>
-			</ng-template>
-		</p-tree>
+	

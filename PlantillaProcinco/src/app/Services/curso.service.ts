@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Curso } from '../Models/CursosViewModel';
+import { Curso, Cursoo, Fill } from '../Models/CursosViewModel';
 import {ServiceService} from './service.service'
 import { Observable, map } from 'rxjs';
 import { Categoria } from '../Models/CategoriasViewModel';
@@ -15,6 +15,8 @@ export class CursoService {
   UrlCategorias = this.service.urlLocalhost + 'Categoria/ddl';
 
   UrlCurso = this.service.urlLocalhost + 'Cursos/';
+  UrlContenidoPorCurso = this.service.urlLocalhost + 'ContenidoPorCurso/';
+
 
 
         getCurso() {
@@ -58,7 +60,7 @@ export class CursoService {
             }
 
 
-        //DDL
+        //DDL    
         getDdlCategorias(): Observable<any> {
             return this.http.get<Categoria[]>(this.UrlCategorias);
         }
@@ -72,6 +74,42 @@ export class CursoService {
                   }),
             );
           }
+
+
+
+
+
+
+
+
+          // PROBANDO TREEVIEWWWWWWWWWWWWWWWW
+          EnviarCurso(formData: any): Observable<any> {
+            return this.http.post<any>(this.UrlContenidoPorCurso  + 'Create/', formData).pipe(
+              map(response => {
+                return response;
+              }),
+            );
+          }
+          getFill(codigo: string): Observable<Fill> {
+            return this.http.get<Fill>(`${this.UrlContenidoPorCurso  + 'Fill/' + codigo}`);
+          }
+          getDetalles(codigo: string): Observable<Fill> {
+            return this.http.get<Fill>(`${this.UrlContenidoPorCurso  + 'FillDetalles/' + codigo}`);
+          }
+          EliminarCurso(ID): Observable<any>{
+            return this.http.delete<any>(`${this.UrlContenidoPorCurso  + 'Delete/' + ID}`)
+          }
+          ActualizarCurso(formData: any): Observable<any> {
+            return this.http.put<any>(this.UrlContenidoPorCurso + 'Edit/', formData);
+          }
+          
+          
+
+          getContenidosPorCurso(cursoId: string): Observable<any> {
+            return this.http.get(`${this.UrlContenidoPorCurso}Fill/${cursoId}`);
+          }
+
+
 
 
 }

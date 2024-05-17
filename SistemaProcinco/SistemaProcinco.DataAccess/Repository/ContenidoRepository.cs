@@ -103,5 +103,26 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

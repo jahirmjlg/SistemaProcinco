@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SistemaProcinco.Common.Models.ContenidoPorCursoViewModel1;
 
 namespace SistemaProcinco.BusinessLogic.Services
 {
@@ -669,6 +670,7 @@ namespace SistemaProcinco.BusinessLogic.Services
 
         #endregion
 
+
         #region Cursos Impartidos
         public ServicesResult ListaCursosImpartidos()
         {
@@ -1089,6 +1091,7 @@ namespace SistemaProcinco.BusinessLogic.Services
 
         #endregion
 
+
         #region Titulos
         public ServicesResult ListaTitulos()
         {
@@ -1296,6 +1299,299 @@ namespace SistemaProcinco.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+
+        #endregion
+
+
+
+
+
+
+
+
+        #region TREEVIEW CONTENIDO POR CURSOS bueno CURSOS
+
+
+
+        public ServicesResult ListadoCurso()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.List();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        public ServicesResult EditarCurso(tbCursos item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.Update1(item);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok("okis", list);
+                }
+                else
+                {
+                    return result.Error("Y existe un registro con ese nombre");
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+        public ServicesResult EliminarCurso(string Curso_Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.Delete1(Curso_Id);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok($"La accion ha sido existosa", list);
+                }
+                else
+                {
+                    return result.Error("No se pudo realizar la accion");
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+        public string InsertarCurso(tbCursos item)
+        {
+            string error = "";
+            try
+            {
+                int result = _cursosRepository.Insert1(item);
+                if (result == 0)
+                    error = "El código no es válido";
+                else
+                    error = result.ToString();
+            }
+            catch (Exception ex)
+            {
+                error = $"Error: {ex.Message} | StackTrace: {ex.StackTrace}";
+            }
+            return error;
+        }
+
+
+
+
+
+
+        public ServicesResult obterCurso(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.Fill1(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+
+
+
+
+        public ServicesResult ListadoContenidos()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosRepository.ListContenidos1();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+
+        #endregion
+
+
+
+
+
+
+        #region CONTENIDO POR CURSO BUENOOOOOOOOOO
+
+
+        public ServicesResult ListadoContenidosCursos()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.List1();
+                return result.Ok(list);
+            }
+
+            catch (Exception ex)
+            {
+
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        public ServicesResult EditarContenidosCursos(tbContenidoPorCurso item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.Update1(item);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok("okis", list);
+                }
+                else
+                {
+                    return result.Error("Y existe un registro con ese nombre");
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+        public ServicesResult EliminarContenidosCursos(string Curso_Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.Delete1(Curso_Id);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok($"La accion ha sido existosa", list);
+                }
+                else
+                {
+                    return result.Error("No se pudo realizar la accion");
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+
+
+
+
+
+        public ServicesResult InsertarContenidosCursos(tbContenidoPorCurso item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.Insert1(item);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error(list);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+
+
+
+
+
+        public ContenidoPorCursoViewModell ObtenerCursoConContenidos(int cursoId)
+        {
+            return _contenidoPorCursoRepository.ObtenerCursoConContenidos(cursoId);
+        }
+
+
+
+        public ServicesResult obterContenidosCursos(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.Fill1(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+        public ServicesResult ObtenerCursos(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _contenidoPorCursoRepository.Fill2(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
 
         #endregion
     }
