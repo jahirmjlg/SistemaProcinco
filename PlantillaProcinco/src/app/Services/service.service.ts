@@ -38,7 +38,7 @@ export class ServiceService {
 
         urlddl = this.urlLocalhost + 'Empleado/ddl';
 
-        urlddlCursos = this.urlLocalhost + 'Cursos/ddl';
+        urlddlCursos = this.urlLocalhost + 'CursosImpartidos/ddlCursos';
 
         urlddlFechas = this.urlLocalhost + 'CursosImpartidos/fechasDDL';
 

@@ -735,13 +735,13 @@ namespace SistemaProcinco.API.Controllers
             body { font-family: 'Arial'; font-size: 10pt; }
             .header { text-align: center; margin-bottom: 20px; }
             .header img { width: 150px; height: auto; }
-            .title { font-size: 24pt; font-weight: bold; color: #633394; margin-top: 10px; }
-            .invoice-details { margin-top: 20px; }
-            .invoice-section { margin-bottom: 20px; }
+            .title { font-size: 24pt; font-weight: bold; color: #633394; margin-top: 10px; margin-bottom: 30px; }
+            .invoice-details { display: flex; justify-content: space-between; margin-top: 20px; }
+            .invoice-section { width: 48%; }
             .invoice-section h2 { font-size: 14pt; font-weight: bold; color: #633394; margin-bottom: 10px; }
             .invoice-section p { margin: 0; padding: 5px 0; }
             .invoice-section p span { font-weight: bold; }
-            .total { text-align: right; font-size: 12pt; font-weight: bold; margin-top: 10px; }
+            .total { text-align: right; font-size: 12pt; font-weight: bold; margin-top: 10px; width: 100%; }
             .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; position: fixed; bottom: 0; left: 0; right: 0; height: 40px; }
         </style>";
 
@@ -767,19 +767,13 @@ namespace SistemaProcinco.API.Controllers
                     <h2>Detalles del Curso</h2>
                     <p><span>ID:</span> {curso.CurIm_Id}</p>
                     <p><span>Curso:</span> {curso.Cursos}</p>
-                    <p><span>Nombre:</span> {curso.Nombre}</p>
+                    <p><span>Instructor:</span> {curso.Nombre}</p>
+                    <p><span>Pago Total:</span> L {curso.Empl_Total:N2}</p>
                 </div>
-                <div class='invoice-section'>
+                <div class='invoice-section' style='text-align: right;'>
                     <h2>Fechas</h2>
                     <p><span>Fecha Inicio:</span> {curso.CurIm_FechaInicio:dd/MM/yyyy}</p>
                     <p><span>Fecha Fin:</span> {curso.CurIm_FechaFin:dd/MM/yyyy}</p>
-                </div>
-                <div class='invoice-section'>
-                    <h2>Pago</h2>
-                    <p><span>Pago Total:</span> {curso.Empl_Total}</p>
-                </div>
-                <div class='total'>
-                    <p>Total: {curso.Empl_Total}</p>
                 </div>
             </div>
             <div class='footer'>
@@ -800,6 +794,10 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
+
+
+
 
 
         [HttpGet("PreviewFactura/{id}")]
@@ -846,6 +844,25 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
+
+        [HttpGet("ddlCursos")]
+        public IActionResult Lista()
+        {
+            var listado = _procincoService.ListaCursos();
+            var drop = listado.Data as List<tbCursos>;
+            var esta = drop.Select(x => new SelectListItem
+            {
+                Text = x.Curso_Descripcion,
+                Value = x.Curso_Id.ToString()
+
+            }).ToList();
+
+            esta.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+            esta.Insert(1, new SelectListItem { Text = "Mostrar Todo", Value = "30" });
+
+
+            return Ok(esta.ToList());
+        }
 
 
 

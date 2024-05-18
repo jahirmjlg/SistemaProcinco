@@ -6,22 +6,22 @@
         <form [formGroup]="crearInformeEmpleadoForm" (ngSubmit)="onSubmitInsert()">
             <div class="card">
                 <div class="card-body">
-                    <h4>Agregar Usuario</h4>
+                    <h4>Agregar Informe para Empleado</h4>
                     <hr />
-    
+
                     <div class="row">
-                        <div class="col-6">    
+                        <div class="col-6">
                             <div class="col-sm-2">
                                 <label for="firstname2">Curso</label>
-                            </div>    
-                            
+                            </div>
+
                             <select formControlName="curso_Id" class="form-control" pInputText id="" required autofocus>
                                 <option *ngFor="let cur of cursos" [value]="cur.value">{{ cur.text }}</option>
                             </select>
-                            
+
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.get('curso_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
                         </div>
-                        <div class="col-6">    
+                        <div class="col-6">
                             <div class="col-sm-2">
                                 <label for="firstname2">Empleado</label>
                             </div>
@@ -31,28 +31,28 @@
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.get('empl_Id').value === '0'" style="color: red !important;">El Empleado es Requerido</small>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-6">
-    
-                            <div class="col-sm-4">
-                                <label for="firstname2" class="form-label">Calificacion</label>
-                            </div>
-    
-                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus (keydown)="validarNumeros($event)"/>
 
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.controls['infoE_Calificacion'].invalid" style="color: red !important;">Codigo Requerido</small>
+                            <div class="container" style="color: gold;">
+                                <h2>Calificar</h2>
+                                <p-rating formControlName="infoE_Calificacion" [stars]="10" [cancel]="false"></p-rating>
+                                <div>{{crearInformeEmpleadoForm.get('infoE_Calificacion').value}} / 10</div>
+                              </div>
+
+                              <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.get('infoE_Calificacion').value === '0'" style="color: red !important;">Calificación Requerida</small>
                         </div>
                         <div class="col-6 ">
                             <div class="col-sm-2">
                                 <label for="firstname2">Observaciones</label>
                             </div>
-    
+
                             <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus (keydown)="validarTexto($event)"/>
-                            
+
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearInformeEmpleadoForm.controls['infoE_Observaciones'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
-                    
+
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-offset-2 col-3">
@@ -65,77 +65,77 @@
                 </div>
             </div>
         </form>
-    
+
     </div>
 
-        
+
     <!-- DESPLEGAR FORMULARIO DE EDITAR -->
-<div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+    <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
 
-    <form [formGroup]="editarInformeEmpleadoForm" (ngSubmit)="onSubmitEdit()">
-        <div class="card">
-            <div class="card-body">
-                <h4>Editar informe Empleado</h4>
-                <hr />
+        <form [formGroup]="editarInformeEmpleadoForm" (ngSubmit)="onSubmitEdit()">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Editar Informe para Empleado</h4>
+                    <hr />
 
-                <div class="row">
-                    <div class="col-6">    
-                        <div class="col-sm-2">
-                            <label for="firstname2">Curso</label>
-                        </div>    
-                        
-                        <select formControlName="curso_Id" class="form-control" pInputText id="" required autofocus>
-                            <option *ngFor="let cur of cursos" [value]="cur.value">{{ cur.text }}</option>
-                        </select>
-                        
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.get('curso_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
-                    </div>
-                    <div class="col-6">    
-                        <div class="col-sm-2">
-                            <label for="firstname2">Empleado</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="col-sm-2">
+                                <label for="firstname2">Curso</label>
+                            </div>
+
+                            <select formControlName="curso_Id" class="form-control" pInputText id="" required autofocus>
+                                <option *ngFor="let cur of cursos" [value]="cur.value">{{ cur.text }}</option>
+                            </select>
+
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarInformeEmpleadoForm.get('curso_Id').value === '0'" style="color: red !important;">El Rol es Requerido</small>
                         </div>
-                        <select formControlName="empl_Id" class="form-control" pInputText id="" required autofocus>
-                            <option *ngFor="let empl of empleados" [value]="empl.value">{{ empl.text }}</option>
-                        </select>
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.get('empl_Id').value === '0'" style="color: red !important;">El Empleado es Requerido</small>
+                        <div class="col-6">
+                            <div class="col-sm-2">
+                                <label for="firstname2">Empleado</label>
+                            </div>
+                            <select formControlName="empl_Id" class="form-control" pInputText id="" required autofocus>
+                                <option *ngFor="let empl of empleados" [value]="empl.value">{{ empl.text }}</option>
+                            </select>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarInformeEmpleadoForm.get('empl_Id').value === '0'" style="color: red !important;">El Empleado es Requerido</small>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-6">
 
-                        <div class="col-sm-4">
-                            <label for="firstname2" class="form-label">Calificacion</label>
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="container" style="color: gold;">
+                                <h2>Calificar</h2>
+                                <p-rating formControlName="infoE_Calificacion" [stars]="10" [cancel]="false"></p-rating>
+                                <div>{{editarInformeEmpleadoForm.get('infoE_Calificacion').value}} / 10</div>
+                              </div>
+
+                              <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarInformeEmpleadoForm.get('infoE_Calificacion').value === '0'" style="color: red !important;">Calificación Requerida</small>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="col-sm-2">
+                                <label for="firstname2">Observaciones</label>
+                            </div>
+
+                            <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus (keydown)="validarTexto($event)"/>
+
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarInformeEmpleadoForm.controls['infoE_Observaciones'].invalid" style="color: red !important;">Descripcion Requerida</small>
                         </div>
 
-                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Calificacion" type="text" required autofocus (keydown)="validarNumeros($event)" />
-
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.controls['infoE_Calificacion'].invalid" style="color: red !important;">Codigo Requerido</small>
                     </div>
-                    <div class="col-6 ">
-                        <div class="col-sm-2">
-                            <label for="firstname2">Observaciones</label>
+                    <div class="row mt-3">
+                        <div class="col-md-offset-2 col-3">
+                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                         </div>
-
-                        <input pInputText id="firstname2" class="form-control" formControlName="infoE_Observaciones" type="text" required autofocus (keydown)="validarTexto($event)" />
-                        
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarInformeEmpleadoForm.controls['infoE_Observaciones'].invalid" style="color: red !important;">Descripcion Requerida</small>
-                    </div>
-                
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-offset-2 col-3">
-                        <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
-                    </div>
-                    <div class="col-md-offset-2 col-3" id="">
-                        <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        <div class="col-md-offset-2 col-3" id="">
+                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
-    </form>
-</div>
+    </div>
 
 
 

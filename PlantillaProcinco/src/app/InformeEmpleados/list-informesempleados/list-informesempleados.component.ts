@@ -28,6 +28,8 @@ export class ListInformesempleadosComponent implements OnInit {
     CollapseDetalle: boolean = false;
     deleteUsaurioBool: boolean = false;
 
+
+
     empleados: any[] = [];
     cursos: any[] = [];
 
@@ -41,7 +43,7 @@ export class ListInformesempleadosComponent implements OnInit {
     infoE_Id: String = "";
     infoE_Calificacion: String = "";
     empl_Id  : String = "";
-    curso_Id : String = ""; 
+    curso_Id : String = "";
     infoE_Observaciones: String = "";
     infoE_Usuariocreacion: String = "";
     infoE_FechaCreacion: String = "";
@@ -57,14 +59,15 @@ export class ListInformesempleadosComponent implements OnInit {
     //ultimos dos
     constructor( private messageService: MessageService, private informesempleadosservice: InformeEmpleadosService, private router: Router,  private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
+
     ngOnInit() {
 
         this.crearInformeEmpleadoForm = this.formBuilder.group({
-            infoE_Calificacion: ['', [Validators.required]],
+            infoE_Calificacion: ['0', [Validators.required]],
             curso_Id: ['0', [Validators.required]],
             empl_Id: ['0', [Validators.required]],
             infoE_Observaciones: ['', [Validators.required]],
-    
+
         });
 
         this.editarInformeEmpleadoForm = new FormGroup({
@@ -111,6 +114,7 @@ export class ListInformesempleadosComponent implements OnInit {
     //INSERTAR
     onSubmitInsert(): void {
 
+
         this.isSubmit = true;
 
             const errorSpan = document.getElementById('error-span');
@@ -149,11 +153,12 @@ export class ListInformesempleadosComponent implements OnInit {
         }
     }
 
- 
+
     //EDITAR
     onSubmitEdit(): void {
 
         this.isSubmitEdit = true;
+
 
         if (this.editarInformeEmpleadoForm.valid) {
           const ciudadData: InformeEmpleado = this.editarInformeEmpleadoForm.value;
@@ -212,7 +217,7 @@ export class ListInformesempleadosComponent implements OnInit {
           this.Tabla=false;
     }
 
- 
+
     //DELETE
     deleteUsuario(codigo) {
         this.deleteUsaurioBool = true;
@@ -220,7 +225,7 @@ export class ListInformesempleadosComponent implements OnInit {
         console.log("ID" + codigo);
     }
 
-    
+
     confirmDelete() {
         this.informesempleadosservice.deleteInformeEmpleado(this.ID).subscribe({
             next: (response) => {
@@ -252,7 +257,7 @@ export class ListInformesempleadosComponent implements OnInit {
         else{
         }
       }
-    
+
       validarTexto(event: KeyboardEvent) {
         if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
             event.preventDefault();
