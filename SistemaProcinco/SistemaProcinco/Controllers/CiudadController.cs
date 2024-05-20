@@ -42,16 +42,25 @@ namespace SistemaProcinco.API.Controllers
         {
             var listado = _generalService.GetCiudadesPorEstados(id);
             var drop = listado.Data as List<tbCiudades>;
-            var ciud = drop.Select(x => new SelectListItem
+
+            if(drop != null)
             {
-                Text = x.Ciud_Descripcion,
-                Value = x.Ciud_Id
+                var ciud = drop.Select(x => new SelectListItem
+                {
+                    Text = x.Ciud_Descripcion,
+                    Value = x.Ciud_Id
 
-            }).ToList();
+                }).ToList();
 
-            ciud.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
+                ciud.Insert(0, new SelectListItem { Text = "--SELECCIONE--", Value = "0" });
 
-            return Ok(ciud.ToList());
+                return Ok(ciud.ToList());
+            }
+            else
+            {
+                return Problem();
+            }
+            
         }
 
 

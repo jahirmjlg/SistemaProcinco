@@ -70,7 +70,7 @@ namespace SistemaProcinco.API.Controllers
             public DateTime? FechaFin { get; set; }
             public String UsuarioCreacion { get; set; }
         }
-
+         
 
         public class PdfFooterHelper : PdfPageEventHelper
         {
@@ -238,16 +238,7 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpGet("DownloadPdf/{fileId}")]
-        public ActionResult DownloadPdf(string fileId)
-        {
-            if (_pdfCache.TryGetValue(fileId, out var pdfBytes))
-            {
-                return File(pdfBytes, "application/pdf", "Download_ReporteCursos.pdf");
-            }
 
-            return NotFound();
-        }
 
 
 
@@ -534,17 +525,6 @@ namespace SistemaProcinco.API.Controllers
             return NotFound();
         }
 
-
-        [HttpGet("DownloadPdfParticipantesFiltro/{fileId}")]
-        public ActionResult DownloadPdfParticipantesFiltro(string fileId)
-        {
-            if (_pdfCache.TryGetValue(fileId, out var pdfBytes))
-            {
-                return File(pdfBytes, "application/pdf", "Download_ReporteParticipantesFiltro.pdf");
-            }
-
-            return NotFound();
-        }
 
 
 
