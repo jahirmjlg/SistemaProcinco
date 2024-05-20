@@ -435,8 +435,6 @@ export class AppMenuComponent implements OnInit {
                             { label: 'Participantes Por Curso', icon: 'pi pi-file-pdf', routerLink: ['/pages/participantesporcurso'] },
 
                             { label: 'Reporte 2', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
-                            { label: 'Reporte 3', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
-                            { label: 'Reporte 4', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
                         ]
                     }
                 ]
@@ -449,7 +447,7 @@ export class AppMenuComponent implements OnInit {
 
 
                             {
-                                label: 'Dashboard 1',
+                                label: 'Dashboards',
                                 icon: 'pi pi-fw pi-database',
                                 routerLink: ['/uikit/charts']
                             }

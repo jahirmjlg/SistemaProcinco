@@ -28,6 +28,7 @@
     "@fullcalendar/timegrid": "^6.0.3",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "datatables": "^1.10.18",
     "datatables.net": "^2.0.5",
     "ngx-cookie-service": "^17.1.0",

@@ -1,45 +1,57 @@
 <div class="grid p-fluid">
     <div class="col-12 lg:col-6">
 
-        <!-- Dashboard #1 -->
-        <!-- <div class="card">
-            <h5>Linear Chart</h5>
-            <p-chart type="line" [data]="lineData" [options]="lineOptions"></p-chart>
-        </div> -->
-
         <div class="card">
-            <h5>Cantidad de Cursos Por Mes</h5>
-            <div style="display: block">
-                <p-chart type="bar" [data]="barData" [options]="lineOptions"></p-chart>
+            <h5>Top 5 cursos impartidos por mes</h5>
+            <div>
+              <label for="mesCursos">Selecciona un mes:</label>
+              <select id="mesCursos" (change)="onMonthChange($event)">
+                <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
+              </select>
             </div>
-        </div>
+            <canvas id="cursosChart"></canvas>
+          </div>
+
+          <div class="card">
+            <h5>Horas Impartidas por Categoría por Mes</h5>
+            <div>
+              <label for="mesHoras">Selecciona un mes:</label>
+              <select id="mesHoras" (change)="onMonthChange($event)">
+                <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
+              </select>
+            </div>
+            <canvas id="horasChart"></canvas>
+          </div>
 
 
-
-        <div class="card flex flex-column align-items-center">
-            <h5 class="text-left w-full">Pie Chart</h5>
-            <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
-        </div>
-
-        <div class="card flex flex-column align-items-center">
-            <h5 class="text-left w-full">Polar Area Chart</h5>
-            <p-chart type="polarArea" [data]="polarData" [options]="polarOptions"></p-chart>
-        </div>
     </div>
+
+
     <div class="col-12 lg:col-6">
-        <div class="card">
-            <h5>Bar Chart</h5>
-            <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
-        </div>
 
-        <div class="card flex flex-column align-items-center">
-            <h5 class="text-left w-full">Doughnut Chart</h5>
-            <p-chart type="doughnut" [data]="pieData" [options]="pieOptions"></p-chart>
-        </div>
+          <div class="card">
+            <h5>Top 5 Categorias impartidas por mes</h5>
+            <div>
+              <label for="mesCategorias">Selecciona un mes:</label>
+              <select id="mesCategorias" (change)="onMonthChange($event)">
+                <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
+              </select>
+            </div>
+            <canvas id="categoriasChart"></canvas>
+          </div>
 
-        <div class="card flex flex-column align-items-center">
-            <h5 class="text-left w-full">Radar Chart</h5>
-            <p-chart type="radar" [data]="radarData" [options]="radarOptions"></p-chart>
-        </div>
+
+            <div class="card">
+              <h5>Empleados Mejor Pagados por mes</h5>
+              <div>
+                <label for="mesEmpleados">Selecciona un mes:</label>
+                <select id="mesEmpleados" (change)="onMonthChange($event)">
+                  <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
+                </select>
+              </div>
+              <canvas id="empleadosChart"></canvas>
+            </div>
+
     </div>
+
 </div>
