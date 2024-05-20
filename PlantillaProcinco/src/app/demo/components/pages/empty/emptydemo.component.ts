@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { CursosImpartidosService } from '../../../../Services/cursosimpartidos.service';
+import { Chart, registerables  } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
     templateUrl: './emptydemo.component.html'
@@ -31,6 +33,8 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
             .subscribe((config) => {
                 this.initCharts();
             });
+
+            Chart.register(...registerables, ChartDataLabels);
     }
 
     ngOnInit() {
@@ -64,9 +68,9 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
         }, error => {
             console.error('Error fetching top 5 courses of the month', error);
         });
-    
 
-     
+
+
         this.cursosimpservice.getCursosImpartidosCategorias().subscribe(data => {
             const labels = data.map(item => item.cate_Descripcion);
             const values = data.map(item => item.vecesImpartido);
@@ -116,7 +120,7 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
         }, error => {
             console.error('Error fetching top paid employees', error);
         });
-    
+
 
         this.cursosimpservice.getHorasImpartidasPorCategoria().subscribe(data => {
             const labels = data.map(item => item.cate_Descripcion);
@@ -241,7 +245,7 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
                 }
             }
         };
-        
+
 
         this.polarData = {
             datasets: [{
