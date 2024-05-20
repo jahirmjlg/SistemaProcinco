@@ -1,39 +1,30 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import {CursosImpartidosService} from '../../../../Services/cursosimpartidos.service'
+import { CursosImpartidosService } from '../../../../Services/cursosimpartidos.service';
 
 @Component({
     templateUrl: './emptydemo.component.html'
 })
 export class EmptyDemoComponent implements OnInit, OnDestroy {
 
-    lineData: any;
-
     barData: any;
-
-
-    //DATOS DASH #1
-    cursosMesData: any;
-
-
     pieData: any;
-
     polarData: any;
-
     radarData: any;
-
     lineOptions: any;
-
     barOptions: any;
-
     pieOptions: any;
-
     polarOptions: any;
-
     radarOptions: any;
-
     subscription: Subscription;
+
+    // Variables para almacenar los datos del dashboard
+    cursosTop5Mes: any;
+    cursosCategorias: any;
+    empleadosMejorPagados: any;
+    horasPorCategoria: any;
+
     constructor(private layoutService: LayoutService, private cursosimpservice: CursosImpartidosService) {
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
@@ -45,18 +36,106 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initCharts();
 
-            // this.cursosimpservice.getCursoPorMesData().subscribe((Response: any)=> {
-            //     console.log(Response.data);
-            //     this.cursosMesData = Response.data;
+        this.cursosimpservice.getCursosImpartidosTop5Mes().subscribe(data => {
+            const labels = data.map(item => item.curso_Descripcion);
+            const values = data.map(item => item.vecesImpartido);
+            this.cursosTop5Mes = {
+                labels: labels,
+                datasets: [
+                    {
+                        data: values,
+                        backgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF'
+                        ],
+                        hoverBackgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF'
+                        ]
+                    }
+                ]
+            };
+        }, error => {
+            console.error('Error fetching top 5 courses of the month', error);
+        });
+    
 
-            //   }, error=>{
-            //     console.log(error);
-            //   });
+     
+        this.cursosimpservice.getCursosImpartidosCategorias().subscribe(data => {
+            const labels = data.map(item => item.cate_Descripcion);
+            const values = data.map(item => item.vecesImpartido);
+            this.cursosCategorias = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Cursos Impartidos por Categorías',
+                        backgroundColor: [
+                            '#66BB6A',
+                            '#FFA726',
+                            '#42A5F5',
+                            '#AB47BC',
+                            '#FF7043'
+                        ],
+                        hoverBackgroundColor: [
+                            '#81C784',
+                            '#FFB74D',
+                            '#64B5F6',
+                            '#BA68C8',
+                            '#FF8A65'
+                        ],
+                        data: values
+                    }
+                ]
+            };
+        }, error => {
+            console.error('Error fetching course categories', error);
+        });
 
+
+
+        this.cursosimpservice.getEmpleadosMejorPagados().subscribe(data => {
+            const labels = data.map(item => item.empl_Nombre);
+            const values = data.map(item => item.empl_Total);
+            this.empleadosMejorPagados = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Empleados Mejor Pagados',
+                        backgroundColor: '#FFA726',
+                        borderColor: '#FB8C00',
+                        data: values
+                    }
+                ]
+            };
+        }, error => {
+            console.error('Error fetching top paid employees', error);
+        });
+    
+
+        this.cursosimpservice.getHorasImpartidasPorCategoria().subscribe(data => {
+            const labels = data.map(item => item.cate_Descripcion);
+            const values = data.map(item => item.horasTotales);
+            this.horasPorCategoria = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Horas Impartidas por Categoría',
+                        backgroundColor: '#AB47BC',
+                        borderColor: '#8E24AA',
+                        data: values
+                    }
+                ]
+            };
+        }, error => {
+            console.error('Error fetching hours by category', error);
+        });
     }
-
-
-
 
     initCharts() {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -162,68 +241,7 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
                 }
             }
         };
-
-
-        //Dashboard #1
-        this.lineData = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                    borderColor: documentStyle.getPropertyValue('--primary-500'),
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                    borderColor: documentStyle.getPropertyValue('--primary-200'),
-                    tension: .4
-                }
-            ]
-        };
-
-
-
-
-
-
-
-
-
-        this.lineOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-            }
-        };
+        
 
         this.polarData = {
             datasets: [{
@@ -313,5 +331,4 @@ export class EmptyDemoComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
         }
     }
-
 }

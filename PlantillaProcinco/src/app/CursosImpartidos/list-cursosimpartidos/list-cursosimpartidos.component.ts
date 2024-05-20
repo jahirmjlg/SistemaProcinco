@@ -60,6 +60,9 @@ export class ListCursosimpartidosComponent {
 
     public safeUrl: SafeResourceUrl;
 
+
+
+
     cols: any[] = [];
     statuses: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
@@ -79,7 +82,10 @@ export class ListCursosimpartidosComponent {
 
     crearCursosImpartidosForm: FormGroup
     editarCursosImpartidosForm: FormGroup
-
+ cursosTop5Mes: any[] = [];
+  cursosCategorias: any[] = [];
+  empleadosMejorPagados: any[] = [];
+  horasPorCategoria: any[] = [];
     constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router,
          private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule,
          private sanitizer: DomSanitizer, private service: ServiceService) { }
@@ -126,6 +132,32 @@ export class ListCursosimpartidosComponent {
 
         });
 
+
+        this.cursosimpartidosservice.getCursosImpartidosTop5Mes().subscribe((response: any) => {
+          this.cursosTop5Mes = response;
+        }, error => {
+          console.log(error);
+        });
+    
+
+
+        this.cursosimpartidosservice.getCursosImpartidosCategorias().subscribe((response: any) => {
+          this.cursosCategorias = response;
+        }, error => {
+          console.log(error);
+        });
+    
+        this.cursosimpartidosservice.getEmpleadosMejorPagados().subscribe((response: any) => {
+          this.empleadosMejorPagados = response;
+        }, error => {
+          console.log(error);
+        });
+    
+        this.cursosimpartidosservice.getHorasImpartidasPorCategoria().subscribe((response: any) => {
+          this.horasPorCategoria = response;
+        }, error => {
+          console.log(error);
+        });
 
         // Respuesta de la api
         this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
