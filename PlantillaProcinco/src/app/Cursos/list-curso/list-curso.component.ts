@@ -335,8 +335,8 @@ export class ListCursoComponent {
                 else{
                     console.log(response)
                 this.deleteCursoBool = false;
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Eliminar el Registro', life: 3000 });
-            }
+                this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
+              }
         },
     });
 

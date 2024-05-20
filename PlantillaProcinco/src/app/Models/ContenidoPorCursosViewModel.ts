@@ -62,7 +62,7 @@ export class ContenidoPorCursos {
     cont_Id!:String;
     cont_Descripcion?:String;
     cont_DuracionHoras !: String;
-    curso_Id!:String;
+    curso_Id!:number;
     curso_Descripcion?:String;
     curso_DuracionHoras!:String;
     curso_Imagen!:String;

@@ -1,6 +1,6 @@
 import { an } from "@fullcalendar/core/internal-common";
    
-   export class Curso {
+export class Curso {
     curso_Id !: Number;
     curso_Descripcion  !: String;
     curso_DuracionHoras  !: Number;
@@ -13,11 +13,6 @@ import { an } from "@fullcalendar/core/internal-common";
     curso_FechaModificacion !: String;
     creacion !: String;
     modificacion !: String;
-}
-
-export class dropCursos{
-    curso_Id !: Number;
-    curso_Descripcion  !: String;
 }
 
 
@@ -47,9 +42,11 @@ export class CursoEnviar {
     txtCategoria: string;
     contenidosSeleccionados: any;
 }
-export class dropCurso{
-    value?:String;
-    text?:String;
+
+
+export class dropCursos{
+    curso_Id !: Number;
+    curso_Descripcion  !: String;
 }
 
 export class Fill{

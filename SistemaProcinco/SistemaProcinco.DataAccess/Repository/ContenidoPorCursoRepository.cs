@@ -181,7 +181,7 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("Curso_Id", id);
+                parameter.Add("ConPc_Id", id);
                 return db.Query<tbContenidoPorCurso>(ScriptsDatabase.ContenidoPorCursoBuscar, parameter, commandType: CommandType.StoredProcedure);
             }
         }
@@ -192,7 +192,7 @@ namespace SistemaProcinco.DataAccess.Repository
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("Curso_Id", id);
-                return db.Query<tbCursos>(ScriptsDatabase.ContenidoPorCursoBuscar, parameter, commandType: CommandType.StoredProcedure);
+                return db.Query<tbCursos>(ScriptsDatabase.CursosBuscar, parameter, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -224,7 +224,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("Curso_Id", Curso_Id);
 
-                var result = db.QueryFirst(ScriptsDatabase.ContenidoPorCursoEliminar, parameter, commandType: CommandType.StoredProcedure);
+                var result = db.QueryFirst(ScriptsDatabase.ContenidoPorCursoEliminarEliminado, parameter, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = (result.Resultado == 1) ? "Exito" : "Error" };
             }
         }

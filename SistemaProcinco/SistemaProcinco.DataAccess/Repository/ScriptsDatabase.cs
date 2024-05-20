@@ -131,7 +131,6 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string CategoriasEliminar = "[Pro].[SP_Categoria_Eliminar]";
         public static string CategoriasBuscar = "[Pro].[SP_Categoria_Buscar]";
         #endregion
-
         #region Contenido
         public static string ContenidoPorCategoriaBuscar = "[Pro].[SP_ContenidoPorCategoria_Seleccionar]";
         public static string ContenidoListar = "[Pro].[SP_Contenido_Seleccionar]";
@@ -146,6 +145,8 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string ContenidoPorCursoCrear = "[Pro].[SP_ContenidoPorCurso_Insertar]";
         public static string ContenidoPorCursoActualizar = "[Pro].[SP_ContenidoPorCurso_Actualizar]";
         public static string ContenidoPorCursoEliminar = "[Pro].[SP_ContenidoPorCurso_Eliminar]";
+        public static string ContenidoPorCursoEliminarEliminado = "[Pro].[SP_ContenidoPorCursoEliminado_Eliminar]";
+
         public static string ContenidoPorCursoBuscar = "[Pro].[SP_ContenidoPorCurso_Buscar]";
         public static string CPCCursoBuscar = "[Pro].[SP_ContenidoPorCurso_BuscarCurso]";
         public static string CPCContenidosBuscar = "[Pro].[SP_ContenidoPorCurso_BuscarContenido]";

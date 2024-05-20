@@ -259,10 +259,21 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("Curso_Id", Curso_Id);
 
-                var result = db.QueryFirst(ScriptsDatabase.CursosEliminar, parameter, commandType: CommandType.StoredProcedure);
-                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = (result.Resultado == 1) ? "Exito" : "Error" };
+                var result = db.QueryFirstOrDefault<dynamic>(ScriptsDatabase.CursosEliminar, parameter, commandType: CommandType.StoredProcedure);
+
+                if (result == null)
+                {
+                    return new RequestStatus { CodeStatus = 0, MessageStatus = "Error: No se recibió un resultado del procedimiento almacenado" };
+                }
+
+                return new RequestStatus
+                {
+                    CodeStatus = result.Resultado,
+                    MessageStatus = (result.Resultado == 1) ? "Exito" : "Error"
+                };
             }
         }
+
 
 
 

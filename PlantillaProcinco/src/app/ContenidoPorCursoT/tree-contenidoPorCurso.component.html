@@ -1,91 +1,63 @@
 <p-toast></p-toast>
-<!-- DESPLEGAR FORMULARIO DE INSERTAR -->
-        <div class="" [ngClass]="{'collapse': Collapse === false}">
-            <div id="error-span" class="collapse">Error: No se pudo enviar el formulario</div>
 
-            <form [formGroup]="crearCursoForm" (ngSubmit)="onSubmitInsert()">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Agregar Curso</h4>
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-12">
-                                <label id="cursoIdLabel">Mensaje: </label>
-                            </div>
+<!-- Formulario de Insertar -->
+<div class="" [ngClass]="{'collapse': Collapse === false}">
+    <form [formGroup]="crearCursoForm" (ngSubmit)="onSubmitInsert()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Agregar Curso</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+                        <label id="cursoIdLabel">Mensaje: </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="col-sm-2">
+                            <label for="firstname2" class="form-label">Curso</label>
                         </div>
-            
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="col-sm-2">
-                                <label for="firstname2" class="form-label">Curso</label>
-                                </div>
-                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid}"/>
-                                <small 
-                                class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
-                            </div>
-                            <div class="col-6 mt-2">
-
-                                    <label for="firstname2">Duracion Horas</label>
-
-
-                                <input pInputText id="firstname2" class="form-control" formControlName="curso_DuracionHoras" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid}" />
-                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.controls['curso_DuracionHoras'].invalid" style="color: red !important;">Cantidad de Horas Requerida</small>
-                            </div>
+                        <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearCursoForm.controls['curso_Descripcion'].invalid}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="isSubmit && crearCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label for="firstname2">Duracion Horas</label>
+                        <input pInputText id="firstname2" class="form-control" formControlName="curso_DuracionHoras" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearCursoForm.controls['curso_DuracionHoras'].invalid}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="isSubmit && crearCursoForm.controls['curso_DuracionHoras'].invalid" style="color: red !important;">Cantidad de Horas Requerida</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="col-sm-2">
+                            <label for="firstname2">Categoria</label>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-
-                                <div class="col-sm-2">
-                                <label for="firstname2">Categoria</label>
-                                </div>
-
-
-                                <select formControlName="cate_Id" class="form-control" pInputText id="" required autofocus>
-                                <option *ngFor="let cate of dropCategorias" [value]="cate.value">{{ cate.text }}</option>
-                            </select>
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.get('cate_Id').value === '0'" style="color: red !important;">Categoria Requerida</small>
-
-                            </div>
-
-                            <div class="col-6">
-
-                                <div class="col-sm-2">
-                                <label for="firstname2">Imagen</label>
-                                </div>
-
-
-                                <div class="field md:col-sm-6">
-                                    <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" (onSelect)="onUpload($event)" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
-                                    <small *ngIf="isSubmit && crearCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-6">
-
-                            <div class="col-sm-2">
-                            <label for="firstname2">Empresa</label>
-                            </div>
-
-
-                            <select formControlName="empre_Id" class="form-control" pInputText id="" required autofocus>
-                            <option *ngFor="let empre of dropEmpresas" [value]="empre.value">{{ empre.text }}</option>
+                        <select formControlName="cate_Id" class="form-control" pInputText id="" required autofocus>
+                            <option *ngFor="let cate of dropCategorias" [value]="cate.value">{{ cate.text }}</option>
                         </select>
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursoForm.get('empre_Id').value === '0'" style="color: red !important;">Empresa Requerida</small>
-
+                        <small class="ng-dirty ng-invalid" *ngIf="isSubmit && crearCursoForm.get('cate_Id').value === '0'" style="color: red !important;">Categoria Requerida</small>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-sm-2">
+                            <label for="firstname2">Imagen</label>
                         </div>
-                        <!-- <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"
-                        (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)">
-                </p-tree> -->
-                   
-                <p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1">
+                        <div class="field md:col-sm-6">
+                            <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true" label="Cargar Imagen" (onSelect)="onUpload($event)" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
+                            <small *ngIf="isSubmit && crearCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="col-sm-2">
+                        <label for="firstname2">Empresa</label>
+                    </div>
+                    <select formControlName="empre_Id" class="form-control" pInputText id="" required autofocus>
+                        <option *ngFor="let empre of dropEmpresas" [value]="empre.value">{{ empre.text }}</option>
+                    </select>
+                    <small class="ng-dirty ng-invalid" *ngIf="isSubmit && crearCursoForm.get('empre_Id').value === '0'" style="color: red !important;">Empresa Requerida</small>
+                </div>
+                <p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)">
                     <ng-template let-node pTemplate="default">
-                        <p-treeNode [node]="node" [leaf]="!node.children">
-                            {{ node.label }}
-                        </p-treeNode>
+                        <span>{{ node.label }}</span>
                     </ng-template>
                 </p-tree>
                 <div class="row mt-6">
@@ -93,126 +65,115 @@
                         <button pButton icon="pi pi-check" type="submit" label="Agregar" class="btn btn-primary"></button>
                     </div>
                     <div class="col-md-offset-2 col-6" id="">
-                        <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
-                    </div>
-                </div>
-
-
-                        <!-- prueba noton  -->
-<!-- 
-                        <div style="display: flex; justify-content: flex-end; margin-top: 1rem; grid-gap: 5px;">
-                            <button pButton  type="button" (click)="onSubmit()" label="Agregar"  icon="pi pi-check" size="small" class="p-button-outlined"></button>
-            
-                          </div> -->
-                    </div>
-                </div>
-
-
-            </form>
-
-
-
-		
-        </div>
-
-
-
-        <!-- DESPLEGAR FORMULARIO DE EDITAR -->
-    <div class="" [ngClass]="{'collapse': CollapseEdit === false}">
-
-        <form [formGroup]="editarCursoForm" (ngSubmit)="onSubmitEdit()">
-            <div class="card">
-                <div class="card-body">
-                    <h4>Editar Curso</h4>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="col-sm-2">
-                            <label for="firstname2" class="form-label">Curso</label>
-                            </div>
-                            <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid}"/>
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
-                        </div>
-                        <div class="col-6 mt-2">
-                                <label for="firstname2">Duracion Horas</label>
-                            <input pInputText id="firstname2" class="form-control" formControlName="curso_DuracionHoras" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid}" />
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid" style="color: red !important;">Cantidad de Horas Requerida</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-
-                            <div class="col-sm-2">
-                            <label for="firstname2">Categoria</label>
-                            </div>
-
-
-                            <select formControlName="cate_Id" class="form-control" pInputText id="" required autofocus>
-                            <option *ngFor="let cate of dropCategorias" [value]="cate.value">{{ cate.text }}</option>
-                        </select>
-                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.get('cate_Id').value === '0'" style="color: red !important;">Categoria Requerida</small>
-
-                        </div>
-
-                        <div class="col-6">
-
-                            <label for="firstname2">Imagen</label>
-                            <div class="">
-                                <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
-                                <small *ngIf="isSubmitEdit && editarCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerido</small>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <p-tree [value]="categoriasConContenidos" selectionMode="checkbox" [(selection)]="selectedFiles1">
-                        <ng-template let-node pTemplate="default">
-                            <p-treeNode [node]="node" [leaf]="!node.children">
-                                {{ node.label }}
-                            </p-treeNode>
-                        </ng-template>
-                    </p-tree>
-
-                    <div class="row mt-3">
-                        <div class="col-md-offset-2 col-3">
-                            <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
-                        </div>
-                        <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
-                        </div>
+                        <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
                     </div>
                 </div>
             </div>
-        </form>
-
-    </div>
-
-
-
-
-
-    <!-- DESPLEGAR TABLA DE LISTADO -->
-    <div class="card" [ngClass]="{'collapse': Tabla === false}">
-        <div class="card-header">
-            <header class="w-100 d-flex justify-content-between p-2">
-                <h2>Listado de Cursos</h2>
-                <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
-
-            </header>
         </div>
+    </form>
+</div>
 
+
+
+
+
+
+
+
+<!-- DESPLEGAR FORMULARIO DE EDITAR -->
+<div class="" [ngClass]="{'collapse': CollapseEdit === false}">
+    <form [formGroup]="editarCursoForm" (ngSubmit)="onSubmitEdit()">
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar Curso</h4>
+                <hr />
+                <!-- Campos del formulario de edición -->
+                <div class="row">
+                    <div class="col">
+                        <label for="curso_Descripcion" class="form-label">Descripción del Curso</label>
+                        <input pInputText id="curso_Descripcion" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid}" />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Descripción Requerida</small>
+                    </div>
+                    <div class="col">
+                        <label for="curso_DuracionHoras" class="form-label">Duración en Horas</label>
+                        <input pInputText id="curso_DuracionHoras" class="form-control" formControlName="curso_DuracionHoras" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid}" />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_DuracionHoras'].invalid" style="color: red !important;">Duración Requerida</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="curso_Imagen" class="form-label">Imagen</label>
+                        <input pInputText id="curso_Imagen" class="form-control" formControlName="curso_Imagen" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Imagen'].invalid}" />
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_Imagen'].invalid" style="color: red !important;">Imagen Requerida</small>
+                    </div>
+                    <div class="col">
+                        <label for="empre_Id" class="form-label">Empresa</label>
+                        <select formControlName="empre_Id" class="form-control" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['empre_Id'].invalid}">
+                            <option *ngFor="let empresa of dropEmpresas" [value]="empresa.value">{{ empresa.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['empre_Id'].invalid" style="color: red !important;">Empresa Requerida</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="cate_Id" class="form-label">Categoría</label>
+                        <select formControlName="cate_Id" class="form-control" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['cate_Id'].invalid}">
+                            <option *ngFor="let categoria of dropCategorias" [value]="categoria.value">{{ categoria.text }}</option>
+                        </select>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['cate_Id'].invalid" style="color: red !important;">Categoría Requerida</small>
+                    </div>
+                </div>
+                <!-- TreeView -->
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="treeview" class="form-label">Contenidos del Curso</label>
+                        <p-tree
+                        [value]="categoriasConContenidos"
+                        selectionMode="checkbox"
+                        [(selection)]="selectedFilesEdit"
+                        (onNodeSelect)="onNodeSelect($event)"
+                        (onNodeUnselect)="onNodeUnselect($event)"
+                        [propagateSelectionUp]="false"
+                        [propagateSelectionDown]="false"
+                    >
+                        <ng-template let-node pTemplate="default">
+                            <span>{{ node.label }}</span>
+                        </ng-template>
+                    </p-tree>
+                    
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-offset-2 col-3">
+                        <button pButton icon="pi pi-check" type="submit" label="Editar" class="btn btn-primary"></button>
+                    </div>
+                    <div class="col-md-offset-2 col-3" id="">
+                        <button pButton icon="pi pi-times" type="button" (click)="CollapseEdit=false; Tabla=true; isSubmitEdit=false" label="Cancelar" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- Tabla de Listado de Cursos -->
+<div class="card" [ngClass]="{'collapse': Tabla === false}">
+    <div class="card-header">
+        <header class="w-100 d-flex justify-content-between p-2">
+            <h2>Listado de Cursos</h2>
+            <button (click)="Collapse=true; Tabla=false" class="btn btn-primary" pButton icon="pi pi-plus" style="max-height: 40px; max-width:150px;" label="Agregar"></button>
+        </header>
+    </div>
     <div class="card-body m-2 mt-4 p-3">
-
-
         <div class="card px-6 py-6">
-
-            <p-table #dt [value]="curso" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="curso" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['curso_Descripcion','categoria']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto" />
                         </span>
                     </div>
                 </ng-template>
@@ -231,22 +192,19 @@
                         <td>{{curs.curso_Id}}</td>
                         <td>{{curs.curso_Descripcion}}</td>
                         <td>{{curs.curso_DuracionHoras}}</td>
-                        <td> <img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{curs.curso_Imagen}}" style="height: 40px; width: 45px;" alt=""></td>
+                        <td><img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{curs.curso_Imagen}}" style="height: 40px; width: 45px;" alt=""></td>
                         <td>{{curs.categoria}}</td>
-
                         <td>
-                          <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(curs.curso_Id)"><i class="pi pi-file-edit "></i>Editar</button> |
-                          <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(curs.curso_Id)"><i class="pi pi-file"></i>Detalle</button> |
-                          <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCurso(curs.curso_Id)"><i class="pi pi-trash"></i>Eliminar</button>
+                            <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(curs.curso_Id)"><i class="pi pi-file-edit"></i>Editar</button> |
+                            <button class="btn btn-warning fa fa-address-card btn-sm" (click)="detalles(curs.curso_Id)"><i class="pi pi-file"></i>Detalle</button> |
+                            <button class="btn btn-danger fa fa-window-close btn-sm" (click)="deleteCurso(curs.curso_Id)"><i class="pi pi-trash"></i>Eliminar</button>
                         </td>
-                      </tr>
+                    </tr>
                 </ng-template>
             </p-table>
         </div>
-
     </div>
-    </div>
-
+</div>
 
 
 
@@ -335,26 +293,20 @@
 
 
 
-    <!-- DESPLEGAR MODAL DELETE -->
-    <p-dialog [(visible)]="deleteCursoBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
-        <div class="flex align-items-center justify-content-center">
-            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <h4><b>Desea eliminar el registro?</b></h4>
-        </div>
-            <div class="row mt-5">
-                <div class="col-4" id="">
-                    <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
-                </div>
-                <div class="col-4">
-                    <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteCursoBool = false"></button>
-                </div>
+
+        <!-- DESPLEGAR MODAL DELETE -->
+        <p-dialog [(visible)]="deleteCursoBool" header="Eliminar Registro" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <h4><b>Desea eliminar el registro?</b></h4>
             </div>
-    </p-dialog>
-
-
-
-
-
-<br>
-
-	
+                <div class="row mt-5">
+                    <div class="col-4" id="">
+                        <button pButton pRipple icon="pi pi-check" class="btn btn-danger" style="width: 120px;" label="Confirmar" (click)="confirmDelete()"></button>
+                    </div>
+                    <div class="col-4">
+                        <button pButton pRipple icon="pi pi-times" class="btn btn-warning" style="width: 120px;" label="Cancelar" (click)="deleteCursoBool = false"></button>
+                    </div>
+                </div>
+        </p-dialog>
+    

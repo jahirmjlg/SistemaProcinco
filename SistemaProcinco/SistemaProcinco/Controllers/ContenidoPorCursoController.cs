@@ -217,7 +217,6 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-
         [HttpGet("FillDetalles/{id}")]
         public IActionResult FillDetalles(int id)
         {
@@ -232,16 +231,11 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-
-
-
         [HttpPut("Edit")]
         public IActionResult Update(FormData formData)
         {
-
             var msj = new ServicesResult();
             List<int> contenidosSeleccionados = formData.contenidosSeleccionados;
-
 
             var modelo = new tbCursos()
             {
@@ -253,7 +247,6 @@ namespace SistemaProcinco.API.Controllers
                 Empre_Id = formData.txtxEmpresa,
                 Curso_UsuarioCreacion = 1,
                 Curso_FechaCreacion = DateTime.Now
-
             };
             var list = _procincoService.EditarCurso(modelo);
 
@@ -270,12 +263,9 @@ namespace SistemaProcinco.API.Controllers
                 };
 
                 msj = _procincoService.InsertarContenidosCursos(modelo2);
-
             }
 
-
             return Ok(new { success = true, message = msj.Message });
-
         }
 
 

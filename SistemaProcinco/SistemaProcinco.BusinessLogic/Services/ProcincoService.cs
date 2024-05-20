@@ -1352,6 +1352,10 @@ namespace SistemaProcinco.BusinessLogic.Services
                 return result.Error(ex);
             }
         }
+
+
+
+
         public ServicesResult EliminarCurso(string Curso_Id)
         {
             var result = new ServicesResult();
@@ -1360,19 +1364,18 @@ namespace SistemaProcinco.BusinessLogic.Services
                 var list = _cursosRepository.Delete1(Curso_Id);
                 if (list.CodeStatus > 0)
                 {
-                    return result.Ok($"La accion ha sido existosa", list);
+                    return result.Ok("La acción ha sido exitosa", list);
                 }
                 else
                 {
-                    return result.Error("No se pudo realizar la accion");
+                    return result.Error("No se pudo realizar la acción");
                 }
             }
             catch (Exception ex)
             {
-                return result.Error(ex);
+                return result.Error(ex.Message);
             }
         }
-
 
 
         public string InsertarCurso(tbCursos item)
@@ -1594,5 +1597,8 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
         #endregion
+
+
+
     }
 }

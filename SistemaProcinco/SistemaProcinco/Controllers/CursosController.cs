@@ -152,18 +152,18 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-        [HttpDelete("CursoEliminar")]
-        public IActionResult Delete(int Curso_Id)
+        [HttpDelete("Delete/{id}")]
+        public IActionResult Delete(string id)
         {
-            var list = _procincoService.EliminarCursos(Curso_Id);
-            if (list.Success == true)
+            if (string.IsNullOrEmpty(id))
             {
-                return Ok(list);
+                return BadRequest(new { success = false, message = "El ID del curso no puede ser nulo o vacío." });
             }
-            else
-            {
-                return Problem();
-            }
+
+            var list = _procincoService.EliminarContenidosCursos(id);
+            var list2 = _procincoService.EliminarCurso(id);
+
+            return Ok(new { success = list2.Success, message = list2.Message });
         }
 
         [HttpGet("CursosBuscar/{id}")]
