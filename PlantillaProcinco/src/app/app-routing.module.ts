@@ -6,6 +6,12 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 @NgModule({
     imports: [
         RouterModule.forRoot([
+            { path: 'reestablecer', data: { breadcrumb: 'EnviarCodigo' }, loadChildren: () => import('./restablecer/validacion/validacion.module').then(m => m.ValidacionModule) },
+            { path: 'compararcodigo', data: { breadcrumb: 'CompararCodigo' }, loadChildren: () => import('./restablecer/comparar/comparar.module').then(m => m.CompararModule) },
+
+            { path: 'reestablecer1', data: { breadcrumb: 'Restablecer' }, loadChildren: () => import('./restablecer/restablecer/restablecer.module').then(m => m.restablecerModule)},
+
+
             { path: 'login', loadChildren: () => import('./demo/components/auth/login/login.module').then(m => m.LoginModule) },
             { path: '', redirectTo: '/login', pathMatch: 'full' },
             {

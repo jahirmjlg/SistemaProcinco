@@ -46,6 +46,11 @@ export class LoginComponent {
      errorMessage: string;
 
 
+     reestablecer()
+     {
+        window.location.replace('/reestablecer');
+
+     }
 
 
      onSubmit(): void {

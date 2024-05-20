@@ -40,12 +40,6 @@ const routes: Routes = [
 
     { path: 'cursosimpartidos', data: { breadcrumb: 'CursosImpartidos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule), canActivate: [AuthGuard] },
 
-    { path: 'enviarcodigo', data: { breadcrumb: 'EnviarCodigo' }, loadChildren: () => import('../../../restablecer/validacion/validacion.module').then(m => m.ValidacionModule), canActivate: [AuthGuard] },
-
-    { path: 'compararcodigo', data: { breadcrumb: 'CompararCodigo' }, loadChildren: () => import('../../../restablecer/comparar/comparar.module').then(m => m.CompararModule), canActivate: [AuthGuard] },
-
-    { path: 'restablecer', data: { breadcrumb: 'Restablecer' }, loadChildren: () => import('../../../restablecer/restablecer/restablecer.module').then(m => m.restablecerModule), canActivate: [AuthGuard] },
-
     { path: 'categorias', data: { breadcrumb: 'Categorias' }, loadChildren: () => import('../../../Categorias/list-categoria/list-categoria.module').then(m => m.ListCategoriaModule), canActivate: [AuthGuard] },
 
     { path: 'drag', data: { breadcrumb: 'DragDrop' }, loadChildren: () => import('../../../CursosImpartidosPdf/listado-cursos-impartidos-pdf/list-mostrarDrop-routing.module').then(m => m.ListMostrarDropRoutingModule), canActivate: [AuthGuard] },

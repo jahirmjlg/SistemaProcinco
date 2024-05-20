@@ -5,7 +5,7 @@
             <div class="text-center mb-5">
                 <img src="assets/layout/images/ProcincoPNG.png" alt="Image" height="50" class="mb-3">
                 <div class="text-900 text-3xl font-medium mb-3"></div>
-                <span class="text-700 font-medium">Ingrese su usuario:</span>
+                <span class="text-700 font-medium" style="font-weight: bold;">Enviar código de reestablecimiento</span>
             </div>
 
             <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -16,8 +16,8 @@
 
                     <span class="error collapse" id="error-span">Usuario Inválido</span>
 
-                   
-                    <button type="submit" pButton pRipple label="Enviar Verificacion" class="w-full p-3 text-xl btn btn-primary" style="max-width: 200px;"></button>
+
+                    <button type="submit" pButton pRipple label="Enviar Verificacion" class="w-full p-3 text-xl btn btn-primary mt-4" style="max-width: 200px;"></button>
                 </div>
             </form>
         </div>

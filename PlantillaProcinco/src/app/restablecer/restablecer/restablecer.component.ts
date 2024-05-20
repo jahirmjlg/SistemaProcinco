@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RestablecerService } from 'src/app/Services/restablecer.service';
-import { Contra } from 'src/app/Models/loginViewModel'; 
+import { Contra } from 'src/app/Models/loginViewModel';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -16,6 +16,8 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class RestablecerComponent {
   restaForm: FormGroup;
+
+  isSubmit:boolean = false;
 
   cols: any[] = [];
   statuses: any[] = [];
@@ -34,7 +36,7 @@ export class RestablecerComponent {
    ngOnInit() {
 
     this.restaForm = new FormGroup({
-      usua_Id: new FormControl("",Validators.required),
+      usua_VerificarCorreo: new FormControl("",Validators.required),
       usua_Contraseña: new FormControl("",Validators.required),
     });
 
@@ -45,6 +47,7 @@ export class RestablecerComponent {
 
    onSubmitEdit(): void {
 
+    this.isSubmit = true;
 
     if (this.restaForm.valid) {
       const ciudadData: Contra = this.restaForm.value;
@@ -54,7 +57,7 @@ export class RestablecerComponent {
             if (response.code == 200) {
 
 
-                this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Contraseña Reestablecida Exitosamente', life: 3000 });
                 console.log(response)
                 // this.router.navigate(['/pages/estados']);
                   this.router.navigate(['/pages/empty']);
@@ -62,11 +65,12 @@ export class RestablecerComponent {
 
             } else {
 
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo reestablecer la contraseña', life: 3000 });
             }
 
         },
         error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo reestablecer la contraseña', life: 3000 });
             console.log(error);
         }
       );

@@ -166,7 +166,7 @@ namespace SistemaProcinco.DataAccess.Repository
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Usua_Id", item.Usua_Id);
+                parametro.Add("@Usua_VerificarCorreo", item.Usua_VerificarCorreo);
                 parametro.Add("@Usua_Contraseña", item.Usua_Contraseña);
                 parametro.Add("@Usua_UsuarioModificacion", item.Usua_UsuarioModificacion);
                 parametro.Add("@Usua_FechaModificacion", item.Usua_FechaModificacion);

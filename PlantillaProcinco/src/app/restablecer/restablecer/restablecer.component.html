@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
@@ -5,23 +7,31 @@
             <div class="text-center mb-5">
                 <img src="assets/layout/images/ProcincoPNG.png" alt="Image" height="50" class="mb-3">
                 <div class="text-900 text-3xl font-medium mb-3"></div>
-                <span class="text-700 font-medium">Ingrese su usuario:</span>
+                <span class="text-700 font-medium">Reestablecer Contraseña</span>
             </div>
 
             <form  [formGroup]="restaForm" (ngSubmit)="onSubmitEdit()">
                 <div>
-                    <input id="ide"  type="text"  formControlName="usua_Id"   >
 
-                    <label class="block text-900 text-xl font-medium mb-2">Contraseña</label>
-                    
+                    <label class="block text-900 text-xl font-medium mb-2">Código de Verificación</label>
+
+                    <input id="contra" type="text" placeholder="código de verificación" formControlName="usua_VerificarCorreo" class="w-full md:w-30rem form-control" >
+                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && restaForm.controls['usua_VerificarCorreo'].invalid" style="color: red !important;">Código requerido</small>
+
+
+
+
+
+
+                    <label class="block text-900 text-xl font-medium mb-2 mt-3">Ingrese su Nueva Contraseña</label>
+
                     <input id="contra" type="text" placeholder="Nueva Contraseña" formControlName="usua_Contraseña" class="w-full md:w-30rem form-control" >
-                    
-                    <span id="validarcontra" class="text-danger mb-5 collapse">El campo contraseña es obligatorio.</span>
+                    <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && restaForm.controls['usua_Contraseña'].invalid" style="color: red !important;">Nueva contraseña requerida</small>
 
-                    <span class="error collapse" id="error-span">Contraseña Inválida</span>
 
-                   
-                    <button type="submit" pButton label="Enviar Codigo" class="w-full p-1 text-xl btn btn-primary" style="max-width: 150px;"></button>
+
+                    <button type="submit" pButton pRipple label="Enviar Codigo" class="w-full p-3 text-xl btn btn-primary mt-4" style="max-width: 200px;"></button>
+
                 </div>
             </form>
         </div>

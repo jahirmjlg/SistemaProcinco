@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValidarService } from 'src/app/Services/validar.service'; 
-import { Login } from 'src/app/Models/loginViewModel'; 
-import { emptyInputValidator } from 'src/app/demo/components/auth/login/CustomValidatorss'; 
+import { ValidarService } from 'src/app/Services/validar.service';
+import { Login } from 'src/app/Models/loginViewModel';
+import { emptyInputValidator } from 'src/app/demo/components/auth/login/CustomValidatorss';
 
 import { Router } from '@angular/router';
 
@@ -70,7 +70,7 @@ export class ValidacionComponent {
                     this.cookieService.set('namee', response.data.empl_Nombre);
 
                     console.log(response)
-                    this.router.navigate(['/pages/compararcodigo']);
+                    this.router.navigate(['/reestablecer1']);
                 } else {
 
                     errorSpan.classList.remove('collapse');

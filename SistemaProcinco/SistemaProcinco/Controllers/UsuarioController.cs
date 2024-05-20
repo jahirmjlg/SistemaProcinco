@@ -185,7 +185,7 @@ namespace SistemaProcinco.API.Controllers
           
             var modelo = new tbUsuarios()
             {
-                Usua_Id = item.Usua_Id,
+                Usua_VerificarCorreo = item.Usua_VerificarCorreo,
                 Usua_Contraseña = item.Usua_Contraseña,
                 Usua_UsuarioModificacion = 1,
                 Usua_FechaModificacion = DateTime.Now,

@@ -5,13 +5,13 @@ export class Login {
 
   }
 
-  
+
   export class Codigo{
     usua_VerificarCorreo !: String;
 
   }
 
   export class Contra{
-    usua_Id !: String;
+    usua_VerificarCorreo !: String;
     usua_Contraseña  !: String;
   }

@@ -358,8 +358,6 @@ export class AppMenuComponent implements OnInit {
                         items: [
                             { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/pages/usuarios'] },
                             { label: 'Roles', icon: 'pi pi-fw pi-user', routerLink: ['/pages/roles'] },
-                            { label: 'Login', icon: 'pi pi-fw pi-user', routerLink: ['/auth/login'] },
-                            { label: 'enviar codigo', icon: 'pi pi-fw pi-user', routerLink: ['/pages/enviarcodigo'] }
                         ]
                     }
                 ]
