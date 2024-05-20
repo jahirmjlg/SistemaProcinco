@@ -147,7 +147,7 @@ export class treeContendioPorCursoComponent implements OnInit {
             formData.append('file', file, uniqueFileName);
             this.cursoService.upload(formData).subscribe(
                 (response) => {
-                    if (response.code == 200) {
+                    if (response.message == "Success") {
                         this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Imagen Subida', life: 3000 });
                     } else {
                         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Suba una imagen', life: 3000 });
@@ -178,6 +178,20 @@ export class treeContendioPorCursoComponent implements OnInit {
                 (response) => {
                     if (response.success) {
                         this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+
+                        this.cursoService.getCurso().subscribe(
+                            (Response: any) => {
+                                this.curso = Response.data;
+                            },
+                            (error) => {
+                                console.log(error);
+                            })
+
+                        this.Collapse = false;
+                        this.Tabla = true;
+
+
+
                     } else {
                         this.messageService.add({ severity: 'error', summary: 'Error', detail: response.message, life: 3000 });
                     }
@@ -194,10 +208,36 @@ export class treeContendioPorCursoComponent implements OnInit {
 
 
 
+    onUploadEdit(event) {
+        const file: File = event.files[0];
+        if (file) {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            const uniqueFileName = uniqueSuffix + '-' + file.name;
+
+            this.editarCursoForm.get('curso_Imagen').setValue(uniqueFileName);
+            const formData: FormData = new FormData();
+
+            formData.append('file', file, uniqueFileName);
+            this.cursoService.upload(formData).subscribe(
+                (response) => {
+                    if (response.message == "Success") {
+                        this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Imagen Subida', life: 3000 });
+                    } else {
+                        console.log(response)
+                        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Suba una imagen', life: 3000 });
+                    }
+                },
+                (error) => {
+                    console.error('Error al cargar imagen', error);
+                }
+            );
+        }
+    }
+
 
     onSubmitEdit(): void {
         this.isSubmitEdit = true;
-    
+
         if (this.editarCursoForm.valid) {
           const formData = {
             Curso_Id: this.editarCursoForm.value.curso_Id,
@@ -209,11 +249,24 @@ export class treeContendioPorCursoComponent implements OnInit {
             contenidosSeleccionados: this.selectedFilesEdit.map((node) => node.data?.cont_Id).filter((id) => id != null),
           };
           console.log('Datos enviados para editar:', formData);
-    
+
           this.cursoService.ActualizarCurso(formData).subscribe(
             (response) => {
               if (response.success) {
                 this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
+
+                this.CollapseEdit = false;
+                this.Tabla = true;
+
+                this.cursoService.getCurso().subscribe(
+                    (Response: any) => {
+                        this.curso = Response.data;
+                    },
+                    (error) => {
+                        console.log(error);
+                    })
+
+
               } else {
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: response.message, life: 3000 });
               }
@@ -227,10 +280,10 @@ export class treeContendioPorCursoComponent implements OnInit {
           console.log('Formulario inválido');
         }
       }
-    
 
-  
-  
+
+
+
 
 
 
@@ -256,7 +309,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
 }
 
 
-  
+
 
   toggleNodeSelection(node: TreeNode, isSelected: boolean) {
     node.partialSelected = !isSelected;
@@ -280,8 +333,8 @@ updateSelectedNodes(nodes: TreeNode[]) {
     }
 }
 
-    
- 
+
+
 
 
       Fill(id: string) {
@@ -297,7 +350,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
                     empre_Id: curso.empre_Id,
                     cate_Id: curso.cate_Id,
                 });
-    
+
                 this.cursoService.getContenidosPorCurso(id).subscribe({
                     next: (contenidos: any) => {
                         console.log('Contenidos del curso:', contenidos);
@@ -321,7 +374,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
             }
         });
     }
-    
+
 
 
 
@@ -337,7 +390,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
           console.log('ID seleccionado:', node.data?.cont_Id);
       }
   }
-  
+
   onNodeUnselect(event) {
       const node = event.node;
       if (node) {
@@ -346,14 +399,14 @@ updateSelectedNodes(nodes: TreeNode[]) {
           console.log('ID deseleccionado:', node.data?.cont_Id);
       }
   }
-  
+
   selectNodeAndChildren(node: TreeNode, isSelected: boolean) {
       if (node.children && node.children.length > 0) {
           node.children.forEach(child => {
               this.selectNodeAndChildren(child, isSelected);
           });
       }
-  
+
       if (isSelected) {
           if (!this.selectedFilesEdit.includes(node)) {
               this.selectedFilesEdit.push(node);
@@ -364,16 +417,16 @@ updateSelectedNodes(nodes: TreeNode[]) {
               this.selectedFilesEdit.splice(index, 1);
           }
       }
-  
+
       node.partialSelected = false;
   }
-  
+
   updateParentSelection(node: TreeNode) {
       if (node.parent) {
           const parent = node.parent;
           const allChildrenSelected = parent.children.every(child => this.selectedFilesEdit.includes(child));
           const noChildSelected = parent.children.every(child => !this.selectedFilesEdit.includes(child));
-  
+
           if (allChildrenSelected) {
               if (!this.selectedFilesEdit.includes(parent)) {
                   this.selectedFilesEdit.push(parent);
@@ -392,18 +445,18 @@ updateSelectedNodes(nodes: TreeNode[]) {
               }
               parent.partialSelected = true;
           }
-  
+
           this.updateParentSelection(parent);
       }
   }
-  
+
 
 
       markSelectedNodes(nodes: TreeNode[], selectedIds: number[]) {
         nodes.forEach(node => {
             if (node.children && node.children.length > 0) {
                 this.markSelectedNodes(node.children, selectedIds);
-    
+
                 // Check if all children are selected
                 const allChildrenSelected = node.children.every(child => selectedIds.includes(child.data.cont_Id));
                 if (allChildrenSelected) {
@@ -426,7 +479,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
         });
         console.log('Nodos después de marcar:', nodes);
     }
-    
+
 
 
 
@@ -479,7 +532,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
           this.cursoID = codigo;
           console.log("ID" + codigo);
       }
-  
+
       confirmDelete() {
           this.cursoService.EliminarCurso(this.cursoID).subscribe({
               next: (response) => {
@@ -489,9 +542,9 @@ updateSelectedNodes(nodes: TreeNode[]) {
                           this.curso = Response.data;
                       });
                       this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Eliminado Exitosamente', life: 3000 });
-  
+
                       this.Tabla=true;
-  
+
                       this.deleteCursoBool = false;
 
                      }
@@ -502,11 +555,11 @@ updateSelectedNodes(nodes: TreeNode[]) {
                 }
           },
       });
-  
+
       }
-  
-  
-    
+
+
+
       getCategorias() {
         this.categoriaService.getCategoria().subscribe(
           (response: any) => {
@@ -524,7 +577,7 @@ updateSelectedNodes(nodes: TreeNode[]) {
           }
         );
       }
-    
+
       fillContenidosPorCurso(categoriaId: number, categoriaNombre: string) {
         this.contenidoService.fillContenidoPorCategoria(categoriaId).subscribe(
           (response: any) => {

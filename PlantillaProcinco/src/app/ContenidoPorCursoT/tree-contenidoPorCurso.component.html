@@ -101,11 +101,25 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col collapse">
                         <label for="curso_Imagen" class="form-label">Imagen</label>
                         <input pInputText id="curso_Imagen" class="form-control" formControlName="curso_Imagen" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['curso_Imagen'].invalid}" />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursoForm.controls['curso_Imagen'].invalid" style="color: red !important;">Imagen Requerida</small>
                     </div>
+
+
+                    <!-- IMAGEN -->
+                    <div class="col-6">
+                        <div class="col-sm-2">
+                            <label for="firstname2">Imagen</label>
+                        </div>
+                        <div class="field md:col-sm-6">
+                            <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true" label="Cargar Imagen" (onSelect)="onUploadEdit($event)" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
+                            <small *ngIf="isSubmitEdit && editarCursoForm.get('curso_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
+                        </div>
+                    </div>
+
+
                     <div class="col">
                         <label for="empre_Id" class="form-label">Empresa</label>
                         <select formControlName="empre_Id" class="form-control" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarCursoForm.controls['empre_Id'].invalid}">
@@ -140,7 +154,7 @@
                             <span>{{ node.label }}</span>
                         </ng-template>
                     </p-tree>
-                    
+
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -192,7 +206,7 @@
                         <td>{{curs.curso_Id}}</td>
                         <td>{{curs.curso_Descripcion}}</td>
                         <td>{{curs.curso_DuracionHoras}}</td>
-                        <td><img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{curs.curso_Imagen}}" style="height: 40px; width: 45px;" alt=""></td>
+                        <td><img src="https://bucketdefer.s3.us-east-2.amazonaws.com/{{curs.curso_Imagen}}" style="height: auto; width: 45px;" alt=""></td>
                         <td>{{curs.categoria}}</td>
                         <td>
                             <button class="btn btn-primary fa fa-user-plus btn-sm" (click)="Fill(curs.curso_Id)"><i class="pi pi-file-edit"></i>Editar</button> |
@@ -309,4 +323,4 @@
                     </div>
                 </div>
         </p-dialog>
-    
+

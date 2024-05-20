@@ -1304,7 +1304,82 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+        #region DASHBOARDS
 
+        //DASH
+        public ServicesResult CursosImpartidosTop5Mes()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.CursosImpartidosTop5Mes();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+        public ServicesResult CursosImpartidosTop5PorMeses(int mes)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.CursosImpartidosTop5PorMeses(mes);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+        public ServicesResult CursosImpartidosCategorias()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.CursosImpartidosCategorias();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+        public ServicesResult CursosImpartidosCategoriasMES(int mes)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.CursosImpartidosCategoriasMES(mes);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+        #endregion
 
 
 

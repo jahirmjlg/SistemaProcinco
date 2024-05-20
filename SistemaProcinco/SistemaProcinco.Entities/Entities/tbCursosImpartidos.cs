@@ -80,5 +80,7 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios CurIm_UsuarioModificacionNavigation { get; set; }
         public virtual tbCursos Curso { get; set; }
         public virtual tbEmpleados Empl { get; set; }
+        [NotMapped]
+        public int VecesImpartido { get; set; }
     }
 }

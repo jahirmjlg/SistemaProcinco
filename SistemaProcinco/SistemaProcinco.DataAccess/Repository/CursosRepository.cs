@@ -178,6 +178,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
                 parametro.Add("@Curso_Imagen", item.Curso_Imagen);
                 parametro.Add("@Cate_Id", item.Cate_Id);
+                parametro.Add("@Empre_Id", item.Empre_Id);
                 parametro.Add("@Curso_UsuarioModificacion", item.Curso_UsuarioModificacion);
                 parametro.Add("@Curso_FechaModificacion", item.Curso_FechaModificacion);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);

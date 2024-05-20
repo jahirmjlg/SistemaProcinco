@@ -25,7 +25,7 @@ namespace SistemaProcinco.API.Controllers
     {
         private readonly ProcincoService _procincoService;
 
-        
+
         private readonly IMapper _mapper;
 
         public CursosImpartidosController(ProcincoService procincoService, IMapper mapper)
@@ -464,8 +464,8 @@ namespace SistemaProcinco.API.Controllers
                 var listado = _procincoService.ParticipantesFiltro(curso, Fecha);
                 foreach (var part in listado.Data)
                 {
-                    
-                        htmlContent += $@"
+
+                    htmlContent += $@"
                 <tr>
                     <td>{part.Part_Id}</td>
                     <td>{part.Part_DNI}</td>
@@ -473,8 +473,8 @@ namespace SistemaProcinco.API.Controllers
                     <td>{part.Curso_Descripcion:dd/MM/yyyy}</td>
                     <td>{part.CurIm_FechaInicio:dd/MM/yyyy}</td>
                     <td>{part.CurIm_Finalizacion}</td>
-                </tr>";                   
-                    
+                </tr>";
+
                 }
 
                 htmlContent += @"
@@ -870,7 +870,7 @@ namespace SistemaProcinco.API.Controllers
         [HttpGet("fechasDDL/{id}")]
         public IActionResult Lista(int id)
         {
-            
+
             var listado = _procincoService.FechasDDL(id);
             var drop = listado.Data as List<tbCursosImpartidos>;
             var date = drop.Select(x => new SelectListItem
@@ -885,6 +885,80 @@ namespace SistemaProcinco.API.Controllers
             return Ok(date.ToList());
         }
 
+
+
+
+        //DASHBOARDSSSS
+
+        [HttpGet("CursosImpartidosTop5Mes")]
+        public IActionResult CursosImpartidosTop5Mes()
+        {
+            var listado = _procincoService.CursosImpartidosTop5Mes();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("CursosImpartidosTop5PorMeses/{mes}")]
+        public IActionResult CursosImpartidosTop5PorMeses(int mes)
+        {
+            var listado = _procincoService.CursosImpartidosTop5PorMeses(mes);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet("CursosImpartidosCategorias")]
+        public IActionResult CursosImpartidosCategorias()
+        {
+            var listado = _procincoService.CursosImpartidosCategorias();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("CursosImpartidosCategoriasMES/{mes}")]
+        public IActionResult CursosImpartidosCategoriasMES(int mes)
+        {
+            var listado = _procincoService.CursosImpartidosCategoriasMES(mes);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
 
     }
 }

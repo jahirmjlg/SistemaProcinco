@@ -49,6 +49,8 @@ namespace SistemaProcinco.Common.Models
         public string CurIm_Finalizacion { get; set; }
 
 
+
+
         public DateTime? CurIm_FechaInicio { get; set; }
         public DateTime? CurIm_FechaFin { get; set; }
         public int CurIm_UsuarioFinalizacion { get; set; }
@@ -68,6 +70,8 @@ namespace SistemaProcinco.Common.Models
         public int Month { get; set; }
         [NotMapped]
         public int TotalCursos { get; set; }
+        [NotMapped]
+        public int VecesImpartido { get; set; }
 
     }
 }

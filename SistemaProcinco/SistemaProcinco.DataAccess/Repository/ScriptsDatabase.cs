@@ -181,12 +181,20 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public static string CursosImpartidosMES = "[Pro].[ObtenerCursosPorMes]";
 
+
         public static string CursosImpartidosEntreMeses = "[Pro].[SP_CursosImpartidos_EntreFechas]";
 
         public static string CursosImpartidosFiltroEmpleados = "[Pro].[SP_CursosImpartidos_FiltroEmpleados]";
 
         public static string ParticipantesFiltro = "[Grl].[SP_Participantes_FiltroCursos]";
         public static string FechasPorCursoDDL = "[Grl].[SP_FechasPorCurso]";
+
+
+        public static string CursosImpartidosTop5Mes = "Pro.SP_CursosImpartidos_Top5";
+        public static string CursosImpartidosTop5PorMeses = "Pro.SP_CursosImpartidos_Top5_MES";
+
+        public static string CursosImpartidosCategorias = "Pro.SP_CursosImpartidos_Categorias";
+        public static string CursosImpartidosCategoriasMES = "Pro.SP_CursosImpartidos_Categorias_MES";
 
 
 
