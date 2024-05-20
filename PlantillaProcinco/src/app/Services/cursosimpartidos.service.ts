@@ -69,4 +69,66 @@ export class CursosImpartidosService {
     return this.http.get<any>(`${this.UrlCursoImp}PreviewFactura/${ID}`, { responseType: 'text' as 'json' });
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // dashboardssssssssssssssssssssssss
+
+  getCursosImpartidosTop5Mes(): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}CursosImpartidosTop5Mes`);
+  }
+
+  getCursosImpartidosTop5PorMeses(mes: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}CursosImpartidosTop5PorMeses/${mes}`);
+  }
+
+  getCursosImpartidosCategorias(): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}CursosImpartidosCategorias`);
+  }
+
+  getCursosImpartidosCategoriasMES(mes: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}CursosImpartidosCategoriasMES/${mes}`);
+  }
+
+  getEmpleadosMejorPagados(): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}EmpleadosMejorPagados`);
+  }
+
+  getEmpleadosMejorPagadosFiltro(mes: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}EmpleadosMejorPagadosFiltro/${mes}`);
+  }
+
+  getHorasImpartidasPorCategoria(): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}HorasImpartidasPorCategoria`);
+  }
+
+  getHorasImpartidasPorCategoriaFiltrado(mes: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlCursoImp}HorasImpartidasPorCategoriaFiltrado/${mes}`);
+  }
 }
+
+
+
+
