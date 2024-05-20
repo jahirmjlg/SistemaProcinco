@@ -138,7 +138,7 @@ export class ListCursosimpartidosComponent {
         }, error => {
           console.log(error);
         });
-    
+
 
 
         this.cursosimpartidosservice.getCursosImpartidosCategorias().subscribe((response: any) => {
@@ -146,13 +146,13 @@ export class ListCursosimpartidosComponent {
         }, error => {
           console.log(error);
         });
-    
+
         this.cursosimpartidosservice.getEmpleadosMejorPagados().subscribe((response: any) => {
           this.empleadosMejorPagados = response;
         }, error => {
           console.log(error);
         });
-    
+
         this.cursosimpartidosservice.getHorasImpartidasPorCategoria().subscribe((response: any) => {
           this.horasPorCategoria = response;
         }, error => {
@@ -177,6 +177,29 @@ export class ListCursosimpartidosComponent {
 
 
 
+    cancel()
+    {
+        this.crearCursosImpartidosForm = this.formBuilder.group({
+            curso_Id: ['', [Validators.required]],
+            empl_Id: ['', [Validators.required]],
+            curIm_FechaInicio: ['', [Validators.required]],
+            curIm_FechaFin: ['', [Validators.required]],
+            empl_DNI: ['', [Validators.required]],
+            empl_Nombre: ['', [Validators.required]],
+            curso_DuracionHoras: ['', [Validators.required]],
+            cate_Descripcion: ['', [Validators.required]],
+            curso_Descripcion: ['', [Validators.required]],
+            curso_Imagen: ['', [Validators.required]],
+
+
+          });
+
+          this.Collapse=false;
+          this.Tabla=true;
+          this.isSubmit=false;
+          this.ImagenEncontrada = false;
+    }
+
 
     onSubmitInsert(): void {
 
@@ -188,6 +211,21 @@ export class ListCursosimpartidosComponent {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearCursosImpartidosForm = this.formBuilder.group({
+                        curso_Id: ['', [Validators.required]],
+                        empl_Id: ['', [Validators.required]],
+                        curIm_FechaInicio: ['', [Validators.required]],
+                        curIm_FechaFin: ['', [Validators.required]],
+                        empl_DNI: ['', [Validators.required]],
+                        empl_Nombre: ['', [Validators.required]],
+                        curso_DuracionHoras: ['', [Validators.required]],
+                        cate_Descripcion: ['', [Validators.required]],
+                        curso_Descripcion: ['', [Validators.required]],
+                        curso_Imagen: ['', [Validators.required]],
+
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

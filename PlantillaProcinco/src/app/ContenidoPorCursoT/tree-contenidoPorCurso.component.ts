@@ -177,6 +177,16 @@ export class treeContendioPorCursoComponent implements OnInit {
             this.cursoService.EnviarCurso(formData).subscribe(
                 (response) => {
                     if (response.success) {
+
+
+                        this.crearCursoForm = this.formBuilder.group({
+                            curso_Descripcion: ['', [Validators.required]],
+                            curso_DuracionHoras: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+                            curso_Imagen: ['', [Validators.required]],
+                            cate_Id: ['0', [Validators.required]],
+                            empre_Id: ['0', [Validators.required]],
+                        });
+
                         this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
                         this.cursoService.getCurso().subscribe(
@@ -283,6 +293,20 @@ export class treeContendioPorCursoComponent implements OnInit {
 
 
 
+      cancel()
+      {
+        this.crearCursoForm = this.formBuilder.group({
+            curso_Descripcion: ['', [Validators.required]],
+            curso_DuracionHoras: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+            curso_Imagen: ['', [Validators.required]],
+            cate_Id: ['0', [Validators.required]],
+            empre_Id: ['0', [Validators.required]],
+        });
+
+        this.Collapse=false;
+        this.Tabla=true;
+        this.isSubmit=false
+      }
 
 
 

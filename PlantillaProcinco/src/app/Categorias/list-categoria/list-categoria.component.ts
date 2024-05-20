@@ -89,11 +89,18 @@ export class ListCategoriaComponent {
 
      Cancel()
      {
+
+        this.crearCategoriaForm = this.formBuilder.group({
+            cate_Descripcion: ['', [Validators.required]],
+            cate_Imagen: ['', [Validators.required]],
+          });
+
         this.Collapse=false;
         this.Tabla=true;
-        this.isSubmitEdit=false;
+        this.isSubmit=false;
         this.fileupload.clear();
         this.subidaIf = false;
+
 
      }
 
@@ -105,6 +112,35 @@ export class ListCategoriaComponent {
             const uniqueFileName = uniqueSuffix + '-' + file.name;
 
             this.crearCategoriaForm.get('cate_Imagen').setValue(uniqueFileName);
+            const formData: FormData = new FormData();
+
+            formData.append('file', file, uniqueFileName);
+            this.categoriaservice.upload(formData).subscribe(
+              response => {
+                console.log('Carga exitosa', response);
+                if (response.message == "Success") {
+                    this.subidaIf = true;
+                    this.subida = uniqueFileName;
+                  this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Imagen Subida', life: 3000 });
+                } else {
+                  this.messageService.add({ severity: 'success', summary: 'Error', detail: 'Imagen Requerida', life: 3000 });
+                }
+              },
+              error => {
+                console.error('Error al cargar imagen', error);
+              }
+            );
+          }
+      }
+
+
+      onUploadEdit(event) {
+        const file: File = event.files[0];
+        if (file) {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            const uniqueFileName = uniqueSuffix + '-' + file.name;
+
+            this.editarCategoriaForm.get('cate_Imagen').setValue(uniqueFileName);
             const formData: FormData = new FormData();
 
             formData.append('file', file, uniqueFileName);
@@ -173,6 +209,11 @@ export class ListCategoriaComponent {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearCategoriaForm = this.formBuilder.group({
+                        cate_Descripcion: ['', [Validators.required]],
+                        cate_Imagen: ['', [Validators.required]],
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
@@ -318,8 +359,8 @@ export class ListCategoriaComponent {
           event.preventDefault();
       }
     }
-    
-    
+
+
 
 
 

@@ -86,6 +86,22 @@ export class ListCiudadesComponent implements OnInit {
 
      }
 
+
+     cancel()
+     {
+
+        this.crearCiudadForm = this.formBuilder.group({
+            ciud_Id: ['', [Validators.required]],
+            ciud_Descripcion: ['', [Validators.required]],
+            esta_Id: ['0', [Validators.required]],
+
+          });
+
+          this.Collapse=false;
+          this.Tabla=true;
+          this.isSubmit=false
+     }
+
     ngOnInit() {
 
         //INICIALIZAR EL FORMULARIO
@@ -148,6 +164,13 @@ export class ListCiudadesComponent implements OnInit {
                 console.log(response.code)
 
                 if (response.code == 200) {
+
+                    this.crearCiudadForm = this.formBuilder.group({
+                        ciud_Id: ['', [Validators.required]],
+                        ciud_Descripcion: ['', [Validators.required]],
+                        esta_Id: ['0', [Validators.required]],
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

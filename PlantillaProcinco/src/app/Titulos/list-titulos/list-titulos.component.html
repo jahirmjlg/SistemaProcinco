@@ -20,9 +20,9 @@
                     </div>
                     <div class="col-6 mt-2">
 
-                        <div class="col-sm-6">
-                            <label for="firstname2">Horas de duracion</label>
-                            </div>
+
+                            <label for="firstname2">Valor Monetario</label>
+
 
                         <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="number" required autofocus (keydown)="validarNumeros($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Valor Requerido</small>
@@ -35,7 +35,7 @@
                         <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                     </div>
                     <div class="col-md-offset-2 col-3" id="">
-                        <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                        <button pButton icon="pi pi-times" type="button" (click)="cancel()" label="Cancelar" class="btn btn-danger"></button>
                     </div>
                 </div>
             </div>
@@ -66,9 +66,9 @@
 
                     <div class="col-6">
 
-                        <div class="col-sm-2">
-                        <label for="firstname2" class="form-label">Horas de duracion</label>
-                        </div>
+
+                        <label for="firstname2" class="form-label">Valor Monetario</label>
+
                         <input pInputText id="firstname2" class="form-control" formControlName="titl_ValorMonetario" type="text" required autofocus (keydown)="validarNumeros($event)"/>
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarTituloForm.controls['titl_ValorMonetario'].invalid" style="color: red !important;">Horas de duracion Requeridas</small>
                     </div>

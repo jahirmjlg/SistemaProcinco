@@ -86,6 +86,7 @@ namespace SistemaProcinco.API.Controllers
             {
                 Cate_Id = item.Cate_Id,
                 Cate_Descripcion = item.Cate_Descripcion,
+                Cate_Imagen = item.Cate_Imagen,
                 Cate_UsuarioModificacion = 1,
                 Cate_FechaModificacion = DateTime.Now
             };

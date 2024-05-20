@@ -17,7 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 })
 export class ListCargosComponent {
-    
+
   Tabla: boolean = true;
 
   Collapse: boolean = false;
@@ -27,7 +27,7 @@ export class ListCargosComponent {
 
   CollapseEdit: boolean = false;
   isSubmitEdit: boolean = false;
-    
+
   CollapseDetalle: boolean = false;
 
     //BOOLEAN DELETE
@@ -87,6 +87,19 @@ export class ListCargosComponent {
         ];
   }
 
+  cancell()
+  {
+    this.crearCargoForm = this.formBuilder.group({
+        carg_Descripcion: ['', [Validators.required]],
+
+        });
+
+
+    this.Collapse=false;
+    this.Tabla=true;
+    this.isSubmit=false;
+  }
+
     onSubmitInsert(): void {
         this.isSubmit = true;
 
@@ -97,6 +110,11 @@ export class ListCargosComponent {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearCargoForm = this.formBuilder.group({
+                        carg_Descripcion: ['', [Validators.required]],
+
+                        });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
@@ -190,7 +208,7 @@ export class ListCargosComponent {
                this.UsuarioModificacion = data[0].usuarioModificacion,
                this.FechaCreacion = data[0].carg_FechaCreacion,
                this.FechaModificacion = data[0].carg_FechaModificacion
-                console.log(data);            
+                console.log(data);
             }
           });
           this.CollapseDetalle = true;

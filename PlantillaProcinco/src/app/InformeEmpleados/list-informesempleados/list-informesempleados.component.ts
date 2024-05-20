@@ -111,6 +111,21 @@ export class ListInformesempleadosComponent implements OnInit {
     }
 
 
+    cancel()
+    {
+        this.crearInformeEmpleadoForm = this.formBuilder.group({
+            infoE_Calificacion: ['0', [Validators.required]],
+            curso_Id: ['0', [Validators.required]],
+            empl_Id: ['0', [Validators.required]],
+            infoE_Observaciones: ['', [Validators.required]],
+
+        });
+
+        this.Collapse=false;
+        this.Tabla=true;
+        this.isSubmit=false
+    }
+
     //INSERTAR
     onSubmitInsert(): void {
 
@@ -125,6 +140,14 @@ export class ListInformesempleadosComponent implements OnInit {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearInformeEmpleadoForm = this.formBuilder.group({
+                        infoE_Calificacion: ['0', [Validators.required]],
+                        curso_Id: ['0', [Validators.required]],
+                        empl_Id: ['0', [Validators.required]],
+                        infoE_Observaciones: ['', [Validators.required]],
+
+                    });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

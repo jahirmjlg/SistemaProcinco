@@ -39,7 +39,7 @@
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                         </div>
                         <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                            <button pButton icon="pi pi-times" type="button" (click)="Cancel()" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
                 </div>
@@ -73,9 +73,9 @@
                         <label for="firstname2">Imagen</label>
 
                         <div class="">
-                            <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" class="mr-2"></p-fileUpload>
-                            <small *ngIf="isSubmitEdit && editarCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerido</small>
-                        </div>
+                            <p-fileUpload #fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" customUpload="true"  label="Cargar Imagen" chooseLabel="Cargar" (onSelect)="onUploadEdit($event)" class="mr-2"></p-fileUpload>
+                            <small *ngIf="isSubmitEdit && editarCategoriaForm.get('cate_Imagen').value === ''" style="color: red;">Imagen Requerida</small>
+                        </div>
 
                     </div>
                 </div>

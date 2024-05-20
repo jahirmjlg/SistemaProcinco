@@ -57,7 +57,7 @@ export class ListContenidoComponent implements OnInit {
     editarContenidoForm: FormGroup
     //ultimos dos
     constructor(private messageService: MessageService, private contenidoservice: ContenidoService, private router: Router,
-        private formBuilder: FormBuilder, 
+        private formBuilder: FormBuilder,
         private cookieService: CookieService) { }
 
     ngOnInit() {
@@ -66,7 +66,7 @@ export class ListContenidoComponent implements OnInit {
         this.crearContenidoForm = this.formBuilder.group({
             cont_Descripcion: ['', [Validators.required]],
             cate_Id: ['0', [Validators.required]],
-          
+
           cont_DuracionHoras: ['0', [Validators.required]],
         });
 
@@ -88,7 +88,7 @@ export class ListContenidoComponent implements OnInit {
 
         // Respuesta de la api
         this.contenidoservice.getContenido().subscribe((Response: any)=> {
-           
+
             console.log(Response.data);
             this.contenido = Response.data;
 
@@ -110,7 +110,7 @@ export class ListContenidoComponent implements OnInit {
 
 
           //
-       
+
         this.schemas = [
             CUSTOM_ELEMENTS_SCHEMA
           ];
@@ -126,8 +126,16 @@ export class ListContenidoComponent implements OnInit {
           this.contenidoservice.insertContenido(contenidoData).subscribe(
            response => {
 
-            if (response.code == 200) 
+            if (response.code == 200)
             {
+
+                this.crearContenidoForm = this.formBuilder.group({
+                    cont_Descripcion: ['', [Validators.required]],
+                    cate_Id: ['0', [Validators.required]],
+
+                  cont_DuracionHoras: ['0', [Validators.required]],
+                });
+
                 this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
                     // this.cookieService.set('namee', response.data.empl_Nombre);
@@ -201,6 +209,25 @@ export class ListContenidoComponent implements OnInit {
 
     }
 
+
+
+    cancel()
+    {
+        this.crearContenidoForm = this.formBuilder.group({
+            cont_Descripcion: ['', [Validators.required]],
+            cate_Id: ['0', [Validators.required]],
+
+          cont_DuracionHoras: ['0', [Validators.required]],
+        });
+
+        this.Collapse=false;
+        this.Tabla=true;
+        this.isSubmit=false
+    }
+
+
+
+
     detalles(id){
 
         this.contenidoservice.fillContenido(id).subscribe({
@@ -213,7 +240,7 @@ export class ListContenidoComponent implements OnInit {
                this.UsuarioModificacion = data[0].usuarioModificacion,
                this.FechaCreacion = data[0].cont_FechaCreacion,
                this.FechaModificacion = data[0].cont_FechaModificacion
-                console.log(data);            
+                console.log(data);
             }
           });
           this.CollapseDetalle = true;
@@ -225,7 +252,7 @@ export class ListContenidoComponent implements OnInit {
         this.ID = codigo;
         console.log("ID" + codigo);
     }
-    
+
     confirmDelete() {
         this.contenidoservice.deleteContenido(this.ID).subscribe({
             next: (response) => {

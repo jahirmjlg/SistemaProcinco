@@ -25,7 +25,7 @@ export class ListTitulosComponent implements OnInit{
 
     CollapseEdit: boolean = false;
     isSubmitEdit: boolean = false;
-    
+
     CollapseDetalle: boolean = false;
 
     //BOOLEAN DELETE
@@ -39,7 +39,7 @@ export class ListTitulosComponent implements OnInit{
     FechaCreacion: String = "";
     FechaModificacion: String = "";
     ID: String = "";
-        
+
     cols: any[] = [];
     statuses: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
@@ -69,7 +69,7 @@ export class ListTitulosComponent implements OnInit{
         titl_Descripcion: new FormControl("", Validators.required),
         titl_ValorMonetario: new FormControl("", Validators.required),
      })
-    
+
       // Respuesta de la api
       this.tituloservice.getTitulos().subscribe((Response: any)=> {
           console.log(Response.data);
@@ -87,6 +87,19 @@ export class ListTitulosComponent implements OnInit{
         ];
   }
 
+
+  cancel()
+  {
+    this.crearTituloForm = this.formBuilder.group({
+        titl_Descripcion: ['', [Validators.required]],
+        titl_ValorMonetario: ['0', [Validators.required]],
+    });
+
+    this.Collapse=false;
+    this.Tabla=true;
+    this.isSubmit=false
+  }
+
   onSubmitInsert(): void {
 
     this.isSubmit = true;
@@ -97,8 +110,14 @@ export class ListTitulosComponent implements OnInit{
       this.tituloservice.insertTitulo(contenidoData).subscribe(
        response => {
 
-        if (response.code == 200) 
+        if (response.code == 200)
         {
+
+            this.crearTituloForm = this.formBuilder.group({
+                titl_Descripcion: ['', [Validators.required]],
+                titl_ValorMonetario: ['0', [Validators.required]],
+            });
+
             this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
                 // this.cookieService.set('namee', response.data.empl_Nombre);
@@ -179,7 +198,7 @@ export class ListTitulosComponent implements OnInit{
                this.UsuarioModificacion = data[0].usuarioModificacion,
                this.FechaCreacion = data[0].titl_FechaCreacion,
                this.FechaModificacion = data[0].titl_FechaModificacion
-                console.log(data);            
+                console.log(data);
             }
           });
           this.CollapseDetalle = true;
@@ -240,7 +259,7 @@ export class ListTitulosComponent implements OnInit{
         }
       }
 
-      
+
 validarNumeros(event: KeyboardEvent) {
 
     if (!/^[a-zA-Z0-9 ]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {

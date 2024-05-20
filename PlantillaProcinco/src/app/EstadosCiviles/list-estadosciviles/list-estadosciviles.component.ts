@@ -27,7 +27,7 @@ export class ListEstadoscivilesComponent {
 
     deleteContenidoBool: boolean = false;
 
- 
+
   estc_Id: String = "";
   estc_Descripcion: String = "";
   UsuarioCreacion: String = "";
@@ -78,6 +78,18 @@ export class ListEstadoscivilesComponent {
         ];
   }
 
+
+  cancel()
+  {
+    this.crearEstaciCivilForm = this.formBuilder.group({
+        estc_Descripcion: ['', [Validators.required]],
+    });
+
+    this.Collapse=false;
+    this.Tabla=true;
+    this.isSubmit=false
+  }
+
   onSubmitInsert(): void {
 
     this.isSubmit = true;
@@ -88,7 +100,7 @@ export class ListEstadoscivilesComponent {
       this.estadoscivilesservice.insertEstadoCivil(contenidoData).subscribe(
        response => {
 
-        if (response.code == 200) 
+        if (response.code == 200)
         {
             this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
@@ -174,20 +186,20 @@ export class ListEstadoscivilesComponent {
                this.UsuarioModificacion = data[0].usuarioModificacion,
                this.FechaCreacion = data[0].estc_FechaCreacion,
                this.FechaModificacion = data[0].estc_FechaModificacion
-                console.log(data);            
+                console.log(data);
             }
           });
           this.CollapseDetalle = true;
           this.Tabla=false;
     }
 
-    
+
     deleteContenido(codigo) {
         this.deleteContenidoBool = true;
         this.ID = codigo;
         console.log("ID" + codigo);
     }
-    
+
     validarTexto(event: KeyboardEvent) {
 
         if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
@@ -195,7 +207,7 @@ export class ListEstadoscivilesComponent {
         }
     }
 
-    
+
 
     confirmDelete() {
         this.estadoscivilesservice.deleteEstadoCivil(this.ID).subscribe({
@@ -220,7 +232,7 @@ export class ListEstadoscivilesComponent {
     }
 
 
-    
+
     Fill(id) {
         this.estadoscivilesservice.fillEstadoCivil(id).subscribe({
             next: (data: EstadoCivil) => {

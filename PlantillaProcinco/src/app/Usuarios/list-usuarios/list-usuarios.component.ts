@@ -33,13 +33,13 @@ export class ListUsuariosComponent {
     roles: any[] = [];
     empleados: any[] = [];
 
-    
+
     usua_Id: String = "";
     usua_Usuario: String = "";
     usua_Contraseña : String = "";
     usua_EsAdmin  : Boolean;
     role_Id  : String = "";
-    empl_Id : String = ""; 
+    empl_Id : String = "";
     UsuarioCreacion: String = "";
     UsuarioModificacion: String = "";
     FechaCreacion: String = "";
@@ -111,6 +111,22 @@ export class ListUsuariosComponent {
   }
 
 
+  cancel()
+  {
+    this.crearUsuarioForm = this.formBuilder.group({
+        usua_Usuario: ['', [Validators.required]],
+        usua_Contraseña: ['', [Validators.required]],
+        usua_EsAdmin: [true, [Validators.required]],
+        role_Id: ['0', [Validators.required]],
+        empl_Id: ['0', [Validators.required]],
+
+      });
+
+      this.Collapse=false;
+      this.Tabla=true;
+      this.isSubmit=false
+  }
+
     //INSERTAR
     onSubmitInsert(): void {
 
@@ -124,6 +140,15 @@ export class ListUsuariosComponent {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearUsuarioForm = this.formBuilder.group({
+                        usua_Usuario: ['', [Validators.required]],
+                        usua_Contraseña: ['', [Validators.required]],
+                        usua_EsAdmin: [true, [Validators.required]],
+                        role_Id: ['0', [Validators.required]],
+                        empl_Id: ['0', [Validators.required]],
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
@@ -160,7 +185,7 @@ export class ListUsuariosComponent {
       else{
       }
     }
-  
+
   validarTexto(event: KeyboardEvent) {
     if (!/^[a-zA-Z\s]+$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
         event.preventDefault();
@@ -171,7 +196,7 @@ export class ListUsuariosComponent {
         event.preventDefault();
     }
   }
-    
+
     //EDITAR
     onSubmitEdit(): void {
 
@@ -233,7 +258,7 @@ export class ListUsuariosComponent {
           this.Tabla=false;
     }
 
-    
+
     //DELETE
     deleteUsuario(codigo) {
         this.deleteUsaurioBool = true;

@@ -128,6 +128,19 @@ export class ListRolesComponent {
 }
 
 
+cancel()
+{
+    this.crearRolForm = this.formBuilder.group({
+        role_Descripcion: ['', [Validators.required]],
+        screens: this.formBuilder.array([])
+    });
+
+    this.Collapse=false;
+    this.Tabla=true;
+    this.isSubmit=false
+}
+
+
 getScreensArrayEdit(): FormArray {
     return this.editarRolForm.get('screens') as FormArray;
 }
@@ -157,6 +170,12 @@ getScreensArrayEdit(): FormArray {
        response => {
         if (response.code == 200)
         {
+
+            this.crearRolForm = this.formBuilder.group({
+                role_Descripcion: ['', [Validators.required]],
+                screens: this.formBuilder.array([])
+            });
+
             this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Rol Insertado Exitosamente', life: 3000 });
 
             console.log(response)

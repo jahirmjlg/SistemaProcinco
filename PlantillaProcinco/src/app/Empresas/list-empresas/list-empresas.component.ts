@@ -122,6 +122,21 @@ export class ListEmpresasComponent {
   }
 
 
+  cancel()
+  {
+    this.crearEmpresaForm = this.formBuilder.group({
+        empre_Descripcion: ['', [Validators.required]],
+        empre_Direccion: ['', [Validators.required]],
+        ciud_Id: ['', [Validators.required]],
+        esta_Id: ['0', [Validators.required]],
+
+
+    });
+
+    this.Collapse=false;
+    this.Tabla=true;
+    this.isSubmit=false
+  }
 
 onSubmitInsert(): void {
 
@@ -134,6 +149,15 @@ onSubmitInsert(): void {
         response => {
 
             if (response.code == 200) {
+
+                this.crearEmpresaForm = this.formBuilder.group({
+                    empre_Descripcion: ['', [Validators.required]],
+                    empre_Direccion: ['', [Validators.required]],
+                    ciud_Id: ['', [Validators.required]],
+                    esta_Id: ['0', [Validators.required]],
+
+
+                });
 
                 this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

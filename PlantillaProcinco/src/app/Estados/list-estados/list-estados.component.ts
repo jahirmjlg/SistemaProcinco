@@ -28,7 +28,7 @@ export class ListEstadosComponent implements OnInit {
 
     CollapseEdit: boolean = false;
     isSubmitEdit: boolean = false;
-    
+
     CollapseDetalle: boolean = false;
 
     //BOOLEAN DELETE
@@ -91,6 +91,20 @@ export class ListEstadosComponent implements OnInit {
           ];
     }
 
+
+    cancel()
+    {
+        this.crearEstadoForm = this.formBuilder.group({
+            esta_Id: ['', [Validators.required]],
+            esta_Descripcion: ['', [Validators.required]],
+
+          });
+
+          this.Collapse=false;
+          this.Tabla=true;
+          this.isSubmit=false
+    }
+
     onSubmitInsert(): void {
 
         this.isSubmit = true;
@@ -102,6 +116,12 @@ export class ListEstadosComponent implements OnInit {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearEstadoForm = this.formBuilder.group({
+                        esta_Id: ['', [Validators.required]],
+                        esta_Descripcion: ['', [Validators.required]],
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

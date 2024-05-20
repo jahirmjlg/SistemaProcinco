@@ -81,7 +81,7 @@
                             <label for="firstname2" class="form-label">Sexo</label>
                                 <div class="col-md-3">
                                     <label>
-                                        <input type="radio" class="form-check-input" name="sexo" value="M" checked formControlName="part_Sexo"> Masculino
+                                        <input type="radio" class="form-check-input" name="sexo" value="M" formControlName="part_Sexo" checked > Masculino
                                     </label>
                                 </div>
 
@@ -151,7 +151,7 @@
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                         </div>
                         <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                            <button pButton icon="pi pi-times" type="button" (click)="cancel()" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
                 </div>

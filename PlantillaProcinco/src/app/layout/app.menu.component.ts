@@ -387,10 +387,10 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-globe',
                         items: [
                             { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimpartidos'] },
-                            { label: 'Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursos'] },
+
                             { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
                             {
-                                label: 'Contenido Por Curso T',
+                                label: 'Cursos',
                                 icon: 'pi pi-fw pi-globe',
                                 routerLink: ['/pages/treecontenidoporcurso']
                             },

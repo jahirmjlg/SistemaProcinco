@@ -18,7 +18,7 @@
                             <input pInputText id="firstname2" class="form-control" formControlName="esta_Id" type="text" required autofocus (keydown)="validarNumeros($event)"/>
 
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEstadoForm.controls['esta_Id'].invalid" style="color: red !important;">Codigo Requerido</small>
-                            
+
                             <small class="ng-dirty ng-invalid" *ngIf="errortipo" style="color: red !important;">Codigo Invalido</small>
                         </div>
                         <div class="col-6 mt-2">
@@ -38,7 +38,7 @@
                             <button pButton icon="pi pi-check" type="submit" label="Agregar"  class="btn btn-primary"></button>
                         </div>
                         <div class="col-md-offset-2 col-3" id="">
-                            <button pButton icon="pi pi-times" type="button" (click)="Collapse=false; Tabla=true; isSubmit=false" label="Cancelar" class="btn btn-danger"></button>
+                            <button pButton icon="pi pi-times" type="button" (click)="cancel()" label="Cancelar" class="btn btn-danger"></button>
                         </div>
                     </div>
                 </div>

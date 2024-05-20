@@ -105,6 +105,13 @@ export class ListCursoComponent {
         this.isSubmitEdit=false;
         this.fileupload.clear();
 
+        this.crearCursoForm = this.formBuilder.group({
+            curso_Descripcion: ['', [Validators.required]],
+            curso_DuracionHoras: ['', [Validators.required]],
+            curso_Imagen: ['', [Validators.required]],
+            cate_Id: ['0', [Validators.required]],
+            empre_Id: ['0', [Validators.required]],
+          });
      }
 
 
@@ -205,6 +212,14 @@ export class ListCursoComponent {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearCursoForm = this.formBuilder.group({
+                        curso_Descripcion: ['', [Validators.required]],
+                        curso_DuracionHoras: ['', [Validators.required]],
+                        curso_Imagen: ['', [Validators.required]],
+                        cate_Id: ['0', [Validators.required]],
+                        empre_Id: ['0', [Validators.required]],
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
@@ -356,7 +371,7 @@ export class ListCursoComponent {
                     curso_DuracionHoras: new FormControl(data[0].curso_DuracionHoras,Validators.required),
                     curso_Imagen: new FormControl(data[0].curso_Imagen,Validators.required),
                     empre_Id: new FormControl(data[0].empre_Id,Validators.required),
-                    
+
                     cate_Id: new FormControl(data[0].cate_Id,Validators.required),
                 });
 
@@ -369,7 +384,7 @@ export class ListCursoComponent {
           });
 
 
-          
+
           this.CollapseEdit = true;
           this.Tabla=false;
 

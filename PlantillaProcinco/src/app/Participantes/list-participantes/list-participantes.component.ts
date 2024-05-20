@@ -224,6 +224,29 @@ validarTextoAlfa(event: KeyboardEvent) {
 
 
 
+    cancel()
+    {
+        this.crearParticipanteForm = this.formBuilder.group({
+            part_DNI: ['', [Validators.required]],
+            empre_Id: ['0', [Validators.required]],
+            part_Nombre: ['', [Validators.required]],
+            part_Apellido: ['', [Validators.required]],
+            part_Correo: ['', [Validators.required]],
+            part_FechaNacimiento: ['', [Validators.required]],
+            part_Sexo: ['', [Validators.required]],
+            estc_Id: ['0', [Validators.required]],
+            part_Direccion: ['', [Validators.required]],
+            ciud_Id: ['0', [Validators.required]],
+            esta_Id: ['0', [Validators.required]],
+
+
+          });
+
+          this.Collapse=false;
+          this.Tabla=true;
+          this.isSubmit=false
+    }
+
 
 
     onEstadoChange(estadoID) {
@@ -256,6 +279,22 @@ validarTextoAlfa(event: KeyboardEvent) {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearParticipanteForm = this.formBuilder.group({
+                        part_DNI: ['', [Validators.required]],
+                        empre_Id: ['0', [Validators.required]],
+                        part_Nombre: ['', [Validators.required]],
+                        part_Apellido: ['', [Validators.required]],
+                        part_Correo: ['', [Validators.required]],
+                        part_FechaNacimiento: ['', [Validators.required]],
+                        part_Sexo: ['', [Validators.required]],
+                        estc_Id: ['0', [Validators.required]],
+                        part_Direccion: ['', [Validators.required]],
+                        ciud_Id: ['0', [Validators.required]],
+                        esta_Id: ['0', [Validators.required]],
+
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 

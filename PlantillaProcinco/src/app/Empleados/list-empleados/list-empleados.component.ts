@@ -249,6 +249,29 @@ validarTextoAlfa(event: KeyboardEvent) {
 
 
 
+    cancel()
+    {
+        this.crearEmpleadoForm = this.formBuilder.group({
+            empl_DNI: ['', [Validators.required]],
+            carg_Id: ['0', [Validators.required]],
+            empl_Nombre: ['', [Validators.required]],
+            empl_Apellido: ['', [Validators.required]],
+            empl_Correo: ['', [Validators.required]],
+            empl_FechaNacimiento: ['', [Validators.required]],
+            empl_Sexo: ['', [Validators.required]],
+            estc_Id: ['0', [Validators.required]],
+            empl_Direccion: ['', [Validators.required]],
+            ciud_Id: ['0', [Validators.required]],
+            esta_Id: ['0', [Validators.required]],
+            screens: this.formBuilder.array([])
+
+
+          });
+
+          this.Collapse=false;
+          this.Tabla=true;
+          this.isSubmit=false
+    }
 
 
     gettitlesArray(): FormArray {
@@ -313,6 +336,23 @@ validarTextoAlfa(event: KeyboardEvent) {
             response => {
 
                 if (response.code == 200) {
+
+                    this.crearEmpleadoForm = this.formBuilder.group({
+                        empl_DNI: ['', [Validators.required]],
+                        carg_Id: ['0', [Validators.required]],
+                        empl_Nombre: ['', [Validators.required]],
+                        empl_Apellido: ['', [Validators.required]],
+                        empl_Correo: ['', [Validators.required]],
+                        empl_FechaNacimiento: ['', [Validators.required]],
+                        empl_Sexo: ['', [Validators.required]],
+                        estc_Id: ['0', [Validators.required]],
+                        empl_Direccion: ['', [Validators.required]],
+                        ciud_Id: ['0', [Validators.required]],
+                        esta_Id: ['0', [Validators.required]],
+                        screens: this.formBuilder.array([])
+
+
+                      });
 
                     this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
 
