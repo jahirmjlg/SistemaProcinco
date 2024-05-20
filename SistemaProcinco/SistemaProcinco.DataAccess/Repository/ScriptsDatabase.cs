@@ -196,6 +196,11 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string CursosImpartidosCategorias = "Pro.SP_CursosImpartidos_Categorias";
         public static string CursosImpartidosCategoriasMES = "Pro.SP_CursosImpartidos_Categorias_MES";
 
+        public static string EmpleadosMejorPagados = "Pro.SP_Empleados_MejorPagados";
+        public static string EmpleadosMejorPagadosFiltro = "Pro.SP_Empleados_MejorPagadosFiltro";
+
+        public static string HorasImpartidasPorCategoria = "Pro.SP_HorasImpartidasPorCategoria";
+        public static string HorasImpartidasPorCategoriaFiltrado = "Pro.SP_HorasImpartidasPorCategoriaFiltrado";
 
 
 

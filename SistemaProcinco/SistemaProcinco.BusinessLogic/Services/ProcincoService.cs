@@ -1379,6 +1379,86 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
+
+
+        //
+        /// ///////////////////////////
+        /// 
+
+        public ServicesResult EmpleadosMejorPagados()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.EmpleadosMejorPagados();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+        public ServicesResult EmpleadosMejorPagadosFiltro(int mes)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.EmpleadosMejorPagadosFiltro(mes);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+        public ServicesResult HorasImpartidasPorCategoria()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.HorasImpartidasPorCategoria();
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+        public ServicesResult HorasImpartidasPorCategoriaFiltrado(int mes)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.HorasImpartidasPorCategoriaFiltrado(mes);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
         #endregion
 
 

@@ -82,5 +82,17 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbEmpleados Empl { get; set; }
         [NotMapped]
         public int VecesImpartido { get; set; }
+
+        [NotMapped]
+        public int MonthId { get; set; }
+        [NotMapped]
+        public string Mes_Descripcion { get; set; }
+
+
+        [NotMapped]
+        public string HorasTotales { get; set; }
+
+        [NotMapped]
+        public int Año { get; set; }
     }
 }

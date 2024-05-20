@@ -920,17 +920,6 @@ namespace SistemaProcinco.API.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
         [HttpGet("CursosImpartidosCategorias")]
         public IActionResult CursosImpartidosCategorias()
         {
@@ -960,5 +949,69 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+
+
+
+
+        ////////
+        ///
+        [HttpGet("EmpleadosMejorPagados")]
+        public IActionResult EmpleadosMejorPagados()
+        {
+            var listado = _procincoService.EmpleadosMejorPagados();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("EmpleadosMejorPagadosFiltro/{mes}")]
+        public IActionResult EmpleadosMejorPagadosFiltro(int mes)
+        {
+            var listado = _procincoService.EmpleadosMejorPagadosFiltro(mes);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("HorasImpartidasPorCategoria")]
+        public IActionResult HorasImpartidasPorCategoria()
+        {
+            var listado = _procincoService.HorasImpartidasPorCategoria();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+        [HttpGet("HorasImpartidasPorCategoriaFiltrado/{mes}")]
+        public IActionResult HorasImpartidasPorCategoriaFiltrado(int mes)
+        {
+            var listado = _procincoService.HorasImpartidasPorCategoriaFiltrado(mes);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
     }
 }

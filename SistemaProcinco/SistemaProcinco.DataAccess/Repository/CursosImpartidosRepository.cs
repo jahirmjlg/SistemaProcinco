@@ -292,5 +292,74 @@ namespace SistemaProcinco.DataAccess.Repository
                 return result;
             }
         }
+
+
+
+
+        ///////////////////////////////
+        ///
+
+
+        public IEnumerable<tbCursosImpartidos> EmpleadosMejorPagados()
+        {
+            string sql = ScriptsDatabase.EmpleadosMejorPagados;
+
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbCursosImpartidos>(sql, commandType: System.Data.CommandType.Text).ToList();
+                return result;
+            }
+        }
+
+
+        public IEnumerable<tbCursosImpartidos> EmpleadosMejorPagadosFiltro(int mes)
+        {
+            string sql = ScriptsDatabase.EmpleadosMejorPagadosFiltro;
+
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Month", mes);
+
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+
+        public IEnumerable<tbCursosImpartidos> HorasImpartidasPorCategoria()
+        {
+            string sql = ScriptsDatabase.HorasImpartidasPorCategoria;
+
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbCursosImpartidos>(sql, commandType: System.Data.CommandType.Text).ToList();
+                return result;
+            }
+        }
+
+
+        public IEnumerable<tbCursosImpartidos> HorasImpartidasPorCategoriaFiltrado(int mes)
+        {
+            string sql = ScriptsDatabase.HorasImpartidasPorCategoriaFiltrado;
+
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Month", mes);
+
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
     }
 }
