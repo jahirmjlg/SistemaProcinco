@@ -75,8 +75,7 @@ namespace SistemaProcinco.API.Controllers
                 {
                     Titl_Id = pantalla.titl_Id,
                     Empl_Id = Empl_IdScope,
-                    TitPe_UsuarioCreacion = 1,
-                    TitPe_FechaCreacion = DateTime.Now
+                    TitPe_UsuarioCreacion = 1
                 };
 
                 result = _procincoService.InsertarTitulosPorEmpleados(modelo2);
@@ -95,29 +94,59 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpPut("EmpleadoEditar")]
-        public IActionResult Edit(EmpleadosViewModel item)
+        public IActionResult Edit([FromBody] RoleWithScreens1 data)
         {
-            var model = _mapper.Map<tbEmpleados>(item);
+            var result = new ServicesResult();
+            var dni = data.Empl_DNI;
+            var cargo = data.Carg_Id;
+            var nombre = data.Empl_Nombre;
+            var apellido = data.Empl_Apellido;
+            var correo = data.Empl_Correo;
+            var fechaNacimiento = data.Empl_FechaNacimiento;
+            var sexo = data.Empl_Sexo;
+            var estadoCivil = data.Estc_Id;
+            var direccion = data.Empl_Direccion;
+            var ciudad = data.Ciud_Id;
+
+            var titulos = data.Screens;
+
             var modelo = new tbEmpleados()
             {
-                Empl_Id = item.Empl_Id,
-                Empl_DNI = item.Empl_DNI,
-                Carg_Id = item.Carg_Id,
-                Empl_Nombre = item.Empl_Nombre,
-                Empl_Apellido = item.Empl_Apellido,
-                Empl_Correo = item.Empl_Correo,
-                Empl_FechaNacimiento = item.Empl_FechaNacimiento,
-                Empl_Sexo = item.Empl_Sexo,
-                Estc_Id = item.Estc_Id,
-                Empl_Direccion = item.Empl_Direccion,
-                Ciud_Id = item.Ciud_Id,
+                Empl_Id = data.Empl_Id,
+                Empl_DNI = data.Empl_DNI,
+                Carg_Id = cargo,
+                Empl_Nombre = nombre,
+                Empl_Apellido = apellido,
+                Empl_Correo = correo,
+                Empl_FechaNacimiento = fechaNacimiento,
+                Empl_Sexo = sexo,
+                Estc_Id = estadoCivil,
+                Empl_Direccion = direccion,
+                Ciud_Id = ciudad,
                 Empl_UsuarioModificacion = 1,
                 Empl_FechaModificacion = DateTime.Now
 
 
             };
-            var list = _generalService.EditarEmpleados(modelo);
-            if (list.Success == true)
+            var list = _generalService.EditarEmpleados1(modelo);
+
+            var limpiar = _procincoService.EliminarTitulosPorEmpleados(data.Empl_Id);
+
+
+            foreach (var titulo in titulos)
+            {
+                var modelo2 = new tbTitulosPorEmpleado()
+                {
+                    Titl_Id = titulo.titl_Id,
+                    Empl_Id = data.Empl_Id,
+                    TitPe_UsuarioModificacion = 1
+                };
+
+                result = _procincoService.InsertarTitulosPorEmpleados(modelo2);
+
+            }
+
+            if (result.Success == true)
             {
                 return Ok(list);
             }
@@ -127,20 +156,24 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
-        [HttpDelete("EmpleadoEliminar/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var list = _generalService.EliminarEmpleados(id);
-            if (list.Success == true)
-            {
-                return Ok(list);
-            }
-            else
-            {
-                return Problem();
-            }
+        //[HttpDelete("EmpleadoEliminar/{id}")]
+        //public IActionResult Delete(int id)
+        //{
+        //    var list = _generalService.EliminarEmpleados(id);
+        //    if (list.Success == true)
+        //    {
+        //        return Ok(list);
+        //    }
+        //    else
+        //    {
+        //        return Problem();
+        //    }
 
-        }
+        //}
+
+
+
+    
 
         [HttpGet("EmpleadoBuscar/{id}")]
         public IActionResult Details(int id)
@@ -177,7 +210,7 @@ namespace SistemaProcinco.API.Controllers
         //////////////////////////////
         //
 
-
+        
         [HttpGet("ListadoTitulos")]
         public IActionResult ListaTitulos()
         {
@@ -205,6 +238,56 @@ namespace SistemaProcinco.API.Controllers
             {
                 return Problem();
             }
+        }
+
+
+
+        //BUSQUEDA DRAG
+        [HttpGet("TitulosEmpleado/{id}")]
+        public IActionResult ListadoFiltro(int id)
+        {
+            var listado = _procincoService.ListaTitulosEmpleado(id);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+
+        [HttpGet("Buscar/{id}")]
+        public IActionResult Detailss(int id)
+        {
+            var list = _generalService.BuscarEmpleadoss(id);
+            if (list.Success == true)
+            {
+                return Json(list.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+
+        [HttpDelete("EmpleadoEliminar/{Empl_id}")]
+        public IActionResult Deletee(int Empl_id)
+        {
+            var list = _generalService.EliminarEmpleadoss(Empl_id);
+            if (list.Success == true)
+            {
+                return Ok(list);
+            }
+            else
+            {
+                return Problem();
+            }
+
         }
 
 

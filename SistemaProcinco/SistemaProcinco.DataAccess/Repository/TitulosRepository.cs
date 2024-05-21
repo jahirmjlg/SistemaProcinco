@@ -86,5 +86,63 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
         }
+
+
+
+        //drag and drog
+
+        public IEnumerable<tbTitulos> List1()
+        {
+            string sql = ScriptsDatabase.titulosSeleccionar;
+
+            List<tbTitulos> result = new List<tbTitulos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                result = db.Query<tbTitulos>(sql, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
+        }
+
+
+
+        public IEnumerable<tbTitulos> List2(int Role_Id)
+        {
+            string sql = ScriptsDatabase.titulosFiltrar;
+
+            List<tbTitulos> result = new List<tbTitulos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Empl_Id", Role_Id);
+                result = db.Query<tbTitulos>(sql, parametro, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
+        }
+
+
+
+
+
+        public IEnumerable<tbTitulos> ListTitulosPorEmpleaddo(int Empl_Id)
+        {
+            string sql = ScriptsDatabase.titulosporempleadoFiltro;
+
+            List<tbTitulos> result = new List<tbTitulos>();
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Empl_Id", Empl_Id);
+                result = db.Query<tbTitulos>(sql, parametro, commandType: CommandType.StoredProcedure).ToList();
+
+                return result;
+            }
+        }
+
+
     }
 }

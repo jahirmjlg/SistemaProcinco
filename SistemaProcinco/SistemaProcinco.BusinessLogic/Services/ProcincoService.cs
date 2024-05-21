@@ -1464,6 +1464,90 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+        #region DRAGANDDROG EMPLEATOS TITULOS
+        public ServicesResult ListaTituloss()
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosRepository.List1();
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+
+        public ServicesResult ListaTitulosFiltro(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosRepository.List2(id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+
+        public ServicesResult ListaTitulosEmpleado(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _titulosRepository.ListTitulosPorEmpleaddo(id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
+
+        #endregion
+
+
+
+
         #region TREEVIEW CONTENIDO POR CURSOS bueno CURSOS
 
 

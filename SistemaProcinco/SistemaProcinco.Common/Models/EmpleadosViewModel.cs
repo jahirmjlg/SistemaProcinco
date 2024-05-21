@@ -16,6 +16,7 @@ namespace SistemaProcinco.Common.Models
         public string Empl_Apellido { get; set; }
         public string Empl_Correo { get; set; }
         public DateTime? Empl_FechaNacimiento { get; set; }
+     
         public string Empl_Sexo { get; set; }
         [NotMapped]
         public string Sexo { get; set; }

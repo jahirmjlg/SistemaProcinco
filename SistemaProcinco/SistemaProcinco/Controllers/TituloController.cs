@@ -115,6 +115,36 @@ namespace SistemaProcinco.API.Controllers
 
 
 
+        //drag and drog
+        [HttpGet("TitulosListado")]
+        public IActionResult Index1()
+        {
+            var listado = _procincoService.ListaTituloss();
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
+
+
+
+        [HttpGet("TitulosFiltro/{id}")]
+        public IActionResult ListadoFiltro(int id)
+        {
+            var listado = _procincoService.ListaTitulosFiltro(id);
+            if (listado.Success == true)
+            {
+                return Ok(listado.Data);
+            }
+            else
+            {
+                return Problem();
+            }
+        }
 
 
 

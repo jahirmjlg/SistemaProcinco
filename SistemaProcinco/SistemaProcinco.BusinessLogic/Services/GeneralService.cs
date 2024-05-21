@@ -997,6 +997,80 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+        #region drag empleados
+        public ServicesResult EditarEmpleadoss(tbEmpleados item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Update2(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        public ServicesResult BuscarEmpleadoss(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Find2(Id);
+                if (lost.Count() > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+
+        public ServicesResult EliminarEmpleadoss(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _empleadosRepository.Deletee(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
 
 
     }

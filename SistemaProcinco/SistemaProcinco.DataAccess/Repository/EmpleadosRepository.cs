@@ -144,12 +144,12 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Ciud_Id", item.Ciud_Id);
                 parametro.Add("@Empl_UsuarioCreacion", item.Empl_UsuarioCreacion);
                 parametro.Add("@Empl_FechaCreacion", DateTime.Now);
-                parametro.Add("@Empl_id", DbType.Int32, direction: ParameterDirection.Output);
+                parametro.Add("@Empl_Id", DbType.Int32, direction: ParameterDirection.Output);
 
 
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
-                int roleId = parametro.Get<int>("@Empl_id");
+                int roleId = parametro.Get<int>("@Empl_Id");
 
                 string mensaje = (result == 1) ? "exito" : "error";
                 return (new RequestStatus { CodeStatus = result, MessageStatus = "" }, roleId);
@@ -257,6 +257,73 @@ namespace SistemaProcinco.DataAccess.Repository
                 result = db.Query<tbEmpleados>(sql, commandType: CommandType.Text).ToList();
 
                 return result;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        //DRAG AND DROG
+        public RequestStatus Update2(tbEmpleados item)
+        {
+            string sql = ScriptsDatabase.empeladosActualizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@Empl_DNI", item.Empl_DNI);
+                parametro.Add("@Carg_Id", item.Carg_Id);
+                parametro.Add("@Empl_Nombre", item.Empl_Nombre);
+                parametro.Add("@Empl_Apellido", item.Empl_Apellido);
+                parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
+                parametro.Add("@Empl_Sexo", item.Empl_Sexo);
+                parametro.Add("@Estc_Id", item.Estc_Id);
+                parametro.Add("@Empl_Direccion", item.Empl_Direccion);
+                parametro.Add("@Ciud_Id", item.Ciud_Id);
+                parametro.Add("@Empl_UsuarioModificacion", item.Empl_UsuarioModificacion);
+                parametro.Add("@Empl_FechaModificacion", DateTime.Now);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+            }
+        }
+
+
+        public IEnumerable<tbEmpleados> Find2(int? id)
+        {
+            string sql = ScriptsDatabase.empleadosLlenasEditar;
+            List<tbEmpleados> result = new List<tbEmpleados>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Empl_Id", id);
+                result = db.Query<tbEmpleados>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+        public RequestStatus Deletee(int? id)
+        {
+            string sql = ScriptsDatabase.empleadosEliminar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Empl_Id", id);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return new RequestStatus { CodeStatus = result, MessageStatus = "" };
+
             }
         }
     }

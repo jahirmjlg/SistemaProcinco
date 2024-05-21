@@ -33,6 +33,8 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public List<int> TitulosID { get; set; }
         public int Empl_Id { get; set; }
+    
+
         public string Empl_DNI { get; set; }
         public int? Carg_Id { get; set; }
         [NotMapped]

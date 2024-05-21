@@ -249,6 +249,24 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
+        #region titulosPorEmpleado
+        public static string titulosSeleccionar = "[Pro].[SP_Titulos_Seleccionar]";
+        public static string titulosFiltrar = "[Pro].[SP_Titulos_Filtrar1]";
+
+
+        public static string titulosporempleadoFiltro = "[Pro].[SP_Titulos_Filtrado]";
+        public static string titulosPorEmpleadoEliminar = "[Pro].[SP_TituloPorEmpleadoo_Eliminar]";
+        public static string empeladosActualizar = "[Grl].[SP_Empleados_Actualizar]";
+        public static string empleadosLlenasEditar = "[Grl].[SP_Empleados_LlenarEditar1]";
+        public static string empleadosEliminar = "[Grl].[SP_Empleados_Eliminar]";
+
+
+        #endregion
+
+
+
+
+
 
 
 

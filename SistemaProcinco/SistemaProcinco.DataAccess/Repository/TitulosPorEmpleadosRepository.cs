@@ -15,12 +15,12 @@ namespace SistemaProcinco.DataAccess.Repository
     {
         public RequestStatus Delete(int? id)
         {
-            string sql = ScriptsDatabase.TitulosPorEmpleadosEliminar;
+            string sql = ScriptsDatabase.titulosPorEmpleadoEliminar;
 
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("TitPe_Id", id);
+                parametro.Add("@Empl_Id", id);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
@@ -50,7 +50,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Titl_Id", item.Titl_Id);
                 parametro.Add("@Empl_Id", item.Empl_Id);
                 parametro.Add("@TitPe_UsuarioCreacion", item.TitPe_UsuarioCreacion);
-                parametro.Add("@TitPe_FechaCreacion", item.TitPe_FechaCreacion);
+                parametro.Add("@TitPe_FechaCreacion", DateTime.Now);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };
             }
@@ -128,7 +128,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public IEnumerable<tbTitulos> List1(int Emple_Id)
         {
-            string sql = ScriptsDatabase.TitulosPorEmpleadosListadoFiltrado;
+            string sql = ScriptsDatabase.TitulosPorEmpleadosFiltrado1;
 
             List<tbTitulos> result = new List<tbTitulos>();
 
@@ -158,6 +158,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = (result.Resultado == 1) ? "Exito" : "Error" };
             }
         }
+
 
 
 

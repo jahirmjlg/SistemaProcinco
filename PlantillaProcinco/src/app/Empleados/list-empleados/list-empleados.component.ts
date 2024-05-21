@@ -29,6 +29,7 @@ export class ListEmpleadosComponent {
 
     Tabla: boolean = true;
 
+  //   variable para iterar
 
     empleado! : Empleado[];
     titulos! : Titulo[];
@@ -166,21 +167,22 @@ validarTextoAlfa(event: KeyboardEvent) {
 
           });
 
-          this.editarEmpleadoForm = new FormGroup({
-            empl_Id: new FormControl("",Validators.required),
-            empl_DNI: new FormControl("",Validators.required),
-            carg_Id: new FormControl("0",Validators.required),
-            empl_Nombre: new FormControl("",Validators.required),
-            empl_Apellido: new FormControl("",Validators.required),
-            empl_Correo: new FormControl("",Validators.required),
-            empl_FechaNacimiento: new FormControl("",Validators.required),
-            empl_Sexo: new FormControl("",Validators.required),
-            estc_Id: new FormControl("0",Validators.required),
-            empl_Direccion: new FormControl("",Validators.required),
-            ciud_Id: new FormControl("0",Validators.required),
-            esta_Id: new FormControl(this.ciudadID,Validators.required),
+          this.editarEmpleadoForm = this.formBuilder.group({
+            empl_Id: ['', Validators.required],
+            empl_DNI: ['', Validators.required],
+            carg_Id: ['', Validators.required],
+            empl_Nombre: ['', Validators.required],
+            empl_Apellido: ['', Validators.required],
+            empl_Correo: ['', Validators.required],
+            empl_FechaNacimiento: ['', Validators.required],
+            empl_Sexo: ['', Validators.required],
+            estc_Id: ['', Validators.required],
+            empl_Direccion: ['', Validators.required],
+            esta_Id: ['', Validators.required],
+            ciud_Id: ['', Validators.required],
             screens: this.formBuilder.array([])
         });
+    
 
 
         this.empleadoservice.getDdlEstados().subscribe((data: dropEstados[]) => {
@@ -212,6 +214,11 @@ validarTextoAlfa(event: KeyboardEvent) {
       });
 
 
+ 
+      this.empleadoservice.getTitulos().subscribe(data => {
+        this.itemsGroup1 = data;
+        console.log(data);
+      });
 
         // this.empleadoservice.getDdlCiudades().subscribe((data: dropCiudades[]) => {
         //     this.ciudadesddl = data;
@@ -388,48 +395,45 @@ validarTextoAlfa(event: KeyboardEvent) {
 
     //EDITAR
     onSubmitEdit(): void {
-
-        this.isSubmitEdit = true;
-
-        if (this.editarEmpleadoForm.valid) {
-          const empleadoData: Empleado = this.editarEmpleadoForm.value;
+      this.isSubmitEdit = true;
+  
+      if (this.editarEmpleadoForm.valid) {
+          const contenidoData: Empleado = this.editarEmpleadoForm.value;
           this.itemsGroup2Edit.forEach(screen => this.addScreenEdit(screen));
-
-          this.empleadoservice.editEmpleado(empleadoData).subscribe(
-
-            response => {
-
-                if (response.code == 200) {
-
-
-                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
-                    console.log(response)
-                    // this.router.navigate(['/pages/estados']);
-                    this.empleadoservice.getEmpleado().subscribe((Response: any)=> {
-                        console.log(Response.data);
-                        this.empleado = Response.data;
-                    });
-
-                    this.CollapseEdit = false;
-                    this.Tabla = true;
-
-                } else {
-
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
-
-
-                }
-
-            },
-            error => {
-                console.log(error);
-            }
+  
+          console.log(this.editarEmpleadoForm.value);
+          this.empleadoservice.editEmpleado(this.editarEmpleadoForm.value).subscribe(
+              response => {
+                  if (response.code == 200) {
+                      this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Rol Editado Exitosamente', life: 3000 });
+                      console.log(response);
+                      this.empleadoservice.getEmpleado().subscribe((Response: any) => {
+                          console.log(Response.data);
+                          this.empleado = Response.data;
+                      });
+  
+                      this.CollapseEdit = false;
+                      this.Tabla = true;
+  
+                      this.editarEmpleadoForm.reset();
+                  } else {
+                      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Empleado', life: 3000 });
+                  }
+              },
+              error => {
+                  console.log(error);
+              }
           );
-        } else {
-          console.log('Formulario inválido');
-        }
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Empleado', life: 3000 });
 
-    }
+          // console.log('Formulario inválido');
+          // console.log('Invalido: ' + this.editarEmpleadoForm.get('empl_Id')?.value +
+          //     ' 2: ' + this.editarEmpleadoForm.get('empl_Nombre')?.value + ' 3: ' +
+          //     this.editarEmpleadoForm.get('screens')?.value);
+      }
+  }
+  
 
 
 
@@ -507,7 +511,7 @@ validarTextoAlfa(event: KeyboardEvent) {
             next: (data: Empleado) => {
 
 
-                this.tituloService.fillTitulo(id).subscribe((Response: any)=>{
+                this.tituloService.getTitulosFiltro(id).subscribe((Response: any)=>{
                     var titulos = Response;
                     titulos.forEach(item => {
                         this.itemsGroup1Edit.push({
@@ -519,18 +523,6 @@ validarTextoAlfa(event: KeyboardEvent) {
                     this.cdRef.detectChanges();
 
         });
-
-
-        // this.tituloService.getPantallasPorRol(id).subscribe((Response: any)=>{
-        //     var pantallasfiltro = Response;
-        //     pantallasfiltro.forEach(item => {
-        //         this.itemsGroup2Edit.push({
-        //             titl_Id: item.titl_Id,
-        //             titl_Descripcion: item.titl_Descripcion
-        //         })
-
-        //     });
-        // });
 
 
 
@@ -579,11 +571,9 @@ validarTextoAlfa(event: KeyboardEvent) {
       itemsRemoved(ev, list) {
         if (list === 1) {
             console.log("SI entra")
-          // Mover de la primera tabla a la segunda.
           this.itemsGroup2.push(...ev.filter(item => !this.itemsGroup2.some(existing => existing.titl_Id === item.titl_Id)));
           this.itemsGroup1 = this.itemsGroup1.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
         } else {
-          // Mover de la segunda tabla a la primera.
           this.itemsGroup1.push(...ev.filter(item => !this.itemsGroup1.some(existing => existing.titl_Id === item.titl_Id)));
           this.itemsGroup2 = this.itemsGroup2.filter(item => !ev.some(removedItem => removedItem.titl_Id === item.titl_Id));
         }
@@ -663,58 +653,75 @@ validarTextoAlfa(event: KeyboardEvent) {
 
 
 
-
-
         Fill1(id) {
           this.itemsGroup1Edit = [];
-      this.itemsGroup2Edit = [];
-      this.editarEmpleadoForm.reset();
-
+          this.itemsGroup2Edit = [];
+          this.editarEmpleadoForm.reset();
+      
           this.empleadoservice.fillEmpleado(id).subscribe({
               next: (data: Empleado) => {
-                  this.tituloporempleadoservice.getTitulosFiltro(id).subscribe((Response: any)=>{
+                  this.empleadoservice.getTitulosFiltro(id).subscribe((Response: any) => {
                       var pantallas = Response;
-                              pantallas.forEach(item => {
-                                  this.itemsGroup1Edit.push({
-                                      titl_Id: item.titl_Id,
-                                      titl_Descripcion: item.titl_Descripcion
-                                  })
-
-                              });
-                              this.cdRef.detectChanges();
-
-                  });
-
-                          this.tituloporempleadoservice.getTitulosPorEmpleadoo(id).subscribe((Response: any)=>{
-                              var pantallasfiltro = Response;
-                              pantallasfiltro.forEach(item => {
-                                  this.itemsGroup2Edit.push({
-                                      titl_Id: item.titl_Id,
-                                      titl_Descripcion: item.titl_Descripcion
-                                  })
-
-                              });
+                      pantallas.forEach(item => {
+                          this.itemsGroup1Edit.push({
+                              titl_Id: item.titl_Id,
+                              titl_Descripcion: item.titl_Descripcion
                           });
-
-
-
-
-                  this.editarEmpleadoForm.get('empl_Id').setValue(data[0].empl_Id);
-                  this.editarEmpleadoForm.get('empl_Nombre').setValue(data[0].empl_Nombre);
-
+                      });
+                      this.cdRef.detectChanges();
+                  });
+      
+                  this.empleadoservice.getTitulosPorRol(id).subscribe((Response: any) => {
+                      var titulosfiltro = Response;
+                      titulosfiltro.forEach(item => {
+                          this.itemsGroup2Edit.push({
+                              titl_Id: item.titl_Id,
+                              titl_Descripcion: item.titl_Descripcion
+                          });
+                      });
+                  });
+      
+                  this.editarEmpleadoForm.patchValue({
+                      empl_Id: id,
+                      empl_DNI: data[0]?.empl_DNI || '',
+                      carg_Id: data[0]?.carg_Id || '',
+                      empl_Nombre: data[0]?.empl_Nombre || '',
+                      empl_Apellido: data[0]?.empl_Apellido || '',
+                      empl_Correo: data[0]?.empl_Correo || '',
+                      empl_FechaNacimiento: data[0]?.empl_FechaNacimiento || '',
+                      empl_Sexo: data[0]?.empl_Sexo || '',
+                      estc_Id: data[0]?.estc_Id || '',
+                      empl_Direccion: data[0]?.empl_Direccion || '',
+                      esta_Id: data[0]?.esta_Id || '',
+                      ciud_Id: data[0]?.ciud_Id || ''
+                  });
+      
+                  this.ciudadID = data[0]?.ciud_Id || '';
+                  this.empleadoservice.getDdlCiudades(data[0]?.esta_Id).subscribe(
+                      (data: any) => {
+                          this.ciudadesddl = data;
+                          this.editarEmpleadoForm.get('ciud_Id')?.setValue(this.ciudadID);
+                      }
+                  );
+      
                   setTimeout(() => {
-                      document.getElementById('miInput').click();
-                    }, 250);
-
+                      const inputElement = document.getElementById('miInput');
+                      if (inputElement) {
+                          inputElement.click();
+                      } else {
+                          console.warn("Element with id 'miInput' not found.");
+                      }
+                  }, 250);
+      
                   this.CollapseEdit = true;
-                  this.Tabla=false;
-
-                  console.log(data)
-
+                  this.Tabla = false;
+      
+                  console.log(data);
               }
-            });
-
+          });
       }
+      
+
 
 
       cancelar()

@@ -13,6 +13,10 @@ namespace SistemaProcinco.Entities.Entities
         public int? Titl_Id { get; set; }
         [NotMapped]
         public string Titulo { get; set; }
+        [NotMapped]
+        public string Titl_Descripcion { get; set; }
+        [NotMapped]
+        public string Titl_ValorMonetario { get; set; }
         public int? Empl_Id { get; set; }
         [NotMapped]
         public string Empleado { get; set; }

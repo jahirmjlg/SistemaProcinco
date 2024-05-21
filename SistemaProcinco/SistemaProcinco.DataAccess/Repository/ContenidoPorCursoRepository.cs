@@ -144,7 +144,7 @@ namespace SistemaProcinco.DataAccess.Repository
 
         public RequestStatus Insert1(tbContenidoPorCurso item)
         {
-            const string sql = "[Pro].[SP_ContenidoPorCurso1_Insertar]";
+            const string sql = "[Pro].[SP_ContenidoPorCurso_Insertar]";
 
 
 
