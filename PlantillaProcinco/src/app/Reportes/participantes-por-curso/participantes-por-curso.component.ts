@@ -69,6 +69,10 @@ export class ParticipantesPorCursoComponent {
                 this.IDCurso = ID;
               this.service.getDdlFechas(ID).subscribe(
                 (data: any) => {
+                    if(data[1].text === '1999-01-01 00:00')
+                        {
+                            data[1].text = 'Todas las fechas'
+                        }
                   this.fechasddl = data;
                   this.formSelect.get('fecha_id').setValue('0');
                 },

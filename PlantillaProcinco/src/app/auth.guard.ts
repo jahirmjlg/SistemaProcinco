@@ -21,7 +21,6 @@ import { CanActivate} from '@angular/router';
         const isAdmin = this.cookieService.get('esAdmin') === 'true';
 
         if (isAdmin || this.authService.isUrlAllowed(url)) {
-            console.log("authh")
           return true;
         }
 

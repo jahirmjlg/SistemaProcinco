@@ -53,11 +53,11 @@ interface Pantalla {
       }
 
       isUrlAllowed(url: string): boolean {
+        this.loadPermissions();
 
         const admin = this.cookieService.get('esAdmin').toString()
 
         if (admin === "true"){
-            console.log("authh")
 
             return true;
         }
@@ -68,6 +68,12 @@ interface Pantalla {
         if (screenNameIndex > 0 && screenNameIndex < urlSegments.length) {
             const screenName = urlSegments[screenNameIndex].toLowerCase().trim();
             console.log(`Screen name extracted: ${screenName}`);
+
+            if(screenName == "empty")
+                {
+                    return true;
+                }
+
             return this.allowedScreens.has(screenName);
         }
 

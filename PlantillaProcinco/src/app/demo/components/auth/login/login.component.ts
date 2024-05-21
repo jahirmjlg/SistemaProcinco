@@ -103,7 +103,6 @@ export class LoginComponent {
 
                     this.authService.loadPermissions();
 
-                    console.log(response)
                     this.router.navigate(['/pages/empty']);
                 } else {
 

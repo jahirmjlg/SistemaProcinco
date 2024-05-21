@@ -4,14 +4,14 @@
 
         <div class="flex align-items-center justify-content-center mt-3" style="position: relative;">
 
-            <label for="firstname2">Seleccione Curso</label>
+            <label for="firstname2" class="mr-2">Curso</label>
 
 
             <select formControlName="curso_id" class="form-control" pInputText id="" required autofocus (change)="onCursoChange(formSelect.get('curso_id').value)">
             <option *ngFor="let esta of cursosddl" [value]="esta.value">{{ esta.text }}</option>
             </select>
 
-            <label for="firstname2">Seleccione Fecha</label>
+            <label for="firstname2" class="mr-2 ml-2"> Fecha</label>
 
 
             <select formControlName="fecha_id" class="form-control" pInputText id="" required autofocus (change)="onFechaChange(formSelect.get('fecha_id').value)">
