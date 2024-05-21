@@ -26,7 +26,7 @@ export class AppTopBarComponent {
     {
         this.cookieService.deleteAll();
         window.location.reload();
-        window.location.replace('/login');
+        window.location.replace('/');
 
     }
 
