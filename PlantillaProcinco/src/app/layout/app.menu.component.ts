@@ -433,7 +433,7 @@ export class AppMenuComponent implements OnInit {
                             { label: 'Reporte Cursos Impartidos', icon: 'pi pi-file-pdf', routerLink: ['/pages/reportecursosimp'] },
                             { label: 'Reporte Por Empleado', icon: 'pi pi-file-pdf', routerLink: ['/pages/reporteporempleado'] },
                             { label: 'Participantes Por Curso', icon: 'pi pi-file-pdf', routerLink: ['/pages/participantesporcurso'] },
-
+                            { label: 'Reporte Cursos y Contenidos Por Categoria', icon: 'pi pi-file-pdf', routerLink: ['/pages/reportecursosporcategoria'] },
                             { label: 'Reporte 2', icon: 'pi pi-file-pdf', routerLink: ['/pages/'] },
                         ]
                     }

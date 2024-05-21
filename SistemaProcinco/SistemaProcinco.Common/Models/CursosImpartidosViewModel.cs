@@ -15,6 +15,8 @@ namespace SistemaProcinco.Common.Models
         [NotMapped]
         public string Cursos { get; set; }
         [NotMapped]
+        public string Cont_Descripcion { get; set; }
+        [NotMapped]
         public string Empre_Descripcion { get; set; }
         [NotMapped]
         public string Part_Nombre { get; set; }

@@ -207,6 +207,7 @@ namespace SistemaProcinco.API.Controllers
 
         private static readonly Dictionary<string, byte[]> _pdfCache = new Dictionary<string, byte[]>();
 
+
         [HttpGet("Preview/{usuCreacion},{FechaInicio},{FechaFin}")]
         public ActionResult GeneratePreviewPdf(string usuCreacion, DateTime FechaInicio, DateTime FechaFin)
         {
@@ -224,6 +225,156 @@ namespace SistemaProcinco.API.Controllers
 
             return Ok(fullUrl);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        //ReporteFechas #4
+        [HttpGet("PreviewCategorias/{usuCreacion},{FechaInicio},{FechaFin}")]
+        public ActionResult GeneratePreviewcategoriasPdf(string usuCreacion, DateTime FechaInicio, DateTime FechaFin)
+        {
+            MemoryStream pdfStream = CreatePdfStreamM(usuCreacion, FechaInicio, FechaFin);
+            pdfStream.Position = 0;
+            var pdfBytes = pdfStream.ToArray();
+
+            var fileId = Guid.NewGuid().ToString();
+            _pdfCache[fileId] = pdfBytes;
+
+
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            var url = Url.Action("GetPdfFile", new { fileId = fileId });
+            var fullUrl = baseUrl + url;
+
+            return Ok(fullUrl);
+        }
+
+
+
+
+        private MemoryStream CreatePdfStreamM(string usuCreacion, DateTime FechaInicio, DateTime FechaFin)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45))
+            {
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                writer.CloseStream = false;
+
+                writer.PageEvent = new PdfFooterHelper(usuCreacion);
+
+                document.Open();
+
+                string css = @"
+        <style> 
+            body { font-family: 'Arial'; font-size: 10pt; }
+            table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
+            th { background-color: #633394; color: #ffffff; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .header img { width: 150px; height: auto; }
+            .title { font-size: 20pt; font-weight: bold; color: #633394; margin-top: 10px; }
+            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; }
+        </style>";
+
+                string htmlContent = @"
+        <html>
+        <head>
+        </head>
+        <body>
+            <div class='header'>
+                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
+                <div class='title'>Reporte de Cursos Impartidos Por Categoria</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Curso</th>
+                        <th>Contenido</th>
+                        <th>Horas Impartidas</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                    </tr>
+                </thead>
+                <tbody>";
+
+                var listado = _procincoService.ListaCategoriasFechas(FechaInicio, FechaFin);
+                foreach (var curso in listado.Data)
+                {
+                    if (curso.CurIm_FechaFin != null)
+                    {
+                        htmlContent += $@"
+                <tr>
+                    <td>{curso.Cate_Descripcion}</td>
+                    <td>{curso.Curso_Descripcion}</td>
+                    <td>{curso.Cont_Descripcion}</td>
+                    <td>{curso.Curso_DuracionHoras}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                </tr>";
+                    }
+                    else
+                    {
+                        htmlContent += $@"
+                <tr>
+                    <td>{curso.CurIm_Id}</td>
+                    <td>{curso.Cursos}</td>
+                    <td>{curso.Nombre}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td style='color: #14b81b'>Sin Finalizar</td>
+                    <td>{(curso.CurIm_Finalizar ? "Sí" : "No")}</td>
+                </tr>";
+                    }
+                }
+
+                htmlContent += @"
+                </tbody>
+            </table>
+            <div class='footer'>
+                <p>© 2024 Procinco. Todos los derechos reservados.</p>
+            </div>
+        </body>
+        </html>";
+
+                using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
+                using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
+                {
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, msHtml, msCss);
+                }
+
+                document.Close();
+            }
+
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [HttpGet("GetPdfFile/{fileId}")]
         public ActionResult GetPdfFile(string fileId)
@@ -489,6 +640,102 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
+
+
+
+
+        //REPORTES FILTRADO #4
+
+
+        private MemoryStream CreatePdfStreamCategoriasPorFiltroFecha(string usuCreacion, int curso, DateTime Fecha)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+
+            using (Document document = new Document(PageSize.A4, 30, 30, 75, 45))
+            {
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                writer.CloseStream = false;
+
+                writer.PageEvent = new PdfFooterHelper(usuCreacion);
+
+                document.Open();
+
+                string css = @"
+        <style> 
+            body { font-family: 'Arial'; font-size: 10pt; }
+            table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
+            th { background-color: #633394; color: #ffffff; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .header img { width: 150px; height: auto; }
+            .title { font-size: 20pt; font-weight: bold; color: #633394; margin-top: 10px; }
+            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; }
+        </style>";
+
+                string htmlContent = @"
+        <html>
+        <head>
+        </head>
+        <body>
+            <div class='header'>
+                <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
+                <div class='title'>Participantes Por Curso</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Curso</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>";
+
+                var listado = _procincoService.ParticipantesFiltro(curso, Fecha);
+                foreach (var part in listado.Data)
+                {
+
+                    htmlContent += $@"
+                <tr>
+                    <td>{part.Part_Id}</td>
+                    <td>{part.Part_DNI}</td>
+                    <td>{part.Part_Nombre}</td>
+                    <td>{part.Curso_Descripcion:dd/MM/yyyy}</td>
+                    <td>{part.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td>{part.CurIm_Finalizacion}</td>
+                </tr>";
+
+                }
+
+                htmlContent += @"
+                </tbody>
+            </table>
+            <div class='footer'>
+                <p>© 2024 Procinco. Todos los derechos reservados.</p>
+            </div>
+        </body>
+        </html>";
+
+                using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css)))
+                using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(htmlContent)))
+                {
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, msHtml, msCss);
+                }
+
+                document.Close();
+            }
+
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+
+
+
+
 
 
 

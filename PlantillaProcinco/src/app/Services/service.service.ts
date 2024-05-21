@@ -64,6 +64,9 @@ export class ServiceService {
             return this.http.get<string>(`${this.urlPreview}Preview/${usuario},${fechaInicio},${fechaFin}`, { responseType: 'text' as 'json' });
           }
 
+          getPreviewPdfcategoriaUrl(usuario:String,fechaInicio:String,fechaFin:String ): Observable<string> {
+            return this.http.get<string>(`${this.urlPreview}PreviewCategorias/${usuario},${fechaInicio},${fechaFin}`, { responseType: 'text' as 'json' });
+          }
 
           getPreviewPdfEmpleado(usuario:String,Empleado:Number ): Observable<string> {
             return this.http.get<string>(`${this.urlPreview}PreviewPorEmpleado/${usuario},${Empleado}`, { responseType: 'text' as 'json' });

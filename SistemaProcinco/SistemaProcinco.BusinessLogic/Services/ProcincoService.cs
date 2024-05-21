@@ -690,6 +690,25 @@ namespace SistemaProcinco.BusinessLogic.Services
         }
 
 
+        public ServicesResult ListaCategoriasFechas(DateTime FechaInicio, DateTime FechaFin)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _cursosImpartidosRepository.BuscarCategoriasFecha(FechaInicio, FechaFin);
+
+                return result.Ok(lost);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+
+            }
+        }
+
+
+
         public ServicesResult ListaCursosFechas(DateTime FechaInicio, DateTime FechaFin)
         {
             var result = new ServicesResult();
@@ -706,6 +725,7 @@ namespace SistemaProcinco.BusinessLogic.Services
 
             }
         }
+
 
         public ServicesResult ListaCursosEmpleados(int id)
         {

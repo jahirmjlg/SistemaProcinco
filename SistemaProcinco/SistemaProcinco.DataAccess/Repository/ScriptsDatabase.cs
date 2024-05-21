@@ -183,6 +183,8 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
         public static string CursosImpartidosEntreMeses = "[Pro].[SP_CursosImpartidos_EntreFechas]";
+        public static string CursosImpartidosEntreFechas = "Pro.SP_CursosImpartidosPorCategoria_EntreFechas";
+
 
         public static string CursosImpartidosFiltroEmpleados = "[Pro].[SP_CursosImpartidos_FiltroEmpleados]";
 

@@ -181,6 +181,25 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+        //reporte #4
+
+        public IEnumerable<tbCursosImpartidos> BuscarCategoriasFecha(DateTime FechaInicio, DateTime FechaFin)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosEntreFechas;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@FechaInicio", FechaInicio);
+                parametro.Add("@FechaFin", FechaFin);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
+
+
+
         public IEnumerable<tbCursosImpartidos> BuscarCursosEmpleado(int id)
         {
             string sql = ScriptsDatabase.CursosImpartidosFiltroEmpleados;

@@ -53,6 +53,7 @@ const routes: Routes = [
 
 
     { path: 'reportecursosimp', data: { breadcrumb: 'ReporteCursosImp' }, loadChildren: () => import('../../../Reportes/list-reportes-cursos-impartidos/reportes-cursos-impartidos.module').then(m => m.ReportesCursosImpartidosModule) },
+    { path: 'reportecursosporcategoria', data: { breadcrumb: 'ReporteCursosCategoria' }, loadChildren: () => import('../../../Reportes/list-reportes-cursos-porcategoria/reportes-cursos-porcategoria.module').then(m => m.ReportesCursosPorCategoriaModule) },
 
 
 
