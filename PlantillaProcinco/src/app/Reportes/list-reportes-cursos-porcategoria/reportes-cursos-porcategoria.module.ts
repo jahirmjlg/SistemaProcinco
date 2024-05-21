@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReportesCursosPorCategoriaComponent } from './reportes-cursos-porcategoria.component';
-import { ReportesCursosImpartidosRoutingModule } from './reporte-cursos-porcategoria-routing.module';
+import { ReportesCursosPorCategoriasRoutingModule } from './reporte-cursos-porcategoria-routing.module';
 
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -24,7 +24,7 @@ import { DialogModule } from 'primeng/dialog';
         TableModule,
         FileUploadModule,
         FormsModule,
-        ReportesCursosPorCategoriaComponent,
+        ReportesCursosPorCategoriasRoutingModule,
         ReactiveFormsModule,
         ButtonModule,
         RippleModule,

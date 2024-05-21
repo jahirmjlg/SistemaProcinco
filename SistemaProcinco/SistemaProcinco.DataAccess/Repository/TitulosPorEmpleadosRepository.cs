@@ -49,7 +49,7 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parametro = new DynamicParameters();
                 parametro.Add("@Titl_Id", item.Titl_Id);
                 parametro.Add("@Empl_Id", item.Empl_Id);
-                parametro.Add("@TitPe_UsuarioCreacion", item.TitPe_UsuarioCreacion);
+                parametro.Add("@TitPe_UsuarioCreacion", 1);
                 parametro.Add("@TitPe_FechaCreacion", DateTime.Now);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
                 return new RequestStatus { CodeStatus = result, MessageStatus = "" };

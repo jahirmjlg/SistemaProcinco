@@ -8,4 +8,4 @@ import { ReportesCursosPorCategoriaComponent } from './reportes-cursos-porcatego
 	])],
 	exports: [RouterModule]
 })
-export class ReportesCursosImpartidosRoutingModule { }
+export class ReportesCursosPorCategoriasRoutingModule { }
