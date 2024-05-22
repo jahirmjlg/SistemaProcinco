@@ -101,6 +101,22 @@ namespace SistemaProcinco.API.Controllers
             }
         }
 
+
+
+        [HttpGet("FillParticipantesPorCursoImpartido/{id}")]
+        public IActionResult FillParticipantesPorCursoImpartido(int id)
+        {
+            var list = _procincoService.obterParticipantesCursosImpartidos(id);
+            if (list.Success)
+            {
+                return Ok(list.Data);
+            }
+            else
+            {
+                return BadRequest(list.Message);
+            }
+        }
+
         [HttpPut("Edit")]
         public IActionResult Update(FormData formData)
         {
@@ -162,5 +178,8 @@ namespace SistemaProcinco.API.Controllers
             var result = _procincoService.ObtenerCursoConParticipantes(cursoId);
             return Ok(result);
         }
+
+
+    
     }
 }

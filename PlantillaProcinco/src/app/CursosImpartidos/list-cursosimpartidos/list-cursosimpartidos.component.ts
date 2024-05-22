@@ -464,20 +464,23 @@ export class ListCursosimpartidosComponent {
 
                 });
 
-                this.onDNIChangeEdit(data[0].empl_DNI)
+                this.onDNIChangeEdit(data[0].empl_DNI);
+            this.onCursoChangeEdit(data[0].cursos);
 
-                this.onCursoChangeEdit(data[0].cursos)
-                console.log(this.ID);
 
-                this.CollapseEdit = true;
-                this.Tabla=false;
-                this.ImagenEncontrada = true;
+            this.participanteService.getParticipantesPorCursosImpartidos(id).subscribe({
+                next: (participantes: any) => {
+                    this.selectedParticipantes = participantes;
+                    this.participantes = this.participantes.filter(p => !this.selectedParticipantes.some(sp => sp.part_Id === p.part_Id));
+                }
+            });
 
-                console.log(data)
-
-            }
-        });
-    }
+            this.CollapseEdit = true;
+            this.Tabla = false;
+            this.ImagenEncontrada = true;
+        }
+    });
+}
 
     deleteCursoImpartido(codigo) {
         this.deleteCursoImpartidoBool = true;

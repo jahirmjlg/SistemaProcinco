@@ -81,9 +81,10 @@ export class ParticipantesService {
 
 
 
+
+
     
     // PROBANDO FORECH PARTICIPANTES
-           // PROBANDO TREEVIEWWWWWWWWWWWWWWWW
            EnviarCurso(formData: any): Observable<any> {
             return this.http.post<any>(this.UrlParticipantesPorCurso  + 'Create/', formData).pipe(
               map(response => {
@@ -106,6 +107,11 @@ export class ParticipantesService {
           
           getContenidosPorCurso(cursoId: string): Observable<any> {
             return this.http.get(`${this.UrlParticipantesPorCurso}Fill/${cursoId}`);
+          }
+
+
+          getParticipantesPorCursosImpartidos(cursoId: string): Observable<any> {
+            return this.http.get(`${this.UrlParticipantesPorCurso}FillParticipantesPorCursoImpartido/${cursoId}`);
           }
 
 

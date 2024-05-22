@@ -15,7 +15,6 @@
                         <div class="col-6">
 
                             <label for="firstname2" class="form-label">Ingrese DNI del Empleado</label>
-
                             <input pInputText id="firstname2" class="form-control" formControlName="empl_DNI" type="text" required autofocus (change)="onDNIChange(crearCursosImpartidosForm.get('empl_DNI').value)"/>
                             <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['empl_DNI'].invalid" style="color: red !important;">DNI Requerido Requerido</small>
                         </div>
@@ -65,7 +64,7 @@
                                     <h5 class="card-title">Categoria</h5>
                                     <input pInputText id="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" style="outline: none; border: none; font-weight: bold;  background-color: #1d2b37e6; color: #fff" class="form-control" formControlName="cate_Descripcion" type="text" readonly/>
 
-                                    <button pButton type="button" label="Ver participantes" (click)="showDialog()" class="mt-3" style="border-radius: 15px;"></button>
+                                    <button pButton type="button" label="Agregar participantes" (click)="showDialog()" class="mt-3" style="border-radius: 15px;"></button>
                             </div>
                               </div>
                             </div>
@@ -196,6 +195,33 @@
 
                         </div>
 
+                    </div>
+
+
+                    <div class="card mt-4" *ngIf="selectedParticipantes.length > 0">
+                        <div class="card-header">
+                            <h4>Participantes Seleccionados</h4>
+                        </div>
+                        <div class="card-body">
+                            <p-table [value]="selectedParticipantes">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Empresa</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-participant>
+                                    <tr>
+                                        <td>{{ participant.part_Id }}</td>
+                                        <td>{{ participant.part_Nombre }}</td>
+                                        <td>{{ participant.empre_Descripcion }}</td>
+                                        <td><button pButton type="button" icon="pi pi-trash" (click)="onRemoveParticipant(participant)"></button></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
                     </div>
 
                     <div class="row mt-3">
@@ -363,6 +389,33 @@
         </div>
 </p-dialog>
 
+
+
+
+<p-dialog header="Listado de Participantes" [(visible)]="displayParticipantes" [style]="{width: '50vw'}" [modal]="true" [dismissableMask]="true" [blockScroll]="true">
+    <input type="text" pInputText placeholder="Buscar..." (input)="applyFilter($event.target.value)" style="width: 100%; margin-bottom: 1rem;">
+    <p-table #dt [value]="participantes" [paginator]="true" [rows]="10" [globalFilterFields]="['part_Nombre', 'empre_Descripcion']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-participant>
+            <tr>
+                <td>{{ participant.part_Id }}</td>
+                <td>{{ participant.part_Nombre }}</td>
+                <td>{{ participant.empre_Descripcion }}</td>
+                <td><button pButton type="button" icon="pi pi-plus" (click)="onAddParticipant(participant)"></button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-footer>
+        <button pButton type="button" label="Cerrar" (click)="displayParticipantes = false" class="ui-button-danger ui-button-rounded mt-4"></button>
+    </p-footer>
+</p-dialog>
 
 
 
