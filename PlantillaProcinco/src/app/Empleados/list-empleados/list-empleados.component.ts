@@ -156,6 +156,8 @@ validarTextoAlfa(event: KeyboardEvent) {
             empl_Nombre: ['', [Validators.required]],
             empl_Apellido: ['', [Validators.required]],
             empl_Correo: ['', [Validators.required]],
+            empl_SalarioHora: ['', Validators.required],
+
             empl_FechaNacimiento: ['', [Validators.required]],
             empl_Sexo: ['', [Validators.required]],
             estc_Id: ['0', [Validators.required]],
@@ -174,6 +176,8 @@ validarTextoAlfa(event: KeyboardEvent) {
             empl_Nombre: ['', Validators.required],
             empl_Apellido: ['', Validators.required],
             empl_Correo: ['', Validators.required],
+            empl_SalarioHora: ['', Validators.required],
+
             empl_FechaNacimiento: ['', Validators.required],
             empl_Sexo: ['', Validators.required],
             estc_Id: ['', Validators.required],
@@ -182,7 +186,7 @@ validarTextoAlfa(event: KeyboardEvent) {
             ciud_Id: ['', Validators.required],
             screens: this.formBuilder.array([])
         });
-    
+
 
 
         this.empleadoservice.getDdlEstados().subscribe((data: dropEstados[]) => {
@@ -214,7 +218,7 @@ validarTextoAlfa(event: KeyboardEvent) {
       });
 
 
- 
+
       this.empleadoservice.getTitulos().subscribe(data => {
         this.itemsGroup1 = data;
         console.log(data);
@@ -264,6 +268,8 @@ validarTextoAlfa(event: KeyboardEvent) {
             empl_Nombre: ['', [Validators.required]],
             empl_Apellido: ['', [Validators.required]],
             empl_Correo: ['', [Validators.required]],
+            empl_SalarioHora: ['', Validators.required],
+
             empl_FechaNacimiento: ['', [Validators.required]],
             empl_Sexo: ['', [Validators.required]],
             estc_Id: ['0', [Validators.required]],
@@ -350,6 +356,8 @@ validarTextoAlfa(event: KeyboardEvent) {
                         empl_Nombre: ['', [Validators.required]],
                         empl_Apellido: ['', [Validators.required]],
                         empl_Correo: ['', [Validators.required]],
+                        empl_SalarioHora: ['', Validators.required],
+
                         empl_FechaNacimiento: ['', [Validators.required]],
                         empl_Sexo: ['', [Validators.required]],
                         estc_Id: ['0', [Validators.required]],
@@ -396,11 +404,11 @@ validarTextoAlfa(event: KeyboardEvent) {
     //EDITAR
     onSubmitEdit(): void {
       this.isSubmitEdit = true;
-  
+
       if (this.editarEmpleadoForm.valid) {
           const contenidoData: Empleado = this.editarEmpleadoForm.value;
           this.itemsGroup2Edit.forEach(screen => this.addScreenEdit(screen));
-  
+
           console.log(this.editarEmpleadoForm.value);
           this.empleadoservice.editEmpleado(this.editarEmpleadoForm.value).subscribe(
               response => {
@@ -411,10 +419,10 @@ validarTextoAlfa(event: KeyboardEvent) {
                           console.log(Response.data);
                           this.empleado = Response.data;
                       });
-  
+
                       this.CollapseEdit = false;
                       this.Tabla = true;
-  
+
                       this.editarEmpleadoForm.reset();
                   } else {
                       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Empleado', life: 3000 });
@@ -433,7 +441,7 @@ validarTextoAlfa(event: KeyboardEvent) {
           //     this.editarEmpleadoForm.get('screens')?.value);
       }
   }
-  
+
 
 
 
@@ -533,6 +541,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                     empl_Nombre: new FormControl(data[0].empl_Nombre,Validators.required),
                     empl_Apellido: new FormControl(data[0].empl_Apellido,Validators.required),
                     empl_Correo: new FormControl(data[0].empl_Correo,Validators.required),
+                    empl_SalarioHora: new FormControl(data[0].empl_SalarioHora,Validators.required),
                     empl_FechaNacimiento: new FormControl(data[0].empl_FechaNacimiento,Validators.required),
                     empl_Sexo: new FormControl(data[0].empl_Sexo,Validators.required),
                     estc_Id: new FormControl(data[0].estc_Id,Validators.required),
@@ -657,7 +666,7 @@ validarTextoAlfa(event: KeyboardEvent) {
           this.itemsGroup1Edit = [];
           this.itemsGroup2Edit = [];
           this.editarEmpleadoForm.reset();
-      
+
           this.empleadoservice.fillEmpleado(id).subscribe({
               next: (data: Empleado) => {
                   this.empleadoservice.getTitulosFiltro(id).subscribe((Response: any) => {
@@ -670,7 +679,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                       });
                       this.cdRef.detectChanges();
                   });
-      
+
                   this.empleadoservice.getTitulosPorRol(id).subscribe((Response: any) => {
                       var titulosfiltro = Response;
                       titulosfiltro.forEach(item => {
@@ -680,7 +689,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                           });
                       });
                   });
-      
+
                   this.editarEmpleadoForm.patchValue({
                       empl_Id: id,
                       empl_DNI: data[0]?.empl_DNI || '',
@@ -688,6 +697,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                       empl_Nombre: data[0]?.empl_Nombre || '',
                       empl_Apellido: data[0]?.empl_Apellido || '',
                       empl_Correo: data[0]?.empl_Correo || '',
+                      empl_SalarioHora: data[0]?.empl_SalarioHora || '',
                       empl_FechaNacimiento: data[0]?.empl_FechaNacimiento || '',
                       empl_Sexo: data[0]?.empl_Sexo || '',
                       estc_Id: data[0]?.estc_Id || '',
@@ -695,7 +705,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                       esta_Id: data[0]?.esta_Id || '',
                       ciud_Id: data[0]?.ciud_Id || ''
                   });
-      
+
                   this.ciudadID = data[0]?.ciud_Id || '';
                   this.empleadoservice.getDdlCiudades(data[0]?.esta_Id).subscribe(
                       (data: any) => {
@@ -703,7 +713,7 @@ validarTextoAlfa(event: KeyboardEvent) {
                           this.editarEmpleadoForm.get('ciud_Id')?.setValue(this.ciudadID);
                       }
                   );
-      
+
                   setTimeout(() => {
                       const inputElement = document.getElementById('miInput');
                       if (inputElement) {
@@ -712,15 +722,15 @@ validarTextoAlfa(event: KeyboardEvent) {
                           console.warn("Element with id 'miInput' not found.");
                       }
                   }, 250);
-      
+
                   this.CollapseEdit = true;
                   this.Tabla = false;
-      
+
                   console.log(data);
               }
           });
       }
-      
+
 
 
 

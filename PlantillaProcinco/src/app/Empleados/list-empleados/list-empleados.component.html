@@ -143,6 +143,15 @@
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
                             </div>
 
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label">Salario Hora Base</label>
+
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="empl_SalarioHora" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmit && crearEmpleadoForm.controls['empl_SalarioHora'].invalid}" />
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearEmpleadoForm.controls['empl_SalarioHora'].invalid" style="color: red !important;">Direccion Requerida</small>
+                            </div>
+
                         </div>
 
 
@@ -346,6 +355,16 @@
 
                                 <input pInputText id="firstname2" class="form-control" formControlName="empl_Direccion" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_Direccion'].invalid}" (keydown)="validarTextoAlfa($event)" />
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['empl_Direccion'].invalid" style="color: red !important;">Direccion Requerida</small>
+                            </div>
+
+
+                            <div class="col-6">
+
+                                <label for="firstname2" class="form-label">Salario Hora Base</label>
+
+
+                                <input pInputText id="firstname2" class="form-control" formControlName="empl_SalarioHora" type="text" required autofocus [ngClass]="{'ng-invalid ng-dirty': isSubmitEdit && editarEmpleadoForm.controls['empl_SalarioHora'].invalid}" />
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarEmpleadoForm.controls['empl_SalarioHora'].invalid" style="color: red !important;">Direccion Requerida</small>
                             </div>
 
                         </div>

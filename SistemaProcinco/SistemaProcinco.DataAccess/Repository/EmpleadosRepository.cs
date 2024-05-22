@@ -53,6 +53,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Nombre", item.Empl_Nombre);
                 parametro.Add("@Empl_Apellido", item.Empl_Apellido);
                 parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_SalarioHora", item.Empl_SalarioHora);
+
                 parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
@@ -92,6 +94,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Nombre", item.Empl_Nombre);
                 parametro.Add("@Empl_Apellido", item.Empl_Apellido);
                 parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_SalarioHora", item.Empl_SalarioHora);
+
                 parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
@@ -137,6 +141,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Nombre", item.Empl_Nombre);
                 parametro.Add("@Empl_Apellido", item.Empl_Apellido);
                 parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_SalarioHora", item.Empl_SalarioHora);
+
                 parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
@@ -198,6 +204,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Nombre", item.Empl_Nombre);
                 parametro.Add("@Empl_Apellido", item.Empl_Apellido);
                 parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_SalarioHora", item.Empl_SalarioHora);
+
                 parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);
@@ -284,6 +292,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Empl_Nombre", item.Empl_Nombre);
                 parametro.Add("@Empl_Apellido", item.Empl_Apellido);
                 parametro.Add("@Empl_Correo", item.Empl_Correo);
+                parametro.Add("@Empl_SalarioHora", item.Empl_SalarioHora);
+
                 parametro.Add("@Empl_FechaNacimiento", item.Empl_FechaNacimiento);
                 parametro.Add("@Empl_Sexo", item.Empl_Sexo);
                 parametro.Add("@Estc_Id", item.Estc_Id);

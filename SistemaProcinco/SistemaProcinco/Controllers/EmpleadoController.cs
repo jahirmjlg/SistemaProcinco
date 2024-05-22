@@ -57,6 +57,8 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Nombre = data.Empl_Nombre,
                 Empl_Apellido = data.Empl_Apellido,
                 Empl_Correo = data.Empl_Correo,
+                Empl_SalarioHora = data.Empl_SalarioHora,
+
                 Empl_FechaNacimiento = data.Empl_FechaNacimiento,
                 Empl_Sexo = data.Empl_Sexo,
                 Estc_Id = data.Estc_Id,
@@ -102,6 +104,8 @@ namespace SistemaProcinco.API.Controllers
             var nombre = data.Empl_Nombre;
             var apellido = data.Empl_Apellido;
             var correo = data.Empl_Correo;
+            var salarioHora = data.Empl_SalarioHora;
+
             var fechaNacimiento = data.Empl_FechaNacimiento;
             var sexo = data.Empl_Sexo;
             var estadoCivil = data.Estc_Id;
@@ -118,6 +122,8 @@ namespace SistemaProcinco.API.Controllers
                 Empl_Nombre = nombre,
                 Empl_Apellido = apellido,
                 Empl_Correo = correo,
+                Empl_SalarioHora = salarioHora,
+
                 Empl_FechaNacimiento = fechaNacimiento,
                 Empl_Sexo = sexo,
                 Estc_Id = estadoCivil,
