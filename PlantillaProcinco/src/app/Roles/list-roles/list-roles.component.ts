@@ -78,12 +78,18 @@ export class ListRolesComponent {
   ngOnInit() {
     this.crearRolForm = this.formBuilder.group({
         role_Descripcion: ['', [Validators.required]],
+        role_Imprimir: [true, [Validators.required]],
+        role_Finalizar: [true, [Validators.required]],
+
         screens: this.formBuilder.array([])
     });
 
     this.editarRolForm = new FormGroup({
         role_Id: new FormControl("",Validators.required),
         role_Descripcion: new FormControl("", Validators.required),
+        role_Imprimir: new FormControl(true, Validators.required),
+        role_Finalizar: new FormControl(true, Validators.required),
+
         screens: this.formBuilder.array([])
     })
 
@@ -132,6 +138,8 @@ cancel()
 {
     this.crearRolForm = this.formBuilder.group({
         role_Descripcion: ['', [Validators.required]],
+        role_Imprimir: [true, [Validators.required]],
+        role_Finalizar: [true, [Validators.required]],
         screens: this.formBuilder.array([])
     });
 
@@ -173,6 +181,8 @@ getScreensArrayEdit(): FormArray {
 
             this.crearRolForm = this.formBuilder.group({
                 role_Descripcion: ['', [Validators.required]],
+                role_Imprimir: [true, [Validators.required]],
+                role_Finalizar: [true, [Validators.required]],
                 screens: this.formBuilder.array([])
             });
 
@@ -232,6 +242,8 @@ getScreensArrayEdit(): FormArray {
                     this.editarRolForm = new FormGroup({
                         role_Id: new FormControl("",Validators.required),
                         role_Descripcion: new FormControl("", Validators.required),
+                        role_Imprimir: new FormControl(true, Validators.required),
+                        role_Finalizar: new FormControl(true, Validators.required),
                         screens: this.formBuilder.array([])
                     })
 
@@ -408,6 +420,9 @@ getScreensArrayEdit(): FormArray {
 
                 this.editarRolForm.get('role_Id').setValue(data[0].role_Id);
                 this.editarRolForm.get('role_Descripcion').setValue(data[0].role_Descripcion);
+                this.editarRolForm.get('role_Imprimir').setValue(data[0].role_Imprimir);
+                this.editarRolForm.get('role_Finalizar').setValue(data[0].role_Finalizar);
+
 
                 setTimeout(() => {
                     document.getElementById('miInput').click();

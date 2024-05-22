@@ -68,6 +68,11 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Usua_Admin1 { get; set; }
 
+        [NotMapped]
+        public bool? Role_Finalizar { get; set; }
+        [NotMapped]
+        public bool? Role_Imprimir { get; set; }
+
         public int Usua_Id { get; set; }
         public string Usua_Usuario { get; set; }
         public string Usua_Contraseña { get; set; }

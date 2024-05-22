@@ -795,6 +795,26 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult BuscarFactura1(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.FindFactura(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
 
 
         public ServicesResult BuscarCursosImpartidos(int Id)

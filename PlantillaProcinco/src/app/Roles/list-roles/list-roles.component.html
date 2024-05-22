@@ -19,8 +19,43 @@
                         <input pInputText id="firstname2" class="form-control" formControlName="role_Descripcion" type="text" required autofocus />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearRolForm.controls['role_Descripcion'].invalid" style="color: red !important;">El Rol es Requerido</small>
                     </div>
+                    <div class="col">
+                        <label for="">Permiso Para Imprimir Factura</label>
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="imprimir" [value]="true" formControlName="role_Imprimir"> Si
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="imprimir" [value]="false" formControlName="role_Imprimir"> No
+                            </label>
+                        </div>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearRolForm.controls['role_Imprimir'].invalid" style="color: red !important;">Dato Requerido</small>
+
+                    </div>
+                    <div class="col">
+                        <label for="">Permiso Para Finalizar Cursos</label>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="finalizar" [value]="true" formControlName="role_Finalizar"> Si
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="finalizar" [value]="false" formControlName="role_Finalizar"> No
+                            </label>
+                        </div>
+
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearRolForm.controls['role_Finalizar'].invalid" style="color: red !important;">Dato Requerido</small>
+
+                    </div>
 
                 </div>
+
 
                 <h3>Pantallas Por Roles</h3>
 
@@ -90,6 +125,41 @@
 
                         <input pInputText id="miInput" class="form-control" formControlName="role_Descripcion" type="text" required autofocus tabindex="0" />
                         <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarRolForm.controls['role_Descripcion'].invalid" style="color: red !important;">El Rol Requerida</small>
+                    </div>
+
+                    <div class="col">
+                        <label for="">Permiso Para Imprimir Factura</label>
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="imprimir" [value]="true" formControlName="role_Imprimir"> Si
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="imprimir" [value]="false" formControlName="role_Imprimir"> No
+                            </label>
+                        </div>
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarRolForm.controls['role_Imprimir'].invalid" style="color: red !important;">Dato Requerido</small>
+
+                    </div>
+                    <div class="col">
+                        <label for="">Permiso Para Finalizar Cursos</label>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="finalizar" [value]="true" formControlName="role_Finalizar"> Si
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="finalizar" [value]="false" formControlName="role_Finalizar"> No
+                            </label>
+                        </div>
+
+                        <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarRolForm.controls['role_Finalizar'].invalid" style="color: red !important;">Dato Requerido</small>
+
                     </div>
 
 

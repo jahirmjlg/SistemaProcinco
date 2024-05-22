@@ -36,5 +36,10 @@ namespace SistemaProcinco.Common.Models
 
         [NotMapped]
         public string UsuarioModificacion { get; set; }
+
+        [NotMapped]
+        public bool? Role_Finalizar { get; set; }
+        [NotMapped]
+        public bool? Role_Imprimir { get; set; }
     }
 }

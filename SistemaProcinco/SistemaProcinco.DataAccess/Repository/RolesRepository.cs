@@ -50,6 +50,9 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parametro = new DynamicParameters();
                 parametro.Add("@Role_Descripcion", item.Role_Descripcion);
                 parametro.Add("@Role_UsuarioCreacion", item.Role_UsuarioCreacion);
+                parametro.Add("@Role_Imprimir", item.Role_Imprimir);
+                parametro.Add("@Role_Finalizar", item.Role_Finalizar);
+
                 parametro.Add("@Role_FechaCreacion", item.Role_FechaCreacion);
                 parametro.Add("@role_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
@@ -84,6 +87,8 @@ namespace SistemaProcinco.DataAccess.Repository
                 var parametro = new DynamicParameters();
                 parametro.Add("@Role_Id", item.Role_Id);
                 parametro.Add("@Role_Descripcion", item.Role_Descripcion);
+                parametro.Add("@Role_Imprimir", item.Role_Imprimir);
+                parametro.Add("@Role_Finalizar", item.Role_Finalizar);
                 parametro.Add("@Role_UsuarioModificacion", item.Role_UsuarioModificacion);
                 parametro.Add("@Role_FechaModificacion", DateTime.Now);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);

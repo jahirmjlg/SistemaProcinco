@@ -960,50 +960,60 @@ namespace SistemaProcinco.API.Controllers
                 string css = @"
         <style> 
             body { font-family: 'Arial'; font-size: 10pt; }
+            table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; background-color: #f9f9f9; color: #333; }
+            th { background-color: #633394; color: #ffffff; }
             .header { text-align: center; margin-bottom: 20px; }
             .header img { width: 150px; height: auto; }
-            .title { font-size: 24pt; font-weight: bold; color: #633394; margin-top: 10px; margin-bottom: 30px; }
-            .invoice-details { display: flex; /*justify-content: space-between;*/ margin-top: 20px; }
-            .invoice-section { width: 48%; }
-            .invoice-section h2 { font-size: 14pt; font-weight: bold; color: #633394; margin-bottom: 10px; }
-            .invoice-section p { margin: 0; padding: 5px 0; }
-            .invoice-section p span { font-weight: bold; }
-            .total { text-align: right; font-size: 12pt; font-weight: bold; margin-top: 10px; width: 100%; }
-            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; position: fixed; bottom: 0; left: 0; right: 0; height: 40px; }
+            .title { font-size: 20pt; font-weight: bold; color: #633394; margin-top: 10px; }
+            .footer { text-align: center; background-color: #633394; color: white; padding: 10px 0; }
         </style>";
 
-                var listado = _procincoService.BuscarFactura(id);
-                var curso = listado.Data[0];
-
-                if (curso == null)
-                {
-                    throw new Exception("No se encontraron datos para el ID proporcionado.");
-                }
-
-                string htmlContent = $@"
+                string htmlContent = @"
         <html>
         <head>
         </head>
         <body>
             <div class='header'>
                 <img src='https://ahm-honduras.com/procinco-new/wp-content/uploads/2022/05/PROCINCO-COLOR-1.png' alt='Logo' />
-                <div class='title'>Factura</div>
+                <div class='title'>Factura del Curso Impartido</div>
             </div>
-            <div class='invoice-details'>
-                <div class='invoice-section'>
-                    <h2>Detalles del Curso</h2>
-                    <p><span>ID:</span> {curso.CurIm_Id}</p>
-                    <p><span>Curso:</span> {curso.Cursos}</p>
-                    <p><span>Instructor:</span> {curso.Nombre}</p>
-                    <p><span>Pago Total:</span> L {curso.Empl_Total:N2}</p>
-                </div>
-                        <div style='margin:50px'></div>
-                <div class='invoice-section' style='margin-top:50px'>
-                    <h2>Fechas</h2>
-                    <p><span>Fecha Inicio:</span> {curso.CurIm_FechaInicio:dd/MM/yyyy}</p>
-                    <p><span>Fecha Fin:</span> {curso.CurIm_FechaFin:dd/MM/yyyy}</p>
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Curso</th>
+                        <th>Instructor</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Salario Hora</th>
+                        <th>Duración del Curso</th>
+
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>";
+
+                var listado = _procincoService.BuscarFactura1(id);
+                var curso = listado.Data[0];
+
+
+                htmlContent += $@"
+                <tr>
+                    <td>{curso.CurIm_Id}</td>
+                    <td>{curso.Cursos}</td>
+                    <td>{curso.Nombre}</td>
+                    <td>{curso.CurIm_FechaInicio:dd/MM/yyyy}</td>
+                    <td>{curso.CurIm_FechaFin:dd/MM/yyyy}</td>
+                    <td>{(curso.Empl_SalarioHora)}</td>
+                    <td>{(curso.Curso_DuracionHoras)}</td>
+                    <td>{(curso.Empl_Total)}</td>
+
+                </tr>";
+
+                htmlContent += @"
+                </tbody>
+            </table>
             <div class='footer'>
                 <p>© 2024 Procinco. Todos los derechos reservados.</p>
             </div>
@@ -1022,7 +1032,6 @@ namespace SistemaProcinco.API.Controllers
             memoryStream.Position = 0;
             return memoryStream;
         }
-
 
 
 

@@ -24,6 +24,9 @@ namespace SistemaProcinco.Common.Models
         public string Empl_DNI { get; set; }
         [NotMapped]
         public string Empl_Nombre { get; set; }
+
+        [NotMapped]
+        public decimal? Empl_SalarioHora { get; set; }
         [NotMapped]
         public int Curso_DuracionHoras { get; set; }
         [NotMapped]

@@ -17,4 +17,7 @@ export class Usuario {
     empl_Nombre !: String;
     usuarioCreacion !: String;
     usuarioModificacion !: String;
+
+    role_Finalizar:Boolean;
+    role_Imprimir:Boolean;
 }

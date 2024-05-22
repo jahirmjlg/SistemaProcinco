@@ -18,6 +18,8 @@ namespace SistemaProcinco.Common.Models
     {
         public int role_Id { get; set; }
         public string role_Descripcion { get; set; }
+        public bool? Role_Imprimir { get; set; }
+        public bool? Role_Finalizar { get; set; }
         public List<ScreenDTO> Screens { get; set; }
     }
     public class RolesViewModel
@@ -27,6 +29,8 @@ namespace SistemaProcinco.Common.Models
         public int? Role_UsuarioCreacion { get; set; }
         public DateTime? Role_FechaCreacion { get; set; }
         public int? Role_UsuarioModificacion { get; set; }
+        public bool? Role_Imprimir { get; set; }
+        public bool? Role_Finalizar { get; set; }
         public DateTime? Role_FechaModificacion { get; set; }
         [NotMapped]
         public string UsuarioCreacion { get; set; }

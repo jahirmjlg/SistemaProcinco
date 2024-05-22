@@ -100,6 +100,9 @@ export class LoginComponent {
                     this.cookieService.set('namee', response.data.empl_Nombre);
                     this.cookieService.set('roleID', response.data.role_Id);
                     this.cookieService.set('esAdmin', response.data.usua_EsAdmin);
+                    this.cookieService.set('imprimir', response.data.role_Imprimir);
+                    this.cookieService.set('finalizar', response.data.role_Finalizar);
+
 
                     this.authService.loadPermissions();
 

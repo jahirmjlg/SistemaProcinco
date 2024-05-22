@@ -1,6 +1,9 @@
 export class Role {
     role_Id !: Number;
     role_Descripcion  !: String;
+    role_Finalizar:Boolean;
+    role_Imprimir:Boolean;
+
     role_UsuarioCreacion !: Number;
     role_FechaCreacion !: String;
     role_UsuarioModificacion !: Number;
@@ -22,4 +25,6 @@ export class dropRoles {
     screens: [{ pant_Id: number, pant_Descripcion: string }];
 
     role_Descripcion: Role;
+    role_Finalizar:Role;
+    role_Imprimir:Role;
 }

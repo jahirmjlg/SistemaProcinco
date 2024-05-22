@@ -44,6 +44,9 @@ namespace SistemaProcinco.Entities.Entities
         public string Modificacion { get; set; }
 
         [NotMapped]
+        public decimal? Empl_SalarioHora { get; set; }
+
+        [NotMapped]
         public int Year { get; set; }
         [NotMapped]
         public int Month { get; set; }

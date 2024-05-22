@@ -41,7 +41,18 @@ namespace SistemaProcinco.DataAccess.Repository
         }
 
 
-
+        public IEnumerable<tbCursosImpartidos> FindFactura(int? id)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosBuscarFactura;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("CurIm_Id", id);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
 
 
 

@@ -43,12 +43,18 @@ namespace SistemaProcinco.API.Controllers
         {
             var result = new ServicesResult();
             var rol = data.role_Descripcion;
+            var imprimir = data.Role_Imprimir;
+            var finalizar = data.Role_Finalizar;
+
             var pantallas = data.Screens;
 
             var modelo = new tbRoles()
             {
                 Role_Descripcion = rol,
                 Role_UsuarioCreacion = 1,
+                Role_Imprimir = imprimir,
+                Role_Finalizar = finalizar,
+
                 Role_FechaCreacion = DateTime.Now
             };
             (var list, int Role_IdScope ) = _accesoService.InsertarRoles(modelo);
@@ -84,12 +90,16 @@ namespace SistemaProcinco.API.Controllers
         {
             var result = new ServicesResult();
             var rol = data.role_Descripcion;
+            var imprimir = data.Role_Imprimir;
+            var finalizar = data.Role_Finalizar;
             var pantallas = data.Screens;
 
             var modelo = new tbRoles()
             {
                 Role_Id = data.role_Id,
                 Role_Descripcion = rol,
+                Role_Imprimir = imprimir,
+                Role_Finalizar = finalizar,
                 Role_UsuarioModificacion = 1,
                 Role_FechaModificacion = DateTime.Now
             };
