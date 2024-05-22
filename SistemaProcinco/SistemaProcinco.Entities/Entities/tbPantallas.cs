@@ -21,6 +21,7 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Modificacion { get; set; }
 
+
         public int Pant_Id { get; set; }
         public string Pant_Descripcion { get; set; }
         public int Pant_UsuarioCreacion { get; set; }

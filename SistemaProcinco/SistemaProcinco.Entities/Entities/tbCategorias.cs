@@ -21,6 +21,7 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Modificacion { get; set; }
 
+
         public int Cate_Id { get; set; }
         public string Cate_Descripcion { get; set; }
         public string Cate_Imagen { get; set; }

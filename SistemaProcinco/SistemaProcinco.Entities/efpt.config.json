@@ -82,6 +82,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Pro].[tbParticipantesPorCursoo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Pro].[tbTitulos]",
          "ObjectType": 0
       },

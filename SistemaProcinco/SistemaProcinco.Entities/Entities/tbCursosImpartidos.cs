@@ -64,6 +64,21 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Part_DNI { get; set; }
 
+        [NotMapped]
+        public int VecesImpartido { get; set; }
+
+        [NotMapped]
+        public int MonthId { get; set; }
+        [NotMapped]
+        public string Mes_Descripcion { get; set; }
+
+
+        [NotMapped]
+        public string HorasTotales { get; set; }
+
+        [NotMapped]
+        public int Año { get; set; }
+
 
         public int CurIm_Id { get; set; }
         public int? Curso_Id { get; set; }
@@ -82,19 +97,5 @@ namespace SistemaProcinco.Entities.Entities
         public virtual tbUsuarios CurIm_UsuarioModificacionNavigation { get; set; }
         public virtual tbCursos Curso { get; set; }
         public virtual tbEmpleados Empl { get; set; }
-        [NotMapped]
-        public int VecesImpartido { get; set; }
-
-        [NotMapped]
-        public int MonthId { get; set; }
-        [NotMapped]
-        public string Mes_Descripcion { get; set; }
-
-
-        [NotMapped]
-        public string HorasTotales { get; set; }
-
-        [NotMapped]
-        public int Año { get; set; }
     }
 }

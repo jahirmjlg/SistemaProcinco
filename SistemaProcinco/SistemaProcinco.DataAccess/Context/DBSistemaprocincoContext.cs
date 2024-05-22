@@ -34,6 +34,7 @@ namespace SistemaProcinco.DataAccess.Context
         public virtual DbSet<tbPantallas> tbPantallas { get; set; }
         public virtual DbSet<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
         public virtual DbSet<tbParticipantes> tbParticipantes { get; set; }
+        public virtual DbSet<tbParticipantesPorCursoo> tbParticipantesPorCursoo { get; set; }
         public virtual DbSet<tbRoles> tbRoles { get; set; }
         public virtual DbSet<tbTitulos> tbTitulos { get; set; }
         public virtual DbSet<tbTitulosPorEmpleado> tbTitulosPorEmpleado { get; set; }
@@ -281,9 +282,9 @@ namespace SistemaProcinco.DataAccess.Context
                     .WithMany(p => p.tbCursosImpartidos)
                     .HasForeignKey(d => d.Curso_Id);
 
-                entity.HasOne(d => d.Empl);
-                    //.WithMany(p => p.tbCursosImpartidos)
-                    //.HasForeignKey(d => d.Empl_Id);
+                entity.HasOne(d => d.Empl)
+                    .WithMany(p => p.tbCursosImpartidos)
+                    .HasForeignKey(d => d.Empl_Id);
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>
@@ -373,7 +374,7 @@ namespace SistemaProcinco.DataAccess.Context
 
                 entity.Property(e => e.Empre_Direccion).IsUnicode(false);
 
-                entity.Property(e => e.Empre_Estado).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Empre_Estado).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Empre_FechaCreacion).HasColumnType("datetime");
 
@@ -579,7 +580,7 @@ namespace SistemaProcinco.DataAccess.Context
                     .HasMaxLength(60)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Part_Estado).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Part_Estado).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Part_FechaCreacion).HasColumnType("datetime");
 
@@ -616,6 +617,41 @@ namespace SistemaProcinco.DataAccess.Context
                 entity.HasOne(d => d.Part_UsuarioModificacionNavigation)
                     .WithMany(p => p.tbParticipantesPart_UsuarioModificacionNavigation)
                     .HasForeignKey(d => d.Part_UsuarioModificacion);
+            });
+
+            modelBuilder.Entity<tbParticipantesPorCursoo>(entity =>
+            {
+                entity.HasKey(e => e.PaCur_Id)
+                    .HasName("PK__tbPartic__247A03FB493797DB");
+
+                entity.ToTable("tbParticipantesPorCursoo", "Pro");
+
+                entity.Property(e => e.PaCur_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.PaCur_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Curso)
+                    .WithMany(p => p.tbParticipantesPorCursoo)
+                    .HasForeignKey(d => d.Curso_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbParticipantesPorCurso_tbCursos_Curso_Id");
+
+                entity.HasOne(d => d.PaCur_UsuarioCreacionNavigation)
+                    .WithMany(p => p.tbParticipantesPorCursooPaCur_UsuarioCreacionNavigation)
+                    .HasForeignKey(d => d.PaCur_UsuarioCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbParticipantesPorCurso_tbUsuarios_UsuarioCreacion");
+
+                entity.HasOne(d => d.PaCur_UsuarioModificacionNavigation)
+                    .WithMany(p => p.tbParticipantesPorCursooPaCur_UsuarioModificacionNavigation)
+                    .HasForeignKey(d => d.PaCur_UsuarioModificacion)
+                    .HasConstraintName("FK_tbParticipantesPorCurso_tbUsuarios_UsuarioModificacion");
+
+                entity.HasOne(d => d.Part)
+                    .WithMany(p => p.tbParticipantesPorCursoo)
+                    .HasForeignKey(d => d.Part_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbParticipantesPorCurso_tbParticipantes_Part_Id");
             });
 
             modelBuilder.Entity<tbRoles>(entity =>

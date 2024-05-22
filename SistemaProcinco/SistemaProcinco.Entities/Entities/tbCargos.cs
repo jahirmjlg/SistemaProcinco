@@ -20,7 +20,6 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string UsuarioModificacion { get; set; }
 
-
         public int Carg_Id { get; set; }
         public string Carg_Descripcion { get; set; }
         public int Carg_UsuarioCreacion { get; set; }

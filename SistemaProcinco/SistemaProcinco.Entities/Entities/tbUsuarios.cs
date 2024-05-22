@@ -41,6 +41,8 @@ namespace SistemaProcinco.Entities.Entities
             tbPantallasPorRolesPaPr_UsuarioModificacionNavigation = new HashSet<tbPantallasPorRoles>();
             tbParticipantesPart_UsuarioCreacionNavigation = new HashSet<tbParticipantes>();
             tbParticipantesPart_UsuarioModificacionNavigation = new HashSet<tbParticipantes>();
+            tbParticipantesPorCursooPaCur_UsuarioCreacionNavigation = new HashSet<tbParticipantesPorCursoo>();
+            tbParticipantesPorCursooPaCur_UsuarioModificacionNavigation = new HashSet<tbParticipantesPorCursoo>();
             tbRolesRole_UsuarioCreacionNavigation = new HashSet<tbRoles>();
             tbRolesRole_UsuarioModificacionNavigation = new HashSet<tbRoles>();
             tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation = new HashSet<tbTitulosPorEmpleado>();
@@ -65,7 +67,6 @@ namespace SistemaProcinco.Entities.Entities
         public string UsuarioModificacion { get; set; }
         [NotMapped]
         public string Usua_Admin1 { get; set; }
-
 
         public int Usua_Id { get; set; }
         public string Usua_Usuario { get; set; }
@@ -114,6 +115,8 @@ namespace SistemaProcinco.Entities.Entities
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaPr_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbParticipantes> tbParticipantesPart_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbParticipantes> tbParticipantesPart_UsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tbParticipantesPorCursoo> tbParticipantesPorCursooPaCur_UsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tbParticipantesPorCursoo> tbParticipantesPorCursooPaCur_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRole_UsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tbTitulosPorEmpleado> tbTitulosPorEmpleadoTitPe_UsuarioCreacionNavigation { get; set; }

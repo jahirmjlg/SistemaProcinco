@@ -26,9 +26,6 @@ namespace SistemaProcinco.Entities.Entities
         [NotMapped]
         public string Pant_Descripcion { get; set; }
 
-
-
-
         public int Role_Id { get; set; }
         public string Role_Descripcion { get; set; }
         public int? Role_UsuarioCreacion { get; set; }
@@ -36,6 +33,8 @@ namespace SistemaProcinco.Entities.Entities
         public int? Role_UsuarioModificacion { get; set; }
         public DateTime? Role_FechaModificacion { get; set; }
         public bool? Role_Estado { get; set; }
+        public bool? Role_Imprimir { get; set; }
+        public bool? Role_Finalizar { get; set; }
 
         public virtual tbUsuarios Role_UsuarioCreacionNavigation { get; set; }
         public virtual tbUsuarios Role_UsuarioModificacionNavigation { get; set; }
