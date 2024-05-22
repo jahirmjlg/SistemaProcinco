@@ -40,6 +40,60 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+
+
+
+
+        public RequestStatus Update1(tbCursos item)
+        {
+            string sql = ScriptsDatabase.CursosActualizar;
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Curso_Id", item.Curso_Id);
+                parametro.Add("@Curso_Descripcion", item.Curso_Descripcion);
+                parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
+                parametro.Add("@Curso_Imagen", item.Curso_Imagen);
+                parametro.Add("@Cate_Id", item.Cate_Id);
+                parametro.Add("@Empre_Id", item.Empre_Id);
+                parametro.Add("@Curso_UsuarioModificacion", item.Curso_UsuarioModificacion);
+                parametro.Add("@Curso_FechaModificacion", item.Curso_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+                string mensaje = (result == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+
+            }
+        }
+
+
+
+
+        public int Insert1(tbCursosImpartidos item)
+        {
+            const string sql = "[Pro].[SP_CursoImpartido_Insertar]";
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@Curso_Id", item.Curso_Id);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@CurIm_FechaInicio", item.CurIm_FechaInicio);
+                parametro.Add("@CurIm_FechaFin", item.CurIm_FechaFin);
+                parametro.Add("@CurIm_UsuarioCreacion", 1);
+                parametro.Add("@CurIm_FechaCreacion", DateTime.Now);
+
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+
+                return result > 0 ? 1 : 0;
+            }
+        }
+
+
+
+
+
         public RequestStatus Insert(tbCursosImpartidos item)
         {
             string sql = ScriptsDatabase.CursosImpartidosCrear;

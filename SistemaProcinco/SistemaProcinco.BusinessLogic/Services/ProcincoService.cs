@@ -1,4 +1,5 @@
 ﻿using SistemaProcinco.BunisessLogic;
+using SistemaProcinco.Common.Models;
 using SistemaProcinco.DataAccess.Repository;
 using SistemaProcinco.Entities.Entities;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SistemaProcinco.Common.Models.ContenidoPorCursoViewModel1;
+using static SistemaProcinco.Common.Models.ParticipantesPorCursoViewModel;
 
 namespace SistemaProcinco.BusinessLogic.Services
 {
@@ -21,7 +23,13 @@ namespace SistemaProcinco.BusinessLogic.Services
         public readonly InformeEmpleadosRepository _informeEmpleadosRepository;
         public readonly TitulosRepository _titulosRepository;
         public readonly TitulosPorEmpleadosRepository _titulosPorEmpleadosRepository;
-        public ProcincoService(CargosRepository cargosRepository, CategoriasRepository categoriasRepository, ContenidoRepository contenidoRepository,
+        public readonly ParticipanteRepository _participanteRepository;
+        public readonly ParticipantesPorCursoRepository _participantesPorCurso;
+
+
+        public ProcincoService(
+              ParticipanteRepository participanteRepository, ParticipantesPorCursoRepository participantesPorCursorepository,
+            CargosRepository cargosRepository, CategoriasRepository categoriasRepository, ContenidoRepository contenidoRepository,
             ContenidoPorCursoRepository contenidoPorCursoRepository, CursosRepository cursosRepository, CursosImpartidosRepository cursosImpartidosRepository,
             InformeEmpleadosRepository informeEmpleadosRepository, TitulosRepository titulosRepository, TitulosPorEmpleadosRepository titulosPorEmpleadosRepository)
         {
@@ -34,6 +42,8 @@ namespace SistemaProcinco.BusinessLogic.Services
             _informeEmpleadosRepository = informeEmpleadosRepository;
             _titulosRepository = titulosRepository;
             _titulosPorEmpleadosRepository = titulosPorEmpleadosRepository;
+            _participanteRepository = participanteRepository;
+            _participantesPorCurso = participantesPorCursorepository;
         }
 
         #region Cargos 
@@ -1853,6 +1863,147 @@ namespace SistemaProcinco.BusinessLogic.Services
 
 
 
+
+
+        #endregion
+
+
+
+
+
+
+
+        #region ParticipantesPorCurso
+        public ServicesResult InsertarParticipantesPorCurso(tbParticipantesPorCursoo item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participantesPorCurso.Insert(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EditarParticipantesPorCurso(tbParticipantesPorCursoo item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participantesPorCurso.Update1(item);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServicesResult EliminarParticipantesPorCurso(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var lost = _participantesPorCurso.Delete1(id);
+                if (lost.CodeStatus > 0)
+                {
+                    return result.Ok(lost);
+                }
+                else
+                {
+                    return result.Error(lost);
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+
+
+
+        public ServicesResult obterParticipantesCursos(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _participantesPorCurso.Fill1(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
+        public string InsertarCursoImparrtido(tbCursosImpartidos item)
+        {
+            string error = "";
+            try
+            {
+                int result = _cursosImpartidosRepository.Insert1(item);
+                if (result == 0)
+                    error = "El código no es válido";
+                else
+                    error = result.ToString();
+            }
+            catch (Exception ex)
+            {
+                error = $"Error: {ex.Message} | StackTrace: {ex.StackTrace}";
+            }
+            return error;
+        }
+
+
+        public ParticipantesPorCursoViewModel1 ObtenerCursoConParticipantes(int cursoId)
+        {
+            return _participantesPorCurso.ObtenerCursoConParticipantes(cursoId);
+        }
+
+
+        //public ServicesResult ParticipantesPorCursoBuscar(string Curso_Descripcion)
+        //{
+        //    var result = new ServicesResult();
+        //    try
+        //    {
+        //        var list = _contenidoPorCursoRepository.BuscarCursos(Curso_Descripcion);
+        //        if (list.Count() > 0)
+        //        {
+        //            return result.Ok(list);
+        //        }
+        //        else
+        //        {
+        //            return result.Error();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return result.Error(ex);
+        //    }
+        //}
 
 
         #endregion

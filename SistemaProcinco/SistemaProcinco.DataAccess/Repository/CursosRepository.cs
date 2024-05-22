@@ -99,37 +99,6 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
-        public int Insert1(tbCursos item)
-        {
-            const string sql = "[Pro].[SP_Curso1_Insertar]";
-
-            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
-            {
-                try
-                {
-                    var parametro = new DynamicParameters();
-                    parametro.Add("@Curso_Descripcion", item.Curso_Descripcion);
-                    parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
-                    parametro.Add("@Curso_Imagen", item.Curso_Imagen);
-                    parametro.Add("@Cate_Id", item.Cate_Id);
-                    parametro.Add("@Empre_Id", item.Empre_Id);
-                    parametro.Add("@Curso_UsuarioCreacion", item.Curso_UsuarioCreacion);
-                    parametro.Add("@Curso_FechaCreacion", DateTime.Now);
-                    parametro.Add("@ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                    var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
-                    int id = parametro.Get<int>("@ID");
-                    return id;
-                }
-                catch (Exception ex)
-                {
-                    // Log or handle exception as needed
-                    throw new Exception($"Error al insertar el curso: {ex.Message}", ex);
-                }
-            }
-        }
-
-
         public IEnumerable<tbCursos> List()
         {
             string sql = ScriptsDatabase.CursosListar;
@@ -187,6 +156,40 @@ namespace SistemaProcinco.DataAccess.Repository
 
             }
         }
+
+
+
+
+        public int Insert1(tbCursos item)
+        {
+            const string sql = "[Pro].[SP_Curso1_Insertar]";
+
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                try
+                {
+                    var parametro = new DynamicParameters();
+                    parametro.Add("@Curso_Descripcion", item.Curso_Descripcion);
+                    parametro.Add("@Curso_DuracionHoras", item.Curso_DuracionHoras);
+                    parametro.Add("@Curso_Imagen", item.Curso_Imagen);
+                    parametro.Add("@Cate_Id", item.Cate_Id);
+                    parametro.Add("@Empre_Id", item.Empre_Id);
+                    parametro.Add("@Curso_UsuarioCreacion", item.Curso_UsuarioCreacion);
+                    parametro.Add("@Curso_FechaCreacion", DateTime.Now);
+                    parametro.Add("@ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+                    int id = parametro.Get<int>("@ID");
+                    return id;
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle exception as needed
+                    throw new Exception($"Error al insertar el curso: {ex.Message}", ex);
+                }
+            }
+        }
+
 
 
 

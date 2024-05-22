@@ -267,7 +267,15 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
+        #region participantesporcurso
+        public static string participantePorCursoBuscar = "[Pro].[SP_ParticipantesPorCurso_Buscar]";
+        public static string participantePorCursoActualizado = "Pro.ParticipantesPorCurso_Actualizar";
+        public static string participantePorCursoEliminado = "[Pro].[SP_ParticipantesPorCursoEliminado_Eliminar]";
+  
 
+
+
+        #endregion
 
 
 

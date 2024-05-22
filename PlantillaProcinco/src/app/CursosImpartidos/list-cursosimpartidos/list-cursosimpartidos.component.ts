@@ -10,6 +10,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { Table, TableModule } from 'primeng/table';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ServiceService } from 'src/app/Services/service.service';
+import { ParticipantesService } from 'src/app/Services/participante.service';
+
 
 @Component({
   selector: 'app-list-cursosimpartidos',
@@ -78,6 +80,7 @@ export class ListCursosimpartidosComponent {
     displayParticipantes: boolean = false;
     globalFilter: any = null;
     participantes!:CursosImpartidos[];
+    selectedParticipantes: CursosImpartidos[] = [];
 
 
     crearCursosImpartidosForm: FormGroup
@@ -88,7 +91,8 @@ export class ListCursosimpartidosComponent {
   horasPorCategoria: any[] = [];
     constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router,
          private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule,
-         private sanitizer: DomSanitizer, private service: ServiceService) { }
+         private sanitizer: DomSanitizer, private service: ServiceService,
+         private participanteService: ParticipantesService) { }
 
 
 
@@ -168,6 +172,12 @@ export class ListCursosimpartidosComponent {
             console.log(error);
           });
 
+
+
+
+
+     
+        
           //
 
         this.schemas = [
@@ -201,65 +211,59 @@ export class ListCursosimpartidosComponent {
     }
 
 
-    onSubmitInsert(): void {
 
-        this.isSubmit = true;
-
-        if (this.crearCursosImpartidosForm.valid) {
-          const cursoimpData: CursosImpartidos = this.crearCursosImpartidosForm.value;
-          this.cursosimpartidosservice.insertCursosIm(cursoimpData).subscribe(
-            response => {
-
-                if (response.code == 200) {
-
-                    this.crearCursosImpartidosForm = this.formBuilder.group({
-                        curso_Id: ['', [Validators.required]],
-                        empl_Id: ['', [Validators.required]],
-                        curIm_FechaInicio: ['', [Validators.required]],
-                        curIm_FechaFin: ['', [Validators.required]],
-                        empl_DNI: ['', [Validators.required]],
-                        empl_Nombre: ['', [Validators.required]],
-                        curso_DuracionHoras: ['', [Validators.required]],
-                        cate_Descripcion: ['', [Validators.required]],
-                        curso_Descripcion: ['', [Validators.required]],
-                        curso_Imagen: ['', [Validators.required]],
-
-
-                      });
-
-                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
-
-                    // this.cookieService.set('namee', response.data.empl_Nombre);
-
-                    console.log(response)
-                    // this.router.navigate(['/pages/estados']);
-                    this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
-                        console.log(Response.data);
-                        this.cursosimpartidos = Response.data;
-
-                      });
-
-                    this.Collapse = false;
-                    this.Tabla = true;
-                    this.ImagenEncontrada = false;
-                } else {
-
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
-
-
-                }
-
-            },
-            error => {
-                console.log('El error: ' + error.data)
-            }
-          );
-        } else {
-          console.log('Formulario inválido');
-        }
-
+    onAddParticipant(participant: CursosImpartidos) {
+      this.selectedParticipantes.push(participant);
+      this.participantes = this.participantes.filter(p => p.part_Id !== participant.part_Id);
     }
+  
+    onRemoveParticipant(participant: CursosImpartidos) {
+      this.participantes.push(participant);
+      this.selectedParticipantes = this.selectedParticipantes.filter(p => p.part_Id !== participant.part_Id);
+    }
+  
+  
 
+    onSubmitInsert(): void {
+      this.isSubmit = true;
+    
+      if (this.crearCursosImpartidosForm.valid) {
+        const formData = {
+          txtCurso: this.crearCursosImpartidosForm.get('curso_Id').value,
+          txtempleado: this.crearCursosImpartidosForm.get('empl_Id').value,
+          txtfechainicio: this.crearCursosImpartidosForm.get('curIm_FechaInicio').value,
+          txtfechafinal: this.crearCursosImpartidosForm.get('curIm_FechaFin').value,
+          participantesSeleccionados: this.selectedParticipantes.map(p => p.part_Id)
+        };
+    
+        this.participanteService.EnviarCurso(formData).subscribe(
+          response => {
+            if (response.success) {
+              this.crearCursosImpartidosForm.reset();
+              this.selectedParticipantes = [];
+              this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+    
+              this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any) => {
+                this.cursosimpartidos = Response.data;
+              });
+    
+              this.Collapse = false;
+              this.Tabla = true;
+              this.ImagenEncontrada = false;
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+            }
+          },
+          error => {
+            console.log('El error: ' + error.data);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al intentar insertar el registro', life: 3000 });
+          }
+        );
+      } else {
+        console.log('Formulario inválido');
+      }
+    }
+    
 
 
 

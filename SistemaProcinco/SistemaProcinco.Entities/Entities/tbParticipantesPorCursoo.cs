@@ -12,7 +12,7 @@ namespace SistemaProcinco.Entities.Entities
         public int Part_Id { get; set; }
         public int Curso_Id { get; set; }
         public bool PaCur_Estado { get; set; }
-        public DateTime PaCur_FechaCreacion { get; set; }
+        public DateTime? PaCur_FechaCreacion { get; set; }
         public int PaCur_UsuarioCreacion { get; set; }
         public DateTime? PaCur_FechaModificacion { get; set; }
         public int? PaCur_UsuarioModificacion { get; set; }
