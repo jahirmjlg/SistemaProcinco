@@ -170,9 +170,8 @@ namespace SistemaProcinco.DataAccess.Repository
         public static string CursosImpartidosEliminar = "[Pro].[SP_CursoImpartido_Eliminar]";
         public static string CursosImpartidosBuscar = "[Pro].[SP_CursosImpartidos_Buscar]";
 
-        public static string CursosImpartidosBuscarFactura = "[Pro].[SP_CursosImpartidos_Buscar1]";
-
         public static string CursosImpartidosFinalizar = "[Pro].[SP_CursoImpartido_Finalizar]";
+        public static string CursosImpartidosBuscarFactura = "[Pro].[SP_CursosImpartidos_Buscar1]";
 
         public static string CursosImpartidosParticipantes = "[Pro].[SP_CursosImpartidos_Participantes]";
 
@@ -270,10 +269,12 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
         #region participantesporcurso
+        public static string participantePorCursoImpartidoBuscar = "[Pro].[SP_ParticipantesPorCursoImpartido_Buscar]";
+
         public static string participantePorCursoBuscar = "[Pro].[SP_ParticipantesPorCurso_Buscar]";
         public static string participantePorCursoActualizado = "Pro.ParticipantesPorCurso_Actualizar";
         public static string participantePorCursoEliminado = "[Pro].[SP_ParticipantesPorCursoEliminado_Eliminar]";
-  
+
 
 
 

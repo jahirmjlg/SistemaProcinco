@@ -52,7 +52,6 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@Role_UsuarioCreacion", item.Role_UsuarioCreacion);
                 parametro.Add("@Role_Imprimir", item.Role_Imprimir);
                 parametro.Add("@Role_Finalizar", item.Role_Finalizar);
-
                 parametro.Add("@Role_FechaCreacion", item.Role_FechaCreacion);
                 parametro.Add("@role_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);

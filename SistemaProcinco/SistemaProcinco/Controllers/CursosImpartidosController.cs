@@ -988,7 +988,6 @@ namespace SistemaProcinco.API.Controllers
                         <th>Fecha Fin</th>
                         <th>Salario Hora</th>
                         <th>Duración del Curso</th>
-
                         <th>Total</th>
                     </tr>
                 </thead>

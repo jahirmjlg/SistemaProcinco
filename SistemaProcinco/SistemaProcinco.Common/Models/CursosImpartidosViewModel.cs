@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,8 +10,12 @@ namespace SistemaProcinco.Common.Models
 {
     public class CursosImpartidosViewModel
     {
+
+        [NotMapped]
+        public decimal? Empl_SalarioHora { get; set; }
+
         public int CurIm_Id { get; set; }
-        public int? Curso_Id { get; set; }
+        public int Curso_Id { get; set; }
         public int? Empl_Id { get; set; }
         [NotMapped]
         public string Cursos { get; set; }
@@ -24,9 +29,6 @@ namespace SistemaProcinco.Common.Models
         public string Empl_DNI { get; set; }
         [NotMapped]
         public string Empl_Nombre { get; set; }
-
-        [NotMapped]
-        public decimal? Empl_SalarioHora { get; set; }
         [NotMapped]
         public int Curso_DuracionHoras { get; set; }
         [NotMapped]

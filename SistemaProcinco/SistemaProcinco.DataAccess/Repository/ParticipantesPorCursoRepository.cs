@@ -59,6 +59,18 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
+
+
+        public IEnumerable<tbParticipantesPorCursoo> FillBueno(int id)
+        {
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("CurIm_Id", id);
+                return db.Query<tbParticipantesPorCursoo>(ScriptsDatabase.participantePorCursoImpartidoBuscar, parameter, commandType: CommandType.StoredProcedure);
+            }
+        }
+
         public IEnumerable<tbCursos> Fill2(int id)
         {
             using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))

@@ -42,7 +42,6 @@ namespace SistemaProcinco.Entities.Entities
         public string Creacion { get; set; }
         [NotMapped]
         public string Modificacion { get; set; }
-
         [NotMapped]
         public decimal? Empl_SalarioHora { get; set; }
 
@@ -84,7 +83,7 @@ namespace SistemaProcinco.Entities.Entities
 
 
         public int CurIm_Id { get; set; }
-        public int? Curso_Id { get; set; }
+        public int Curso_Id { get; set; }
         public int? Empl_Id { get; set; }
         public DateTime? CurIm_FechaInicio { get; set; }
         public DateTime? CurIm_FechaFin { get; set; }

@@ -795,26 +795,6 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
-        public ServicesResult BuscarFactura1(int Id)
-        {
-            var result = new ServicesResult();
-            try
-            {
-                var list = _cursosImpartidosRepository.FindFactura(Id);
-                if (list.Count() > 0)
-                {
-                    return result.Ok(list);
-                }
-                else
-                {
-                    return result.Error();
-                }
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex);
-            }
-        }
 
 
         public ServicesResult BuscarCursosImpartidos(int Id)
@@ -1977,6 +1957,20 @@ namespace SistemaProcinco.BusinessLogic.Services
             }
         }
 
+        public ServicesResult obterParticipantesCursosImpartidos(int id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _participantesPorCurso.FillBueno(id);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
 
 
         public string InsertarCursoImparrtido(tbCursosImpartidos item)
@@ -2001,6 +1995,29 @@ namespace SistemaProcinco.BusinessLogic.Services
         public ParticipantesPorCursoViewModel1 ObtenerCursoConParticipantes(int cursoId)
         {
             return _participantesPorCurso.ObtenerCursoConParticipantes(cursoId);
+        }
+
+
+
+        public ServicesResult BuscarFactura1(int Id)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.FindFactura(Id);
+                if (list.Count() > 0)
+                {
+                    return result.Ok(list);
+                }
+                else
+                {
+                    return result.Error();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
         }
 
 
@@ -2032,3 +2049,24 @@ namespace SistemaProcinco.BusinessLogic.Services
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

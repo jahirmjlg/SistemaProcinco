@@ -41,18 +41,7 @@ namespace SistemaProcinco.DataAccess.Repository
         }
 
 
-        public IEnumerable<tbCursosImpartidos> FindFactura(int? id)
-        {
-            string sql = ScriptsDatabase.CursosImpartidosBuscarFactura;
-            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
-            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
-            {
-                var parametro = new DynamicParameters();
-                parametro.Add("CurIm_Id", id);
-                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
-                return result;
-            }
-        }
+
 
 
 
@@ -95,11 +84,12 @@ namespace SistemaProcinco.DataAccess.Repository
                 parametro.Add("@CurIm_UsuarioCreacion", 1);
                 parametro.Add("@CurIm_FechaCreacion", DateTime.Now);
 
-                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+                db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
 
-                return result > 0 ? 1 : 0;
+                return item.Curso_Id;
             }
         }
+
 
 
 
@@ -377,7 +367,18 @@ namespace SistemaProcinco.DataAccess.Repository
             }
         }
 
-
+        public IEnumerable<tbCursosImpartidos> FindFactura(int? id)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosBuscarFactura;
+            List<tbCursosImpartidos> result = new List<tbCursosImpartidos>();
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("CurIm_Id", id);
+                result = db.Query<tbCursosImpartidos>(sql, parametro, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                return result;
+            }
+        }
 
 
         ///////////////////////////////
