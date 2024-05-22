@@ -34,10 +34,19 @@
 
                             <div class="col-6">
 
-                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
-
-                                <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (change)="onCursoChange(crearCursosImpartidosForm.get('curso_Descripcion').value)"/>
+                                <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label><br>
+                                <p-autoComplete  (change)="onCursoChange(crearCursosImpartidosForm.get('curso_Descripcion').value)"
+                                formControlName="curso_Descripcion"
+                                 [suggestions]="filteredCursos"
+                                  (completeMethod)="filterCursos($event)"
+                                  field="curso_Descripcion"
+                                  >
+                                </p-autoComplete> <br>
                                 <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+
+
+                                <!-- <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (change)="onCursoChange(crearCursosImpartidosForm.get('curso_Descripcion').value)"/>
+                                <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && crearCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small> -->
 
 
                                 <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
@@ -78,7 +87,7 @@
                                     <h4>Participantes</h4>
                                 </div>
                                 <div class="card-body">
-                                 
+
                                     <p-table [value]="selectedParticipantes">
                                         <ng-template pTemplate="header">
                                             <tr>
@@ -99,7 +108,7 @@
                                     </p-table>
                                 </div>
                             </div>
-                            
+
 
                         </div>
 
@@ -156,10 +165,15 @@
 
                         <div class="col-6">
 
-                            <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label>
-
-                            <input pInputText id="firstname2" class="form-control" formControlName="curso_Descripcion" type="text" required autofocus (change)="onCursoChangeEdit(editarCursosImpartidosForm.get('curso_Descripcion').value)"/>
-                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmit && editarCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
+                            <label for="firstname2" class="form-label mt-5">Ingrese el nombre del Curso</label><br>
+                            <p-autoComplete  (change)="onCursoChangeEdit(editarCursosImpartidosForm.get('curso_Descripcion').value)"
+                            formControlName="curso_Descripcion"
+                             [suggestions]="filteredCursos"
+                              (completeMethod)="filterCursosEdit($event)"
+                              field="curso_Descripcion"
+                              >
+                            </p-autoComplete> <br>
+                            <small class="ng-dirty ng-invalid" *ngIf=" isSubmitEdit && editarCursosImpartidosForm.controls['curso_Descripcion'].invalid" style="color: red !important;">Curso Requerido</small>
 
 
                             <label for="firstname2" [ngClass]="{'collapse': ImagenEncontrada === false}" class="form-label mt-5">Ingrese la Fecha de Inicio del Curso</label>
@@ -370,7 +384,7 @@
 
 <p-dialog header="Listado de Participantes" [(visible)]="displayParticipantes" [style]="{width: '50vw'}" [modal]="true" [dismissableMask]="true" [blockScroll]="true">
     <input type="text" pInputText placeholder="Buscar..." (input)="applyFilter($event.target.value)" style="width: 100%; margin-bottom: 1rem;">
-  
+
     <p-table #dt [value]="participantes" [paginator]="true" [rows]="10" [globalFilterFields]="['part_Nombre', 'empre_Descripcion']">
       <ng-template pTemplate="header">
         <tr>
@@ -389,12 +403,12 @@
         </tr>
       </ng-template>
     </p-table>
-  
+
     <p-footer>
       <button pButton type="button" label="Cerrar" (click)="displayParticipantes=false" class="ui-button-danger ui-button-rounded mt-4"></button>
     </p-footer>
   </p-dialog>
-  
+
 
 
 
@@ -436,8 +450,13 @@
 <div class="card" style="text-align: end;" [ngClass]="{'collapse': showPdf === false}">
     <div><button class="btn btn-danger" (click)="showPdf = false" style="max-width: 100px;">Cerrar</button></div>
     <div class="flex align-items-center justify-content-center mt-3">
-        <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
-            <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
-          </object>
+
     </div>
 </div>
+
+<p-dialog [(visible)]="showPdf" header="Factura" [modal]="true" [style]="{width:'750px'}">
+
+    <object [data]="safeUrl" type="application/pdf" width="100%" height="500px">
+        <p>No es posible cargar el PDF. <a [href]="safeUrl">Haz clic aquí para descargar el archivo PDF.</a></p>
+      </object>
+</p-dialog>

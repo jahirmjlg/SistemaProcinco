@@ -11,6 +11,7 @@ import { Table, TableModule } from 'primeng/table';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ServiceService } from 'src/app/Services/service.service';
 import { ParticipantesService } from 'src/app/Services/participante.service';
+import { CursoService } from 'src/app/Services/curso.service';
 
 
 @Component({
@@ -92,7 +93,7 @@ export class ListCursosimpartidosComponent {
     constructor(private messageService: MessageService, private cursosimpartidosservice: CursosImpartidosService, private router: Router,
          private formBuilder: FormBuilder, private cookieService: CookieService, private tablemodule:TableModule,
          private sanitizer: DomSanitizer, private service: ServiceService,
-         private participanteService: ParticipantesService) { }
+         private participanteService: ParticipantesService, private cursosService: CursoService) { }
 
 
 
@@ -102,8 +103,51 @@ export class ListCursosimpartidosComponent {
           }
 
 
+
+          //METODO AUTOCOMPLETADO
+          cursos: any[] = [];
+          filteredCursos: any[] = [];
+
+          filterCursos(event: any) {
+            const filtered: any[] = [];
+            const query = event.query;
+            for (let i = 0; i < this.cursos.length; i++) {
+                const cursoss = this.cursos[i];
+                if (cursoss.curso_Descripcion.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                    filtered.push(cursoss);
+                    this.onCursoChange(cursoss.curso_Descripcion);
+                }
+            }
+
+            this.filteredCursos = filtered;
+        }
+
+
+        filterCursosEdit(event: any) {
+            const filtered: any[] = [];
+            const query = event.query;
+            for (let i = 0; i < this.cursos.length; i++) {
+                const cursoss = this.cursos[i];
+                if (cursoss.curso_Descripcion.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                    filtered.push(cursoss);
+                    this.onCursoChangeEdit(cursoss.curso_Descripcion);
+                }
+            }
+
+            this.filteredCursos = filtered;
+        }
+
+        /////////////
+
     ngOnInit() {
 
+        this.cursosService.getCurso().subscribe((Response: any)=> {
+            console.log(Response.data);
+            this.cursos = Response.data;
+
+          }, error=>{
+            console.log(error);
+          });
 
 
         this.crearCursosImpartidosForm = this.formBuilder.group({
@@ -176,8 +220,8 @@ export class ListCursosimpartidosComponent {
 
 
 
-     
-        
+
+
           //
 
         this.schemas = [
@@ -216,17 +260,17 @@ export class ListCursosimpartidosComponent {
       this.selectedParticipantes.push(participant);
       this.participantes = this.participantes.filter(p => p.part_Id !== participant.part_Id);
     }
-  
+
     onRemoveParticipant(participant: CursosImpartidos) {
       this.participantes.push(participant);
       this.selectedParticipantes = this.selectedParticipantes.filter(p => p.part_Id !== participant.part_Id);
     }
-  
-  
+
+
 
     onSubmitInsert(): void {
       this.isSubmit = true;
-    
+
       if (this.crearCursosImpartidosForm.valid) {
         const formData = {
           txtCurso: this.crearCursosImpartidosForm.get('curso_Id').value,
@@ -235,18 +279,18 @@ export class ListCursosimpartidosComponent {
           txtfechafinal: this.crearCursosImpartidosForm.get('curIm_FechaFin').value,
           participantesSeleccionados: this.selectedParticipantes.map(p => p.part_Id)
         };
-    
+
         this.participanteService.EnviarCurso(formData).subscribe(
           response => {
             if (response.success) {
               this.crearCursosImpartidosForm.reset();
               this.selectedParticipantes = [];
               this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
-    
+
               this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any) => {
                 this.cursosimpartidos = Response.data;
               });
-    
+
               this.Collapse = false;
               this.Tabla = true;
               this.ImagenEncontrada = false;
@@ -263,7 +307,7 @@ export class ListCursosimpartidosComponent {
         console.log('Formulario inválido');
       }
     }
-    
+
 
 
 

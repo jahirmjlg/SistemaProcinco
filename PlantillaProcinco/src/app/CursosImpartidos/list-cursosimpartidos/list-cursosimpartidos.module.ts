@@ -18,6 +18,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listdemo-routing.module';
+import { AutoCompleteModule } from "primeng/autocomplete";
+
 
 @NgModule({
     imports: [
@@ -29,6 +31,8 @@ import { ListDemoRoutingModule } from 'src/app/demo/components/uikit/list/listde
         ReactiveFormsModule,
         ButtonModule,
         RippleModule,
+        AutoCompleteModule,
+
         ToastModule,
         ToolbarModule,
         RatingModule,
