@@ -386,7 +386,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Procinco',
                         icon: 'pi pi-fw pi-globe',
                         items: [
-                            { label: 'Cursos Impartidos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/cursosimpartidos'] },
+                            { label: 'Asignar Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/asignarcursos'] },
 
                             { label: 'Contenido por Cursos', icon: 'pi pi-fw pi-globe', routerLink: ['/pages/contenidoporcurso'] },
                             {

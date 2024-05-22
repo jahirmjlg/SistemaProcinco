@@ -38,7 +38,7 @@ const routes: Routes = [
 
     { path: 'cursos', data: { breadcrumb: 'Cursos' }, loadChildren: () => import('../../../Cursos/list-curso/list-curso.module').then(m => m.ListCursoModule), canActivate: [AuthGuard] },
 
-    { path: 'cursosimpartidos', data: { breadcrumb: 'CursosImpartidos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule), canActivate: [AuthGuard] },
+    { path: 'asignarcursos', data: { breadcrumb: 'AsignarCursos' }, loadChildren: () => import('../../../CursosImpartidos/list-cursosimpartidos/list-cursosimpartidos.module').then(m => m.ListCursosImpartidosModule), canActivate: [AuthGuard] },
 
     { path: 'categorias', data: { breadcrumb: 'Categorias' }, loadChildren: () => import('../../../Categorias/list-categoria/list-categoria.module').then(m => m.ListCategoriaModule), canActivate: [AuthGuard] },
 
