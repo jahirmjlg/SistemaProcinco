@@ -118,25 +118,23 @@ namespace SistemaProcinco.API.Controllers
         }
 
         [HttpPut("Edit")]
-        public IActionResult Update(FormData formData)
+        public IActionResult Update(FormDataParticipantes formData)
         {
             var msj = new ServicesResult();
-            List<int> contenidosSeleccionados = formData.contenidosSeleccionados;
-
-            var modelo = new tbCursos()
+            List<int> contenidosSeleccionados = formData.participantesSeleccionados;
+            var modelo = new tbCursosImpartidos()
             {
-                Curso_Id = formData.Curso_Id,
-                Curso_Descripcion = formData.txtCurso,
-                Curso_DuracionHoras = formData.txtxHoras,
-                Curso_Imagen = formData.txtImagen,
-                Cate_Id = formData.txtCategoria,
-                Empre_Id = formData.txtxEmpresa,
-                Curso_UsuarioCreacion = 1,
-                Curso_FechaCreacion = DateTime.Now
-            };
-            var list = _procincoService.EditarCurso(modelo);
+                Curso_Id = formData.txtCurso,
+                CurIm_Id = formData.CurIm_Id,
 
-            var idCurso = formData.Curso_Id;
+                Empl_Id = formData.txtempleado,
+                CurIm_FechaInicio = formData.txtfechainicio,
+                CurIm_FechaFin = formData.txtfechafinal,
+                CurIm_FechaCreacion = DateTime.Now
+            };
+            var list = _procincoService.EditarCursoImpartido(modelo);
+
+            var idCurso = formData.txtCurso;
 
             var res = _procincoService.EliminarContenidosCursos(idCurso.ToString());
 

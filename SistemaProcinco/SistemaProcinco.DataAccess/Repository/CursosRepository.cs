@@ -135,6 +135,9 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
+
+
+
         public RequestStatus Update1(tbCursos item)
         {
             string sql = ScriptsDatabase.CursosActualizar;

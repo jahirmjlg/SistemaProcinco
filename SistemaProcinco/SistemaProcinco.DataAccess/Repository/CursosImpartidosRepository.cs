@@ -42,7 +42,26 @@ namespace SistemaProcinco.DataAccess.Repository
 
 
 
+        public RequestStatus Update2(tbCursosImpartidos item)
+        {
+            string sql = ScriptsDatabase.CursosImpartidosActualizar;
 
+            using (var db = new SqlConnection(SistemaProcincoContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("@CurIm_Id", item.CurIm_Id);
+                parametro.Add("@Curso_Id", item.Curso_Id);
+                parametro.Add("@Empl_Id", item.Empl_Id);
+                parametro.Add("@CurIm_FechaInicio", item.CurIm_FechaInicio);
+                parametro.Add("@CurIm_FechaFin", item.CurIm_FechaFin);
+                parametro.Add("@CurIm_UsuarioModificacion", item.CurIm_UsuarioModificacion);
+                parametro.Add("@CurIm_FechaModificacion", item.CurIm_FechaModificacion);
+                var result = db.Execute(sql, parametro, commandType: CommandType.StoredProcedure);
+                string mensaje = (result == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+
+            }
+        }
 
 
         public RequestStatus Update1(tbCursos item)

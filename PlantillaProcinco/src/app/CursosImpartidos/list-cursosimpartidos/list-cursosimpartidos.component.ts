@@ -319,48 +319,50 @@ export class ListCursosimpartidosComponent {
     onSubmitEdit(): void {
 
         this.isSubmitEdit = true;
-            const errorSpan = document.getElementById('error-span');
 
         if (this.editarCursosImpartidosForm.valid) {
-          const cursoimpData: CursosImpartidos = this.editarCursosImpartidosForm.value;
-          this.cursosimpartidosservice.editCursosIm(cursoimpData).subscribe(
+
+
+          const formData = {
+
+            txtCurso: this.editarCursosImpartidosForm.get('curso_Id').value,
+            CurIm_Id: this.editarCursosImpartidosForm.get('curIm_Id').value,
+
+            txtempleado: this.editarCursosImpartidosForm.get('empl_Id').value,
+            txtfechainicio: this.editarCursosImpartidosForm.get('curIm_FechaInicio').value,
+            txtfechafinal: this.editarCursosImpartidosForm.get('curIm_FechaFin').value,
+            participantesSeleccionados: this.selectedParticipantes.map(p => p.part_Id)
+          };
+
+          this.participanteService.ActualizarCurso(formData).subscribe(
             response => {
+              if (response.success) {
+                this.editarCursosImpartidosForm.reset();
 
-                if (response.code == 200) {
-
-
-                    this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Editado Exitosamente', life: 3000 });
-                    console.log(response)
-                    // this.router.navigate(['/pages/estados']);
-                    this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any)=> {
-                        console.log(Response.data);
-                        this.cursosimpartidos = Response.data;
-
-                      }, error=>{
-                        console.log(error);
-                      });
-
-                    this.CollapseEdit = false;
-                    this.Tabla = true;
-                    this.ImagenEncontrada = false;
-
-                } else {
-
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Editar el Registro', life: 3000 });
-
-
-                }
-
+                this.selectedParticipantes = [];
+                this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Registro Insertado Exitosamente', life: 3000 });
+  
+                this.cursosimpartidosservice.getCursosImpartidos().subscribe((Response: any) => {
+                  this.cursosimpartidos = Response.data;
+                });
+                this.CollapseEdit = false;
+  
+                this.Collapse = false;
+                this.Tabla = true;
+                this.ImagenEncontrada = false;
+              } else {
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo Agregar el Registro', life: 3000 });
+              }
             },
             error => {
-                console.log(error);
+              console.log('El error: ' + error.data);
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al intentar insertar el registro', life: 3000 });
             }
           );
         } else {
           console.log('Formulario inválido');
         }
-
-    }
+      }
 
 
 

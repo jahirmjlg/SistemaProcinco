@@ -2021,6 +2021,38 @@ namespace SistemaProcinco.BusinessLogic.Services
         }
 
 
+
+
+
+
+
+
+
+
+
+        public ServicesResult EditarCursoImpartido(tbCursosImpartidos item)
+        {
+            var result = new ServicesResult();
+            try
+            {
+                var list = _cursosImpartidosRepository.Update2(item);
+                if (list.CodeStatus > 0)
+                {
+                    return result.Ok("okis", list);
+                }
+                else
+                {
+                    return result.Error("Y existe un registro con ese nombre");
+                }
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex);
+            }
+        }
+
+
+
         //public ServicesResult ParticipantesPorCursoBuscar(string Curso_Descripcion)
         //{
         //    var result = new ServicesResult();

@@ -8,6 +8,8 @@ namespace SistemaProcinco.API.Clases
 {
     public class FormData
     {
+        public int CurIm_Id { get; set; }
+        [Required(ErrorMessage = "El Campo {0} es requerido")]
         public int Curso_Id { get; set; }
         [Required(ErrorMessage = "El Campo {0} es requerido")]
 
